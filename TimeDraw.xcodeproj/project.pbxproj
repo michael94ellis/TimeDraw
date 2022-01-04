@@ -15,12 +15,22 @@
 		2F39B86D27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84127823CF600FE72C3 /* TimeDraw.xcdatamodeld */; };
 		2F39B86E27823CF700FE72C3 /* TimeDrawApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */; };
 		2F39B86F27823CF700FE72C3 /* TimeDrawApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */; };
-		2F39B87027823CF700FE72C3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84427823CF600FE72C3 /* ContentView.swift */; };
-		2F39B87127823CF700FE72C3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84427823CF600FE72C3 /* ContentView.swift */; };
-		2F39B87227823CF700FE72C3 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84527823CF600FE72C3 /* Persistence.swift */; };
-		2F39B87327823CF700FE72C3 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84527823CF600FE72C3 /* Persistence.swift */; };
+		2F39B87027823CF700FE72C3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84427823CF600FE72C3 /* MainView.swift */; };
+		2F39B87127823CF700FE72C3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84427823CF600FE72C3 /* MainView.swift */; };
+		2F39B87227823CF700FE72C3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84527823CF600FE72C3 /* CoreDataManager.swift */; };
+		2F39B87327823CF700FE72C3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84527823CF600FE72C3 /* CoreDataManager.swift */; };
 		2F39B87427823CF700FE72C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B84627823CF600FE72C3 /* Assets.xcassets */; };
 		2F39B87527823CF700FE72C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B84627823CF600FE72C3 /* Assets.xcassets */; };
+		2F39B88627823E1400FE72C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */; };
+		2F39B88727823E1400FE72C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */; };
+		2F39B889278241B500FE72C3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B888278241B500FE72C3 /* Colors.swift */; };
+		2F39B88A278241B500FE72C3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B888278241B500FE72C3 /* Colors.swift */; };
+		2F42C58E2783DE3F00F0BEB2 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C58D2783DE3F00F0BEB2 /* Dashboard.swift */; };
+		2F42C58F2783DE3F00F0BEB2 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C58D2783DE3F00F0BEB2 /* Dashboard.swift */; };
+		2F42C5912783E55800F0BEB2 /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5902783E55800F0BEB2 /* Calendar-Extension.swift */; };
+		2F42C5922783E55800F0BEB2 /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5902783E55800F0BEB2 /* Calendar-Extension.swift */; };
+		2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59327848DF700F0BEB2 /* Date-Extension.swift */; };
+		2F42C59527848DF700F0BEB2 /* Date-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59327848DF700F0BEB2 /* Date-Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,8 +53,8 @@
 /* Begin PBXFileReference section */
 		2F39B84227823CF600FE72C3 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawApp.swift; sourceTree = "<group>"; };
-		2F39B84427823CF600FE72C3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		2F39B84527823CF600FE72C3 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		2F39B84427823CF600FE72C3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		2F39B84527823CF600FE72C3 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		2F39B84627823CF600FE72C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F39B84B27823CF600FE72C3 /* TimeDraw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeDraw.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F39B85127823CF600FE72C3 /* TimeDraw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeDraw.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,6 +65,12 @@
 		2F39B86427823CF700FE72C3 /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F39B86827823CF700FE72C3 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		2F39B86A27823CF700FE72C3 /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
+		2F39B88427823DEC00FE72C3 /* TimeDraw (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TimeDraw (iOS).entitlements"; sourceTree = "<group>"; };
+		2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2F39B888278241B500FE72C3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		2F42C58D2783DE3F00F0BEB2 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
+		2F42C5902783E55800F0BEB2 /* Calendar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar-Extension.swift"; sourceTree = "<group>"; };
+		2F42C59327848DF700F0BEB2 /* Date-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date-Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +108,8 @@
 		2F39B83B27823CF600FE72C3 = {
 			isa = PBXGroup;
 			children = (
+				2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */,
+				2F39B88427823DEC00FE72C3 /* TimeDraw (iOS).entitlements */,
 				2F39B84027823CF600FE72C3 /* Shared */,
 				2F39B85227823CF600FE72C3 /* macOS */,
 				2F39B85B27823CF600FE72C3 /* Tests iOS */,
@@ -104,8 +122,12 @@
 			isa = PBXGroup;
 			children = (
 				2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */,
-				2F39B84427823CF600FE72C3 /* ContentView.swift */,
-				2F39B84527823CF600FE72C3 /* Persistence.swift */,
+				2F39B84427823CF600FE72C3 /* MainView.swift */,
+				2F42C59327848DF700F0BEB2 /* Date-Extension.swift */,
+				2F42C5902783E55800F0BEB2 /* Calendar-Extension.swift */,
+				2F42C58D2783DE3F00F0BEB2 /* Dashboard.swift */,
+				2F39B888278241B500FE72C3 /* Colors.swift */,
+				2F39B84527823CF600FE72C3 /* CoreDataManager.swift */,
 				2F39B84627823CF600FE72C3 /* Assets.xcassets */,
 				2F39B84127823CF600FE72C3 /* TimeDraw.xcdatamodeld */,
 			);
@@ -275,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F39B87427823CF700FE72C3 /* Assets.xcassets in Resources */,
+				2F39B88627823E1400FE72C3 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +306,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F39B87527823CF700FE72C3 /* Assets.xcassets in Resources */,
+				2F39B88727823E1400FE72C3 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,9 +332,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F39B86E27823CF700FE72C3 /* TimeDrawApp.swift in Sources */,
-				2F39B87227823CF700FE72C3 /* Persistence.swift in Sources */,
+				2F39B889278241B500FE72C3 /* Colors.swift in Sources */,
+				2F42C5912783E55800F0BEB2 /* Calendar-Extension.swift in Sources */,
+				2F39B87227823CF700FE72C3 /* CoreDataManager.swift in Sources */,
 				2F39B86C27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
-				2F39B87027823CF700FE72C3 /* ContentView.swift in Sources */,
+				2F42C58E2783DE3F00F0BEB2 /* Dashboard.swift in Sources */,
+				2F39B87027823CF700FE72C3 /* MainView.swift in Sources */,
+				2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,9 +347,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F39B86F27823CF700FE72C3 /* TimeDrawApp.swift in Sources */,
-				2F39B87327823CF700FE72C3 /* Persistence.swift in Sources */,
+				2F39B88A278241B500FE72C3 /* Colors.swift in Sources */,
+				2F42C5922783E55800F0BEB2 /* Calendar-Extension.swift in Sources */,
+				2F39B87327823CF700FE72C3 /* CoreDataManager.swift in Sources */,
 				2F39B86D27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
-				2F39B87127823CF700FE72C3 /* ContentView.swift in Sources */,
+				2F42C58F2783DE3F00F0BEB2 /* Dashboard.swift in Sources */,
+				2F39B87127823CF700FE72C3 /* MainView.swift in Sources */,
+				2F42C59527848DF700F0BEB2 /* Date-Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +507,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TimeDraw (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KLQC884752;
@@ -483,6 +516,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
@@ -490,13 +524,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw;
 				PRODUCT_NAME = TimeDraw;
 				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
 		};
@@ -505,6 +540,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TimeDraw (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KLQC884752;
@@ -513,6 +549,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
@@ -520,13 +557,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw;
 				PRODUCT_NAME = TimeDraw;
 				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

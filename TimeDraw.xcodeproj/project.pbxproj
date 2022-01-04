@@ -31,6 +31,10 @@
 		2F42C5922783E55800F0BEB2 /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5902783E55800F0BEB2 /* Calendar-Extension.swift */; };
 		2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59327848DF700F0BEB2 /* Date-Extension.swift */; };
 		2F42C59527848DF700F0BEB2 /* Date-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59327848DF700F0BEB2 /* Date-Extension.swift */; };
+		2F42C5972784A87100F0BEB2 /* PopoverLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5962784A87100F0BEB2 /* PopoverLink.swift */; };
+		2F42C5982784A87100F0BEB2 /* PopoverLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5962784A87100F0BEB2 /* PopoverLink.swift */; };
+		2F42C59A2784A8E400F0BEB2 /* EditGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5992784A8E400F0BEB2 /* EditGoalView.swift */; };
+		2F42C59B2784A8E400F0BEB2 /* EditGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5992784A8E400F0BEB2 /* EditGoalView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +75,8 @@
 		2F42C58D2783DE3F00F0BEB2 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		2F42C5902783E55800F0BEB2 /* Calendar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar-Extension.swift"; sourceTree = "<group>"; };
 		2F42C59327848DF700F0BEB2 /* Date-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date-Extension.swift"; sourceTree = "<group>"; };
+		2F42C5962784A87100F0BEB2 /* PopoverLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverLink.swift; sourceTree = "<group>"; };
+		2F42C5992784A8E400F0BEB2 /* EditGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGoalView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +129,8 @@
 			children = (
 				2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */,
 				2F39B84427823CF600FE72C3 /* MainView.swift */,
+				2F42C5992784A8E400F0BEB2 /* EditGoalView.swift */,
+				2F42C5962784A87100F0BEB2 /* PopoverLink.swift */,
 				2F42C59327848DF700F0BEB2 /* Date-Extension.swift */,
 				2F42C5902783E55800F0BEB2 /* Calendar-Extension.swift */,
 				2F42C58D2783DE3F00F0BEB2 /* Dashboard.swift */,
@@ -337,7 +345,9 @@
 				2F39B87227823CF700FE72C3 /* CoreDataManager.swift in Sources */,
 				2F39B86C27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
 				2F42C58E2783DE3F00F0BEB2 /* Dashboard.swift in Sources */,
+				2F42C59A2784A8E400F0BEB2 /* EditGoalView.swift in Sources */,
 				2F39B87027823CF700FE72C3 /* MainView.swift in Sources */,
+				2F42C5972784A87100F0BEB2 /* PopoverLink.swift in Sources */,
 				2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -352,7 +362,9 @@
 				2F39B87327823CF700FE72C3 /* CoreDataManager.swift in Sources */,
 				2F39B86D27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
 				2F42C58F2783DE3F00F0BEB2 /* Dashboard.swift in Sources */,
+				2F42C59B2784A8E400F0BEB2 /* EditGoalView.swift in Sources */,
 				2F39B87127823CF700FE72C3 /* MainView.swift in Sources */,
+				2F42C5982784A87100F0BEB2 /* PopoverLink.swift in Sources */,
 				2F42C59527848DF700F0BEB2 /* Date-Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

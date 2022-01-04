@@ -15,32 +15,21 @@ struct DashboardView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Goal.start, ascending: true)],
         animation: .default)
     private var goals: FetchedResults<Goal>
+    
+    @State var newItem: String = ""
 
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(self.goals) { item in
-                    NavigationLink {
-                        Text("Item at \(item.start!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.start!, formatter: itemFormatter)
-                    }
-                }
-                .onDelete(perform: deleteItems)
+        HStack {
+            Button(action: addItem) {
+                Label("", systemImage: "plus")
             }
-            .toolbar {
-#if os(iOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-#endif
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
+            TextField("New Item", text: self.$newItem)
+        }
+        VStack {
+            ForEach(self.goals) { item in
+                Text(item.title ?? "No Title")
+                Text(item.start!, formatter: itemFormatter)
             }
-            Text("Select an item")
         }
     }
 
@@ -48,7 +37,7 @@ struct DashboardView: View {
         withAnimation {
             let newItem = Goal(context: self.viewContext)
             newItem.start = Date()
-
+            newItem.title = self.newItem
             do {
                 try self.viewContext.save()
             } catch {

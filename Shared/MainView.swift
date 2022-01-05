@@ -13,9 +13,9 @@ struct MainView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Goal.start, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \DailyGoal.date, ascending: true)],
         animation: .default)
-    private var goals: FetchedResults<Goal>
+    private var dailyGoals: FetchedResults<DailyGoal>
     
     private let date = Date()
     private let weekdayFormatter = DateFormatter()
@@ -33,6 +33,16 @@ struct MainView: View {
     init() {
         self.weekdayFormatter.dateFormat = "EEE"
         self.monthNameFormatter.dateFormat = "LLLL"
+//        let goal: DailyGoal? = dailyGoals.first(where: {
+//            if let dailyGoalDate = $0.date,
+//               Calendar.current.isDateInToday(dailyGoalDate) {
+//                return true
+//            }
+//            return false
+//        })
+//        if let todaysDailyGoal = goal {
+//            self.dailyGoal = todaysDailyGoal.text ?? self.emptyGoalText
+//        }
     }
     
     var body: some View {
@@ -45,7 +55,7 @@ struct MainView: View {
                             .foregroundColor(Color.red1)
                         Spacer()
                         Button(action: {
-                            self.showMenuPopover.toggle()
+//                            self.showMenuPopover.toggle()
                         }, label: {
                             Image(systemName: "ellipsis")
                                 .frame(width: 40, height: 30)
@@ -100,19 +110,28 @@ struct MainView: View {
                     })
                         .contentShape(Rectangle())
                 } else {
-                    TextField("", text: self.$dailyGoal)
+                    MultilineTextField(text: self.$dailyGoal)
                         .foregroundColor(Color.gray1)
-                        .lineLimit(3)
                         .multilineTextAlignment(.center)
                         .submitLabel(.done)
                         .focused(self.$isDailyGoalFocused)
                         .onSubmit {
                             if self.dailyGoal.isEmpty { self.dailyGoal = self.emptyGoalText }
                         }
-                        .padding(3) // border increases padding by 1
-                        .background(RoundedRectangle(cornerRadius: 4).stroke(self.isDailyGoalFocused ? Color.gray : Color.clear))
+                        .frame(height: 80)
+                        .background(RoundedRectangle(cornerRadius: 4).stroke(self.isDailyGoalFocused ? Color.lightGrey : Color.clear))
                         .padding(.horizontal, 30)
                         .padding(.vertical, 10)
+                        .toolbar {
+                            ToolbarItem(placement: .keyboard) {
+                                HStack {
+                                    Spacer()
+                                    Button("Done") {
+                                        self.isDailyGoalFocused = false
+                                    }
+                                }
+                            }
+                        }
                 }
                 Spacer()
                 // Clock View
@@ -142,48 +161,60 @@ struct MainView: View {
                 })
                     .contentShape(Rectangle())
                 VStack {
-                    ForEach(self.goals) { item in
-                        HStack {
-                            Text(item.title ?? "No Title")
-                                .lineLimit(2)
-                                .foregroundColor(Color(uiColor: .darkGray))
-                            Spacer()
-                            Text(item.start?.formatted() ?? "??")
-                                .lineLimit(2)
-                                .foregroundColor(Color(uiColor: .darkGray))
-                        }
-                        .padding(.vertical, 6)
-                        .padding(.horizontal)
-                        .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
-                        .padding(.horizontal)
-                        
-                    }
+                    Text("Events List TODO/FIXME")
+                    // TODO: Event List
+//                    ForEach(self.) { item in
+//                        HStack {
+//                            Text(item.title ?? "No Title")
+//                                .lineLimit(2)
+//                                .foregroundColor(Color(uiColor: .darkGray))
+//                            Spacer()
+//                            Text(item.start?.formatted() ?? "??")
+//                                .lineLimit(2)
+//                                .foregroundColor(Color(uiColor: .darkGray))
+//                        }
+//                        .padding(.vertical, 6)
+//                        .padding(.horizontal)
+//                        .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
+//                        .padding(.horizontal)
+//
+//                    }
                 }
                 Spacer()
             }
-            VStack(spacing: 0) {
-                Group {
-                    Divider().padding(.horizontal)
-                    HStack {
-                        Button(action: addItem) {
-                            Image(systemName: "plus")
-                        }.padding(.horizontal)
-                            .buttonStyle(.plain)
-                        TextField("Add an event", text: self.$newEventName)
-                            .focused(self.$isNewEventFocused)
+            if self.isDailyGoalFocused {
+                // TODO: Something for this?
+            } else {
+                VStack(spacing: 0) {
+                    Group {
+                        Divider().padding(.horizontal)
+                        HStack {
+                            Button(action: self.addEvent) {
+                                Image(systemName: "plus")
+                            }.padding(.horizontal)
+                                .buttonStyle(.plain)
+                            TextField("Add an event", text: self.$newEventName)
+                                .focused(self.$isNewEventFocused)
+                        }
                     }
+                    .padding()
+                    .background(Color(uiColor: .systemBackground))
                 }
-                .padding()
-                .background(Color(uiColor: .systemBackground))
             }
         }
     }
     
-    private func addItem() {
+    private func addEvent() {
         withAnimation {
-            let newItem = Goal(context: self.viewContext)
-            newItem.start = Date()
-            newItem.title = self.newEventName
+            // TODO: Add Event
+        }
+    }
+    
+    private func addDailyGoal() {
+        withAnimation {
+            let newItem = DailyGoal(context: self.viewContext)
+            newItem.date = Date()
+            newItem.text = self.newEventName
             CoreDataManager.shared.saveMainContext()
         }
     }

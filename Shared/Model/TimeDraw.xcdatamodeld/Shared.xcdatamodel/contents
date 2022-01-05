@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="EventID" representedClassName="EventID" syncable="YES" codeGenerationType="class">
-        <attribute name="eventId" optional="YES" attributeType="String"/>
-    </entity>
-    <entity name="Goal" representedClassName="Goal" syncable="YES" codeGenerationType="class">
-        <attribute name="color" optional="YES" attributeType="String"/>
-        <attribute name="emoji" optional="YES" attributeType="String"/>
-        <attribute name="end" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="events" optional="YES" attributeType="Transformable"/>
-        <attribute name="information" optional="YES" attributeType="String"/>
-        <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="title" optional="YES" attributeType="String"/>
+    <entity name="DailyGoal" representedClassName="DailyGoal" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="EventID" positionX="-63" positionY="-18" width="128" height="44"/>
-        <element name="Goal" positionX="-63" positionY="-9" width="128" height="134"/>
+        <element name="DailyGoal" positionX="-63" positionY="-9" width="128" height="59"/>
     </elements>
 </model>

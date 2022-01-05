@@ -9,7 +9,12 @@ import SwiftUI
 
 @main
 struct TimeDrawApp: App {
+    
     let persistenceController = CoreDataManager.shared
+    
+    init() {
+        EventManager.configureWithAppName("TimeDraw")
+    }
 
     var body: some Scene {
         WindowGroup {

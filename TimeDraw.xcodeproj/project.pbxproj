@@ -25,8 +25,6 @@
 		2F39B88727823E1400FE72C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */; };
 		2F39B889278241B500FE72C3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B888278241B500FE72C3 /* Colors.swift */; };
 		2F39B88A278241B500FE72C3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B888278241B500FE72C3 /* Colors.swift */; };
-		2F42C58E2783DE3F00F0BEB2 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C58D2783DE3F00F0BEB2 /* Dashboard.swift */; };
-		2F42C58F2783DE3F00F0BEB2 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C58D2783DE3F00F0BEB2 /* Dashboard.swift */; };
 		2F42C5912783E55800F0BEB2 /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5902783E55800F0BEB2 /* Calendar-Extension.swift */; };
 		2F42C5922783E55800F0BEB2 /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5902783E55800F0BEB2 /* Calendar-Extension.swift */; };
 		2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59327848DF700F0BEB2 /* Date-Extension.swift */; };
@@ -35,6 +33,16 @@
 		2F42C5982784A87100F0BEB2 /* PopoverLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5962784A87100F0BEB2 /* PopoverLink.swift */; };
 		2F42C59A2784A8E400F0BEB2 /* EditGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5992784A8E400F0BEB2 /* EditGoalView.swift */; };
 		2F42C59B2784A8E400F0BEB2 /* EditGoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5992784A8E400F0BEB2 /* EditGoalView.swift */; };
+		2F42C59D2784E3DE00F0BEB2 /* EventKitWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59C2784E3DE00F0BEB2 /* EventKitWrapper.swift */; };
+		2F42C59E2784E3DE00F0BEB2 /* EventKitWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59C2784E3DE00F0BEB2 /* EventKitWrapper.swift */; };
+		2F42C5A02784E6C800F0BEB2 /* Array-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59F2784E6C800F0BEB2 /* Array-Extension.swift */; };
+		2F42C5A12784E6C800F0BEB2 /* Array-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59F2784E6C800F0BEB2 /* Array-Extension.swift */; };
+		2F42C5A32784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */; };
+		2F42C5A42784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */; };
+		2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A52784E6FC00F0BEB2 /* EventError.swift */; };
+		2F42C5A72784E6FC00F0BEB2 /* EventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A52784E6FC00F0BEB2 /* EventError.swift */; };
+		2F42C5AF2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */; };
+		2F42C5B02784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,11 +80,15 @@
 		2F39B88427823DEC00FE72C3 /* TimeDraw (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TimeDraw (iOS).entitlements"; sourceTree = "<group>"; };
 		2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2F39B888278241B500FE72C3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		2F42C58D2783DE3F00F0BEB2 /* Dashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
 		2F42C5902783E55800F0BEB2 /* Calendar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar-Extension.swift"; sourceTree = "<group>"; };
 		2F42C59327848DF700F0BEB2 /* Date-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date-Extension.swift"; sourceTree = "<group>"; };
 		2F42C5962784A87100F0BEB2 /* PopoverLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverLink.swift; sourceTree = "<group>"; };
 		2F42C5992784A8E400F0BEB2 /* EditGoalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGoalView.swift; sourceTree = "<group>"; };
+		2F42C59C2784E3DE00F0BEB2 /* EventKitWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventKitWrapper.swift; sourceTree = "<group>"; };
+		2F42C59F2784E6C800F0BEB2 /* Array-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array-Extension.swift"; sourceTree = "<group>"; };
+		2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKEventStore-Extension.swift"; sourceTree = "<group>"; };
+		2F42C5A52784E6FC00F0BEB2 /* EventError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventError.swift; sourceTree = "<group>"; };
+		2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledItemsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,15 +141,12 @@
 			children = (
 				2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */,
 				2F39B84427823CF600FE72C3 /* MainView.swift */,
+				2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */,
+				2F42C5AD2784E74000F0BEB2 /* Model */,
+				2F42C5A92784E71500F0BEB2 /* Utils */,
 				2F42C5992784A8E400F0BEB2 /* EditGoalView.swift */,
 				2F42C5962784A87100F0BEB2 /* PopoverLink.swift */,
-				2F42C59327848DF700F0BEB2 /* Date-Extension.swift */,
-				2F42C5902783E55800F0BEB2 /* Calendar-Extension.swift */,
-				2F42C58D2783DE3F00F0BEB2 /* Dashboard.swift */,
-				2F39B888278241B500FE72C3 /* Colors.swift */,
-				2F39B84527823CF600FE72C3 /* CoreDataManager.swift */,
 				2F39B84627823CF600FE72C3 /* Assets.xcassets */,
-				2F39B84127823CF600FE72C3 /* TimeDraw.xcdatamodeld */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -177,6 +186,37 @@
 				2F39B86A27823CF700FE72C3 /* Tests_macOSLaunchTests.swift */,
 			);
 			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+		2F42C5A82784E70C00F0BEB2 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				2F42C59C2784E3DE00F0BEB2 /* EventKitWrapper.swift */,
+				2F42C5A52784E6FC00F0BEB2 /* EventError.swift */,
+				2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
+		2F42C5A92784E71500F0BEB2 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2F39B888278241B500FE72C3 /* Colors.swift */,
+				2F42C59F2784E6C800F0BEB2 /* Array-Extension.swift */,
+				2F42C59327848DF700F0BEB2 /* Date-Extension.swift */,
+				2F42C5902783E55800F0BEB2 /* Calendar-Extension.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		2F42C5AD2784E74000F0BEB2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2F39B84127823CF600FE72C3 /* TimeDraw.xcdatamodeld */,
+				2F39B84527823CF600FE72C3 /* CoreDataManager.swift */,
+				2F42C5A82784E70C00F0BEB2 /* Events */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,10 +383,14 @@
 				2F39B889278241B500FE72C3 /* Colors.swift in Sources */,
 				2F42C5912783E55800F0BEB2 /* Calendar-Extension.swift in Sources */,
 				2F39B87227823CF700FE72C3 /* CoreDataManager.swift in Sources */,
+				2F42C59D2784E3DE00F0BEB2 /* EventKitWrapper.swift in Sources */,
 				2F39B86C27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
-				2F42C58E2783DE3F00F0BEB2 /* Dashboard.swift in Sources */,
 				2F42C59A2784A8E400F0BEB2 /* EditGoalView.swift in Sources */,
+				2F42C5A32784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
+				2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2F39B87027823CF700FE72C3 /* MainView.swift in Sources */,
+				2F42C5A02784E6C800F0BEB2 /* Array-Extension.swift in Sources */,
+				2F42C5AF2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift in Sources */,
 				2F42C5972784A87100F0BEB2 /* PopoverLink.swift in Sources */,
 				2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */,
 			);
@@ -360,10 +404,14 @@
 				2F39B88A278241B500FE72C3 /* Colors.swift in Sources */,
 				2F42C5922783E55800F0BEB2 /* Calendar-Extension.swift in Sources */,
 				2F39B87327823CF700FE72C3 /* CoreDataManager.swift in Sources */,
+				2F42C59E2784E3DE00F0BEB2 /* EventKitWrapper.swift in Sources */,
 				2F39B86D27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
-				2F42C58F2783DE3F00F0BEB2 /* Dashboard.swift in Sources */,
 				2F42C59B2784A8E400F0BEB2 /* EditGoalView.swift in Sources */,
+				2F42C5A42784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
+				2F42C5A72784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2F39B87127823CF700FE72C3 /* MainView.swift in Sources */,
+				2F42C5A12784E6C800F0BEB2 /* Array-Extension.swift in Sources */,
+				2F42C5B02784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift in Sources */,
 				2F42C5982784A87100F0BEB2 /* PopoverLink.swift in Sources */,
 				2F42C59527848DF700F0BEB2 /* Date-Extension.swift in Sources */,
 			);

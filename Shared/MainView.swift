@@ -92,6 +92,7 @@ struct MainView: View {
                         self.isDailyGoalFocused = true
                     }, label: {
                         Text(self.emptyGoalText)
+                            .lineLimit(3)
                             .foregroundColor(Color.gray1)
                             .padding(4) // +1 for no border
                             .padding(.horizontal, 30)
@@ -144,10 +145,18 @@ struct MainView: View {
                     ForEach(self.goals) { item in
                         HStack {
                             Text(item.title ?? "No Title")
+                                .lineLimit(2)
+                                .foregroundColor(Color(uiColor: .darkGray))
                             Spacer()
                             Text(item.start?.formatted() ?? "??")
+                                .lineLimit(2)
+                                .foregroundColor(Color(uiColor: .darkGray))
                         }
-                        .padding()
+                        .padding(.vertical, 6)
+                        .padding(.horizontal)
+                        .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
+                        .padding(.horizontal)
+                        
                     }
                 }
                 Spacer()

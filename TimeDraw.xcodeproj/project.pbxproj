@@ -45,6 +45,8 @@
 		2F42C5B02784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */; };
 		2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
+		2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
+		2FC6C7B92786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +94,7 @@
 		2F42C5A52784E6FC00F0BEB2 /* EventError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventError.swift; sourceTree = "<group>"; };
 		2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledItemsViewModel.swift; sourceTree = "<group>"; };
 		2FC6C7B42786434600D75568 /* MultiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTextField.swift; sourceTree = "<group>"; };
+		2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +147,7 @@
 			children = (
 				2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */,
 				2F39B84427823CF600FE72C3 /* MainView.swift */,
+				2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */,
 				2FC6C7B42786434600D75568 /* MultiLineTextField.swift */,
 				2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */,
 				2F42C5AD2784E74000F0BEB2 /* Model */,
@@ -385,6 +389,7 @@
 			files = (
 				2F39B86E27823CF700FE72C3 /* TimeDrawApp.swift in Sources */,
 				2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */,
+				2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */,
 				2F39B889278241B500FE72C3 /* Colors.swift in Sources */,
 				2F42C5912783E55800F0BEB2 /* Calendar-Extension.swift in Sources */,
 				2F39B87227823CF700FE72C3 /* CoreDataManager.swift in Sources */,
@@ -407,6 +412,7 @@
 			files = (
 				2F39B86F27823CF700FE72C3 /* TimeDrawApp.swift in Sources */,
 				2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */,
+				2FC6C7B92786A26900D75568 /* DailyGoalTextField.swift in Sources */,
 				2F39B88A278241B500FE72C3 /* Colors.swift in Sources */,
 				2F42C5922783E55800F0BEB2 /* Calendar-Extension.swift in Sources */,
 				2F39B87327823CF700FE72C3 /* CoreDataManager.swift in Sources */,

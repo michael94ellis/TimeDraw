@@ -13,7 +13,7 @@ fileprivate struct UITextViewWrapper: UIViewRepresentable {
 
     @Binding var text: String
     @Binding var calculatedHeight: CGFloat
-    var onDone: (() -> Void)?
+    var onCommit: (() -> Void)?
 
     func makeUIView(context: UIViewRepresentableContext<UITextViewWrapper>) -> UITextView {
         let textField = UITextView()
@@ -26,11 +26,18 @@ fileprivate struct UITextViewWrapper: UIViewRepresentable {
         textField.isScrollEnabled = false
         textField.backgroundColor = UIColor.clear
         textField.clipsToBounds = true
-        if nil != onDone {
+        if nil != onCommit {
             textField.returnKeyType = .done
         }
 
         textField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
+        toolBar.items = [doneButton]
+        toolBar.setItems([doneButton], animated: true)
+        textField.inputAccessoryView = toolBar
+        
         return textField
     }
 
@@ -54,7 +61,7 @@ fileprivate struct UITextViewWrapper: UIViewRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        return Coordinator(text: $text, height: $calculatedHeight, onDone: onDone)
+        return Coordinator(text: $text, height: $calculatedHeight, onDone: onCommit)
     }
 
     final class Coordinator: NSObject, UITextViewDelegate {
@@ -85,6 +92,13 @@ fileprivate struct UITextViewWrapper: UIViewRepresentable {
 
 }
 
+extension UITextView {
+    @objc func doneButtonTapped(button: UIBarButtonItem) -> Void {
+        self.resignFirstResponder()
+    }
+}
+
+
 struct MultilineTextField: View {
 
     private var placeholder: String
@@ -109,7 +123,7 @@ struct MultilineTextField: View {
     }
 
     var body: some View {
-        UITextViewWrapper(text: self.internalText, calculatedHeight: $dynamicHeight, onDone: onCommit)
+        UITextViewWrapper(text: self.internalText, calculatedHeight: $dynamicHeight, onCommit: onCommit)
             .frame(minHeight: dynamicHeight, maxHeight: dynamicHeight)
             .background(placeholderView, alignment: .topLeading)
     }

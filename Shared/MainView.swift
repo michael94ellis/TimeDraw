@@ -23,8 +23,6 @@ struct MainView: View {
     
     @State private var showMenuPopover = false
     @State private var hideClockView = false
-    private let emptyGoalText = "What is your goal today?"
-    @State private var dailyGoal: String = "What is your goal today?"
     @FocusState private var isDailyGoalFocused: Bool
     
     @State var newEventName: String = ""
@@ -95,44 +93,7 @@ struct MainView: View {
                         }
                     }
                 }
-                // Goal ?? TODO make set daily goal button
-                if self.dailyGoal == self.emptyGoalText {
-                    Button(action: {
-                        self.dailyGoal = ""
-                        self.isDailyGoalFocused = true
-                    }, label: {
-                        Text(self.emptyGoalText)
-                            .lineLimit(3)
-                            .foregroundColor(Color.gray1)
-                            .padding(4) // +1 for no border
-                            .padding(.horizontal, 30)
-                            .padding(.vertical, 10)
-                    })
-                        .contentShape(Rectangle())
-                } else {
-                    MultilineTextField(text: self.$dailyGoal)
-                        .foregroundColor(Color.gray1)
-                        .multilineTextAlignment(.center)
-                        .submitLabel(.done)
-                        .focused(self.$isDailyGoalFocused)
-                        .onSubmit {
-                            if self.dailyGoal.isEmpty { self.dailyGoal = self.emptyGoalText }
-                        }
-                        .frame(height: 80)
-                        .background(RoundedRectangle(cornerRadius: 4).stroke(self.isDailyGoalFocused ? Color.lightGrey : Color.clear))
-                        .padding(.horizontal, 30)
-                        .padding(.vertical, 10)
-                        .toolbar {
-                            ToolbarItem(placement: .keyboard) {
-                                HStack {
-                                    Spacer()
-                                    Button("Done") {
-                                        self.isDailyGoalFocused = false
-                                    }
-                                }
-                            }
-                        }
-                }
+                DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
                 Spacer()
                 // Clock View
                 if !self.hideClockView {

@@ -108,7 +108,7 @@ struct MultilineTextField: View {
     var body: some View {
         UITextViewWrapper(text: self.internalText, calculatedHeight: self.$dynamicHeight, isFocused: self.isFocused, onCommit: self.onCommit)
             .frame(minHeight: self.dynamicHeight, maxHeight: self.dynamicHeight)
-            .background(self.placeholderView, alignment: .topLeading)
+            .background(self.placeholderView, alignment: .center)
     }
     
     @ViewBuilder

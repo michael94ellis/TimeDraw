@@ -22,6 +22,24 @@ struct DailyGoalTextField: View {
                 // Count of newlines = split by newline count - 1
                 // No need to check every character for `Character.isNewline`
                 let dailyGoalComponents = newDailyGoal.split(separator: "\n")
+                if dailyGoalComponents.count < newDailyGoal.count {
+                    var totalNewLines = 0
+                    // Remove newline characters that are not the first or second newline character
+                    var newDailyGoalWithoutLastNewlines = ""
+                    dailyGoal.forEach {
+                        if $0.isNewline {
+                            totalNewLines += 1
+                            if totalNewLines <= 2 {
+                                newDailyGoalWithoutLastNewlines.append($0)
+                            } else {
+                                return
+                            }
+                        } else {
+                            newDailyGoalWithoutLastNewlines.append($0)
+                        }
+                    }
+                    self.dailyGoal = newDailyGoalWithoutLastNewlines
+                }
                 // If theres 3 or more newline characters that is 4+ lines of text
                 if dailyGoalComponents.count - 1 >= 2 {
                     // Remove newline characters that are not the first or second newline character

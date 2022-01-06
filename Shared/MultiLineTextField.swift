@@ -13,13 +13,14 @@ fileprivate struct UITextViewWrapper: UIViewRepresentable {
 
     @Binding var text: String
     @Binding var calculatedHeight: CGFloat
+    var isFocused: FocusState<Bool>.Binding
     var onCommit: (() -> Void)?
 
     func makeUIView(context: UIViewRepresentableContext<UITextViewWrapper>) -> UITextView {
         let textField = UITextView()
         textField.delegate = context.coordinator
-
         textField.isEditable = true
+        textField.textAlignment = .center
         textField.font = UIFont.preferredFont(forTextStyle: .body)
         textField.isSelectable = true
         textField.isUserInteractionEnabled = true
@@ -29,24 +30,21 @@ fileprivate struct UITextViewWrapper: UIViewRepresentable {
         if nil != onCommit {
             textField.returnKeyType = .done
         }
-
         textField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(textField.doneButtonTapped(button:)))
-        toolBar.items = [doneButton]
-        toolBar.setItems([doneButton], animated: true)
+        let done = SwiftBarButtonItem(title: "Done", style: .done, actionHandler: { _ in
+            self.isFocused.wrappedValue.toggle()
+        })
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolBar.items = [spacer, done]
         textField.inputAccessoryView = toolBar
-        
         return textField
     }
 
     func updateUIView(_ uiView: UITextView, context: UIViewRepresentableContext<UITextViewWrapper>) {
         if uiView.text != self.text {
             uiView.text = self.text
-        }
-        if uiView.window != nil, !uiView.isFirstResponder {
-            uiView.becomeFirstResponder()
         }
         UITextViewWrapper.recalculateHeight(view: uiView, result: $calculatedHeight)
     }
@@ -79,25 +77,8 @@ fileprivate struct UITextViewWrapper: UIViewRepresentable {
             text.wrappedValue = uiView.text
             UITextViewWrapper.recalculateHeight(view: uiView, result: calculatedHeight)
         }
-
-        func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-            if let onDone = self.onDone, text == "\n" {
-                textView.resignFirstResponder()
-                onDone()
-                return false
-            }
-            return true
-        }
-    }
-
-}
-
-extension UITextView {
-    @objc func doneButtonTapped(button: UIBarButtonItem) -> Void {
-        self.resignFirstResponder()
     }
 }
-
 
 struct MultilineTextField: View {
 
@@ -114,27 +95,58 @@ struct MultilineTextField: View {
 
     @State private var dynamicHeight: CGFloat = 100
     @State private var showingPlaceholder = false
+    var isFocused: FocusState<Bool>.Binding
 
-    init (_ placeholder: String = "", text: Binding<String>, onCommit: (() -> Void)? = nil) {
+    init (_ placeholder: String = "", text: Binding<String>, focus: FocusState<Bool>.Binding, onCommit: (() -> Void)? = nil) {
         self.placeholder = placeholder
+        self.isFocused = focus
         self.onCommit = onCommit
         self._text = text
         self._showingPlaceholder = State<Bool>(initialValue: self.text.isEmpty)
     }
 
     var body: some View {
-        UITextViewWrapper(text: self.internalText, calculatedHeight: $dynamicHeight, onCommit: onCommit)
-            .frame(minHeight: dynamicHeight, maxHeight: dynamicHeight)
-            .background(placeholderView, alignment: .topLeading)
+        UITextViewWrapper(text: self.internalText, calculatedHeight: self.$dynamicHeight, isFocused: self.isFocused, onCommit: self.onCommit)
+            .frame(minHeight: self.dynamicHeight, maxHeight: self.dynamicHeight)
+            .background(self.placeholderView, alignment: .topLeading)
+    }
+    
+    @ViewBuilder
+    var placeholderView: some View {
+        if showingPlaceholder, !isFocused.wrappedValue {
+            Text(placeholder)
+                .frame(alignment: .center)
+                .foregroundColor(.gray)
+                .padding(.leading, 4)
+                .padding(.top, 8)
+        }
+    }
+}
+
+class SwiftBarButtonItem: UIBarButtonItem {
+    typealias ActionHandler = (UIBarButtonItem) -> Void
+
+    private var actionHandler: ActionHandler?
+
+    convenience init(image: UIImage?, style: UIBarButtonItem.Style, actionHandler: ActionHandler?) {
+        self.init(image: image, style: style, target: nil, action: #selector(barButtonItemPressed(sender:)))
+        target = self
+        self.actionHandler = actionHandler
     }
 
-    var placeholderView: some View {
-        Group {
-            if showingPlaceholder {
-                Text(placeholder).foregroundColor(.gray)
-                    .padding(.leading, 4)
-                    .padding(.top, 8)
-            }
-        }
+    convenience init(title: String?, style: UIBarButtonItem.Style, actionHandler: ActionHandler?) {
+        self.init(title: title, style: style, target: nil, action: #selector(barButtonItemPressed(sender:)))
+        target = self
+        self.actionHandler = actionHandler
+    }
+
+    convenience init(barButtonSystemItem systemItem: UIBarButtonItem.SystemItem, actionHandler: ActionHandler?) {
+        self.init(barButtonSystemItem: systemItem, target: nil, action: #selector(barButtonItemPressed(sender:)))
+        target = self
+        self.actionHandler = actionHandler
+    }
+
+    @objc func barButtonItemPressed(sender: UIBarButtonItem) {
+        actionHandler?(sender)
     }
 }

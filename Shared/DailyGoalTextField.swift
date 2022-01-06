@@ -10,11 +10,10 @@ import SwiftUI
 struct DailyGoalTextField: View {
     
     @AppStorage("DailyGoal") private var dailyGoal: String = "What is your goal today?"
-    
     var isDailyGoalFocused: FocusState<Bool>.Binding
     
     var body: some View {
-        MultilineTextField(text: self.$dailyGoal)
+        MultilineTextField("What is your goal today?", text: self.$dailyGoal, focus: self.isDailyGoalFocused)
             .foregroundColor(Color.gray1)
             .multilineTextAlignment(.center)
             .submitLabel(.done)

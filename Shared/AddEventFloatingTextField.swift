@@ -17,12 +17,11 @@ struct AddEventFloatingTextField: View {
             HStack {
                 HStack {
                     Button(action: self.addEvent) {
-                        Image(systemName: "face.smiling.fill")
-                            .frame(width: 36)
-                            .foregroundColor(Color.white)
-                            .background(Circle()
-                                            .fill(Color.darkGray2))
+                        Image("smile.face")
+                            .resizable()
+                            .frame(width: 22, height: 22)
                     }.buttonStyle(.plain)
+                        .frame(width: 36, height: 36)
                     
                     TextField("", text: self.$newEventName)
                         .focused(self.$isNewEventFocused)

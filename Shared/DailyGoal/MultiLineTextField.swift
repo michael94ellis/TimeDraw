@@ -19,6 +19,7 @@ fileprivate struct UITextViewWrapper: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<UITextViewWrapper>) -> UITextView {
         let textField = UITextView()
         textField.delegate = context.coordinator
+        textField.font = .preferredFont(forTextStyle: .callout)
         textField.isEditable = true
         textField.textAlignment = .center
         textField.font = UIFont.preferredFont(forTextStyle: .body)

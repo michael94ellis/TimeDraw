@@ -60,6 +60,7 @@ struct DailyGoalTextField: View {
     
     var body: some View {
         MultilineTextField("What is your goal today?", text: self.$dailyGoal, focus: self.isDailyGoalFocused)
+            .font(.callout)
             .foregroundColor(Color.gray1)
             .multilineTextAlignment(.center)
             .submitLabel(.done)

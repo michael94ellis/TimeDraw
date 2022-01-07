@@ -49,6 +49,8 @@
 		2F6505042787A09900AF90F7 /* MainHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505022787A09900AF90F7 /* MainHeader.swift */; };
 		2F6505062787DA3C00AF90F7 /* AddEventFloatingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505052787DA3C00AF90F7 /* AddEventFloatingTextField.swift */; };
 		2F6505072787DA3C00AF90F7 /* AddEventFloatingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505052787DA3C00AF90F7 /* AddEventFloatingTextField.swift */; };
+		2F6505092787F87A00AF90F7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505082787F87A00AF90F7 /* SettingsView.swift */; };
+		2F65050A2787F87A00AF90F7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505082787F87A00AF90F7 /* SettingsView.swift */; };
 		2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
@@ -102,6 +104,7 @@
 		2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBarButtonItem.swift; sourceTree = "<group>"; };
 		2F6505022787A09900AF90F7 /* MainHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeader.swift; sourceTree = "<group>"; };
 		2F6505052787DA3C00AF90F7 /* AddEventFloatingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventFloatingTextField.swift; sourceTree = "<group>"; };
+		2F6505082787F87A00AF90F7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2FC6C7B42786434600D75568 /* MultiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTextField.swift; sourceTree = "<group>"; };
 		2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,6 +160,7 @@
 				2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */,
 				2F39B84427823CF600FE72C3 /* MainView.swift */,
 				2F6505022787A09900AF90F7 /* MainHeader.swift */,
+				2F6505082787F87A00AF90F7 /* SettingsView.swift */,
 				2F6505052787DA3C00AF90F7 /* AddEventFloatingTextField.swift */,
 				2F6504FE27879B8900AF90F7 /* DailyGoal */,
 				2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */,
@@ -412,6 +416,7 @@
 				2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */,
 				2F39B889278241B500FE72C3 /* Colors.swift in Sources */,
 				2F42C5912783E55800F0BEB2 /* Calendar-Extension.swift in Sources */,
+				2F6505092787F87A00AF90F7 /* SettingsView.swift in Sources */,
 				2F39B87227823CF700FE72C3 /* CoreDataManager.swift in Sources */,
 				2F6505062787DA3C00AF90F7 /* AddEventFloatingTextField.swift in Sources */,
 				2F42C59D2784E3DE00F0BEB2 /* EventKitWrapper.swift in Sources */,
@@ -438,6 +443,7 @@
 				2FC6C7B92786A26900D75568 /* DailyGoalTextField.swift in Sources */,
 				2F39B88A278241B500FE72C3 /* Colors.swift in Sources */,
 				2F42C5922783E55800F0BEB2 /* Calendar-Extension.swift in Sources */,
+				2F65050A2787F87A00AF90F7 /* SettingsView.swift in Sources */,
 				2F39B87327823CF700FE72C3 /* CoreDataManager.swift in Sources */,
 				2F6505072787DA3C00AF90F7 /* AddEventFloatingTextField.swift in Sources */,
 				2F42C59E2784E3DE00F0BEB2 /* EventKitWrapper.swift in Sources */,

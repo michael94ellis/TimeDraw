@@ -30,15 +30,16 @@ struct MainHeader: View {
                 Spacer()
                 
                 Button(action: {
-                    //                            self.showMenuPopover.toggle()
+                    self.showMenuPopover.toggle()
                 }, label: {
                     Image(systemName: "ellipsis")
                         .frame(width: 40, height: 30)
                 })
-                    .popover(isPresented: self.$showMenuPopover, content: {
-                        PopoverLink(destination: EditGoalView(), label: { Text("New Goal") })
-                        PopoverLink(destination: Text("To Do"), label: { Text("New Event") })
-                    })
+                Menu(content: {
+                    Button("Cancel", action: { })
+                    Button("Cance2l", action: { })
+                }, label: { Image(systemName: "ellipses") })
+        
             }
             .padding(.horizontal, 25)
             .padding(.vertical, 10)

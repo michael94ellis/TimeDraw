@@ -22,6 +22,7 @@ struct AddEventFloatingTextField: View {
                             .frame(width: 22, height: 22)
                     }.buttonStyle(.plain)
                         .frame(width: 36, height: 36)
+                        .padding(.leading, 10)
                     
                     TextField("", text: self.$newEventName)
                         .focused(self.$isNewEventFocused)
@@ -31,9 +32,9 @@ struct AddEventFloatingTextField: View {
                             Text("Event").foregroundColor(.gray)
                         }
                 }
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 34)
-                                    .fill(Color(uiColor: .systemGray6)))
+                .frame(height: 48)
+                .background(RoundedRectangle(cornerRadius: 34)
+                                .fill(Color(uiColor: .systemGray6)))
                 Button(action: self.addEvent) {
                     Image(systemName: "plus")
                         .frame(width: 48, height: 48)

@@ -11,6 +11,7 @@ extension Color {
     // App White, Gray, Black, Light/Dark colors
     static let dark: Color = Color(hex: "2D2926")
     static let darkGray: Color = Color(hex: "46403c")
+    static let darkGray2: Color = Color(hex: "474747")
     static let gray1: Color = Color(hex: "515151")
     static let gray2: Color = Color(hex: "74706D")
     static let lightGray: Color = Color(hex: "B7B7B7")

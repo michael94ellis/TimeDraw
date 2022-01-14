@@ -19,6 +19,7 @@ struct TimeDrawApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
+                .font(.interRegular)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

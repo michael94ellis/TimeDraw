@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainHeader: View {
     
-    @State private var showMenuPopover = false
+    @State private var showSettingsPopover = false
 
     private let date: Date
     private let weekdayFormatter = DateFormatter()
@@ -28,18 +28,15 @@ struct MainHeader: View {
                     .fontWeight(.semibold)
                     .foregroundColor(Color.red1)
                 Spacer()
-                
-                Button(action: {
-                    self.showMenuPopover.toggle()
-                }, label: {
-                    Image(systemName: "ellipsis")
-                        .frame(width: 40, height: 30)
-                })
                 Menu(content: {
-                    Button("Cancel", action: { })
-                    Button("Cance2l", action: { })
-                }, label: { Image(systemName: "ellipses") })
-        
+                    Button("Settings", action: { self.showSettingsPopover.toggle() })
+                    Button("Feedback", action: { })
+                }, label: { Image(systemName: "ellipsis")
+                    .frame(width: 40, height: 30) })
+                    .fullScreenCover(isPresented: self.$showSettingsPopover, content: {
+                        SettingsView(display: $showSettingsPopover)
+                    })
+
             }
             .padding(.horizontal, 25)
             .padding(.vertical, 10)

@@ -79,37 +79,33 @@ struct AddEventFloatingTextField: View {
     }
     
     private func addEvent() {
-        let newEvent: EKEvent = EKEvent(eventStore: eventStore)
-        newEvent.title = self.newEventName
-        newEvent.startDate = self.newStartEventDate
-        newEvent.endDate = self.newEndEventDate
-        // TODO Recurring and Alarms
-        newEvent.calendar = eventStore.defaultCalendarForNewEvents
-        do {
-            try eventStore.save(newEvent, span: .thisEvent)
-            print("Saved Event")
-        } catch let error as NSError {
-            print("failed to save event with error : \(error)")
+        if let startDate = self.newStartEventDate, let endDate = self.newEndEventDate {
+            Task {
+                do {
+                    try await EventManager.shared.createEvent(self.newEventName, startDate: startDate, endDate: endDate)
+                    print("Saved Event")
+                    // TODO Recurring and Alarms
+                    self.newEventName = ""
+                    self.isNewEventFocused = false
+                    self.isShowingDatePicker = false
+                    
+                } catch let error as NSError {
+                    print("failed to save event with error : \(error)")
+                    self.addReminder()
+                }
+            }
+        } else {
             self.addReminder()
         }
-        self.newEventName = ""
-        self.isNewEventFocused = false
-        self.isShowingDatePicker = false
     }
     
     private func addReminder() {
         let reminder: EKReminder = EKReminder(eventStore: self.eventStore)
         reminder.title = self.newEventName
-        reminder.priority = 2
+//        reminder.priority = 2
         //  How to show completed
         //reminder.completionDate = Date()
-        if let alarmTime = self.newStartEventDate {
-            let alarm = EKAlarm(absoluteDate: alarmTime)
-            reminder.addAlarm(alarm)
-        } else if let alarmTime = self.newEndEventDate {
-            let alarm = EKAlarm(absoluteDate: alarmTime)
-            reminder.addAlarm(alarm)
-        }
+        // TODO alarms, priority, completion, etc.
         reminder.calendar = self.eventStore.defaultCalendarForNewReminders()
 
         do {

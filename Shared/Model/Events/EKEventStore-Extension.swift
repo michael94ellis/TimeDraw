@@ -8,9 +8,8 @@
 import Foundation
 import EventKit
 
-extension EKEvent: Identifiable {
-    
-}
+extension EKEvent: Identifiable { }
+extension EKReminder: Identifiable { }
 
 extension EKEventStore {
 
@@ -31,7 +30,7 @@ extension EKEventStore {
         calendar: EKCalendar,
         span: EKSpan = .thisEvent,
         isAllDay: Bool = false
-    ) async throws -> EKEvent {
+    ) throws -> EKEvent {
         let event = EKEvent(eventStore: self)
         event.calendar = calendar
         event.title = title
@@ -41,12 +40,46 @@ extension EKEventStore {
         try save(event, span: span, commit: true)
         return event
     }
-
+    /// Create a Reminder
+    /// - Parameters:
+    ///   - title: title of the event
+    ///   - calendar: calendar instance
+    /// - Returns: created event
+    public func createReminder(
+        title: String,
+        startDate: Date,
+        endDate: Date?,
+        calendar: EKCalendar,
+        span: EKSpan = .thisEvent,
+        isAllDay: Bool = false
+    ) throws -> EKReminder {
+        let reminder = EKReminder(eventStore: self)
+        reminder.calendar = calendar
+        reminder.title = title
+        try save(reminder, commit: true)
+        return reminder
+    }
+    
     /// Delete event
     /// - Parameters:
     ///   - identifier: event identifier
     ///   - span: event's span
     public func deleteEvent(
+        identifier: String,
+        span: EKSpan = .thisEvent
+    ) throws {
+        guard let event = fetchEvent(identifier: identifier) else {
+            throw EventError.invalidEvent
+        }
+
+        try remove(event, span: span, commit: true)
+    }
+    
+    /// Delete event
+    /// - Parameters:
+    ///   - identifier: event identifier
+    ///   - span: event's span
+    public func deleteReminder(
         identifier: String,
         span: EKSpan = .thisEvent
     ) throws {
@@ -86,5 +119,12 @@ extension EKEventStore {
     /// - Returns: an EKEvent instance with given identifier
     func fetchEvent(identifier: String) -> EKEvent? {
         event(withIdentifier: identifier)
+    }
+    /// Fetch an EKEvent instance with given identifier
+    /// - Parameter identifier: event identifier
+    /// - Returns: an EKEvent instance with given identifier
+    func getReminders(matching predicate: NSPredicate?, completion: @escaping ([EKReminder]?) -> Void) {
+        let reminderPredicate: NSPredicate = predicate ?? self.predicateForReminders(in: nil)
+        self.fetchReminders(matching: reminderPredicate, completion: completion)
     }
 }

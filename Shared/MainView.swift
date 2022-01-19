@@ -27,7 +27,8 @@ struct MainView: View {
     
     init() {
         Task {
-            EventManager.shared.events = try! await EventManager.shared.fetchEventsForToday()
+            EventManager.shared.events = try await EventManager.shared.fetchEventsForToday()
+            try await EventManager.shared.fetchReminders()
         }
     }
     
@@ -72,6 +73,22 @@ struct MainView: View {
                                     .foregroundColor(Color(uiColor: .darkGray))
                                 Spacer()
                                 Text(item.startDate?.formatted() ?? "??")
+                                    .lineLimit(2)
+                                    .foregroundColor(Color(uiColor: .darkGray))
+                            }
+                            .padding(.vertical, 6)
+                            .padding(.horizontal)
+                            .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
+                            .padding(.horizontal)
+                            
+                        }
+                        ForEach(EventManager.shared.reminders) { item in
+                            HStack {
+                                Text(item.title ?? "No Title")
+                                    .lineLimit(2)
+                                    .foregroundColor(Color(uiColor: .darkGray))
+                                Spacer()
+                                Text("??")
                                     .lineLimit(2)
                                     .foregroundColor(Color(uiColor: .darkGray))
                             }

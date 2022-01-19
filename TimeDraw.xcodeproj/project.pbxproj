@@ -41,8 +41,6 @@
 		2F42C5A42784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */; };
 		2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A52784E6FC00F0BEB2 /* EventError.swift */; };
 		2F42C5A72784E6FC00F0BEB2 /* EventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A52784E6FC00F0BEB2 /* EventError.swift */; };
-		2F42C5AF2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */; };
-		2F42C5B02784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */; };
 		2F65050027879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */; };
 		2F65050127879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */; };
 		2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505022787A09900AF90F7 /* MainHeader.swift */; };
@@ -71,6 +69,10 @@
 		2F6505252791370D00AF90F7 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505132791370D00AF90F7 /* Inter-Bold.ttf */; };
 		2F6505292791384500AF90F7 /* Inter-Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505282791384500AF90F7 /* Inter-Font.swift */; };
 		2F65052A2791384500AF90F7 /* Inter-Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505282791384500AF90F7 /* Inter-Font.swift */; };
+		2F81230C2797B59500458B1A /* AddEventDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81230B2797B59500458B1A /* AddEventDatePicker.swift */; };
+		2F81230D2797B59500458B1A /* AddEventDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81230B2797B59500458B1A /* AddEventDatePicker.swift */; };
+		2F81230F2798957C00458B1A /* DatePickerInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81230E2798957C00458B1A /* DatePickerInputView.swift */; };
+		2F8123102798957C00458B1A /* DatePickerInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81230E2798957C00458B1A /* DatePickerInputView.swift */; };
 		2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
@@ -120,7 +122,6 @@
 		2F42C59F2784E6C800F0BEB2 /* Array-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array-Extension.swift"; sourceTree = "<group>"; };
 		2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKEventStore-Extension.swift"; sourceTree = "<group>"; };
 		2F42C5A52784E6FC00F0BEB2 /* EventError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventError.swift; sourceTree = "<group>"; };
-		2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledItemsViewModel.swift; sourceTree = "<group>"; };
 		2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBarButtonItem.swift; sourceTree = "<group>"; };
 		2F6505022787A09900AF90F7 /* MainHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeader.swift; sourceTree = "<group>"; };
 		2F6505052787DA3C00AF90F7 /* AddEventFloatingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventFloatingTextField.swift; sourceTree = "<group>"; };
@@ -136,6 +137,8 @@
 		2F6505132791370D00AF90F7 /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
 		2F6505272791373800AF90F7 /* TimeDraw--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TimeDraw--iOS--Info.plist"; sourceTree = "<group>"; };
 		2F6505282791384500AF90F7 /* Inter-Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Inter-Font.swift"; sourceTree = "<group>"; };
+		2F81230B2797B59500458B1A /* AddEventDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventDatePicker.swift; sourceTree = "<group>"; };
+		2F81230E2798957C00458B1A /* DatePickerInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerInputView.swift; sourceTree = "<group>"; };
 		2FC6C7B42786434600D75568 /* MultiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTextField.swift; sourceTree = "<group>"; };
 		2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -194,8 +197,9 @@
 				2F6505022787A09900AF90F7 /* MainHeader.swift */,
 				2F6505082787F87A00AF90F7 /* SettingsView.swift */,
 				2F6505052787DA3C00AF90F7 /* AddEventFloatingTextField.swift */,
+				2F81230B2797B59500458B1A /* AddEventDatePicker.swift */,
+				2F81230E2798957C00458B1A /* DatePickerInputView.swift */,
 				2F6504FE27879B8900AF90F7 /* DailyGoal */,
-				2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */,
 				2F42C5AD2784E74000F0BEB2 /* Model */,
 				2F42C5A92784E71500F0BEB2 /* Utils */,
 				2F42C5992784A8E400F0BEB2 /* EditGoalView.swift */,
@@ -479,6 +483,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F81230C2797B59500458B1A /* AddEventDatePicker.swift in Sources */,
 				2F39B86E27823CF700FE72C3 /* TimeDrawApp.swift in Sources */,
 				2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */,
 				2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */,
@@ -493,10 +498,10 @@
 				2F42C59A2784A8E400F0BEB2 /* EditGoalView.swift in Sources */,
 				2F42C5A32784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
 				2F65050027879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */,
+				2F81230F2798957C00458B1A /* DatePickerInputView.swift in Sources */,
 				2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2F39B87027823CF700FE72C3 /* MainView.swift in Sources */,
 				2F42C5A02784E6C800F0BEB2 /* Array-Extension.swift in Sources */,
-				2F42C5AF2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift in Sources */,
 				2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */,
 				2F42C5972784A87100F0BEB2 /* PopoverLink.swift in Sources */,
 				2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */,
@@ -507,6 +512,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F81230D2797B59500458B1A /* AddEventDatePicker.swift in Sources */,
 				2F39B86F27823CF700FE72C3 /* TimeDrawApp.swift in Sources */,
 				2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */,
 				2FC6C7B92786A26900D75568 /* DailyGoalTextField.swift in Sources */,
@@ -521,10 +527,10 @@
 				2F42C59B2784A8E400F0BEB2 /* EditGoalView.swift in Sources */,
 				2F42C5A42784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
 				2F65050127879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */,
+				2F8123102798957C00458B1A /* DatePickerInputView.swift in Sources */,
 				2F42C5A72784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2F39B87127823CF700FE72C3 /* MainView.swift in Sources */,
 				2F42C5A12784E6C800F0BEB2 /* Array-Extension.swift in Sources */,
-				2F42C5B02784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift in Sources */,
 				2F6505042787A09900AF90F7 /* MainHeader.swift in Sources */,
 				2F42C5982784A87100F0BEB2 /* PopoverLink.swift in Sources */,
 				2F42C59527848DF700F0BEB2 /* Date-Extension.swift in Sources */,

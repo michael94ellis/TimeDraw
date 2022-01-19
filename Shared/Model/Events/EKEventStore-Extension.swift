@@ -8,6 +8,10 @@
 import Foundation
 import EventKit
 
+extension EKEvent: Identifiable {
+    
+}
+
 extension EKEventStore {
 
     // MARK: - CRUD

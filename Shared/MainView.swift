@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import EventKit
 
 struct MainView: View {
     
@@ -20,8 +21,15 @@ struct MainView: View {
     private let date = Date()
     
     @State private var hideClockView = false
+    @State private var displayAddEventModal = false
     @FocusState private var isDailyGoalFocused: Bool
+    @ObservedObject private var eventManager: EventManager = .shared
     
+    init() {
+        Task {
+            EventManager.shared.events = try! await EventManager.shared.fetchEventsForToday()
+        }
+    }
     
     var body: some View {
         ZStack {
@@ -57,24 +65,22 @@ struct MainView: View {
                     .frame(width: 200, height: 30)
                     .frame(maxWidth: .infinity)
                     VStack {
-                        Text("Events List TODO/FIXME")
-                        // TODO: Event List
-                        //                    ForEach(self.) { item in
-                        //                        HStack {
-                        //                            Text(item.title ?? "No Title")
-                        //                                .lineLimit(2)
-                        //                                .foregroundColor(Color(uiColor: .darkGray))
-                        //                            Spacer()
-                        //                            Text(item.start?.formatted() ?? "??")
-                        //                                .lineLimit(2)
-                        //                                .foregroundColor(Color(uiColor: .darkGray))
-                        //                        }
-                        //                        .padding(.vertical, 6)
-                        //                        .padding(.horizontal)
-                        //                        .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
-                        //                        .padding(.horizontal)
-                        //
-                        //                    }
+                        ForEach(EventManager.shared.events) { item in
+                            HStack {
+                                Text(item.title ?? "No Title")
+                                    .lineLimit(2)
+                                    .foregroundColor(Color(uiColor: .darkGray))
+                                Spacer()
+                                Text(item.startDate?.formatted() ?? "??")
+                                    .lineLimit(2)
+                                    .foregroundColor(Color(uiColor: .darkGray))
+                            }
+                            .padding(.vertical, 6)
+                            .padding(.horizontal)
+                            .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
+                            .padding(.horizontal)
+                            
+                        }
                         Spacer()
                     }
                     Spacer()
@@ -98,5 +104,9 @@ struct MainView: View {
                 }
             }
         }
+    }
+    
+    func showAddEventModal() {
+        self.displayAddEventModal.toggle()
     }
 }

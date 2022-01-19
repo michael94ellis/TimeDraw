@@ -15,7 +15,7 @@ struct TimeDrawApp: App {
     init() {
         EventManager.configureWithAppName("TimeDraw")
     }
-
+    
     var body: some Scene {
         WindowGroup {
             MainView()

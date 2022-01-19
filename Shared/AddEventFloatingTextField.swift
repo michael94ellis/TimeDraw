@@ -6,14 +6,38 @@
 //
 
 import SwiftUI
+import EventKit
 
 struct AddEventFloatingTextField: View {
     
     @State var newEventName: String = ""
+    @State var newStartEventDate: Date? 
+    @State var newEndEventDate: Date?
+    @State var isShowingDatePicker: Bool = false
     @FocusState private var isNewEventFocused: Bool
     
+    private let eventStore = EKEventStore()
+    
+    private let barHeight: CGFloat = 44
+    
     var body: some View {
-        Group {
+        VStack {
+            if self.isNewEventFocused || self.isShowingDatePicker {
+                HStack {
+                    if self.isShowingDatePicker {
+                        AddEventDatePicker(startDate: self.$newStartEventDate, endDate: self.$newEndEventDate, isDisplayed: self.$isShowingDatePicker)
+                    } else {
+                        Button(action: self.addTimeToEvent) {
+                            Text("Add Date")
+                                .frame(height: 48)
+                                .foregroundColor(Color.blue1)
+                                .background(RoundedRectangle(cornerRadius: 13).fill(Color.lightGray2).frame(width: 360, height: 60))
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.bottom, 11)
+            }
             HStack {
                 HStack {
                     Button(action: self.addEvent) {
@@ -23,35 +47,81 @@ struct AddEventFloatingTextField: View {
                     }.buttonStyle(.plain)
                         .frame(width: 36, height: 36)
                         .padding(.leading, 10)
-                    
                     TextField("", text: self.$newEventName)
                         .focused(self.$isNewEventFocused)
-                        .submitLabel(.send)
+                        .submitLabel(.done)
+                        .onSubmit {
+                            self.addEvent()
+                        }
                         .foregroundColor(Color.dark)
                         .placeholder(when: self.newEventName.isEmpty) {
                             Text("Event").foregroundColor(.gray)
                         }
+                    Button(action: self.addEvent) {
+                        Image(systemName: "plus")
+                            .frame(width: self.barHeight, height: self.barHeight)
+                            .foregroundColor(Color.dark)
+                    }.buttonStyle(.plain)
                 }
-                .frame(height: 48)
-                .background(RoundedRectangle(cornerRadius: 34)
+                .frame(width: 362, height: self.barHeight)
+                .background(RoundedRectangle(cornerRadius: 13)
                                 .fill(Color(uiColor: .systemGray6)))
-                Button(action: self.addEvent) {
-                    Image(systemName: "plus")
-                        .frame(width: 48, height: 48)
-                        .foregroundColor(Color.white)
-                        .background(Circle()
-                                        .fill(Color.darkGray2))
-                }.buttonStyle(.plain)
             }
         }
-        .padding(12)
+        .padding(14)
+    }
+    
+    private func addTimeToEvent() {
+        self.isShowingDatePicker = true
+    }
+    private func removeTimeFromEvent() {
+        self.isShowingDatePicker = false
     }
     
     private func addEvent() {
+        let newEvent: EKEvent = EKEvent(eventStore: eventStore)
+        newEvent.title = self.newEventName
+        newEvent.startDate = self.newStartEventDate
+        newEvent.endDate = self.newEndEventDate
+        // TODO Recurring and Alarms
+        newEvent.calendar = eventStore.defaultCalendarForNewEvents
+        do {
+            try eventStore.save(newEvent, span: .thisEvent)
+            print("Saved Event")
+        } catch let error as NSError {
+            print("failed to save event with error : \(error)")
+            self.addReminder()
+        }
         self.newEventName = ""
         self.isNewEventFocused = false
+        self.isShowingDatePicker = false
+    }
+    
+    private func addReminder() {
+        let reminder: EKReminder = EKReminder(eventStore: self.eventStore)
+        reminder.title = self.newEventName
+        reminder.priority = 2
+        //  How to show completed
+        //reminder.completionDate = Date()
+        if let alarmTime = self.newStartEventDate {
+            let alarm = EKAlarm(absoluteDate: alarmTime)
+            reminder.addAlarm(alarm)
+        } else if let alarmTime = self.newEndEventDate {
+            let alarm = EKAlarm(absoluteDate: alarmTime)
+            reminder.addAlarm(alarm)
+        }
+        reminder.calendar = self.eventStore.defaultCalendarForNewReminders()
+
+        do {
+          try self.eventStore.save(reminder, commit: true)
+        } catch {
+          print("Cannot save Reminder")
+          return
+        }
+        print("Reminder saved")
     }
 }
+
 extension View {
     func placeholder<Content: View>(
         when shouldShow: Bool,

@@ -46,18 +46,6 @@ struct DailyGoalTextField: View {
         self.dailyGoal = newDailyGoalWithoutLastNewlines
     }
     
-    private func addDailyGoal() {
-//        let formatter = DateFormatter()
-//        formatter.timeStyle = .none
-//        formatter.dateStyle = .full
-//        formatter.timeZone = TimeZone.current
-//        print(formatter.string(from: Date().onlyDate))
-//        let newItem = DailyGoal(context: self.viewContext)
-//        newItem.date = Date()
-//        newItem.text = self.newEventName
-//        CoreDataManager.shared.saveMainContext()
-    }
-    
     var body: some View {
         MultilineTextField("What is your goal today?", text: self.$dailyGoal, focus: self.isDailyGoalFocused)
             .font(.callout)

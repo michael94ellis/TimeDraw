@@ -10,9 +10,7 @@ import CoreData
 import EventKit
 
 struct MainView: View {
-    
-    @Environment(\.managedObjectContext) private var viewContext
-    
+        
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \DailyGoal.date, ascending: true)],
         animation: .default)

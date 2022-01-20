@@ -11,8 +11,10 @@ import EventKit
 struct AddEventFloatingInputView: View {
     
     @State var newEventName: String = ""
-    @State var newStartEventDate: Date? 
+    @State var newStartEventDate: Date?
     @State var newEndEventDate: Date?
+    /// True for reminders, false for events
+    @AppStorage("default_save_type") var isReminder: Bool = true
     @Binding var isShowingBackgroundBlur: Bool
     @Binding var isShowingDatePicker: Bool
     var isNewEventFocused: FocusState<Bool>.Binding
@@ -30,10 +32,8 @@ struct AddEventFloatingInputView: View {
             .opacity((self.isNewEventFocused.wrappedValue || self.isShowingDatePicker) ? 1 : 0)
             HStack {
                 HStack {
-                    Button(action: self.addEvent) {
-                        Image("smile.face")
-                            .resizable()
-                            .frame(width: 22, height: 22)
+                    Button(action: self.toggleToEventOrReminder) {
+                        Image(systemName: self.isReminder ? "list.bullet" : "calendar.badge.plus")
                     }.buttonStyle(.plain)
                         .frame(width: 36, height: 36)
                         .padding(.leading, 10)
@@ -50,7 +50,7 @@ struct AddEventFloatingInputView: View {
                         }
                         .foregroundColor(Color.dark)
                         .placeholder(when: self.newEventName.isEmpty) {
-                            Text("Event").foregroundColor(.gray)
+                            Text(self.isReminder ? "New Reminder" : "New Event").foregroundColor(.gray)
                         }
                     Button(action: self.addEvent) {
                         Image(systemName: "plus")
@@ -65,6 +65,20 @@ struct AddEventFloatingInputView: View {
             }
         }
         .padding(14)
+    }
+    
+    private func toggleToEventOrReminder() {
+        withAnimation {
+            self.isReminder.toggle()
+        }
+    }
+    
+    private func createEventOrReminder() {
+        if self.isReminder {
+            self.addReminder()
+        } else {
+            self.addEvent()
+        }
     }
     
     private func addEvent() {
@@ -83,11 +97,10 @@ struct AddEventFloatingInputView: View {
                     self.newEndEventDate = nil
                 } catch let error as NSError {
                     print("failed to save event with error : \(error)")
-                    self.addReminder()
                 }
             }
         } else {
-            self.addReminder()
+            // TODO show alert 
         }
     }
     

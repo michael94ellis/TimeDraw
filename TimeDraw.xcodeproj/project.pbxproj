@@ -181,6 +181,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F2111322799EE370041EE85 /* AddEventFloatingInput */ = {
+			isa = PBXGroup;
+			children = (
+				2F6505052787DA3C00AF90F7 /* AddEventFloatingInputView.swift */,
+				2F81230B2797B59500458B1A /* AddEventDatePicker.swift */,
+				2F81230E2798957C00458B1A /* DatePickerInputView.swift */,
+			);
+			path = AddEventFloatingInput;
+			sourceTree = "<group>";
+		};
 		2F39B83B27823CF600FE72C3 = {
 			isa = PBXGroup;
 			children = (
@@ -203,10 +213,9 @@
 				2F21112F2799B62D0041EE85 /* EventsAndRemindersMainList.swift */,
 				2F6505022787A09900AF90F7 /* MainHeader.swift */,
 				2F6505082787F87A00AF90F7 /* SettingsView.swift */,
-				2F6505052787DA3C00AF90F7 /* AddEventFloatingInputView.swift */,
-				2F81230B2797B59500458B1A /* AddEventDatePicker.swift */,
-				2F81230E2798957C00458B1A /* DatePickerInputView.swift */,
+				2F2111322799EE370041EE85 /* AddEventFloatingInput */,
 				2F6504FE27879B8900AF90F7 /* DailyGoal */,
+				2F42C5A82784E70C00F0BEB2 /* Events */,
 				2F42C5AD2784E74000F0BEB2 /* Model */,
 				2F42C5A92784E71500F0BEB2 /* Utils */,
 				2F42C5992784A8E400F0BEB2 /* EditGoalView.swift */,
@@ -282,7 +291,6 @@
 			children = (
 				2F39B84127823CF600FE72C3 /* TimeDraw.xcdatamodeld */,
 				2F39B84527823CF600FE72C3 /* CoreDataManager.swift */,
-				2F42C5A82784E70C00F0BEB2 /* Events */,
 			);
 			path = Model;
 			sourceTree = "<group>";

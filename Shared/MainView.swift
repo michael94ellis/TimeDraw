@@ -47,13 +47,16 @@ struct MainView: View {
             }
             .if(self.isShowingAddEventBackgroundBlur) { view in
                 view.background(Color.lightGray)
+                    .edgesIgnoringSafeArea(.bottom)
                     .blur(radius: 0)
                     .blur(radius: 2)
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        self.isShowingAddEventBackgroundBlur = false
-                        self.isShowingDatePicker = false
-                        self.isNewEventFocused = false
+                        withAnimation {
+                            self.isShowingAddEventBackgroundBlur = false
+                            self.isShowingDatePicker = false
+                            self.isNewEventFocused = false
+                        }
                     }
             }
             VStack {
@@ -64,10 +67,14 @@ struct MainView: View {
                     })
             }
             .frame(alignment: .bottom)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                withAnimation {
+                    self.isShowingAddEventBackgroundBlur = false
+                    self.isShowingDatePicker = false
+                    self.isNewEventFocused = false
+                }
+            }
         }
-    }
-    
-    func showAddEventModal() {
-        self.displayAddEventModal.toggle()
     }
 }

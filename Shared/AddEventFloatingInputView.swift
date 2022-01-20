@@ -23,12 +23,11 @@ struct AddEventFloatingInputView: View {
     
     var body: some View {
         VStack {
-            if self.isNewEventFocused.wrappedValue || self.isShowingDatePicker {
-                HStack {
-                    AddEventDatePicker(startDate: self.$newStartEventDate, endDate: self.$newEndEventDate, isDisplayed: self.$isShowingDatePicker, isShowingDatePicker: self.$isShowingDatePicker)
-                }
-                .padding(.bottom, 11)
+            HStack {
+                AddEventDatePicker(startDate: self.$newStartEventDate, endDate: self.$newEndEventDate, isDisplayed: self.$isShowingDatePicker, isShowingDatePicker: self.$isShowingDatePicker)
             }
+            .padding(.bottom, 11)
+            .opacity((self.isNewEventFocused.wrappedValue || self.isShowingDatePicker) ? 1 : 0)
             HStack {
                 HStack {
                     Button(action: self.addEvent) {
@@ -45,7 +44,9 @@ struct AddEventFloatingInputView: View {
                             self.addEvent()
                         }
                         .onTapGesture {
-                            self.isShowingDatePicker = self.newStartEventDate != nil || self.newEndEventDate != nil
+                            withAnimation {
+                                self.isShowingDatePicker = self.newStartEventDate != nil || self.newEndEventDate != nil
+                            }
                         }
                         .foregroundColor(Color.dark)
                         .placeholder(when: self.newEventName.isEmpty) {

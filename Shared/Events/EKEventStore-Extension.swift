@@ -10,6 +10,27 @@ import EventKit
 
 extension EKEvent: Identifiable { }
 extension EKReminder: Identifiable { }
+extension EKReminderPriority {
+    static let none = 0
+    static let high = 1
+    static let mediumHigh = 3
+    static let medium = 5
+    static let mediumLow = 7
+    static let low = 9
+}
+extension EKEventStatus {
+    static let none = 0
+    static let confirmed = 1
+    static let tentative = 2
+    static let cancelled = 3
+}
+extension EKEventAvailability {
+    static let notSupported = -1
+    static let busy = 0
+    static let free = 1
+    static let tentative = 2
+    static let unavailable = 3
+}
 
 extension EKEventStore {
 

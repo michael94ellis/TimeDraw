@@ -22,7 +22,8 @@ struct EventsAndRemindersMainList: View{
             LazyVStack {
                 ForEach(EventManager.shared.events) { item in
                     HStack {
-                        Image(systemName: "calendar")
+                        Circle().fill(Color(cgColor: item.calendar.cgColor))
+                            .frame(width: 8, height: 8)
                         Text(item.title ?? "No Title")
                             .lineLimit(2)
                             .foregroundColor(Color(uiColor: .darkGray))
@@ -39,7 +40,8 @@ struct EventsAndRemindersMainList: View{
                 }
                 ForEach(EventManager.shared.reminders) { item in
                     HStack {
-                        Image(systemName: "list.bullet")
+                        Circle().fill(Color(cgColor: item.calendar.cgColor))
+                            .frame(width: 8, height: 8)
                         Text(item.title ?? "No Title")
                             .lineLimit(2)
                             .foregroundColor(Color(uiColor: .darkGray))

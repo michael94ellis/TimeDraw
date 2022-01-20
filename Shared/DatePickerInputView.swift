@@ -66,5 +66,4 @@ final class DatePickerTextField: UITextField {
     @objc private func dismissTextField() {
         resignFirstResponder()
     }
-    
 }

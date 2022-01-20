@@ -174,10 +174,11 @@ public final class EventManager: ObservableObject {
             return filterCalendarIDs.contains(calendar.calendarIdentifier)
         }
         let predicate = self.eventStore.predicateForReminders(in: calendars)
-        let reminders = await self.eventStore
-            .fetchReminders(matching: predicate, completion: { reminders in
+        let reminders = self.eventStore.fetchReminders(matching: predicate, completion: { reminders in
                 // MainActor is a type that runs code on main thread.
-                self.reminders = reminders ?? []
+                DispatchQueue.main.async {
+                    self.reminders = reminders ?? []
+                }
             })
     }
 

@@ -40,31 +40,32 @@ struct MainView: View {
                 Spacer()
                 Group {
                     // Clock View
-                    if !self.hideClockView {
-                        Image(systemName: "clock")
-                            .resizable()
-                            .frame(width: 130, height: 130)
-                            .padding(25)
-                    }
-                    Group {
-                        Button(action: {
-                            self.hideClockView.toggle()
-                        }, label: {
-                            if self.hideClockView {
-                                Image(systemName: "chevron.down")
-                                    .resizable()
-                                    .frame(width: 20, height: 10)
-                                    .foregroundColor(.darkGray)
-                            } else {
-                                Image(systemName: "chevron.up")
-                                    .resizable()
-                                    .frame(width: 20, height: 10)
-                                    .foregroundColor(.darkGray)
-                            }
-                        }).buttonStyle(.plain)
-                    }
-                    .frame(width: 200, height: 30)
-                    .frame(maxWidth: .infinity)
+//                    if !self.hideClockView {
+//                        Image(systemName: "clock")
+//                            .resizable()
+//                            .frame(width: 130, height: 130)
+//                            .padding(25)
+//                    }
+//                    Group {
+//                        Button(action: {
+//                            self.hideClockView.toggle()
+//                        }, label: {
+//                            if self.hideClockView {
+//                                Image(systemName: "chevron.down")
+//                                    .resizable()
+//                                    .frame(width: 20, height: 10)
+//                                    .foregroundColor(.darkGray)
+//                            } else {
+//                                Image(systemName: "chevron.up")
+//                                    .resizable()
+//                                    .frame(width: 20, height: 10)
+//                                    .foregroundColor(.darkGray)
+//                            }
+//                        }).buttonStyle(.plain)
+//                    }
+//                    .frame(width: 200, height: 30)
+//                    .frame(maxWidth: .infinity)
+                    Divider()
                     VStack {
                         ForEach(EventManager.shared.events) { item in
                             HStack {

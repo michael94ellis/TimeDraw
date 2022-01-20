@@ -14,6 +14,7 @@ public final class EventManager: ObservableObject {
 
     // MARK: - Properties
     @Published public var events = [EKEvent]()
+    @Published public var reminders = [EKReminder]()
 
     public static var appName: String?
 
@@ -34,10 +35,21 @@ public final class EventManager: ObservableObject {
 
     private init() {} // This prevents others from using the default '()' initializer for this class.
     // MARK: - Flow
-    /// Request event store authorization
+    /// Request event store authorization for Events
     /// - Returns: EKAuthorizationStatus enum
     public func requestEventStoreAuthorization() async throws -> EKAuthorizationStatus {
-        let granted = try await requestCalendarAccess()
+        let granted = try await requestEventAccess()
+        if granted {
+            return EKEventStore.authorizationStatus(for: .event)
+        }
+        else {
+            throw EventError.unableToAccessCalendar
+        }
+    }
+    /// Request event store authorization for Reminders
+    /// - Returns: EKAuthorizationStatus enum
+    public func requestReminderStoreAuthorization() async throws -> EKAuthorizationStatus {
+        let granted = try await requestReminderAccess()
         if granted {
             return EKEventStore.authorizationStatus(for: .event)
         }
@@ -112,7 +124,7 @@ public final class EventManager: ObservableObject {
     public func fetchEventsRangeUntilEndOfDay(from startDate: Date, filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
         try await fetchEvents(startDate: startDate, endDate: startDate.endOfDay, filterCalendarIDs: filterCalendarIDs)
     }
-
+    
     /// Fetch events from date range
     /// - Parameters:
     ///   - startDate: start date range
@@ -143,6 +155,32 @@ public final class EventManager: ObservableObject {
 
         return events
     }
+    
+    /// Fetch events from date range
+    /// - Parameters:
+    ///   - startDate: start date range
+    ///   - endDate: end date range
+    ///   - completion: completion handler
+    ///   - filterCalendarIDs: filterable Calendar IDs
+    /// Returns: events
+    @discardableResult
+    public func fetchReminders(filterCalendarIDs: [String] = []) async throws {
+        let authorization = try await requestReminderStoreAuthorization()
+        guard authorization == .authorized else {
+            throw EventError.eventAuthorizationStatus(nil)
+        }
+        let calendars = self.eventStore.calendars(for: .reminder).filter { calendar in
+            if filterCalendarIDs.isEmpty { return true }
+            return filterCalendarIDs.contains(calendar.calendarIdentifier)
+        }
+        let predicate = self.eventStore.predicateForReminders(in: calendars)
+        let reminders = self.eventStore.fetchReminders(matching: predicate, completion: { reminders in
+                // MainActor is a type that runs code on main thread.
+                DispatchQueue.main.async {
+                    self.reminders = reminders ?? []
+                }
+            })
+    }
 
     // MARK: Private
     /// Request access to calendar
@@ -161,8 +199,12 @@ public final class EventManager: ObservableObject {
 
         return calendar
     }
-
-    private func requestCalendarAccess() async throws -> Bool {
+    
+    private func requestEventAccess() async throws -> Bool {
         try await eventStore.requestAccess(to: .event)
+    }
+    
+    private func requestReminderAccess() async throws -> Bool {
+        try await eventStore.requestAccess(to: .reminder)
     }
 }

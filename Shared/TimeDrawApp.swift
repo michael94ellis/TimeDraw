@@ -15,10 +15,11 @@ struct TimeDrawApp: App {
     init() {
         EventManager.configureWithAppName("TimeDraw")
     }
-
+    
     var body: some Scene {
         WindowGroup {
             MainView()
+                .font(.interRegular)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

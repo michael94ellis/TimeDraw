@@ -41,8 +41,38 @@
 		2F42C5A42784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */; };
 		2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A52784E6FC00F0BEB2 /* EventError.swift */; };
 		2F42C5A72784E6FC00F0BEB2 /* EventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A52784E6FC00F0BEB2 /* EventError.swift */; };
-		2F42C5AF2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */; };
-		2F42C5B02784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */; };
+		2F65050027879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */; };
+		2F65050127879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */; };
+		2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505022787A09900AF90F7 /* MainHeader.swift */; };
+		2F6505042787A09900AF90F7 /* MainHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505022787A09900AF90F7 /* MainHeader.swift */; };
+		2F6505062787DA3C00AF90F7 /* AddEventFloatingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505052787DA3C00AF90F7 /* AddEventFloatingTextField.swift */; };
+		2F6505072787DA3C00AF90F7 /* AddEventFloatingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505052787DA3C00AF90F7 /* AddEventFloatingTextField.swift */; };
+		2F6505092787F87A00AF90F7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505082787F87A00AF90F7 /* SettingsView.swift */; };
+		2F65050A2787F87A00AF90F7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505082787F87A00AF90F7 /* SettingsView.swift */; };
+		2F6505142791370D00AF90F7 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050B2791370C00AF90F7 /* Inter-SemiBold.ttf */; };
+		2F6505152791370D00AF90F7 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050B2791370C00AF90F7 /* Inter-SemiBold.ttf */; };
+		2F6505162791370D00AF90F7 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050C2791370C00AF90F7 /* Inter-Thin.ttf */; };
+		2F6505172791370D00AF90F7 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050C2791370C00AF90F7 /* Inter-Thin.ttf */; };
+		2F6505182791370D00AF90F7 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050D2791370C00AF90F7 /* Inter-Medium.ttf */; };
+		2F6505192791370D00AF90F7 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050D2791370C00AF90F7 /* Inter-Medium.ttf */; };
+		2F65051A2791370D00AF90F7 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050E2791370C00AF90F7 /* Inter-ExtraLight.ttf */; };
+		2F65051B2791370D00AF90F7 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050E2791370C00AF90F7 /* Inter-ExtraLight.ttf */; };
+		2F65051C2791370D00AF90F7 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050F2791370C00AF90F7 /* Inter-Regular.ttf */; };
+		2F65051D2791370D00AF90F7 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050F2791370C00AF90F7 /* Inter-Regular.ttf */; };
+		2F65051E2791370D00AF90F7 /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505102791370C00AF90F7 /* Inter-Light.ttf */; };
+		2F65051F2791370D00AF90F7 /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505102791370C00AF90F7 /* Inter-Light.ttf */; };
+		2F6505202791370D00AF90F7 /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505112791370C00AF90F7 /* Inter-ExtraBold.ttf */; };
+		2F6505212791370D00AF90F7 /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505112791370C00AF90F7 /* Inter-ExtraBold.ttf */; };
+		2F6505222791370D00AF90F7 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505122791370D00AF90F7 /* Inter-Black.ttf */; };
+		2F6505232791370D00AF90F7 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505122791370D00AF90F7 /* Inter-Black.ttf */; };
+		2F6505242791370D00AF90F7 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505132791370D00AF90F7 /* Inter-Bold.ttf */; };
+		2F6505252791370D00AF90F7 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505132791370D00AF90F7 /* Inter-Bold.ttf */; };
+		2F6505292791384500AF90F7 /* Inter-Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505282791384500AF90F7 /* Inter-Font.swift */; };
+		2F65052A2791384500AF90F7 /* Inter-Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505282791384500AF90F7 /* Inter-Font.swift */; };
+		2F81230C2797B59500458B1A /* AddEventDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81230B2797B59500458B1A /* AddEventDatePicker.swift */; };
+		2F81230D2797B59500458B1A /* AddEventDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81230B2797B59500458B1A /* AddEventDatePicker.swift */; };
+		2F81230F2798957C00458B1A /* DatePickerInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81230E2798957C00458B1A /* DatePickerInputView.swift */; };
+		2F8123102798957C00458B1A /* DatePickerInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81230E2798957C00458B1A /* DatePickerInputView.swift */; };
 		2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
@@ -92,7 +122,23 @@
 		2F42C59F2784E6C800F0BEB2 /* Array-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array-Extension.swift"; sourceTree = "<group>"; };
 		2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKEventStore-Extension.swift"; sourceTree = "<group>"; };
 		2F42C5A52784E6FC00F0BEB2 /* EventError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventError.swift; sourceTree = "<group>"; };
-		2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledItemsViewModel.swift; sourceTree = "<group>"; };
+		2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBarButtonItem.swift; sourceTree = "<group>"; };
+		2F6505022787A09900AF90F7 /* MainHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeader.swift; sourceTree = "<group>"; };
+		2F6505052787DA3C00AF90F7 /* AddEventFloatingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventFloatingTextField.swift; sourceTree = "<group>"; };
+		2F6505082787F87A00AF90F7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		2F65050B2791370C00AF90F7 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
+		2F65050C2791370C00AF90F7 /* Inter-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Thin.ttf"; sourceTree = "<group>"; };
+		2F65050D2791370C00AF90F7 /* Inter-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Medium.ttf"; sourceTree = "<group>"; };
+		2F65050E2791370C00AF90F7 /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
+		2F65050F2791370C00AF90F7 /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular.ttf"; sourceTree = "<group>"; };
+		2F6505102791370C00AF90F7 /* Inter-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Light.ttf"; sourceTree = "<group>"; };
+		2F6505112791370C00AF90F7 /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
+		2F6505122791370D00AF90F7 /* Inter-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Black.ttf"; sourceTree = "<group>"; };
+		2F6505132791370D00AF90F7 /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
+		2F6505272791373800AF90F7 /* TimeDraw--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TimeDraw--iOS--Info.plist"; sourceTree = "<group>"; };
+		2F6505282791384500AF90F7 /* Inter-Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Inter-Font.swift"; sourceTree = "<group>"; };
+		2F81230B2797B59500458B1A /* AddEventDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventDatePicker.swift; sourceTree = "<group>"; };
+		2F81230E2798957C00458B1A /* DatePickerInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerInputView.swift; sourceTree = "<group>"; };
 		2FC6C7B42786434600D75568 /* MultiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTextField.swift; sourceTree = "<group>"; };
 		2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,6 +178,7 @@
 		2F39B83B27823CF600FE72C3 = {
 			isa = PBXGroup;
 			children = (
+				2F6505272791373800AF90F7 /* TimeDraw--iOS--Info.plist */,
 				2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */,
 				2F39B88427823DEC00FE72C3 /* TimeDraw (iOS).entitlements */,
 				2F39B84027823CF600FE72C3 /* Shared */,
@@ -147,14 +194,18 @@
 			children = (
 				2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */,
 				2F39B84427823CF600FE72C3 /* MainView.swift */,
-				2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */,
-				2FC6C7B42786434600D75568 /* MultiLineTextField.swift */,
-				2F42C5AE2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift */,
+				2F6505022787A09900AF90F7 /* MainHeader.swift */,
+				2F6505082787F87A00AF90F7 /* SettingsView.swift */,
+				2F6505052787DA3C00AF90F7 /* AddEventFloatingTextField.swift */,
+				2F81230B2797B59500458B1A /* AddEventDatePicker.swift */,
+				2F81230E2798957C00458B1A /* DatePickerInputView.swift */,
+				2F6504FE27879B8900AF90F7 /* DailyGoal */,
 				2F42C5AD2784E74000F0BEB2 /* Model */,
 				2F42C5A92784E71500F0BEB2 /* Utils */,
 				2F42C5992784A8E400F0BEB2 /* EditGoalView.swift */,
 				2F42C5962784A87100F0BEB2 /* PopoverLink.swift */,
 				2F39B84627823CF600FE72C3 /* Assets.xcassets */,
+				2F6505262791371400AF90F7 /* Fonts */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -210,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				2F39B888278241B500FE72C3 /* Colors.swift */,
+				2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */,
 				2F42C59F2784E6C800F0BEB2 /* Array-Extension.swift */,
 				2F42C59327848DF700F0BEB2 /* Date-Extension.swift */,
 				2F42C5902783E55800F0BEB2 /* Calendar-Extension.swift */,
@@ -225,6 +277,32 @@
 				2F42C5A82784E70C00F0BEB2 /* Events */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		2F6504FE27879B8900AF90F7 /* DailyGoal */ = {
+			isa = PBXGroup;
+			children = (
+				2FC6C7B42786434600D75568 /* MultiLineTextField.swift */,
+				2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */,
+			);
+			path = DailyGoal;
+			sourceTree = "<group>";
+		};
+		2F6505262791371400AF90F7 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				2F6505122791370D00AF90F7 /* Inter-Black.ttf */,
+				2F6505132791370D00AF90F7 /* Inter-Bold.ttf */,
+				2F6505112791370C00AF90F7 /* Inter-ExtraBold.ttf */,
+				2F65050F2791370C00AF90F7 /* Inter-Regular.ttf */,
+				2F65050B2791370C00AF90F7 /* Inter-SemiBold.ttf */,
+				2F65050C2791370C00AF90F7 /* Inter-Thin.ttf */,
+				2F65050E2791370C00AF90F7 /* Inter-ExtraLight.ttf */,
+				2F6505102791370C00AF90F7 /* Inter-Light.ttf */,
+				2F65050D2791370C00AF90F7 /* Inter-Medium.ttf */,
+				2F6505282791384500AF90F7 /* Inter-Font.swift */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -352,8 +430,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F6505162791370D00AF90F7 /* Inter-Thin.ttf in Resources */,
+				2F65051A2791370D00AF90F7 /* Inter-ExtraLight.ttf in Resources */,
+				2F6505242791370D00AF90F7 /* Inter-Bold.ttf in Resources */,
+				2F6505202791370D00AF90F7 /* Inter-ExtraBold.ttf in Resources */,
+				2F65051E2791370D00AF90F7 /* Inter-Light.ttf in Resources */,
+				2F6505142791370D00AF90F7 /* Inter-SemiBold.ttf in Resources */,
 				2F39B87427823CF700FE72C3 /* Assets.xcassets in Resources */,
+				2F6505182791370D00AF90F7 /* Inter-Medium.ttf in Resources */,
+				2F6505222791370D00AF90F7 /* Inter-Black.ttf in Resources */,
 				2F39B88627823E1400FE72C3 /* LaunchScreen.storyboard in Resources */,
+				2F65051C2791370D00AF90F7 /* Inter-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,8 +448,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F6505172791370D00AF90F7 /* Inter-Thin.ttf in Resources */,
+				2F65051B2791370D00AF90F7 /* Inter-ExtraLight.ttf in Resources */,
+				2F6505252791370D00AF90F7 /* Inter-Bold.ttf in Resources */,
+				2F6505212791370D00AF90F7 /* Inter-ExtraBold.ttf in Resources */,
+				2F65051F2791370D00AF90F7 /* Inter-Light.ttf in Resources */,
+				2F6505152791370D00AF90F7 /* Inter-SemiBold.ttf in Resources */,
 				2F39B87527823CF700FE72C3 /* Assets.xcassets in Resources */,
+				2F6505192791370D00AF90F7 /* Inter-Medium.ttf in Resources */,
+				2F6505232791370D00AF90F7 /* Inter-Black.ttf in Resources */,
 				2F39B88727823E1400FE72C3 /* LaunchScreen.storyboard in Resources */,
+				2F65051D2791370D00AF90F7 /* Inter-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,20 +483,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F81230C2797B59500458B1A /* AddEventDatePicker.swift in Sources */,
 				2F39B86E27823CF700FE72C3 /* TimeDrawApp.swift in Sources */,
 				2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */,
 				2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */,
 				2F39B889278241B500FE72C3 /* Colors.swift in Sources */,
 				2F42C5912783E55800F0BEB2 /* Calendar-Extension.swift in Sources */,
+				2F6505292791384500AF90F7 /* Inter-Font.swift in Sources */,
+				2F6505092787F87A00AF90F7 /* SettingsView.swift in Sources */,
 				2F39B87227823CF700FE72C3 /* CoreDataManager.swift in Sources */,
+				2F6505062787DA3C00AF90F7 /* AddEventFloatingTextField.swift in Sources */,
 				2F42C59D2784E3DE00F0BEB2 /* EventKitWrapper.swift in Sources */,
 				2F39B86C27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
 				2F42C59A2784A8E400F0BEB2 /* EditGoalView.swift in Sources */,
 				2F42C5A32784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
+				2F65050027879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */,
+				2F81230F2798957C00458B1A /* DatePickerInputView.swift in Sources */,
 				2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2F39B87027823CF700FE72C3 /* MainView.swift in Sources */,
 				2F42C5A02784E6C800F0BEB2 /* Array-Extension.swift in Sources */,
-				2F42C5AF2784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift in Sources */,
+				2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */,
 				2F42C5972784A87100F0BEB2 /* PopoverLink.swift in Sources */,
 				2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */,
 			);
@@ -410,20 +512,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F81230D2797B59500458B1A /* AddEventDatePicker.swift in Sources */,
 				2F39B86F27823CF700FE72C3 /* TimeDrawApp.swift in Sources */,
 				2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */,
 				2FC6C7B92786A26900D75568 /* DailyGoalTextField.swift in Sources */,
 				2F39B88A278241B500FE72C3 /* Colors.swift in Sources */,
 				2F42C5922783E55800F0BEB2 /* Calendar-Extension.swift in Sources */,
+				2F65052A2791384500AF90F7 /* Inter-Font.swift in Sources */,
+				2F65050A2787F87A00AF90F7 /* SettingsView.swift in Sources */,
 				2F39B87327823CF700FE72C3 /* CoreDataManager.swift in Sources */,
+				2F6505072787DA3C00AF90F7 /* AddEventFloatingTextField.swift in Sources */,
 				2F42C59E2784E3DE00F0BEB2 /* EventKitWrapper.swift in Sources */,
 				2F39B86D27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
 				2F42C59B2784A8E400F0BEB2 /* EditGoalView.swift in Sources */,
 				2F42C5A42784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
+				2F65050127879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */,
+				2F8123102798957C00458B1A /* DatePickerInputView.swift in Sources */,
 				2F42C5A72784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2F39B87127823CF700FE72C3 /* MainView.swift in Sources */,
 				2F42C5A12784E6C800F0BEB2 /* Array-Extension.swift in Sources */,
-				2F42C5B02784EAFA00F0BEB2 /* ScheduledItemsViewModel.swift in Sources */,
+				2F6505042787A09900AF90F7 /* MainHeader.swift in Sources */,
 				2F42C5982784A87100F0BEB2 /* PopoverLink.swift in Sources */,
 				2F42C59527848DF700F0BEB2 /* Date-Extension.swift in Sources */,
 			);
@@ -581,13 +689,17 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "TimeDraw (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TimeDraw--iOS--Info.plist";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -614,13 +726,17 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "TimeDraw (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "TimeDraw--iOS--Info.plist";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

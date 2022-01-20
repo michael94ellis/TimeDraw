@@ -11,18 +11,25 @@ struct EventsAndRemindersMainList: View{
     
     @ObservedObject private var eventManager: EventManager = .shared
     
+    private let timeOnly = DateFormatter()
+    
+    init() {
+        self.timeOnly.dateFormat = "hh:mma"
+    }
+    
     var body: some View {
         ScrollView {
             LazyVStack {
                 ForEach(EventManager.shared.events) { item in
                     HStack {
+                        Image(systemName: "calendar")
                         Text(item.title ?? "No Title")
                             .lineLimit(2)
                             .foregroundColor(Color(uiColor: .darkGray))
                         Spacer()
-                        Text(item.startDate?.formatted() ?? "??")
-                            .lineLimit(2)
-                            .foregroundColor(Color(uiColor: .darkGray))
+                        Text("\(self.timeOnly.string(from: item.startDate)) - \(self.timeOnly.string(from: item.startDate))")
+                         .font(.caption)
+                         .foregroundColor(Color(uiColor: .darkGray))
                     }
                     .padding(.vertical, 6)
                     .padding(.horizontal)
@@ -32,13 +39,16 @@ struct EventsAndRemindersMainList: View{
                 }
                 ForEach(EventManager.shared.reminders) { item in
                     HStack {
+                        Image(systemName: "list.bullet")
                         Text(item.title ?? "No Title")
                             .lineLimit(2)
                             .foregroundColor(Color(uiColor: .darkGray))
                         Spacer()
-                        Text("??")
-                            .lineLimit(2)
-                            .foregroundColor(Color(uiColor: .darkGray))
+                        if item.priority > 0 {
+                            Text("Priority: \(item.priority)")
+                                .font(.caption)
+                                .foregroundColor(Color(uiColor: .darkGray))
+                        }
                     }
                     .padding(.vertical, 6)
                     .padding(.horizontal)

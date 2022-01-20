@@ -46,7 +46,9 @@ struct AddEventDatePicker: View {
                         .padding(.vertical, 4)
                         .background(RoundedRectangle(cornerRadius: 4).fill(Color.lightGray1))
                         .onTapGesture {
-                            self.startDate = Date()
+                            if self.startDate == nil {
+                                self.startDate = Date()
+                            }
                         }
                     Text("to")
                     DatePickerInputView(date: self.$endDate, placeholder: "End")
@@ -54,7 +56,9 @@ struct AddEventDatePicker: View {
                         .padding(.vertical, 4)
                         .background(RoundedRectangle(cornerRadius: 4).fill(Color.lightGray1))
                         .onTapGesture {
-                            self.endDate = Date()
+                            if self.endDate == nil {
+                                self.endDate = Date()
+                            }
                         }
                 }
                 .padding(.horizontal)

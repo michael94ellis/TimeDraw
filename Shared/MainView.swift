@@ -22,7 +22,10 @@ struct MainView: View {
     
     @State private var hideClockView = false
     @State private var displayAddEventModal = false
+    @State private var isShowingAddEventBackgroundBlur = false
+    @State var isShowingDatePicker: Bool = false
     @FocusState private var isDailyGoalFocused: Bool
+    @FocusState var isNewEventFocused: Bool
     @ObservedObject private var eventManager: EventManager = .shared
     
     init() {
@@ -115,12 +118,21 @@ struct MainView: View {
                 }))
                 Spacer()
             }
-            if !self.isDailyGoalFocused {
-                VStack {
-                    Spacer()
-                    AddEventFloatingTextField()
-                }
+            .if(self.isShowingAddEventBackgroundBlur) { view in
+                view.background(Color.lightGray)
+                    .blur(radius: 0)
+                    .blur(radius: 3)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        self.isShowingAddEventBackgroundBlur = false
+                        self.isShowingDatePicker = false
+                        self.isNewEventFocused = false
+                    }
             }
+            AddEventFloatingInputView(isShowingBackgroundBlur: self.$isShowingAddEventBackgroundBlur, isShowingDatePicker: self.$isShowingDatePicker, isNewEventFocused: self.$isNewEventFocused)
+                .onChange(of: self.isNewEventFocused, perform: { isFocused in
+                    if isFocused { self.isShowingAddEventBackgroundBlur = true }
+                })
         }
     }
     

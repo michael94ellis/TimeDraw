@@ -8,13 +8,14 @@
 import SwiftUI
 import EventKit
 
-struct AddEventFloatingTextField: View {
+struct AddEventFloatingInputView: View {
     
     @State var newEventName: String = ""
     @State var newStartEventDate: Date? 
     @State var newEndEventDate: Date?
-    @State var isShowingDatePicker: Bool = false
-    @FocusState private var isNewEventFocused: Bool
+    @Binding var isShowingBackgroundBlur: Bool
+    @Binding var isShowingDatePicker: Bool
+    var isNewEventFocused: FocusState<Bool>.Binding
     
     private let eventStore = EKEventStore()
     
@@ -22,19 +23,10 @@ struct AddEventFloatingTextField: View {
     
     var body: some View {
         VStack {
-            if self.isNewEventFocused || self.isShowingDatePicker {
+            Spacer()
+            if self.isNewEventFocused.wrappedValue || self.isShowingDatePicker {
                 HStack {
-                    if self.isShowingDatePicker {
-                        AddEventDatePicker(startDate: self.$newStartEventDate, endDate: self.$newEndEventDate, isDisplayed: self.$isShowingDatePicker)
-                    } else {
-                        Button(action: self.addTimeToEvent) {
-                            Text("Add Date")
-                                .frame(height: 48)
-                                .foregroundColor(Color.blue1)
-                                .background(RoundedRectangle(cornerRadius: 13).fill(Color.lightGray2).frame(width: 360, height: 60))
-                        }
-                        .buttonStyle(.plain)
-                    }
+                    AddEventDatePicker(startDate: self.$newStartEventDate, endDate: self.$newEndEventDate, isDisplayed: self.$isShowingDatePicker, isShowingDatePicker: self.$isShowingDatePicker)
                 }
                 .padding(.bottom, 11)
             }
@@ -48,10 +40,13 @@ struct AddEventFloatingTextField: View {
                         .frame(width: 36, height: 36)
                         .padding(.leading, 10)
                     TextField("", text: self.$newEventName)
-                        .focused(self.$isNewEventFocused)
+                        .focused(self.isNewEventFocused)
                         .submitLabel(.done)
                         .onSubmit {
                             self.addEvent()
+                        }
+                        .onTapGesture {
+                            self.isShowingDatePicker = self.newStartEventDate != nil || self.newEndEventDate != nil
                         }
                         .foregroundColor(Color.dark)
                         .placeholder(when: self.newEventName.isEmpty) {
@@ -71,24 +66,18 @@ struct AddEventFloatingTextField: View {
         .padding(14)
     }
     
-    private func addTimeToEvent() {
-        self.isShowingDatePicker = true
-    }
-    private func removeTimeFromEvent() {
-        self.isShowingDatePicker = false
-    }
-    
     private func addEvent() {
         if let startDate = self.newStartEventDate, let endDate = self.newEndEventDate {
             Task {
                 do {
-                    try await EventManager.shared.createEvent(self.newEventName, startDate: startDate, endDate: endDate)
+                    let newEvent = try await EventManager.shared.createEvent(self.newEventName, startDate: startDate, endDate: endDate)
+                    EventManager.shared.events.append(newEvent)
                     print("Saved Event")
                     // TODO Recurring and Alarms
                     self.newEventName = ""
-                    self.isNewEventFocused = false
+                    self.isNewEventFocused.wrappedValue = false
                     self.isShowingDatePicker = false
-                    
+                    self.isShowingBackgroundBlur = false
                 } catch let error as NSError {
                     print("failed to save event with error : \(error)")
                     self.addReminder()

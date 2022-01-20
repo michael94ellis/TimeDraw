@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F21112D279908450041EE85 /* View-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21112C279908450041EE85 /* View-Extension.swift */; };
+		2F21112E279908450041EE85 /* View-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21112C279908450041EE85 /* View-Extension.swift */; };
 		2F39B85D27823CF600FE72C3 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85C27823CF600FE72C3 /* Tests_iOS.swift */; };
 		2F39B85F27823CF700FE72C3 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85E27823CF700FE72C3 /* Tests_iOSLaunchTests.swift */; };
 		2F39B86927823CF700FE72C3 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B86827823CF700FE72C3 /* Tests_macOS.swift */; };
@@ -45,8 +47,8 @@
 		2F65050127879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */; };
 		2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505022787A09900AF90F7 /* MainHeader.swift */; };
 		2F6505042787A09900AF90F7 /* MainHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505022787A09900AF90F7 /* MainHeader.swift */; };
-		2F6505062787DA3C00AF90F7 /* AddEventFloatingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505052787DA3C00AF90F7 /* AddEventFloatingTextField.swift */; };
-		2F6505072787DA3C00AF90F7 /* AddEventFloatingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505052787DA3C00AF90F7 /* AddEventFloatingTextField.swift */; };
+		2F6505062787DA3C00AF90F7 /* AddEventFloatingInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505052787DA3C00AF90F7 /* AddEventFloatingInputView.swift */; };
+		2F6505072787DA3C00AF90F7 /* AddEventFloatingInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505052787DA3C00AF90F7 /* AddEventFloatingInputView.swift */; };
 		2F6505092787F87A00AF90F7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505082787F87A00AF90F7 /* SettingsView.swift */; };
 		2F65050A2787F87A00AF90F7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505082787F87A00AF90F7 /* SettingsView.swift */; };
 		2F6505142791370D00AF90F7 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050B2791370C00AF90F7 /* Inter-SemiBold.ttf */; };
@@ -97,6 +99,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2F21112C279908450041EE85 /* View-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View-Extension.swift"; sourceTree = "<group>"; };
 		2F39B84227823CF600FE72C3 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawApp.swift; sourceTree = "<group>"; };
 		2F39B84427823CF600FE72C3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -124,7 +127,7 @@
 		2F42C5A52784E6FC00F0BEB2 /* EventError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventError.swift; sourceTree = "<group>"; };
 		2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBarButtonItem.swift; sourceTree = "<group>"; };
 		2F6505022787A09900AF90F7 /* MainHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeader.swift; sourceTree = "<group>"; };
-		2F6505052787DA3C00AF90F7 /* AddEventFloatingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventFloatingTextField.swift; sourceTree = "<group>"; };
+		2F6505052787DA3C00AF90F7 /* AddEventFloatingInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventFloatingInputView.swift; sourceTree = "<group>"; };
 		2F6505082787F87A00AF90F7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2F65050B2791370C00AF90F7 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
 		2F65050C2791370C00AF90F7 /* Inter-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Thin.ttf"; sourceTree = "<group>"; };
@@ -196,7 +199,7 @@
 				2F39B84427823CF600FE72C3 /* MainView.swift */,
 				2F6505022787A09900AF90F7 /* MainHeader.swift */,
 				2F6505082787F87A00AF90F7 /* SettingsView.swift */,
-				2F6505052787DA3C00AF90F7 /* AddEventFloatingTextField.swift */,
+				2F6505052787DA3C00AF90F7 /* AddEventFloatingInputView.swift */,
 				2F81230B2797B59500458B1A /* AddEventDatePicker.swift */,
 				2F81230E2798957C00458B1A /* DatePickerInputView.swift */,
 				2F6504FE27879B8900AF90F7 /* DailyGoal */,
@@ -265,6 +268,7 @@
 				2F42C59F2784E6C800F0BEB2 /* Array-Extension.swift */,
 				2F42C59327848DF700F0BEB2 /* Date-Extension.swift */,
 				2F42C5902783E55800F0BEB2 /* Calendar-Extension.swift */,
+				2F21112C279908450041EE85 /* View-Extension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -487,12 +491,13 @@
 				2F39B86E27823CF700FE72C3 /* TimeDrawApp.swift in Sources */,
 				2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */,
 				2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */,
+				2F21112D279908450041EE85 /* View-Extension.swift in Sources */,
 				2F39B889278241B500FE72C3 /* Colors.swift in Sources */,
 				2F42C5912783E55800F0BEB2 /* Calendar-Extension.swift in Sources */,
 				2F6505292791384500AF90F7 /* Inter-Font.swift in Sources */,
 				2F6505092787F87A00AF90F7 /* SettingsView.swift in Sources */,
 				2F39B87227823CF700FE72C3 /* CoreDataManager.swift in Sources */,
-				2F6505062787DA3C00AF90F7 /* AddEventFloatingTextField.swift in Sources */,
+				2F6505062787DA3C00AF90F7 /* AddEventFloatingInputView.swift in Sources */,
 				2F42C59D2784E3DE00F0BEB2 /* EventKitWrapper.swift in Sources */,
 				2F39B86C27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
 				2F42C59A2784A8E400F0BEB2 /* EditGoalView.swift in Sources */,
@@ -516,12 +521,13 @@
 				2F39B86F27823CF700FE72C3 /* TimeDrawApp.swift in Sources */,
 				2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */,
 				2FC6C7B92786A26900D75568 /* DailyGoalTextField.swift in Sources */,
+				2F21112E279908450041EE85 /* View-Extension.swift in Sources */,
 				2F39B88A278241B500FE72C3 /* Colors.swift in Sources */,
 				2F42C5922783E55800F0BEB2 /* Calendar-Extension.swift in Sources */,
 				2F65052A2791384500AF90F7 /* Inter-Font.swift in Sources */,
 				2F65050A2787F87A00AF90F7 /* SettingsView.swift in Sources */,
 				2F39B87327823CF700FE72C3 /* CoreDataManager.swift in Sources */,
-				2F6505072787DA3C00AF90F7 /* AddEventFloatingTextField.swift in Sources */,
+				2F6505072787DA3C00AF90F7 /* AddEventFloatingInputView.swift in Sources */,
 				2F42C59E2784E3DE00F0BEB2 /* EventKitWrapper.swift in Sources */,
 				2F39B86D27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
 				2F42C59B2784A8E400F0BEB2 /* EditGoalView.swift in Sources */,

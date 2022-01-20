@@ -16,7 +16,7 @@ struct DatePickerInputView: UIViewRepresentable {
     init(date: Binding<Date?>, placeholder: String) {
         self._date = date
         self.placeholder = placeholder
-        formatter.dateFormat = "hh:mm a"
+        formatter.dateFormat = "MMM dd hh:mm a"
     }
     
     func updateUIView(_ uiView: DatePickerTextField, context: Context) {

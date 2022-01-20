@@ -23,7 +23,6 @@ struct AddEventFloatingInputView: View {
     
     var body: some View {
         VStack {
-            Spacer()
             if self.isNewEventFocused.wrappedValue || self.isShowingDatePicker {
                 HStack {
                     AddEventDatePicker(startDate: self.$newStartEventDate, endDate: self.$newEndEventDate, isDisplayed: self.$isShowingDatePicker, isShowingDatePicker: self.$isShowingDatePicker)
@@ -60,7 +59,8 @@ struct AddEventFloatingInputView: View {
                 }
                 .frame(width: 362, height: self.barHeight)
                 .background(RoundedRectangle(cornerRadius: 13)
-                                .fill(Color(uiColor: .systemGray6)))
+                                .fill(Color(uiColor: .systemGray6))
+                                .shadow(radius: 4, x: 2, y: 4))
             }
         }
         .padding(14)
@@ -78,6 +78,8 @@ struct AddEventFloatingInputView: View {
                     self.isNewEventFocused.wrappedValue = false
                     self.isShowingDatePicker = false
                     self.isShowingBackgroundBlur = false
+                    self.newStartEventDate = nil
+                    self.newEndEventDate = nil
                 } catch let error as NSError {
                     print("failed to save event with error : \(error)")
                     self.addReminder()

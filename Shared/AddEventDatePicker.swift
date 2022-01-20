@@ -43,27 +43,34 @@ struct AddEventDatePicker: View {
                 HStack {
                     DatePickerInputView(date: self.$startDate, placeholder: "Start")
                         .padding(.horizontal)
+                        .padding(.vertical, 4)
+                        .background(RoundedRectangle(cornerRadius: 4).fill(Color.lightGray1))
                         .onTapGesture {
                             self.startDate = Date()
                         }
                     Text("to")
                     DatePickerInputView(date: self.$endDate, placeholder: "End")
                         .padding(.horizontal)
+                        .padding(.vertical, 4)
+                        .background(RoundedRectangle(cornerRadius: 4).fill(Color.lightGray1))
                         .onTapGesture {
                             self.endDate = Date()
                         }
                 }
+                .padding(.horizontal)
                 .padding(.bottom)
             }
             .frame(width: 362, height: self.barHeight)
             .background(RoundedRectangle(cornerRadius: 13)
-                            .fill(Color(uiColor: .systemGray6)))
+                            .fill(Color(uiColor: .systemGray6))
+                            .shadow(radius: 4, x: 2, y: 4))
         } else {
             Button(action: self.addTimeToEvent) {
                 Text("Add Date")
                     .frame(height: 48)
                     .foregroundColor(Color.blue1)
-                    .background(RoundedRectangle(cornerRadius: 13).fill(Color.lightGray2).frame(width: 360, height: 60))
+                    .background(RoundedRectangle(cornerRadius: 13).fill(Color.lightGray2).frame(width: 360, height: 60)
+                                    .shadow(radius: 4, x: 2, y: 4))
             }
             .buttonStyle(.plain)
         }

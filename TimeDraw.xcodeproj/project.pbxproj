@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2F21112D279908450041EE85 /* View-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21112C279908450041EE85 /* View-Extension.swift */; };
 		2F21112E279908450041EE85 /* View-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21112C279908450041EE85 /* View-Extension.swift */; };
+		2F2111302799B62D0041EE85 /* EventsAndRemindersMainList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21112F2799B62D0041EE85 /* EventsAndRemindersMainList.swift */; };
+		2F2111312799B62D0041EE85 /* EventsAndRemindersMainList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21112F2799B62D0041EE85 /* EventsAndRemindersMainList.swift */; };
 		2F39B85D27823CF600FE72C3 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85C27823CF600FE72C3 /* Tests_iOS.swift */; };
 		2F39B85F27823CF700FE72C3 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85E27823CF700FE72C3 /* Tests_iOSLaunchTests.swift */; };
 		2F39B86927823CF700FE72C3 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B86827823CF700FE72C3 /* Tests_macOS.swift */; };
@@ -100,6 +102,7 @@
 
 /* Begin PBXFileReference section */
 		2F21112C279908450041EE85 /* View-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View-Extension.swift"; sourceTree = "<group>"; };
+		2F21112F2799B62D0041EE85 /* EventsAndRemindersMainList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsAndRemindersMainList.swift; sourceTree = "<group>"; };
 		2F39B84227823CF600FE72C3 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawApp.swift; sourceTree = "<group>"; };
 		2F39B84427823CF600FE72C3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -197,6 +200,7 @@
 			children = (
 				2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */,
 				2F39B84427823CF600FE72C3 /* MainView.swift */,
+				2F21112F2799B62D0041EE85 /* EventsAndRemindersMainList.swift */,
 				2F6505022787A09900AF90F7 /* MainHeader.swift */,
 				2F6505082787F87A00AF90F7 /* SettingsView.swift */,
 				2F6505052787DA3C00AF90F7 /* AddEventFloatingInputView.swift */,
@@ -497,6 +501,7 @@
 				2F6505292791384500AF90F7 /* Inter-Font.swift in Sources */,
 				2F6505092787F87A00AF90F7 /* SettingsView.swift in Sources */,
 				2F39B87227823CF700FE72C3 /* CoreDataManager.swift in Sources */,
+				2F2111302799B62D0041EE85 /* EventsAndRemindersMainList.swift in Sources */,
 				2F6505062787DA3C00AF90F7 /* AddEventFloatingInputView.swift in Sources */,
 				2F42C59D2784E3DE00F0BEB2 /* EventKitWrapper.swift in Sources */,
 				2F39B86C27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
@@ -527,6 +532,7 @@
 				2F65052A2791384500AF90F7 /* Inter-Font.swift in Sources */,
 				2F65050A2787F87A00AF90F7 /* SettingsView.swift in Sources */,
 				2F39B87327823CF700FE72C3 /* CoreDataManager.swift in Sources */,
+				2F2111312799B62D0041EE85 /* EventsAndRemindersMainList.swift in Sources */,
 				2F6505072787DA3C00AF90F7 /* AddEventFloatingInputView.swift in Sources */,
 				2F42C59E2784E3DE00F0BEB2 /* EventKitWrapper.swift in Sources */,
 				2F39B86D27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,

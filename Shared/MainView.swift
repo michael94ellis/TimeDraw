@@ -41,87 +41,14 @@ struct MainView: View {
                 MainHeader(for: self.date)
                 DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
                 Spacer()
-                Group {
-                    // Clock View
-//                    if !self.hideClockView {
-//                        Image(systemName: "clock")
-//                            .resizable()
-//                            .frame(width: 130, height: 130)
-//                            .padding(25)
-//                    }
-//                    Group {
-//                        Button(action: {
-//                            self.hideClockView.toggle()
-//                        }, label: {
-//                            if self.hideClockView {
-//                                Image(systemName: "chevron.down")
-//                                    .resizable()
-//                                    .frame(width: 20, height: 10)
-//                                    .foregroundColor(.darkGray)
-//                            } else {
-//                                Image(systemName: "chevron.up")
-//                                    .resizable()
-//                                    .frame(width: 20, height: 10)
-//                                    .foregroundColor(.darkGray)
-//                            }
-//                        }).buttonStyle(.plain)
-//                    }
-//                    .frame(width: 200, height: 30)
-//                    .frame(maxWidth: .infinity)
-                    Divider()
-                    VStack {
-                        ForEach(EventManager.shared.events) { item in
-                            HStack {
-                                Text(item.title ?? "No Title")
-                                    .lineLimit(2)
-                                    .foregroundColor(Color(uiColor: .darkGray))
-                                Spacer()
-                                Text(item.startDate?.formatted() ?? "??")
-                                    .lineLimit(2)
-                                    .foregroundColor(Color(uiColor: .darkGray))
-                            }
-                            .padding(.vertical, 6)
-                            .padding(.horizontal)
-                            .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
-                            .padding(.horizontal)
-                            
-                        }
-                        ForEach(EventManager.shared.reminders) { item in
-                            HStack {
-                                Text(item.title ?? "No Title")
-                                    .lineLimit(2)
-                                    .foregroundColor(Color(uiColor: .darkGray))
-                                Spacer()
-                                Text("??")
-                                    .lineLimit(2)
-                                    .foregroundColor(Color(uiColor: .darkGray))
-                            }
-                            .padding(.vertical, 6)
-                            .padding(.horizontal)
-                            .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
-                            .padding(.horizontal)
-                            
-                        }
-                        Spacer()
-                    }
-                    Spacer()
-                }
-                // Gesture on main screen to hide/show the clock view
-                .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
-                            .onEnded({ value in
-                    if value.translation.height < 4 {
-                        self.hideClockView = true
-                    }
-                    if value.translation.height > 4 {
-                        self.hideClockView = false
-                    }
-                }))
-                Spacer()
+                // Clock View todo in v2
+                Divider()
+                EventsAndRemindersMainList()
             }
             .if(self.isShowingAddEventBackgroundBlur) { view in
                 view.background(Color.lightGray)
                     .blur(radius: 0)
-                    .blur(radius: 3)
+                    .blur(radius: 2)
                     .contentShape(Rectangle())
                     .onTapGesture {
                         self.isShowingAddEventBackgroundBlur = false
@@ -129,10 +56,14 @@ struct MainView: View {
                         self.isNewEventFocused = false
                     }
             }
-            AddEventFloatingInputView(isShowingBackgroundBlur: self.$isShowingAddEventBackgroundBlur, isShowingDatePicker: self.$isShowingDatePicker, isNewEventFocused: self.$isNewEventFocused)
-                .onChange(of: self.isNewEventFocused, perform: { isFocused in
-                    if isFocused { self.isShowingAddEventBackgroundBlur = true }
-                })
+            VStack {
+                Spacer()
+                AddEventFloatingInputView(isShowingBackgroundBlur: self.$isShowingAddEventBackgroundBlur, isShowingDatePicker: self.$isShowingDatePicker, isNewEventFocused: self.$isNewEventFocused)
+                    .onChange(of: self.isNewEventFocused, perform: { isFocused in
+                        if isFocused { self.isShowingAddEventBackgroundBlur = true }
+                    })
+            }
+            .frame(alignment: .bottom)
         }
     }
     

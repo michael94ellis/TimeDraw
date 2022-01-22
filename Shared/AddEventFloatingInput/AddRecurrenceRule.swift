@@ -14,8 +14,28 @@ struct AddRecurrenceRule: View {
     
     var recurrenceRule: EKRecurrenceRule?
     @State var endDate: Date?
+    @State var showDateTime: Bool = false
     @State var recurrenceEnds: Bool = false
     @State var selectedRule: EKRecurrenceFrequency = .weekly
+    
+    var endDateBinding: Binding<Date> { Binding<Date>(get: { self.endDate ?? self.setSuggestedEndDate() }, set: { self.endDate = $0 }) }
+    
+    @discardableResult
+    func setSuggestedEndDate() -> Date {
+        guard let endDate = self.endDate else {
+            var suggestedEndDate: Date
+            switch self.selectedRule {
+            case .daily: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 31)
+            case .weekly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 7 * 4)
+            case .monthly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 30 * 12)
+            case .yearly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 365 * 2)
+            default: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 5)
+            }
+            self.endDate = suggestedEndDate
+            return suggestedEndDate
+        }
+        return endDate
+    }
     
     var body: some View {
         if self.viewModel.isRecurrencePickerOpen {
@@ -41,29 +61,29 @@ struct AddRecurrenceRule: View {
                     }
                     .pickerStyle(.segmented)
                     .padding(.vertical, 4)
-                    Spacer()
                 }
                 .padding(.horizontal)
                 HStack {
-                    Text("End Date:")
-                        .padding(.horizontal, 3)
-                    DateTimePickerInputView(date: self.$endDate, placeholder: "Tap to add", mode: .date)
-                        .frame(width: 150, height: 30)
-                        .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
-                        .onTapGesture {
-                            self.recurrenceEnds.toggle()
-                            if self.endDate == nil {
-                                var suggestedEndDate: Date?
-                                switch self.selectedRule {
-                                case .daily: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 31)
-                                case .weekly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 7 * 4)
-                                case .monthly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 30 * 12)
-                                case .yearly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 365 * 2)
-                                default: suggestedEndDate = nil
-                                }
-                                self.endDate = suggestedEndDate
-                            }
+                    Button(action: {
+                        withAnimation {
+                            self.showDateTime.toggle()
                         }
+                    }) {
+                        Text(self.showDateTime ?  "End:" : "End Date:")
+                            .padding(.horizontal)
+                    }
+                    .buttonStyle(.plain)
+                    if self.showDateTime {
+                        DatePicker("", selection: self.endDateBinding)
+                    } else {
+                        DateTimePickerInputView(date: self.$endDate, placeholder: "Tap to add", mode: .date)
+                            .frame(width: 150, height: 30)
+                            .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
+                            .onTapGesture {
+                                self.setSuggestedEndDate()
+                                self.recurrenceEnds.toggle()
+                            }
+                    }
                 }
                 .padding(.horizontal)
                 .padding(.bottom)

@@ -12,10 +12,14 @@ import SwiftUI
 class AddEventViewModel: ObservableObject {
     
     @Published var newItemTitle: String = ""
+    @Published var newItemStartTime: Date?
+    @Published var newItemEndTime: Date?
     @Published var newItemStartDate: Date?
     @Published var newItemEndDate: Date?
     
     public var newItemTitleBinding: Binding<String> {  Binding<String>(get: { self.newItemTitle }, set: { self.newItemTitle = $0 }) }
+    public var newItemStartTimeBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemStartTime }, set: { self.newItemStartTime = $0 }) }
+    public var newItemEndTimeBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemEndTime }, set: { self.newItemEndTime = $0 }) }
     public var newItemStartDateBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemStartDate }, set: { self.newItemStartDate = $0 }) }
     public var newItemEndDateBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemEndDate }, set: { self.newItemEndDate = $0 }) }
     

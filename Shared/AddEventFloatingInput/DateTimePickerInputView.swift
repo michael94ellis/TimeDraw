@@ -16,14 +16,14 @@ struct DateTimePickerInputView: UIViewRepresentable {
     
     init(date: Binding<Date?>, placeholder: String, mode: UIDatePicker.Mode) {
         self._date = date
-        self.placeholder = " \(placeholder)"
-        formatter.dateFormat = "MMM dd hh:mm a"
+        self.placeholder = "\(placeholder)"
+        formatter.dateFormat = "MMM dd h:mm a"
         self.mode = mode
     }
     
     func updateUIView(_ uiView: DateTimePickerTextField, context: Context) {
         if let unwrappedDate = date {
-            uiView.text = " \(formatter.string(from: unwrappedDate))"
+            uiView.text = "\(formatter.string(from: unwrappedDate))"
             if let datePicker = uiView.inputView as? UIDatePicker {
                 datePicker.date = unwrappedDate
             }
@@ -32,9 +32,10 @@ struct DateTimePickerInputView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> DateTimePickerTextField {
         let pickerField = DateTimePickerTextField(placeholderText: self.placeholder, date: $date, frame: .zero, mode: self.mode)
-        pickerField.placeholder = " \(placeholder)"
+        pickerField.placeholder = "\(placeholder)"
+        pickerField.textAlignment = .center
         if let date = date {
-            pickerField.text = " \(formatter.string(from: date))"
+            pickerField.text = "\(formatter.string(from: date))"
         }
         return pickerField
     }

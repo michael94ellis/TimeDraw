@@ -1,51 +1,22 @@
 //
-//  DatePickerInputView.swift
+//  DateTimePickerTextField.swift
 //  TimeDraw
 //
-//  Created by Michael Ellis on 1/19/22.
+//  Created by Michael Ellis on 1/21/22.
 //
 
 import SwiftUI
 
-struct DatePickerInputView: UIViewRepresentable {
-    
-    @Binding var date: Date?
-    let placeholder: String
-    let formatter = DateFormatter()
-    
-    init(date: Binding<Date?>, placeholder: String) {
-        self._date = date
-        self.placeholder = placeholder
-        formatter.dateFormat = "MMM dd hh:mm a"
-    }
-    
-    func updateUIView(_ uiView: DatePickerTextField, context: Context) {
-        if let date = date {
-            uiView.text = "\(formatter.string(from: date))"
-        }
-    }
-    
-    func makeUIView(context: Context) -> DatePickerTextField {
-        let pickerField = DatePickerTextField(date: $date, frame: .zero)
-        pickerField.placeholder = placeholder
-        if let date = date {
-            pickerField.text = "\(formatter.string(from: date))"
-        }
-        return pickerField
-    }
-    
-}
-
-final class DatePickerTextField: UITextField {
+final class DateTimePickerTextField: UITextField {
     @Binding var date: Date?
     private let datePicker = UIDatePicker()
     
-    init(date: Binding<Date?>, frame: CGRect) {
+    init(date: Binding<Date?>, frame: CGRect, mode: UIDatePicker.Mode) {
         self._date = date
         super.init(frame: frame)
         inputView = datePicker
         datePicker.addTarget(self, action: #selector(datePickerDidSelect(_:)), for: .valueChanged)
-        datePicker.datePickerMode = .time
+        datePicker.datePickerMode = mode
         datePicker.preferredDatePickerStyle = .wheels
         let toolBar = UIToolbar()
         toolBar.sizeToFit()
@@ -65,5 +36,17 @@ final class DatePickerTextField: UITextField {
     
     @objc private func dismissTextField() {
         resignFirstResponder()
+    }
+    
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        false
+    }
+
+    override func selectionRects(for range: UITextRange) -> [UITextSelectionRect] {
+        []
+    }
+
+    override func caretRect(for position: UITextPosition) -> CGRect {
+        .null
     }
 }

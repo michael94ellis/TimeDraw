@@ -163,7 +163,6 @@ public final class EventManager: ObservableObject {
     ///   - completion: completion handler
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
-    @discardableResult
     public func fetchReminders(filterCalendarIDs: [String] = []) async throws {
         let authorization = try await requestReminderStoreAuthorization()
         guard authorization == .authorized else {
@@ -174,12 +173,12 @@ public final class EventManager: ObservableObject {
             return filterCalendarIDs.contains(calendar.calendarIdentifier)
         }
         let predicate = self.eventStore.predicateForReminders(in: calendars)
-        let reminders = self.eventStore.fetchReminders(matching: predicate, completion: { reminders in
-                // MainActor is a type that runs code on main thread.
+        self.eventStore
+            .fetchReminders(matching: predicate) { newReminders in
                 DispatchQueue.main.async {
-                    self.reminders = reminders ?? []
+                    self.reminders = newReminders ?? []
                 }
-            })
+            }
     }
 
     // MARK: Private

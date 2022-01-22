@@ -8,6 +8,18 @@
 import Foundation
 import EventKit
 
+extension EKRecurrenceFrequency: CaseIterable, CustomStringConvertible {
+    public static var allCases: [EKRecurrenceFrequency] { [.daily, .weekly, .monthly, .yearly] }
+    public var description: String {
+        switch self.rawValue {
+        case 0: return "Daily"
+        case 1: return "Weekly"
+        case 2: return "Monthly"
+        case 3: return "Yearly"
+        default: return "Unsupported"
+        }
+    }
+}
 extension EKEvent: Identifiable { }
 extension EKReminder: Identifiable { }
 extension EKReminderPriority {

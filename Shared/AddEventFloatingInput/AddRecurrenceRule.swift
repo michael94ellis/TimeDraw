@@ -13,7 +13,7 @@ struct AddRecurrenceRule: View {
     @EnvironmentObject var viewModel: AddEventViewModel
     
     var recurrenceRule: EKRecurrenceRule?
-    @State var endDate: Date? = Date().addingTimeInterval(60 * 60 * 24 * 14)
+    @State var endDate: Date?
     @State var recurrenceEnds: Bool = false
     @State var selectedRule: EKRecurrenceFrequency = .weekly
     
@@ -24,7 +24,7 @@ struct AddRecurrenceRule: View {
                     Text("Repeat")
                         .padding(.horizontal)
                     Spacer()
-                    Button(action: { self.viewModel.removeRuleFromEvent() }) {
+                    Button(action: { self.viewModel.closeRecurrencePicker() }) {
                         Text("Remove").foregroundColor(.red1)
                     }
                     .padding(.horizontal)
@@ -41,20 +41,29 @@ struct AddRecurrenceRule: View {
                     }
                     .pickerStyle(.segmented)
                     .padding(.vertical, 4)
-                    .background(RoundedRectangle(cornerRadius: 4).fill(Color.lightGray1))
                     Spacer()
                 }
                 .padding(.horizontal)
                 HStack {
                     Text("End Date:")
                         .padding(.horizontal, 3)
-                    if self.recurrenceEnds {
-                        DateTimePickerInputView(date: self.$endDate, placeholder: "End Date", mode: .date)
-                            .frame(height: 30)
-                            .background(RoundedRectangle(cornerRadius: 4).fill(Color.lightGray1))
-                    }
-                    Toggle("", isOn: self.$recurrenceEnds)
-                        .padding(.horizontal)
+                    DateTimePickerInputView(date: self.$endDate, placeholder: "Tap to add", mode: .date)
+                        .frame(width: 150, height: 30)
+                        .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
+                        .onTapGesture {
+                            self.recurrenceEnds.toggle()
+                            if self.endDate == nil {
+                                var suggestedEndDate: Date?
+                                switch self.selectedRule {
+                                case .daily: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 31)
+                                case .weekly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 7 * 4)
+                                case .monthly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 30 * 12)
+                                case .yearly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 365 * 2)
+                                default: suggestedEndDate = nil
+                                }
+                                self.endDate = suggestedEndDate
+                            }
+                        }
                 }
                 .padding(.horizontal)
                 .padding(.bottom)
@@ -64,7 +73,7 @@ struct AddRecurrenceRule: View {
                             .fill(Color(uiColor: .systemGray6))
                             .shadow(radius: 4, x: 2, y: 4))
         } else {
-            Button(action: self.viewModel.addRuleToEvent) {
+            Button(action: self.viewModel.openRecurrencePicker) {
                 HStack {
                     Image(systemName: "clock.arrow.2.circlepath")
                         .resizable()
@@ -76,7 +85,7 @@ struct AddRecurrenceRule: View {
                 .frame(height: 48)
                 .foregroundColor(Color.blue1)
                 .contentShape(Rectangle())
-                .background(RoundedRectangle(cornerRadius: 13).fill(Color.lightGray2).frame(width: 360, height: 60)
+                .background(RoundedRectangle(cornerRadius: 13).fill(Color(uiColor: .systemGray6)).frame(width: 360, height: 60)
                                 .shadow(radius: 4, x: 2, y: 4))
             }
             .buttonStyle(.plain)

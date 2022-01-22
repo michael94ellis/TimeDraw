@@ -42,7 +42,7 @@ struct MainView: View {
                 EventsAndRemindersMainList()
             }
             .if(self.isAddEventFocused) { view in
-                view.background(Color.lightGray)
+                view.background(Color.black.opacity(0.6))
                     .edgesIgnoringSafeArea(.bottom)
                     .blur(radius: 0)
                     .blur(radius: 2)

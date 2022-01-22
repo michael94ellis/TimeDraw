@@ -8,21 +8,27 @@
 import SwiftUI
 
 final class DateTimePickerTextField: UITextField {
+    
+//    let placeholder: String
     @Binding var date: Date?
     private let datePicker = UIDatePicker()
     
-    init(date: Binding<Date?>, frame: CGRect, mode: UIDatePicker.Mode) {
+    init(placeholderText: String, date: Binding<Date?>, frame: CGRect, mode: UIDatePicker.Mode) {
         self._date = date
         super.init(frame: frame)
+        self.placeholder = placeholderText
         inputView = datePicker
+        datePicker.date = date.wrappedValue ?? Date()
         datePicker.addTarget(self, action: #selector(datePickerDidSelect(_:)), for: .valueChanged)
         datePicker.datePickerMode = mode
         datePicker.preferredDatePickerStyle = .wheels
         let toolBar = UIToolbar()
+        toolBar.barTintColor = .systemGray4
         toolBar.sizeToFit()
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let clearButton = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(clearTextField))
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(dismissTextField))
-        toolBar.setItems([flexibleSpace, doneButton], animated: false)
+        toolBar.setItems([clearButton, flexibleSpace, doneButton], animated: false)
         inputAccessoryView = toolBar
     }
     
@@ -32,6 +38,11 @@ final class DateTimePickerTextField: UITextField {
     
     @objc private func datePickerDidSelect(_ sender: UIDatePicker) {
         date = sender.date
+    }
+    
+    @objc private func clearTextField() {
+        self.date = nil
+        self.text = nil
     }
     
     @objc private func dismissTextField() {

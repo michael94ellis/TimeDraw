@@ -32,7 +32,7 @@ struct AddEventDateTimePicker: View {
                     DateTimePickerInputView(date: self.viewModel.newItemStartDateBinding, placeholder: "Start", mode: .time)
                         .frame(height: 30)
                         .padding(.vertical, 4)
-                        .background(RoundedRectangle(cornerRadius: 4).fill(Color.lightGray1))
+                        .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
                         .onTapGesture {
                             if self.viewModel.newItemStartDate == nil {
                                 self.viewModel.newItemStartDate = Date()
@@ -42,7 +42,7 @@ struct AddEventDateTimePicker: View {
                     DateTimePickerInputView(date: self.viewModel.newItemEndDateBinding, placeholder: "End", mode: .time)
                         .frame(width: 150, height: 30)
                         .padding(.vertical, 4)
-                        .background(RoundedRectangle(cornerRadius: 4).fill(Color.lightGray1))
+                        .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
                         .onTapGesture {
                             if self.viewModel.newItemEndDate == nil {
                                 self.viewModel.newItemEndDate = Date().addingTimeInterval(60 * 60)
@@ -63,7 +63,7 @@ struct AddEventDateTimePicker: View {
                     .frame(height: 48)
                     .foregroundColor(Color.blue1)
                     .contentShape(Rectangle())
-                    .background(RoundedRectangle(cornerRadius: 13).fill(Color.lightGray2).frame(width: 360, height: 60)
+                    .background(RoundedRectangle(cornerRadius: 13).fill(Color(uiColor: .systemGray6)).frame(width: 360, height: 60)
                                     .shadow(radius: 4, x: 2, y: 4))
             }
             .buttonStyle(.plain)

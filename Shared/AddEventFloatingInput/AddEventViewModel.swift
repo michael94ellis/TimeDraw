@@ -41,13 +41,13 @@ class AddEventViewModel: ObservableObject {
         }
     }
     
-    func addRuleToEvent() {
+    func openRecurrencePicker() {
         withAnimation {
             self.isRecurrencePickerOpen = true
         }
     }
     
-    func removeRuleFromEvent() {
+    func closeRecurrencePicker() {
         withAnimation {
             self.isRecurrencePickerOpen = false
         }

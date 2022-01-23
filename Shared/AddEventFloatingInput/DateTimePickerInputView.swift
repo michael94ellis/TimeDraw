@@ -17,7 +17,7 @@ struct DateTimePickerInputView: UIViewRepresentable {
     init(date: Binding<Date?>, placeholder: String, mode: UIDatePicker.Mode) {
         self._date = date
         self.placeholder = "\(placeholder)"
-        formatter.dateFormat = "MMM dd h:mm a"
+        formatter.dateFormat = "MMM dd Hh:mm a"
         self.mode = mode
     }
     

@@ -73,20 +73,29 @@ struct AddEventFloatingInputView: View {
                         .edgesIgnoringSafeArea(.bottom)
                     TextField("", text: self.viewModel.newItemTitleBinding)
                         .focused(self.$isNewEventFocused)
+                        .onChange(of: self.viewModel.isAddEventTextFieldFocused) {
+                            self.viewModel.isAddEventTextFieldFocused = $0
+                            self.isNewEventFocused = $0
+                        }
                         .submitLabel(.done)
                         .onSubmit {
                             self.viewModel.createEventOrReminder()
+                            self.isNewEventFocused = false
                         }
                         .onTapGesture {
                             withAnimation {
                                 self.viewModel.isDateTimePickerOpen = self.viewModel.newItemStartDate != nil || self.viewModel.newItemEndDate != nil
                                 self.isBackgroundBlurred = true
+                                self.isNewEventFocused = true
                             }
                         }
                         .placeholder(when: self.viewModel.newItemTitle.isEmpty) {
                             Text("New Event or Reminder").foregroundColor(.gray)
                         }
-                    Button(action: self.viewModel.createEventOrReminder) {
+                    Button(action: {
+                        self.viewModel.createEventOrReminder()
+                        self.isNewEventFocused = false
+                    }) {
                         Image(systemName: "plus")
                             .frame(width: self.barHeight, height: self.barHeight)
                             .foregroundColor(Color(uiColor: .label))

@@ -36,6 +36,7 @@ class AddEventViewModel: ObservableObject {
     public var startDateSuggestionBinding: Binding<Date> { Binding<Date>(get: { self.newItemStartDate ?? Date() }, set: { self.newItemStartDate = $0 }) }
     public var endDateSuggestionBinding: Binding<Date> { Binding<Date>(get: { self.newItemEndDate ?? Date().addingTimeInterval(60 * 60) }, set: { self.newItemEndDate = $0 }) }
     
+    @Published var isAddEventTextFieldFocused: Bool = false
     @Published var isDisplayingOptions: Bool = false
     @Published var isDateTimePickerOpen: Bool = false
     @Published var isRecurrencePickerOpen: Bool = false
@@ -85,14 +86,17 @@ class AddEventViewModel: ObservableObject {
     
     private func reset() {
         DispatchQueue.main.async {
-            self.isDisplayingOptions = false
-            self.isDateTimePickerOpen = false
-            self.isRecurrencePickerOpen = false
-            self.isLocationTextFieldOpen = false
-            
-            self.newItemTitle = ""
-            self.newItemStartDate = nil
-            self.newItemEndDate = nil
+            withAnimation {
+                self.isAddEventTextFieldFocused = false
+                self.isDisplayingOptions = false
+                self.isDateTimePickerOpen = false
+                self.isRecurrencePickerOpen = false
+                self.isLocationTextFieldOpen = false
+                
+                self.newItemTitle = ""
+                self.newItemStartDate = nil
+                self.newItemEndDate = nil
+            }
         }
     }
     

@@ -70,7 +70,7 @@ struct AddRecurrenceRule: View {
                                 self.showDateTime.toggle()
                             }
                         }) {
-                            Text("End Date:")
+                            Text("End Date:  ")
                         }
                         .buttonStyle(.plain)
                         Spacer()

@@ -19,7 +19,6 @@ struct MainView: View {
     private let date = Date()
     
     @FocusState private var isDailyGoalFocused: Bool
-    @State var isAddEventFocused: Bool = false
     @ObservedObject private var eventManager: EventManager = .shared
     
     @StateObject private var addEventViewModel: AddEventViewModel = AddEventViewModel()
@@ -41,7 +40,7 @@ struct MainView: View {
                 Divider()
                 EventsAndRemindersMainList()
             }
-            .if(self.isAddEventFocused) { view in
+            .if(self.addEventViewModel.isAddEventTextFieldFocused) { view in
                 view.background(Color.black.opacity(0.6))
                     .edgesIgnoringSafeArea(.bottom)
                     .blur(radius: 0)
@@ -49,7 +48,7 @@ struct MainView: View {
                     .contentShape(Rectangle())
                     .onTapGesture {
                         withAnimation {
-                            self.isAddEventFocused = false
+                            self.addEventViewModel.isAddEventTextFieldFocused = false
                         }
                     }
             }
@@ -58,12 +57,12 @@ struct MainView: View {
                     .contentShape(Rectangle())
                     .onTapGesture {
                         withAnimation {
-                            self.isAddEventFocused = false
+                            self.addEventViewModel.isAddEventTextFieldFocused = false
                         }
                     }
-                AddEventFloatingInputView(isBackgroundBlurred: self.$isAddEventFocused)
-                    .onChange(of: self.isAddEventFocused, perform: { isFocused in
-                        if isFocused { self.isAddEventFocused = true }
+                AddEventFloatingInputView(isBackgroundBlurred: self.$addEventViewModel.isAddEventTextFieldFocused)
+                    .onChange(of: self.addEventViewModel.isAddEventTextFieldFocused, perform: { isFocused in
+                        if isFocused { self.addEventViewModel.isAddEventTextFieldFocused = true }
                     })
                     .environmentObject(self.addEventViewModel)
             }

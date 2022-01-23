@@ -81,17 +81,17 @@ extension EKEventStore {
     public func createReminder(
         title: String,
         startDate: Date?,
-        endDate: Date?,
+        dueDate: Date?,
         calendar: EKCalendar
     ) throws -> EKReminder {
         let reminder = EKReminder(eventStore: self)
-        reminder.calendar = calendar
         reminder.title = title
+        reminder.calendar = calendar
         if let startDate = startDate {
             reminder.startDateComponents = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute, .second], from: startDate)
         }
-        if let endDate = endDate {
-            reminder.dueDateComponents = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute, .second], from: endDate)
+        if let dueDate = dueDate {
+            reminder.dueDateComponents = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute, .second], from: dueDate)
         }
         try save(reminder, commit: true)
         return reminder
@@ -128,10 +128,10 @@ extension EKEventStore {
     }
 
     // MARK: - Fetch
-    /// Calendar for current AppName
-    /// - Returns: App calendar
+    /// Event Calendar for current AppName
+    /// - Returns: App calendar for EKEvents
     /// - Parameter calendarColor: default new calendar color
-    public func calendarForApp(calendarColor: CGColor = .init(red: 1, green: 0, blue: 0, alpha: 1)) -> EKCalendar? {
+    public func calendarForEvents(calendarColor: CGColor = .init(red: 1, green: 0, blue: 0, alpha: 1)) -> EKCalendar? {
         guard let appName = EventManager.appName else {
             print("App name is nil, please config with `Shift.configureWithAppName` in AppDelegate")
             return nil
@@ -139,15 +139,37 @@ extension EKEventStore {
 
         let calendars = self.calendars(for: .event)
 
-        if let clendar = calendars.first(where: { $0.title == appName }) {
-            return clendar
+        if let appCalendar = calendars.first(where: { $0.title == appName }) {
+            return appCalendar
         } else {
-            let newClendar = EKCalendar(for: .event, eventStore: self)
-            newClendar.title = appName
-            newClendar.source = defaultCalendarForNewEvents?.source
-            newClendar.cgColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
-            try? saveCalendar(newClendar, commit: true)
-            return newClendar
+            let newCalendar = EKCalendar(for: .event, eventStore: self)
+            newCalendar.title = appName
+            newCalendar.source = defaultCalendarForNewEvents?.source
+            newCalendar.cgColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
+            try? saveCalendar(newCalendar, commit: true)
+            return newCalendar
+        }
+    }
+    /// Reminder Calendar for current AppName
+    /// - Returns: App calendar for EKReminders
+    /// - Parameter calendarColor: default new calendar color
+    public func calendarForReminders(calendarColor: CGColor = .init(red: 12, green: 22, blue: 0, alpha: 1)) -> EKCalendar? {
+        guard let appName = EventManager.appName else {
+            print("App name is nil, please config with `Shift.configureWithAppName` in AppDelegate")
+            return nil
+        }
+
+        let calendars = self.calendars(for: .reminder)
+
+        if let appCalendar = calendars.first(where: { $0.title == appName }) {
+            return appCalendar
+        } else {
+            let newCalendar = EKCalendar(for: .reminder, eventStore: self)
+            newCalendar.title = appName
+            newCalendar.source = defaultCalendarForNewEvents?.source
+            newCalendar.cgColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
+            try? saveCalendar(newCalendar, commit: true)
+            return newCalendar
         }
     }
 

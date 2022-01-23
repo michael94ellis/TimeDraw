@@ -67,53 +67,57 @@ class AddEventViewModel: ObservableObject {
     }
     
     public func createEventOrReminder() {
-        print("TODO Create Event or Reminder")
+        self.addEvent()
+    }
+    
+    private func reset() {
+        DispatchQueue.main.async {
+            self.isDisplayingOptions = false
+            self.isDateTimePickerOpen = false
+            self.isRecurrencePickerOpen = false
+            self.isLocationTextFieldOpen = false
+            
+            self.newItemTitle = ""
+            self.newItemStartDate = nil
+            self.newItemEndDate = nil
+        }
     }
     
     private func addEvent() {
         guard let startDate = self.newItemStartDate, let endDate = self.newItemEndDate else {
             // TODO handle
+            self.addReminder()
             return
         }
         Task {
             do {
                 let newEvent = try await EventManager.shared.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
                 // TODO add recurrence and stuff
-                EventManager.shared.events.append(newEvent)
+                await MainActor.run {
+                    EventManager.shared.events.append(newEvent)
+                }
                 print("Saved Event")
-                
-                // Cleanup
-                self.isDisplayingOptions = false
-                self.isDateTimePickerOpen = false
-                self.isRecurrencePickerOpen = false
-                self.isLocationTextFieldOpen = false
-                
-                self.newItemTitle = ""
-                self.newItemStartDate = nil
-                self.newItemEndDate = nil
-                
+                self.reset()
             } catch let error as NSError {
-                print("failed to save event with error : \(error)")
+                print("Error: failed to save event with error : \(error)")
             }
         }
     }
     
     private func addReminder() {
-//        let reminder: EKReminder = EKReminder(eventStore: self.eventStore)
-//        reminder.title = self.newEventName
-////        reminder.priority = 2
-//        //  How to show completed
-//        //reminder.completionDate = Date()
-//        // TODO alarms, priority, completion, etc.
-//        reminder.calendar = self.eventStore.defaultCalendarForNewReminders()
-//
-//        do {
-//          try self.eventStore.save(reminder, commit: true)
-//        } catch {
-//          print("Cannot save Reminder")
-//          return
-//        }
-//        print("Reminder saved")
+        Task {
+            do {
+                let newEvent = try await EventManager.shared.createReminder(self.newItemTitle, startDate: self.newItemStartDate, dueDate: self.newItemEndDate)
+                // TODO add recurrence and stuff
+                await MainActor.run {
+                    EventManager.shared.reminders.append(newEvent)
+                }
+                print("Saved Reminder")
+                self.reset()
+            } catch let error as NSError {
+                print("Error: failed to save reminder with error : \(error)")
+            }
+        }
     }
     
     func getRecentEmojis() -> [String] {

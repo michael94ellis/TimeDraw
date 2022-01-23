@@ -40,7 +40,7 @@ struct AddEventDateTimePicker: View {
                         HStack {
                             Spacer()
                             Text("From:")
-                                .frame(width: 75, height: 30, alignment: .leading)
+                                .frame(width: 75, height: 30, alignment: .leading)  
                             Spacer()
                             DatePicker("", selection: self.viewModel.startDateSuggestionBinding)
                                 .labelsHidden()

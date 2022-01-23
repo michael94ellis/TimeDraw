@@ -33,22 +33,18 @@ struct AddEventFloatingInputView: View {
                 .opacity(self.isBackgroundBlurred ? 1 : 0)
             HStack {
                 HStack {
-                    Button(action: { self.isShowingEmojiPicker.toggle() }) {
+                    Menu(content: {
+                        ForEach(self.viewModel.getRecentEmojis(), id: \.self) { emoji in
+                            Button(emoji, action: {
+                                self.viewModel.newItemTitle = "\(emoji) \(self.viewModel.newItemTitle)"
+                            })
+                                .frame(width: 30, height: 30)
+                        }
+                    }) {
                         Image("smile.face")
                             .resizable()
                             .frame(width: 25, height: 25)
-                    }.buttonStyle(.plain)
-                        .frame(width: 36, height: 36)
-                        .padding(.leading, 10)
-//                        .popover(isPresented: self.$isShowingEmojiPicker, attachmentAnchor: .point(.topTrailing), arrowEdge: .bottom) {
-//                            Group {
-//                            ForEach(self.viewModel.getRecentEmojis(), id: \.self) {
-//                                Button($0, action: { })
-//                                    .frame(width: 30, height: 30)
-//                            }
-//                            }
-//                            .frame(width: 100, height: 100)
-//                        }
+                    }
                     TextField("", text: self.viewModel.newItemTitleBinding)
                         .focused(self.$isNewEventFocused)
                         .submitLabel(.done)

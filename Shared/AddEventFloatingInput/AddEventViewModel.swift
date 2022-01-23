@@ -13,13 +13,16 @@ class AddEventViewModel: ObservableObject {
     
     // New Event/Reminder Data
     @Published var newItemTitle: String = ""
+    // For the "Add Time" feature
     @Published var newItemStartTime: Date?
     @Published var newItemEndTime: Date?
+    // For the "Add Date/Time" feature
     @Published var newItemStartDate: Date?
     @Published var newItemEndDate: Date?
     // Recurrence Rule Data
     var recurrenceRule: EKRecurrenceRule?
     @Published var endRecurrenceDate: Date?
+    @Published var numberOfOccurences: Int?
     @Published var recurrenceEnds: Bool = false
     @Published var selectedRule: EKRecurrenceFrequency = .weekly
     

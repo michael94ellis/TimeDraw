@@ -63,7 +63,7 @@ struct AddEventFloatingInputView: View {
                         }
                         .foregroundColor(Color.dark)
                         .placeholder(when: self.viewModel.newItemTitle.isEmpty) {
-                            Text("New Event").foregroundColor(.gray)
+                            Text("New Event or Reminder").foregroundColor(.gray)
                         }
                     Button(action: self.viewModel.createEventOrReminder) {
                         Image(systemName: "plus")

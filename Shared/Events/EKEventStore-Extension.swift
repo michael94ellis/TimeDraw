@@ -80,15 +80,19 @@ extension EKEventStore {
     /// - Returns: created event
     public func createReminder(
         title: String,
-        startDate: Date,
+        startDate: Date?,
         endDate: Date?,
-        calendar: EKCalendar,
-        span: EKSpan = .thisEvent,
-        isAllDay: Bool = false
+        calendar: EKCalendar
     ) throws -> EKReminder {
         let reminder = EKReminder(eventStore: self)
         reminder.calendar = calendar
         reminder.title = title
+        if let startDate = startDate {
+            reminder.startDateComponents = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute, .second], from: startDate)
+        }
+        if let endDate = endDate {
+            reminder.dueDateComponents = Calendar.current.dateComponents([.day, .month, .year, .hour, .minute, .second], from: endDate)
+        }
         try save(reminder, commit: true)
         return reminder
     }

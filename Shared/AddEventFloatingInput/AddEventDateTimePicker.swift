@@ -38,7 +38,7 @@ struct AddEventDateTimePicker: View {
     }
     
     var body: some View {
-        if self.viewModel.isTimePickerOpen {
+        if self.viewModel.isDateTimePickerOpen {
             VStack {
                 HStack {
                     Button(action: {
@@ -103,7 +103,7 @@ struct AddEventDateTimePicker: View {
                     .frame(height: 48)
                     .foregroundColor(Color.blue1)
                     .contentShape(Rectangle())
-                    .background(RoundedRectangle(cornerRadius: 13).fill(Color(uiColor: .systemGray6)).frame(width: 360, height: 60)
+                    .background(RoundedRectangle(cornerRadius: 13).fill(Color(uiColor: .systemGray6))
                                     .shadow(radius: 4, x: 2, y: 4))
             }
             .buttonStyle(.plain)

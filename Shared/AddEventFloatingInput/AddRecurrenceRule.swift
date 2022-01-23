@@ -11,31 +11,7 @@ import EventKit
 struct AddRecurrenceRule: View {
     
     @EnvironmentObject var viewModel: AddEventViewModel
-    
-    var recurrenceRule: EKRecurrenceRule?
-    @State var endDate: Date?
     @State var showDateTime: Bool = false
-    @State var recurrenceEnds: Bool = false
-    @State var selectedRule: EKRecurrenceFrequency = .weekly
-    
-    var endDateBinding: Binding<Date> { Binding<Date>(get: { self.endDate ?? self.setSuggestedEndDate() }, set: { self.endDate = $0 }) }
-    
-    @discardableResult
-    func setSuggestedEndDate() -> Date {
-        guard let endDate = self.endDate else {
-            var suggestedEndDate: Date
-            switch self.selectedRule {
-            case .daily: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 31)
-            case .weekly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 7 * 4)
-            case .monthly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 30 * 12)
-            case .yearly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 365 * 2)
-            default: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 5)
-            }
-            self.endDate = suggestedEndDate
-            return suggestedEndDate
-        }
-        return endDate
-    }
     
     var body: some View {
         if self.viewModel.isRecurrencePickerOpen {
@@ -53,7 +29,7 @@ struct AddRecurrenceRule: View {
                 Divider()
                     .padding(.horizontal)
                 HStack {
-                    Picker("", selection: self.$selectedRule) {
+                    Picker("", selection: self.$viewModel.selectedRule) {
                         ForEach(EKRecurrenceFrequency.allCases, id: \.self) { frequency in
                             Text(frequency.description)
                                 .font(.title)
@@ -74,24 +50,28 @@ struct AddRecurrenceRule: View {
                     }
                     .buttonStyle(.plain)
                     if self.showDateTime {
-                        DatePicker("", selection: self.endDateBinding)
+                        DatePicker("", selection: self.viewModel.endRecurrenceDateBinding)
                     } else {
-                        DateTimePickerInputView(date: self.$endDate, placeholder: "Tap to add", mode: .date)
+                        DateTimePickerInputView(date: self.$viewModel.endRecurrenceDate, placeholder: "Tap to add", mode: .date)
                             .frame(width: 150, height: 30)
                             .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
                             .onTapGesture {
-                                self.setSuggestedEndDate()
-                                self.recurrenceEnds.toggle()
+                                self.viewModel.setSuggestedEndRecurrenceDate()
+                                self.viewModel.recurrenceEnds.toggle()
                             }
                     }
                 }
                 .padding(.horizontal)
                 .padding(.bottom)
             }
-            .frame(width: 362)
+            .frame(maxWidth: 600)
             .background(RoundedRectangle(cornerRadius: 13)
                             .fill(Color(uiColor: .systemGray6))
                             .shadow(radius: 4, x: 2, y: 4))
+            // This is where the recurrence end is set
+            .onReceive(self.viewModel.endRecurrenceDate.publisher) {
+                self.viewModel.recurrenceRule?.recurrenceEnd = EKRecurrenceEnd(end: $0)
+            }
         } else {
             Button(action: self.viewModel.openRecurrencePicker) {
                 HStack {
@@ -105,7 +85,7 @@ struct AddRecurrenceRule: View {
                 .frame(height: 48)
                 .foregroundColor(Color.blue1)
                 .contentShape(Rectangle())
-                .background(RoundedRectangle(cornerRadius: 13).fill(Color(uiColor: .systemGray6)).frame(width: 360, height: 60)
+                .background(RoundedRectangle(cornerRadius: 13).fill(Color(uiColor: .systemGray6))
                                 .shadow(radius: 4, x: 2, y: 4))
             }
             .buttonStyle(.plain)

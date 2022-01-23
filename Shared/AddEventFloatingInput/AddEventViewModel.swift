@@ -11,12 +11,19 @@ import SwiftUI
 
 class AddEventViewModel: ObservableObject {
     
+    // New Event/Reminder Data
     @Published var newItemTitle: String = ""
     @Published var newItemStartTime: Date?
     @Published var newItemEndTime: Date?
     @Published var newItemStartDate: Date?
     @Published var newItemEndDate: Date?
+    // Recurrence Rule Data
+    var recurrenceRule: EKRecurrenceRule?
+    @Published var endRecurrenceDate: Date?
+    @Published var recurrenceEnds: Bool = false
+    @Published var selectedRule: EKRecurrenceFrequency = .weekly
     
+    var endRecurrenceDateBinding: Binding<Date> { Binding<Date>(get: { self.endRecurrenceDate ?? self.setSuggestedEndRecurrenceDate() }, set: { self.endRecurrenceDate = $0 }) }
     public var newItemTitleBinding: Binding<String> {  Binding<String>(get: { self.newItemTitle }, set: { self.newItemTitle = $0 }) }
     public var newItemStartTimeBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemStartTime }, set: { self.newItemStartTime = $0 }) }
     public var newItemEndTimeBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemEndTime }, set: { self.newItemEndTime = $0 }) }
@@ -24,24 +31,23 @@ class AddEventViewModel: ObservableObject {
     public var newItemEndDateBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemEndDate }, set: { self.newItemEndDate = $0 }) }
     
     @Published var isDisplayingOptions: Bool = false
-    @Published var isTimePickerOpen: Bool = false
     @Published var isDateTimePickerOpen: Bool = false
     @Published var isRecurrencePickerOpen: Bool = false
     @Published var isLocationTextFieldOpen: Bool = false
     
     public var isFocused: Bool {
-        self.isTimePickerOpen || self.isDateTimePickerOpen || self.isRecurrencePickerOpen || self.isLocationTextFieldOpen
+        self.isDateTimePickerOpen || self.isRecurrencePickerOpen || self.isLocationTextFieldOpen
     }
     
     func addTimeToEvent() {
         withAnimation {
-            self.isTimePickerOpen = true
+            self.isDateTimePickerOpen = true
         }
     }
     
     func removeTimeFromEvent() {
         withAnimation {
-            self.isTimePickerOpen = false
+            self.isDateTimePickerOpen = false
         }
     }
     
@@ -55,5 +61,83 @@ class AddEventViewModel: ObservableObject {
         withAnimation {
             self.isRecurrencePickerOpen = false
         }
+    }
+    
+    public func createEventOrReminder() {
+        print("TODO Create Event or Reminder")
+    }
+    
+    private func addEvent() {
+        guard let startDate = self.newItemStartDate, let endDate = self.newItemEndDate else {
+            // TODO handle
+            return
+        }
+        Task {
+            do {
+                let newEvent = try await EventManager.shared.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
+                // TODO add recurrence and stuff
+                EventManager.shared.events.append(newEvent)
+                print("Saved Event")
+                
+                // Cleanup
+                self.isDisplayingOptions = false
+                self.isDateTimePickerOpen = false
+                self.isRecurrencePickerOpen = false
+                self.isLocationTextFieldOpen = false
+                
+                self.newItemTitle = ""
+                self.newItemStartDate = nil
+                self.newItemEndDate = nil
+                
+            } catch let error as NSError {
+                print("failed to save event with error : \(error)")
+            }
+        }
+    }
+    
+    private func addReminder() {
+//        let reminder: EKReminder = EKReminder(eventStore: self.eventStore)
+//        reminder.title = self.newEventName
+////        reminder.priority = 2
+//        //  How to show completed
+//        //reminder.completionDate = Date()
+//        // TODO alarms, priority, completion, etc.
+//        reminder.calendar = self.eventStore.defaultCalendarForNewReminders()
+//
+//        do {
+//          try self.eventStore.save(reminder, commit: true)
+//        } catch {
+//          print("Cannot save Reminder")
+//          return
+//        }
+//        print("Reminder saved")
+    }
+    
+    func getRecentEmojis() -> [String] {
+        guard let prefs = UserDefaults(suiteName: "com.apple.EmojiPreferences"),
+              let defaults = prefs.dictionary(forKey: "EMFDefaultsKey"),
+              let recents = defaults["EMFRecentsKey"] as? [String] else {
+                  // No Recent Emojis
+                  return ["No Recent Emojis"]
+              }
+        return recents
+    }
+    
+    @discardableResult
+    func setSuggestedEndRecurrenceDate() -> Date {
+        guard let endDate = self.endRecurrenceDate else {
+            var suggestedEndDate: Date
+            switch self.selectedRule {
+            case .daily: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 31)
+            case .weekly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 7 * 4)
+            case .monthly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 30 * 6)
+            case .yearly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 366 * 2)
+            default: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 5)
+            }
+            self.endRecurrenceDate = suggestedEndDate
+            self.recurrenceRule?.recurrenceEnd = EKRecurrenceEnd(end: suggestedEndDate)
+            return suggestedEndDate
+        }
+        return endDate
     }
 }

@@ -75,8 +75,23 @@ public final class EventManager: ObservableObject {
         isAllDay: Bool = false
     ) async throws -> EKEvent {
         let calendar = try await accessCalendar()
-        let createdEvent = try await self.eventStore.createEvent(title: title, startDate: startDate, endDate: endDate, calendar: calendar, span: span, isAllDay: isAllDay)
+        let createdEvent = try self.eventStore.createEvent(title: title, startDate: startDate, endDate: endDate, calendar: calendar, span: span, isAllDay: isAllDay)
         return createdEvent
+    }
+    
+    /// Create a Reminder
+    /// - Parameters:
+    ///   - title: title of the reminder
+    /// - Returns: created reminder
+    public func createReminder(
+        _ title: String,
+        startDate: Date?,
+        endDate: Date?,
+        calendar: EKCalendar
+    ) async throws -> EKReminder {
+        let calendar = try await accessCalendar()
+        let newReminder = try self.eventStore.createReminder(title: title, startDate: startDate, endDate: endDate, calendar: calendar)
+        return newReminder
     }
 
     /// Delete an event

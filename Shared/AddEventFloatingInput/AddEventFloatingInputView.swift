@@ -15,6 +15,7 @@ struct AddEventFloatingInputView: View {
     @State var isShowingEmojiPicker: Bool = false
     @Binding var isBackgroundBlurred: Bool
     private let barHeight: CGFloat = 44
+    @State var emojiSelection: String = ""
     
     @ViewBuilder var eventOptions: some View {
         HStack {
@@ -27,24 +28,49 @@ struct AddEventFloatingInputView: View {
         .padding(.bottom, 8)
     }
     
+    let numberOfEmojiColumns: Int = 5
+    let emojiButtonWidth: Int = 45
+    let emojiButtonHeight: Int = 40
+    
+    var emojiPopoverSize: CGSize {
+        let emojiListCount = self.viewModel.getRecentEmojis().count
+        let emojiPopoverWidth = emojiListCount >= self.numberOfEmojiColumns ?
+        self.emojiButtonWidth * self.numberOfEmojiColumns :
+        emojiListCount * self.emojiButtonWidth
+        let emojiPopoverHeight = (emojiListCount / self.numberOfEmojiColumns + emojiListCount % self.numberOfEmojiColumns) * self.emojiButtonHeight
+        return CGSize(width: emojiPopoverWidth, height: emojiPopoverHeight)
+    }
+    
     var body: some View {
         VStack {
             eventOptions
                 .opacity(self.isBackgroundBlurred ? 1 : 0)
             HStack {
                 HStack {
-                    Menu(content: {
-                        ForEach(self.viewModel.getRecentEmojis(), id: \.self) { emoji in
-                            Button(emoji, action: {
-                                self.viewModel.newItemTitle = "\(emoji) \(self.viewModel.newItemTitle)"
-                            })
-                                .frame(width: 30, height: 30)
-                        }
-                    }) {
+                    PopoverButton(showPopover: self.$isShowingEmojiPicker,
+                                  popoverSize: self.emojiPopoverSize,
+                                  content: {
                         Image("smile.face")
                             .resizable()
                             .frame(width: 25, height: 25)
-                    }
+                            .onTapGesture {
+                                self.isShowingEmojiPicker.toggle()
+                            }
+                    }, popoverContent: {
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: self.numberOfEmojiColumns)) {
+                            ForEach(self.viewModel.getRecentEmojis(), id: \.self) { emoji in
+                                Button(emoji, action: {
+                                    self.viewModel.newItemTitle = "\(emoji) \(self.viewModel.newItemTitle)"
+                                    self.isShowingEmojiPicker.toggle()
+                                })
+                                    .frame(width: CGFloat(self.emojiButtonWidth), height: CGFloat(self.emojiButtonHeight))
+                            }
+                        }
+                        .padding(.horizontal)
+                    })
+                        .padding(.leading, 12)
+                        .padding(.trailing, 5)
+                        .edgesIgnoringSafeArea(.bottom)
                     TextField("", text: self.viewModel.newItemTitleBinding)
                         .focused(self.$isNewEventFocused)
                         .submitLabel(.done)

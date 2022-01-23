@@ -49,7 +49,6 @@ struct AddEventDateTimePicker: View {
                             Spacer()
                         }
                         .padding(.horizontal, 16)
-                        .padding(.bottom, 4)
                         HStack {
                             Spacer()
                             Text("To:")
@@ -62,13 +61,13 @@ struct AddEventDateTimePicker: View {
                             Spacer()
                         }
                         .padding(.horizontal, 16)
-                        .padding(.bottom, 4)
                     }
+                    .padding(.bottom)
                 } else {
                     HStack {
                         DateTimePickerInputView(date: self.viewModel.newItemStartDateBinding, placeholder: "Start", mode: .time)
                             .frame(width: 150, height: 30)
-                            .padding(.vertical, 4)
+                            .padding(.top, 4)
                             .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
                             .onTapGesture {
                                 if self.viewModel.newItemStartDate == nil {
@@ -78,7 +77,7 @@ struct AddEventDateTimePicker: View {
                         Text("to")
                         DateTimePickerInputView(date: self.viewModel.newItemEndDateBinding, placeholder: "End", mode: .time)
                             .frame(width: 150, height: 30)
-                            .padding(.vertical, 4)
+                            .padding(.top, 4)
                             .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
                             .onTapGesture {
                                 if self.viewModel.newItemEndDate == nil {

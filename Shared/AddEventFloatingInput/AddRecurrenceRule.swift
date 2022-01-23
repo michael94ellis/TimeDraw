@@ -56,6 +56,11 @@ struct AddRecurrenceRule: View {
                             .frame(width: 90, height: 30)
                             .multilineTextAlignment(TextAlignment.center)
                             .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
+                            .onChange(of: self.viewModel.numberOfOccurences) { newNumber in
+                                if newNumber != nil {
+                                    self.viewModel.endRecurrenceDate = nil
+                                }
+                            }
                         Text("times")
                         Spacer()
                     } else {
@@ -80,7 +85,6 @@ struct AddRecurrenceRule: View {
                                 .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
                                 .onTapGesture {
                                     self.viewModel.setSuggestedEndRecurrenceDate()
-                                    self.viewModel.recurrenceEnds.toggle()
                                 }
                         }
                         Spacer()
@@ -93,10 +97,6 @@ struct AddRecurrenceRule: View {
             .background(RoundedRectangle(cornerRadius: 13)
                             .fill(Color(uiColor: .systemGray6))
                             .shadow(radius: 4, x: 2, y: 4))
-            // This is where the recurrence end is set
-            .onReceive(self.viewModel.endRecurrenceDate.publisher) {
-                self.viewModel.recurrenceRule?.recurrenceEnd = EKRecurrenceEnd(end: $0)
-            }
         } else {
             Button(action: self.viewModel.openRecurrencePicker) {
                 HStack {

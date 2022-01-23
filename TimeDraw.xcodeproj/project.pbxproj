@@ -83,6 +83,8 @@
 		2F8123102798957C00458B1A /* DateTimePickerInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81230E2798957C00458B1A /* DateTimePickerInputView.swift */; };
 		2F8AB2FD279BB4F000654FEF /* DateTimePickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB2FC279BB4F000654FEF /* DateTimePickerTextField.swift */; };
 		2F8AB2FE279BB4F000654FEF /* DateTimePickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB2FC279BB4F000654FEF /* DateTimePickerTextField.swift */; };
+		2F8AB303279D140E00654FEF /* PopoverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB302279D140E00654FEF /* PopoverButton.swift */; };
+		2F8AB304279D140E00654FEF /* PopoverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB302279D140E00654FEF /* PopoverButton.swift */; };
 		2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
@@ -154,6 +156,7 @@
 		2F81230B2797B59500458B1A /* AddEventDateTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventDateTimePicker.swift; sourceTree = "<group>"; };
 		2F81230E2798957C00458B1A /* DateTimePickerInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerInputView.swift; sourceTree = "<group>"; };
 		2F8AB2FC279BB4F000654FEF /* DateTimePickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerTextField.swift; sourceTree = "<group>"; };
+		2F8AB302279D140E00654FEF /* PopoverButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverButton.swift; sourceTree = "<group>"; };
 		2FC6C7B42786434600D75568 /* MultiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTextField.swift; sourceTree = "<group>"; };
 		2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -290,6 +293,7 @@
 			children = (
 				2F39B888278241B500FE72C3 /* Colors.swift */,
 				2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */,
+				2F8AB302279D140E00654FEF /* PopoverButton.swift */,
 				2F42C59F2784E6C800F0BEB2 /* Array-Extension.swift */,
 				2F42C59327848DF700F0BEB2 /* Date-Extension.swift */,
 				2F42C5902783E55800F0BEB2 /* Calendar-Extension.swift */,
@@ -516,6 +520,7 @@
 				2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */,
 				2F542010279B4AE90046696B /* AddEventViewModel.swift in Sources */,
 				2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */,
+				2F8AB303279D140E00654FEF /* PopoverButton.swift in Sources */,
 				2F21112D279908450041EE85 /* View-Extension.swift in Sources */,
 				2F8AB2FD279BB4F000654FEF /* DateTimePickerTextField.swift in Sources */,
 				2F39B889278241B500FE72C3 /* Colors.swift in Sources */,
@@ -550,6 +555,7 @@
 				2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */,
 				2F542011279B4AE90046696B /* AddEventViewModel.swift in Sources */,
 				2FC6C7B92786A26900D75568 /* DailyGoalTextField.swift in Sources */,
+				2F8AB304279D140E00654FEF /* PopoverButton.swift in Sources */,
 				2F21112E279908450041EE85 /* View-Extension.swift in Sources */,
 				2F8AB2FE279BB4F000654FEF /* DateTimePickerTextField.swift in Sources */,
 				2F39B88A278241B500FE72C3 /* Colors.swift in Sources */,
@@ -727,7 +733,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "TimeDraw (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -764,7 +770,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "TimeDraw (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

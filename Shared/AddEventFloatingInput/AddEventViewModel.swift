@@ -20,14 +20,14 @@ class AddEventViewModel: ObservableObject {
     @Published var newItemStartDate: Date?
     @Published var newItemEndDate: Date?
     // Recurrence Rule Data
-    var recurrenceRule: EKRecurrenceRule?
+    private var recurrenceRule: EKRecurrenceRule?
+    private var recurrendeEnd: EKRecurrenceEnd?
     @Published var endRecurrenceDate: Date?
     @Published var numberOfOccurences: Int?
-    @Published var recurrenceEnds: Bool = false
     @Published var isRecurrenceUsingOccurences: Bool = false
     @Published var selectedRule: EKRecurrenceFrequency = .weekly
     
-    var endRecurrenceDateBinding: Binding<Date> { Binding<Date>(get: { self.endRecurrenceDate ?? self.setSuggestedEndRecurrenceDate() }, set: { self.endRecurrenceDate = $0 }) }
+    public var endRecurrenceDateBinding: Binding<Date> { Binding<Date>(get: { self.endRecurrenceDate ?? self.setSuggestedEndRecurrenceDate() }, set: { self.endRecurrenceDate = $0 }) }
     public var newItemTitleBinding: Binding<String> {  Binding<String>(get: { self.newItemTitle }, set: { self.newItemTitle = $0 }) }
     public var newItemStartTimeBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemStartTime }, set: { self.newItemStartTime = $0 }) }
     public var newItemEndTimeBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemEndTime }, set: { self.newItemEndTime = $0 }) }
@@ -71,6 +71,16 @@ class AddEventViewModel: ObservableObject {
     
     public func createEventOrReminder() {
         self.addEvent()
+        if let recurrenceEnd = self.endRecurrenceDate {
+            self.recurrendeEnd = EKRecurrenceEnd(end: recurrenceEnd)
+        } else if let numberOfOccurences = numberOfOccurences {
+            self.recurrendeEnd = EKRecurrenceEnd(occurrenceCount: numberOfOccurences)
+        }
+        self.setRecurrenceRule()
+    }
+    
+    private func setRecurrenceRule() {
+        self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, end: self.recurrendeEnd)
     }
     
     private func reset() {
@@ -111,6 +121,9 @@ class AddEventViewModel: ObservableObject {
         Task {
             do {
                 let newEvent = try await EventManager.shared.createReminder(self.newItemTitle, startDate: self.newItemStartDate, dueDate: self.newItemEndDate)
+                if let recurrenceRule = recurrenceRule {
+                    newEvent.addRecurrenceRule(recurrenceRule)
+                }
                 // TODO add recurrence and stuff
                 await MainActor.run {
                     EventManager.shared.reminders.append(newEvent)
@@ -145,7 +158,7 @@ class AddEventViewModel: ObservableObject {
             default: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 5)
             }
             self.endRecurrenceDate = suggestedEndDate
-            self.recurrenceRule?.recurrenceEnd = EKRecurrenceEnd(end: suggestedEndDate)
+            self.numberOfOccurences = nil
             return suggestedEndDate
         }
         return endDate

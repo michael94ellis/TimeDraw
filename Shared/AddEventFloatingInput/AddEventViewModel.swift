@@ -24,6 +24,7 @@ class AddEventViewModel: ObservableObject {
     @Published var endRecurrenceDate: Date?
     @Published var numberOfOccurences: Int?
     @Published var recurrenceEnds: Bool = false
+    @Published var isRecurrenceUsingOccurences: Bool = false
     @Published var selectedRule: EKRecurrenceFrequency = .weekly
     
     var endRecurrenceDateBinding: Binding<Date> { Binding<Date>(get: { self.endRecurrenceDate ?? self.setSuggestedEndRecurrenceDate() }, set: { self.endRecurrenceDate = $0 }) }
@@ -32,6 +33,8 @@ class AddEventViewModel: ObservableObject {
     public var newItemEndTimeBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemEndTime }, set: { self.newItemEndTime = $0 }) }
     public var newItemStartDateBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemStartDate }, set: { self.newItemStartDate = $0 }) }
     public var newItemEndDateBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemEndDate }, set: { self.newItemEndDate = $0 }) }
+    public var startDateSuggestionBinding: Binding<Date> { Binding<Date>(get: { self.newItemStartDate ?? Date() }, set: { self.newItemStartDate = $0 }) }
+    public var endDateSuggestionBinding: Binding<Date> { Binding<Date>(get: { self.newItemEndDate ?? Date().addingTimeInterval(60 * 60) }, set: { self.newItemEndDate = $0 }) }
     
     @Published var isDisplayingOptions: Bool = false
     @Published var isDateTimePickerOpen: Bool = false

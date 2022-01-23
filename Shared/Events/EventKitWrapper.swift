@@ -22,8 +22,12 @@ public final class EventManager: ObservableObject {
     public private(set) var eventStore = EKEventStore()
 
     /// Returns calendar object from event kit
-    public var defaultCalendar: EKCalendar? {
-        eventStore.calendarForApp()
+    public var defaultEventCalendar: EKCalendar? {
+        eventStore.calendarForEvents()
+    }
+    /// Returns calendar object from event kit
+    public var defaultReminderCalendar: EKCalendar? {
+        eventStore.calendarForReminders()
     }
 
     // MARK: Static accessor
@@ -74,7 +78,7 @@ public final class EventManager: ObservableObject {
         span: EKSpan = .thisEvent,
         isAllDay: Bool = false
     ) async throws -> EKEvent {
-        let calendar = try await accessCalendar()
+        let calendar = try await accessEventsCalendar()
         let createdEvent = try self.eventStore.createEvent(title: title, startDate: startDate, endDate: endDate, calendar: calendar, span: span, isAllDay: isAllDay)
         return createdEvent
     }
@@ -86,11 +90,11 @@ public final class EventManager: ObservableObject {
     public func createReminder(
         _ title: String,
         startDate: Date?,
-        endDate: Date?,
-        calendar: EKCalendar
+        dueDate: Date?
     ) async throws -> EKReminder {
-        let calendar = try await accessCalendar()
-        let newReminder = try self.eventStore.createReminder(title: title, startDate: startDate, endDate: endDate, calendar: calendar)
+        self.eventStore.calendars(for: .reminder)
+        let calendar = try await accessRemindersCalendar()
+        let newReminder = try self.eventStore.createReminder(title: title, startDate: startDate, dueDate: dueDate, calendar: calendar)
         return newReminder
     }
 
@@ -102,7 +106,7 @@ public final class EventManager: ObservableObject {
         identifier: String,
         span: EKSpan = .thisEvent
     ) async throws {
-        try await accessCalendar()
+        try await accessEventsCalendar()
         try self.eventStore.deleteEvent(identifier: identifier, span: span)
     }
 
@@ -197,17 +201,33 @@ public final class EventManager: ObservableObject {
     }
 
     // MARK: Private
-    /// Request access to calendar
+    /// Request access to Events calendar
     /// - Returns: calendar object
     @discardableResult
-    private func accessCalendar() async throws -> EKCalendar {
+    private func accessEventsCalendar() async throws -> EKCalendar {
         let authorization = try await requestEventStoreAuthorization()
 
         guard authorization == .authorized else {
             throw EventError.eventAuthorizationStatus(nil)
         }
 
-        guard let calendar = eventStore.calendarForApp() else {
+        guard let calendar = eventStore.calendarForEvents() else {
+            throw EventError.unableToAccessCalendar
+        }
+
+        return calendar
+    }
+    /// Request access to Reminders calendar
+    /// - Returns: calendar object
+    @discardableResult
+    private func accessRemindersCalendar() async throws -> EKCalendar {
+        let authorization = try await requestReminderStoreAuthorization()
+
+        guard authorization == .authorized else {
+            throw EventError.eventAuthorizationStatus(nil)
+        }
+
+        guard let calendar = eventStore.calendarForReminders() else {
             throw EventError.unableToAccessCalendar
         }
 

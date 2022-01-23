@@ -12,7 +12,6 @@ struct AddRecurrenceRule: View {
     
     @EnvironmentObject var viewModel: AddEventViewModel
     @State var showDateTime: Bool = false
-    @State var showOccurenceEnd: Bool = false
     
     var body: some View {
         if self.viewModel.isRecurrencePickerOpen {
@@ -20,10 +19,10 @@ struct AddRecurrenceRule: View {
                 HStack {
                     Button(action: {
                         withAnimation {
-                            self.showOccurenceEnd.toggle()
+                            self.viewModel.isRecurrenceUsingOccurences.toggle()
                         }
                     }) {
-                        Text(self.showOccurenceEnd ? "Occurrences" : "Repeat")
+                        Text(self.viewModel.isRecurrenceUsingOccurences ? "Occurrences" : "Repeat")
                             .padding(.horizontal)
                     }
                     .buttonStyle(.plain)
@@ -37,6 +36,7 @@ struct AddRecurrenceRule: View {
                 Divider()
                     .padding(.horizontal)
                 HStack {
+                    Spacer()
                     Picker("", selection: self.$viewModel.selectedRule) {
                         ForEach(EKRecurrenceFrequency.allCases, id: \.self) { frequency in
                             Text(frequency.description)
@@ -45,10 +45,11 @@ struct AddRecurrenceRule: View {
                     }
                     .pickerStyle(.segmented)
                     .padding(.vertical, 4)
+                    Spacer()
                 }
                 .padding(.horizontal)
                 HStack {
-                    if self.showOccurenceEnd {
+                    if self.viewModel.isRecurrenceUsingOccurences {
                         Spacer()
                         Text("Repeat")
                         TextField("123", value: self.$viewModel.numberOfOccurences, formatter: NumberFormatter())
@@ -58,26 +59,31 @@ struct AddRecurrenceRule: View {
                         Text("times")
                         Spacer()
                     } else {
+                        Spacer()
                         Button(action: {
                             withAnimation {
                                 self.showDateTime.toggle()
                             }
                         }) {
-                            Text(self.showDateTime ?  "End:" : "End Date:")
-                                .padding(.horizontal)
+                            Text("End Date:")
                         }
                         .buttonStyle(.plain)
+                        Spacer()
                         if self.showDateTime {
                             DatePicker("", selection: self.viewModel.endRecurrenceDateBinding)
+                                .datePickerStyle(.compact)
+                                .labelsHidden()
+                                .frame(width: 200, height: 30)
                         } else {
                             DateTimePickerInputView(date: self.$viewModel.endRecurrenceDate, placeholder: "Tap to add", mode: .date)
-                                .frame(width: 150, height: 30)
+                                .frame(width: 200, height: 30)
                                 .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
                                 .onTapGesture {
                                     self.viewModel.setSuggestedEndRecurrenceDate()
                                     self.viewModel.recurrenceEnds.toggle()
                                 }
                         }
+                        Spacer()
                     }
                 }
                 .padding(.horizontal)

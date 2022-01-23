@@ -61,7 +61,6 @@ struct AddEventFloatingInputView: View {
                                 self.isBackgroundBlurred = true
                             }
                         }
-                        .foregroundColor(Color(uiColor: .label))
                         .placeholder(when: self.viewModel.newItemTitle.isEmpty) {
                             Text("New Event or Reminder").foregroundColor(.gray)
                         }
@@ -71,7 +70,8 @@ struct AddEventFloatingInputView: View {
                             .foregroundColor(Color(uiColor: .label))
                     }.buttonStyle(.plain)
                 }
-                .frame(width: 362, height: self.barHeight)
+                .frame(height: self.barHeight)
+                .frame(maxWidth: 600)
                 .background(RoundedRectangle(cornerRadius: 13)
                                 .fill(Color(uiColor: .systemGray6))
                                 .shadow(radius: 4, x: 2, y: 2))

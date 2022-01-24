@@ -10,7 +10,7 @@ import SwiftUI
 struct AddEventDateTimePicker: View {
     
     @EnvironmentObject var viewModel: AddEventViewModel
-    @State var showDates: Bool = false
+    @State var showDates: Bool = true
     private let barHeight: CGFloat = 96
     
     var body: some View {
@@ -22,7 +22,7 @@ struct AddEventDateTimePicker: View {
                             self.showDates.toggle()
                         }
                     }) {
-                        Text(self.showDates ?  "Date/Time" : "Time")
+                        Text(self.showDates ?  "Time" : "Today")
                             .padding(.horizontal)
                     }
                     .buttonStyle(.plain)
@@ -39,7 +39,7 @@ struct AddEventDateTimePicker: View {
                     VStack {
                         HStack {
                             Spacer()
-                            Text("From:")
+                            Text("Start:")
                                 .frame(width: 75, height: 30, alignment: .leading)  
                             Spacer()
                             DatePicker("", selection: self.viewModel.startDateSuggestionBinding)
@@ -51,7 +51,7 @@ struct AddEventDateTimePicker: View {
                         .padding(.horizontal, 16)
                         HStack {
                             Spacer()
-                            Text("To:")
+                            Text("End:")
                                 .frame(width: 75, height: 30, alignment: .leading)
                             Spacer()
                             DatePicker("", selection: self.viewModel.endDateSuggestionBinding)

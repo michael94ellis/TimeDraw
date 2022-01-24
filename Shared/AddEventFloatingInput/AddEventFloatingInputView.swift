@@ -74,15 +74,18 @@ struct AddEventFloatingInputView: View {
                     TextField("", text: self.viewModel.newItemTitleBinding)
                         .focused(self.$isNewEventFocused)
                         .onChange(of: self.viewModel.isAddEventTextFieldFocused) {
+                            // Handle changes of the textfield focus from the view model's perspective
                             self.viewModel.isAddEventTextFieldFocused = $0
                             self.isNewEventFocused = $0
                         }
                         .submitLabel(.done)
                         .onSubmit {
+                            // User tapped Keyboard Done button
                             self.viewModel.createEventOrReminder()
                             self.isNewEventFocused = false
                         }
                         .onTapGesture {
+                            // User tapped textfield - is attempting to add event
                             withAnimation {
                                 self.viewModel.isDateTimePickerOpen = self.viewModel.newItemStartDate != nil || self.viewModel.newItemEndDate != nil
                                 self.isBackgroundBlurred = true
@@ -93,6 +96,7 @@ struct AddEventFloatingInputView: View {
                             Text("New Event or Reminder").foregroundColor(.gray)
                         }
                     Button(action: {
+                        // User submitted event by tapping plus
                         self.viewModel.createEventOrReminder()
                         self.isNewEventFocused = false
                     }) {

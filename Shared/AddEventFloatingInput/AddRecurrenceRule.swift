@@ -11,7 +11,7 @@ import EventKit
 struct AddRecurrenceRule: View {
     
     @EnvironmentObject var viewModel: AddEventViewModel
-    @State var showDateTime: Bool = false
+    @State var showDateTime: Bool = true
     
     var body: some View {
         if self.viewModel.isRecurrencePickerOpen {

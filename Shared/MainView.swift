@@ -41,10 +41,11 @@ struct MainView: View {
                 EventsAndRemindersMainList()
             }
             .if(self.addEventViewModel.isAddEventTextFieldFocused) { view in
-                view.background(Color.black.opacity(0.6))
-                    .edgesIgnoringSafeArea(.bottom)
-                    .blur(radius: 0)
-                    .blur(radius: 2)
+                view.background(Color.black.opacity(0.6)
+                                    .blur(radius: 1))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .edgesIgnoringSafeArea(.all)
+                    .blur(radius: 1)
                     .contentShape(Rectangle())
                     .onTapGesture {
                         withAnimation {

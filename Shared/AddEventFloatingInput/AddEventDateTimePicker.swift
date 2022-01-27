@@ -17,15 +17,8 @@ struct AddEventDateTimePicker: View {
         if self.viewModel.isDateTimePickerOpen {
             VStack {
                 HStack {
-                    Button(action: {
-                        withAnimation {
-                            self.showDates.toggle()
-                        }
-                    }) {
-                        Text(self.showDates ?  "Time" : "Today")
-                            .padding(.horizontal)
-                    }
-                    .buttonStyle(.plain)
+                    Text("Time")
+                        .padding(.horizontal)
                     Spacer()
                     Button(action: { self.viewModel.removeTimeFromEvent() }) {
                         Text("Remove").foregroundColor(.red1)
@@ -35,17 +28,13 @@ struct AddEventDateTimePicker: View {
                 .padding(.top)
                 Divider()
                     .padding(.horizontal)
-                if self.showDates {
                     VStack {
                         HStack {
                             Spacer()
                             Text("Start:")
                                 .frame(width: 75, height: 30, alignment: .leading)  
                             Spacer()
-                            DatePicker("", selection: self.viewModel.startDateSuggestionBinding)
-                                .labelsHidden()
-                                .frame(maxWidth: 200)
-                                .frame(height: 30)
+                            DateAndTimePickers(suggestTimeInterval: 0, dateTime: self.$viewModel.newItemStartDate)
                             Spacer()
                         }
                         .padding(.horizontal, 16)
@@ -54,40 +43,13 @@ struct AddEventDateTimePicker: View {
                             Text("End:")
                                 .frame(width: 75, height: 30, alignment: .leading)
                             Spacer()
-                            DatePicker("", selection: self.viewModel.endDateSuggestionBinding)
-                                .labelsHidden()
-                                .frame(maxWidth: 200)
-                                .frame(height: 30)
+                            DateAndTimePickers(suggestTimeInterval: 60 * 60, dateTime: self.$viewModel.newItemEndDate)
                             Spacer()
                         }
                         .padding(.horizontal, 16)
                     }
                     .padding(.bottom)
-                } else {
-                    HStack {
-                        DateTimePickerInputView(date: self.viewModel.newItemStartDateBinding, placeholder: "Start", mode: .time)
-                            .frame(width: 150, height: 30)
-                            .padding(.top, 4)
-                            .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
-                            .onTapGesture {
-                                if self.viewModel.newItemStartDate == nil {
-                                    self.viewModel.newItemStartDate = Date()
-                                }
-                            }
-                        Text("to")
-                        DateTimePickerInputView(date: self.viewModel.newItemEndDateBinding, placeholder: "End", mode: .time)
-                            .frame(width: 150, height: 30)
-                            .padding(.top, 4)
-                            .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
-                            .onTapGesture {
-                                if self.viewModel.newItemEndDate == nil {
-                                    self.viewModel.newItemEndDate = Date().addingTimeInterval(60 * 60)
-                                }
-                            }
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom)
-                }
+               
             }
             .frame(maxWidth: 600)
             .background(RoundedRectangle(cornerRadius: 13)

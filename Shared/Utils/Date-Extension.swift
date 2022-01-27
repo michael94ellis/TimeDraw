@@ -7,6 +7,13 @@
 
 import Foundation
 
+extension DateFormatter {
+    convenience public init(format: String) {
+        self.init()
+        self.dateFormat = format
+    }
+}
+
 extension Date {
     
     func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {

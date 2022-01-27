@@ -35,7 +35,7 @@ struct EventsAndRemindersMainList: View{
                         }
                         Spacer()
                         if item.hasRecurrenceRules {
-                            Image(systemName: "clock.arrow.2.circlepath")
+                            Image("repeat")
                                 .font(.subheadline)
                                 .foregroundColor(Color(uiColor: .darkGray))
                         }
@@ -68,6 +68,13 @@ struct EventsAndRemindersMainList: View{
                                 .foregroundColor(Color(uiColor: .darkGray))
                         }
                         Spacer()
+                        if let rules = item.recurrenceRules, !rules.isEmpty {
+                            Image("repeat")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .font(.subheadline)
+                                .foregroundColor(Color(uiColor: .darkGray))
+                        }
                         if item.priority > 0 {
                             Text("Priority: \(item.priority)")
                                 .font(.caption)

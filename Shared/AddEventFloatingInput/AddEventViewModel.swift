@@ -25,16 +25,19 @@ class AddEventViewModel: ObservableObject {
     @Published var endRecurrenceDate: Date?
     @Published var numberOfOccurences: Int?
     @Published var isRecurrenceUsingOccurences: Bool = false
-    @Published var selectedRule: EKRecurrenceFrequency = .weekly
+    @Published var frequencyDayValueInt: Int?
+    @Published var frequencyDayValueString: String = ""
+    @Published var frequencyMonthDate: Int?
+    @Published var selectedRule: EKRecurrenceFrequency = .weekly {
+        didSet {
+            print(self.selectedRule)
+        }
+    }
     
-    public var endRecurrenceDateBinding: Binding<Date> { Binding<Date>(get: { self.endRecurrenceDate ?? self.setSuggestedEndRecurrenceDate() }, set: { self.endRecurrenceDate = $0 }) }
+    let weekdayFormatter = DateFormatter(format: "E")
+    var daysOfTheWeek = [String]()
+    
     public var newItemTitleBinding: Binding<String> {  Binding<String>(get: { self.newItemTitle }, set: { self.newItemTitle = $0 }) }
-    public var newItemStartTimeBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemStartTime }, set: { self.newItemStartTime = $0 }) }
-    public var newItemEndTimeBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemEndTime }, set: { self.newItemEndTime = $0 }) }
-    public var newItemStartDateBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemStartDate }, set: { self.newItemStartDate = $0 }) }
-    public var newItemEndDateBinding: Binding<Date?> {  Binding<Date?>(get: { self.newItemEndDate }, set: { self.newItemEndDate = $0 }) }
-    public var startDateSuggestionBinding: Binding<Date> { Binding<Date>(get: { self.newItemStartDate ?? Date() }, set: { self.newItemStartDate = $0 }) }
-    public var endDateSuggestionBinding: Binding<Date> { Binding<Date>(get: { self.newItemEndDate ?? Date().addingTimeInterval(60 * 60) }, set: { self.newItemEndDate = $0 }) }
     
     @Published var isAddEventTextFieldFocused: Bool = false
     @Published var isDisplayingOptions: Bool = false
@@ -44,6 +47,14 @@ class AddEventViewModel: ObservableObject {
     
     public var isFocused: Bool {
         self.isDateTimePickerOpen || self.isRecurrencePickerOpen || self.isLocationTextFieldOpen
+    }
+    
+    init() {
+        if let month = Calendar.current.dateComponents([.month], from: Date()).month {
+            self.frequencyMonthDate = month - 1
+        }
+        let daysInThisWeek = Calendar.current.daysWithSameWeekOfYear(as: Date())
+        self.daysOfTheWeek = daysInThisWeek.compactMap { self.weekdayFormatter.string(from: $0) }
     }
     
     func addTimeToEvent() {
@@ -111,6 +122,7 @@ class AddEventViewModel: ObservableObject {
                 let newEvent = try await EventManager.shared.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
                 if self.isRecurrencePickerOpen, let recurrenceRule = recurrenceRule {
                     newEvent.addRecurrenceRule(recurrenceRule)
+                    try? EventManager.shared.eventStore.save(newEvent, span: .futureEvents)
                 }
                 // TODO add recurrence and stuff
                 await MainActor.run {
@@ -130,6 +142,7 @@ class AddEventViewModel: ObservableObject {
                 let newReminder = try await EventManager.shared.createReminder(self.newItemTitle, startDate: self.newItemStartDate, dueDate: self.newItemEndDate)
                 if self.isRecurrencePickerOpen, let recurrenceRule = recurrenceRule {
                     newReminder.addRecurrenceRule(recurrenceRule)
+                    try? EventManager.shared.eventStore.save(newReminder, commit: true)
                 }
                 // TODO add recurrence and stuff
                 await MainActor.run {

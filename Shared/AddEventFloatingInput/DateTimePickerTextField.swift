@@ -26,8 +26,8 @@ final class DateTimePickerTextField: UITextField {
         toolBar.barTintColor = .systemGray4
         toolBar.sizeToFit()
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let clearButton = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(clearTextField))
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(dismissTextField))
+        let clearButton = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(self.clearTextField))
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.dismissTextField))
         toolBar.setItems([clearButton, flexibleSpace, doneButton], animated: false)
         inputAccessoryView = toolBar
     }

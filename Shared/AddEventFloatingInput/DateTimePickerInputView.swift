@@ -14,10 +14,10 @@ struct DateTimePickerInputView: UIViewRepresentable {
     let formatter = DateFormatter()
     let mode: UIDatePicker.Mode
     
-    init(date: Binding<Date?>, placeholder: String, mode: UIDatePicker.Mode) {
+    init(date: Binding<Date?>, placeholder: String, mode: UIDatePicker.Mode, format: String? = nil) {
         self._date = date
         self.placeholder = "\(placeholder)"
-        formatter.dateFormat = "MMM dd Hh:mm a"
+        formatter.dateFormat = format == nil ? "MMM dd hh:mm a" : format
         self.mode = mode
     }
     

@@ -195,6 +195,7 @@ public final class EventManager: ObservableObject {
         self.eventStore
             .fetchReminders(matching: predicate) { newReminders in
                 DispatchQueue.main.async {
+                    print(newReminders)
                     self.reminders = newReminders ?? []
                 }
             }

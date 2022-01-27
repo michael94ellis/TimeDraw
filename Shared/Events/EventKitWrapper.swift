@@ -89,8 +89,8 @@ public final class EventManager: ObservableObject {
     /// - Returns: created reminder
     public func createReminder(
         _ title: String,
-        startDate: Date?,
-        dueDate: Date?
+        startDate: DateComponents?,
+        dueDate: DateComponents?
     ) async throws -> EKReminder {
         self.eventStore.calendars(for: .reminder)
         let calendar = try await accessRemindersCalendar()

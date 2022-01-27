@@ -158,7 +158,7 @@ struct AddRecurrenceRule: View {
                     } else {
                         Spacer()
                         Text("End Date:  ")
-                        DateAndTimePickers(suggestTimeInterval: 0, dateTime: self.$viewModel.endRecurrenceDate)
+                        DateAndTimePickers(dateTime: self.$viewModel.endRecurrenceTime, dateDate: self.$viewModel.endRecurrenceDate)
                             .onTapGesture {
                                 self.viewModel.setSuggestedEndRecurrenceDate()
                             }

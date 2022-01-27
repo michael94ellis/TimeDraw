@@ -14,15 +14,16 @@ class AddEventViewModel: ObservableObject {
     // New Event/Reminder Data
     @Published var newItemTitle: String = ""
     // For the "Add Time" feature
-    @Published var newItemStartTime: Date?
-    @Published var newItemEndTime: Date?
+    @Published var newItemStartTime: DateComponents?
+    @Published var newItemEndTime: DateComponents?
     // For the "Add Date/Time" feature
-    @Published var newItemStartDate: Date?
-    @Published var newItemEndDate: Date?
+    @Published var newItemStartDate: DateComponents?
+    @Published var newItemEndDate: DateComponents?
     // Recurrence Rule Data
     private var recurrenceRule: EKRecurrenceRule?
     private var recurrenceEnd: EKRecurrenceEnd?
-    @Published var endRecurrenceDate: Date?
+    @Published var endRecurrenceDate: DateComponents?
+    @Published var endRecurrenceTime: DateComponents?
     @Published var numberOfOccurences: Int?
     @Published var isRecurrenceUsingOccurences: Bool = false
     @Published var frequencyDayValueInt: Int?
@@ -83,8 +84,8 @@ class AddEventViewModel: ObservableObject {
     
     public func createEventOrReminder() {
         self.addEvent()
-        if let recurrenceEnd = self.endRecurrenceDate {
-            self.recurrenceEnd = EKRecurrenceEnd(end: recurrenceEnd)
+        if let recurrenceEnd = self.endRecurrenceDate, let recurrenceEndDate = Calendar.current.date(from: recurrenceEnd) {
+            self.recurrenceEnd = EKRecurrenceEnd(end: recurrenceEndDate)
         } else if let numberOfOccurences = numberOfOccurences {
             self.recurrenceEnd = EKRecurrenceEnd(occurrenceCount: numberOfOccurences)
         }
@@ -112,8 +113,10 @@ class AddEventViewModel: ObservableObject {
     }
     
     private func addEvent() {
-        guard let startDate = self.newItemStartDate, let endDate = self.newItemEndDate else {
-            // TODO handle
+        guard let startDateComponents = self.newItemStartDate,
+              let startDate = Calendar.current.date(from: startDateComponents),
+              let endDateComponents = self.newItemEndDate,
+              let endDate = Calendar.current.date(from: endDateComponents) else {
             self.addReminder()
             return
         }
@@ -167,7 +170,7 @@ class AddEventViewModel: ObservableObject {
     }
     
     @discardableResult
-    func setSuggestedEndRecurrenceDate() -> Date {
+    func setSuggestedEndRecurrenceDate() {
         guard let endDate = self.endRecurrenceDate else {
             var suggestedEndDate: Date
             switch self.selectedRule {
@@ -177,10 +180,10 @@ class AddEventViewModel: ObservableObject {
             case .yearly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 366 * 2)
             default: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 5)
             }
-            self.endRecurrenceDate = suggestedEndDate
+            self.endRecurrenceDate = Calendar.current.dateComponents([.day, .month, .year], from: suggestedEndDate)
+            self.endRecurrenceTime = Calendar.current.dateComponents([.hour, .minute, .second], from: suggestedEndDate)
             self.numberOfOccurences = nil
-            return suggestedEndDate
+            return
         }
-        return endDate
     }
 }

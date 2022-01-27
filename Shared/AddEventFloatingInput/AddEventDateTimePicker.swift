@@ -34,7 +34,7 @@ struct AddEventDateTimePicker: View {
                             Text("Start:")
                                 .frame(width: 75, height: 30, alignment: .leading)  
                             Spacer()
-                            DateAndTimePickers(suggestTimeInterval: 0, dateTime: self.$viewModel.newItemStartDate)
+                            DateAndTimePickers(dateTime: self.$viewModel.newItemStartTime, dateDate: self.$viewModel.newItemStartDate)
                             Spacer()
                         }
                         .padding(.horizontal, 16)
@@ -43,7 +43,7 @@ struct AddEventDateTimePicker: View {
                             Text("End:")
                                 .frame(width: 75, height: 30, alignment: .leading)
                             Spacer()
-                            DateAndTimePickers(suggestTimeInterval: 60 * 60, dateTime: self.$viewModel.newItemEndDate)
+                            DateAndTimePickers(dateTime: self.$viewModel.newItemEndTime , dateDate: self.$viewModel.newItemEndDate)
                             Spacer()
                         }
                         .padding(.horizontal, 16)

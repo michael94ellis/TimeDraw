@@ -95,7 +95,7 @@ class AddEventViewModel: ObservableObject {
         self.recurrenceRule = EKRecurrenceRule(recurrenceWith: selectedRule, interval: 1, end: self.recurrenceEnd)
     }
     
-    private func reset() {
+    func reset() {
         DispatchQueue.main.async {
             withAnimation {
                 self.isAddEventTextFieldFocused = false

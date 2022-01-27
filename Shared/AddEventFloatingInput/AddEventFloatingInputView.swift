@@ -19,6 +19,25 @@ struct AddEventFloatingInputView: View {
     
     @ViewBuilder var eventOptions: some View {
         HStack {
+            Spacer()
+            Button(action: {
+                withAnimation {
+                    self.viewModel.reset()
+                }
+            }) {
+                Image(systemName: "trash")
+                    .resizable()
+                    .frame(width: 30, height: 32)
+                    .foregroundColor(.red1)
+            }
+            .buttonStyle(.plain)
+            .frame(width: 55, height: 55)
+            .background(RoundedRectangle(cornerRadius: 13)
+                            .fill(Color(uiColor: .systemGray6))
+                            .shadow(radius: 4, x: 2, y: 4))
+        }
+        .padding(.bottom, 8)
+        HStack {
             AddRecurrenceRule()
         }
         .padding(.bottom, 8)

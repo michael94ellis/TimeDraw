@@ -27,7 +27,7 @@ class AddEventViewModel: ObservableObject {
     @Published var numberOfOccurences: Int?
     @Published var isRecurrenceUsingOccurences: Bool = false
     @Published var frequencyDayValueInt: Int?
-    @Published var frequencyDayValueString: String = ""
+    @Published var frequencyWeekdayValue: EKWeekday = .monday
     @Published var frequencyMonthDate: Int?
     @Published var selectedRule: EKRecurrenceFrequency = .weekly {
         didSet {
@@ -48,6 +48,15 @@ class AddEventViewModel: ObservableObject {
     
     public var isFocused: Bool {
         self.isDateTimePickerOpen || self.isRecurrencePickerOpen || self.isLocationTextFieldOpen
+    }
+    
+    private var getSelectedWeekDays: [EKRecurrenceDayOfWeek] {
+        return EKWeekday.allCases.compactMap {
+            guard self.frequencyWeekdayValue == $0 else {
+                return nil
+            }
+            return EKRecurrenceDayOfWeek($0)
+        }
     }
     
     init() {
@@ -93,7 +102,18 @@ class AddEventViewModel: ObservableObject {
     }
     
     private func setRecurrenceRule() {
-        self.recurrenceRule = EKRecurrenceRule(recurrenceWith: selectedRule, interval: 1, end: self.recurrenceEnd)
+        let interval = self.frequencyDayValueInt ?? 1
+        switch self.selectedRule {
+        case .daily:
+            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: selectedRule, interval: interval, end: self.recurrenceEnd)
+        case .weekly:
+            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: interval, daysOfTheWeek: self.getSelectedWeekDays, daysOfTheMonth: nil, monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+        case .monthly:
+            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [NSNumber(nonretainedObject: self.frequencyDayValueInt)], monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+        case .yearly:
+            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [NSNumber(nonretainedObject: self.frequencyDayValueInt)], monthsOfTheYear: (1...12).compactMap { NSNumber(value: $0) }, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+        }
+        
     }
     
     func reset() {
@@ -169,9 +189,8 @@ class AddEventViewModel: ObservableObject {
         return recents
     }
     
-    @discardableResult
     func setSuggestedEndRecurrenceDate() {
-        guard let endDate = self.endRecurrenceDate else {
+        if self.endRecurrenceDate == nil {
             var suggestedEndDate: Date
             switch self.selectedRule {
             case .daily: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 31)
@@ -183,7 +202,6 @@ class AddEventViewModel: ObservableObject {
             self.endRecurrenceDate = Calendar.current.dateComponents([.day, .month, .year], from: suggestedEndDate)
             self.endRecurrenceTime = Calendar.current.dateComponents([.hour, .minute, .second], from: suggestedEndDate)
             self.numberOfOccurences = nil
-            return
         }
     }
 }

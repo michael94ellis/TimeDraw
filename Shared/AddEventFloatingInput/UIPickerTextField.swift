@@ -23,6 +23,14 @@ class UIPickerTextField: UITextField, UIPickerViewDelegate, UIPickerViewDataSour
         }
         self.inputView = pickerView
         self.tintColor = .clear
+        let toolBar = UIToolbar()
+        toolBar.barTintColor = .systemGray4
+        toolBar.sizeToFit()
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let clearButton = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(self.clearTextField))
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.dismissTextField))
+        toolBar.setItems([clearButton, flexibleSpace, doneButton], animated: false)
+        inputAccessoryView = toolBar
     }
 
     @available(*, unavailable)
@@ -61,5 +69,25 @@ class UIPickerTextField: UITextField, UIPickerViewDelegate, UIPickerViewDataSour
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.selectionIndex = row
+    }
+    
+    @objc private func clearTextField() {
+        self.text = nil
+    }
+    
+    @objc private func dismissTextField() {
+        resignFirstResponder()
+    }
+    
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        false
+    }
+
+    override func selectionRects(for range: UITextRange) -> [UITextSelectionRect] {
+        []
+    }
+
+    override func caretRect(for position: UITextPosition) -> CGRect {
+        .null
     }
 }

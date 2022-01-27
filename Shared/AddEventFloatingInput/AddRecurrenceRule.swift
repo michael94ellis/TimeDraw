@@ -57,7 +57,7 @@ struct AddRecurrenceRule: View {
         HStack {
             Spacer()
             Picker("", selection: self.$viewModel.selectedRule) {
-                ForEach(EKRecurrenceFrequency.allCases, id: \.self) { frequency in
+                ForEach([EKRecurrenceFrequency.daily, .weekly, .monthly], id: \.self) { frequency in
                     Text(frequency.description)
                         .font(.title)
                 }
@@ -95,7 +95,7 @@ struct AddRecurrenceRule: View {
                     HStack {
                         Spacer()
                         Text("Every")
-                        TextField("1", value: self.$viewModel.numberOfOccurences, formatter: NumberFormatter())
+                        TextField("1", value: self.$viewModel.frequencyDayValueInt, formatter: NumberFormatter())
                             .keyboardType(.numberPad)
                             .frame(width: 90, height: 30)
                             .multilineTextAlignment(TextAlignment.center)
@@ -111,9 +111,9 @@ struct AddRecurrenceRule: View {
                     .frame(height: 33)
                 case .weekly:
                     HStack {
-                        Picker("", selection: self.$viewModel.frequencyDayValueString) { // S M T W T F S
-                            ForEach(self.viewModel.daysOfTheWeek, id: \.self) { dayLetter in
-                                Text(dayLetter)
+                        Picker("", selection: self.$viewModel.frequencyWeekdayValue) { // S M T W T F S
+                            ForEach(EKWeekday.allCases, id: \.self) { day in
+                                Text(day.description.prefix(3))
                                     .font(.callout)
                             }
                         }

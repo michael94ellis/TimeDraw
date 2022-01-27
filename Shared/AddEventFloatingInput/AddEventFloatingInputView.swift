@@ -106,7 +106,6 @@ struct AddEventFloatingInputView: View {
                         .onTapGesture {
                             // User tapped textfield - is attempting to add event
                             withAnimation {
-                                self.viewModel.isDateTimePickerOpen = self.viewModel.newItemStartDate != nil || self.viewModel.newItemEndDate != nil
                                 self.isBackgroundBlurred = true
                                 self.isNewEventFocused = true
                             }

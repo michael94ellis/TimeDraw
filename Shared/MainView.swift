@@ -10,11 +10,6 @@ import CoreData
 import EventKit
 
 struct MainView: View {
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \DailyGoal.date, ascending: true)],
-        animation: .default)
-    private var dailyGoals: FetchedResults<DailyGoal>
     
     private let date = Date()
     

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EventsAndRemindersMainList: View{
+struct EventsAndRemindersMainList: View {
     
     @ObservedObject private var eventManager: EventManager = .shared
     
@@ -24,18 +24,21 @@ struct EventsAndRemindersMainList: View{
                     HStack {
                         Circle().fill(Color(cgColor: item.calendar.cgColor))
                             .frame(width: 8, height: 8)
-                        if item.title.isEmpty {
-                            Text("Untitled Event")
+                        if item.endDate < Date() {
+                            Text(item.title.isEmpty ? "Untitled Event": item.startDate.description)
+                                .strikethrough()
                                 .lineLimit(2)
                                 .foregroundColor(Color(uiColor: .darkGray))
                         } else {
-                            Text(item.title)
+                            Text(item.title.isEmpty ? "Untitled Event": item.title)
                                 .lineLimit(2)
                                 .foregroundColor(Color(uiColor: .darkGray))
                         }
                         Spacer()
                         if item.hasRecurrenceRules {
                             Image("repeat")
+                                .resizable()
+                                .frame(width: 20, height: 20)
                                 .font(.subheadline)
                                 .foregroundColor(Color(uiColor: .darkGray))
                         }
@@ -58,15 +61,10 @@ struct EventsAndRemindersMainList: View{
                     HStack {
                         Circle().fill(Color(cgColor: item.calendar.cgColor))
                             .frame(width: 8, height: 8)
-                        if item.title.isEmpty {
-                            Text("Untitled Reminder")
-                                .lineLimit(2)
-                                .foregroundColor(Color(uiColor: .darkGray))
-                        } else {
-                            Text(item.title)
-                                .lineLimit(2)
-                                .foregroundColor(Color(uiColor: .darkGray))
-                        }
+                        Text(item.title.isEmpty ? "Untitled Reminder" : item.title)
+                            .if(item.isCompleted) { $0.strikethrough() }
+                            .lineLimit(2)
+                            .foregroundColor(Color(uiColor: .darkGray))
                         Spacer()
                         if let rules = item.recurrenceRules, !rules.isEmpty {
                             Image("repeat")
@@ -79,6 +77,19 @@ struct EventsAndRemindersMainList: View{
                             Text("Priority: \(item.priority)")
                                 .font(.caption)
                                 .foregroundColor(Color(uiColor: .darkGray))
+                        }
+                        if let dueDate = item.dueDateComponents {
+                            if let startDate = item.startDateComponents {
+                                if let dueHour = dueDate.hour, let dueMinute = dueDate.minute {
+                                    let dueTime = "\(dueHour):\(dueMinute < 10 ? "0" : "")\(dueMinute) \(dueHour > 11 ? "PM" : "AM")"
+                                    if let startHour = startDate.hour, let startMinute = startDate.minute {
+                                        let startTime = "\(startHour):\(startMinute < 10 ? "0" : "")\(startMinute) \(startHour > 11 ? "PM" : "AM")"
+                                        Text("\(startTime) - \(dueTime)")
+                                            .font(.caption)
+                                            .foregroundColor(Color(uiColor: .darkGray))
+                                    }
+                                }
+                            }
                         }
                     }
                     .padding(.vertical, 6)

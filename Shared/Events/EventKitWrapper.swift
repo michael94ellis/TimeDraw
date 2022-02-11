@@ -166,7 +166,6 @@ public final class EventManager: ObservableObject {
         let predicate = self.eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: calendars)
         let events = self.eventStore
             .events(matching: predicate)
-            .uniqued(\.eventIdentifier) // filter duplicated events
         // MainActor is a type that runs code on main thread.
         await MainActor.run {
             self.events = events

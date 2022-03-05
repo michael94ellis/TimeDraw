@@ -26,11 +26,9 @@ class EventListViewModel: ObservableObject {
     public func updateData() {
         Task {
             try await self.fetchEventsForToday()
-            print(self.events)
         }
         Task {
             try await self.fetchRemindersForToday()
-            print(self.reminders)
         }
     }
     

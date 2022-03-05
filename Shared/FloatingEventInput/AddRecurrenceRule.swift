@@ -45,7 +45,7 @@ struct AddRecurrenceRule: View {
             }
             .buttonStyle(.plain)
             Spacer()
-            Button(action: { self.viewModel.closeRecurrencePicker() }) {
+            Button(action: { self.viewModel.removeRecurrenceFromEvent() }) {
                 Text("Remove").foregroundColor(.red1)
             }
             .padding(.horizontal)

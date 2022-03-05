@@ -14,18 +14,10 @@ struct MainView: View {
     private let date = Date()
     
     @FocusState private var isDailyGoalFocused: Bool
-    @ObservedObject private var eventManager: EventKitManager = .shared
     
     @StateObject private var addEventViewModel: ModifyCalendarItemViewModel = ModifyCalendarItemViewModel()
     
-    init() {
-        Task {
-            try await EventKitManager.shared.fetchEventsForToday()
-        }
-        Task {
-            try await EventKitManager.shared.fetchRemindersForToday()
-        }
-    }
+    init() {}
     
     var body: some View {
         ZStack {

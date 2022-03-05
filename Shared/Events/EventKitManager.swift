@@ -9,11 +9,55 @@ import Foundation
 import SwiftUI
 import EventKit
 
-public final class EventKitManager: ObservableObject {
-    
+@MainActor
+class EventListViewModel: ObservableObject {
     // MARK: - Properties
     @Published public var events = [EKEvent]()
     @Published public var reminders = [EKReminder]()
+    
+    // MARK: Static accessor
+    public static let shared = EventListViewModel()
+    // This prevents others from using the default '()' initializer for this class.
+    private init() {
+        self.updateData()
+    }
+    
+    public func updateData() {
+        Task {
+            try await self.fetchEventsForToday()
+            print(self.events)
+        }
+        Task {
+            try await self.fetchRemindersForToday()
+            print(self.reminders    )
+        }
+    }
+    
+    // MARK: - Fetch Events
+    /// Fetch events for today
+    /// - Parameter filterCalendarIDs: filterable Calendar IDs
+    /// Returns: events for today
+    public func fetchEventsForToday(filterCalendarIDs: [String] = []) async throws {
+        let today = Date()
+        self.events = try await EventKitManager.shared.fetchEvents(startDate: today.startOfDay, endDate: today.endOfDay, filterCalendarIDs: filterCalendarIDs)
+    }
+    
+    // MARK: Fetch Reminders
+    /// Fetch events for today
+    /// - Parameter filterCalendarIDs: filterable Calendar IDs
+    /// Returns: events for today
+    public func fetchRemindersForToday() async throws {
+        let date = Date()
+        try await EventKitManager.shared.fetchReminders(start: date.startOfDay, end: date.endOfDay, completion: { reminders in
+            // MainActor didnt work for callback
+            DispatchQueue.main.async {
+                self.reminders = reminders ?? []
+            }
+        })
+    }
+}
+
+public final class EventKitManager {
     
     public static var appName: String?
 
@@ -110,17 +154,6 @@ public final class EventKitManager: ObservableObject {
         try self.eventStore.deleteEvent(identifier: identifier, span: span)
     }
 
-    // MARK: - Fetch Events
-    /// Fetch events for today
-    /// - Parameter completion: completion handler
-    /// - Parameter filterCalendarIDs: filterable Calendar IDs
-    /// Returns: events for today
-    @MainActor
-    public func fetchEventsForToday(filterCalendarIDs: [String] = []) async throws {
-        let today = Date()
-        self.events = try await fetchEvents(startDate: today.startOfDay, endDate: today.endOfDay, filterCalendarIDs: filterCalendarIDs)
-    }
-
     /// Fetch events for a specific day
     /// - Parameters:
     ///   - date: day to fetch events from
@@ -167,21 +200,6 @@ public final class EventKitManager: ObservableObject {
         let events = self.eventStore
             .events(matching: predicate)
         return events
-    }
-    
-    // MARK: Fetch Reminders
-    /// Fetch events for today
-    /// - Parameter completion: completion handler
-    /// - Parameter filterCalendarIDs: filterable Calendar IDs
-    /// Returns: events for today
-    public func fetchRemindersForToday() async throws {
-        let date = Date()
-        try await EventKitManager.shared.fetchReminders(start: date.startOfDay, end: date.endOfDay, completion: { reminders in
-            // MainActor didnt work for callback
-            DispatchQueue.main.async {
-                self.reminders = reminders ?? []
-            }
-        })
     }
     
     /// Fetch events from date range

@@ -142,10 +142,6 @@ class ModifyCalendarItemViewModel: ObservableObject {
                     newEvent.addRecurrenceRule(recurrenceRule)
                     try? EventKitManager.shared.eventStore.save(newEvent, span: .futureEvents)
                 }
-                // TODO add recurrence and stuff
-                await MainActor.run {
-                    EventKitManager.shared.events.append(newEvent)
-                }
                 print("Saved Event")
                 self.reset()
             } catch let error as NSError {
@@ -161,10 +157,6 @@ class ModifyCalendarItemViewModel: ObservableObject {
                 if self.isRecurrencePickerOpen, let recurrenceRule = recurrenceRule {
                     newReminder.addRecurrenceRule(recurrenceRule)
                     try? EventKitManager.shared.eventStore.save(newReminder, commit: true)
-                }
-                // TODO add recurrence and stuff
-                await MainActor.run {
-                    EventKitManager.shared.reminders.append(newReminder)
                 }
                 print("Saved Reminder")
                 self.reset()

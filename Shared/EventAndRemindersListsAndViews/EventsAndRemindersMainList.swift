@@ -24,16 +24,9 @@ struct EventsAndRemindersMainList: View {
                     HStack {
                         Circle().fill(Color(cgColor: item.calendar.cgColor))
                             .frame(width: 8, height: 8)
-                        if item.endDate < Date() {
-                            Text(item.title.isEmpty ? "Untitled Event": item.startDate.description)
-                                .strikethrough()
-                                .lineLimit(2)
-                                .foregroundColor(Color(uiColor: .darkGray))
-                        } else {
-                            Text(item.title.isEmpty ? "Untitled Event": item.title)
-                                .lineLimit(2)
-                                .foregroundColor(Color(uiColor: .darkGray))
-                        }
+                        Text(item.title.isEmpty ? "Untitled Event": item.title)
+                            .lineLimit(2)
+                            .foregroundColor(Color(uiColor: .darkGray))
                         Spacer()
                         if item.hasRecurrenceRules {
                             Image("repeat")
@@ -47,7 +40,7 @@ struct EventsAndRemindersMainList: View {
                                 .font(.caption)
                                 .foregroundColor(Color(uiColor: .darkGray))
                         } else {
-                            Text("\(self.timeOnly.string(from: item.startDate)) - \(self.timeOnly.string(from: item.startDate))")
+                            Text("\(self.timeOnly.string(from: item.startDate)) - \(self.timeOnly.string(from: item.endDate))")
                                 .font(.caption)
                                 .foregroundColor(Color(uiColor: .darkGray))
                         }

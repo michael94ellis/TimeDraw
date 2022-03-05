@@ -57,10 +57,20 @@ struct DateAndTimePickers: View {
                             .fill(Color(uiColor: .systemGray5)))
             .frame(maxWidth: 200)
             .frame(height: 30)
+            .onTapGesture {
+                if self.dateDate == nil {
+                    self.dateDate = Date().get(.year, .month, .day)
+                }
+            }
         DateTimePickerInputView(date: self.timeSuggestBinding, placeholder: "Time", mode: .time, format: "hh:mm a")
             .frame(maxWidth: 200)
             .frame(height: 30)
             .background(RoundedRectangle(cornerRadius: 4)
                             .fill(Color(uiColor: .systemGray5)))
+            .onTapGesture {
+                if self.dateTime == nil {
+                    self.dateTime = Date().get(.hour, .minute, .second)
+                }
+            }
     }
 }

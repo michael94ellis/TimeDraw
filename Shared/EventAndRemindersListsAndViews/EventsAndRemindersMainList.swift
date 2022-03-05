@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EventsAndRemindersMainList: View {
     
-    @ObservedObject private var eventManager: EventManager = .shared
+    @ObservedObject private var eventManager: EventKitManager = .shared
     
     private let timeOnly = DateFormatter()
     
@@ -20,7 +20,7 @@ struct EventsAndRemindersMainList: View {
     var body: some View {
         ScrollView {
             LazyVStack {
-                ForEach(EventManager.shared.events) { item in
+                ForEach(EventKitManager.shared.events) { item in
                     HStack {
                         Circle().fill(Color(cgColor: item.calendar.cgColor))
                             .frame(width: 8, height: 8)
@@ -57,7 +57,7 @@ struct EventsAndRemindersMainList: View {
                     .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
                     .padding(.horizontal)
                 }
-                ForEach(EventManager.shared.reminders) { item in
+                ForEach(EventKitManager.shared.reminders) { item in
                     HStack {
                         Circle().fill(Color(cgColor: item.calendar.cgColor))
                             .frame(width: 8, height: 8)

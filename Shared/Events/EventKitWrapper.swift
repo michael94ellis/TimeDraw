@@ -9,13 +9,12 @@ import Foundation
 import SwiftUI
 import EventKit
 
-/// Swift wrapper for EventKit
-public final class EventManager: ObservableObject {
-
+public final class EventKitManager: ObservableObject {
+    
     // MARK: - Properties
     @Published public var events = [EKEvent]()
     @Published public var reminders = [EKReminder]()
-
+    
     public static var appName: String?
 
     /// Event store: An object that accesses the user’s calendar and reminder events and supports the scheduling of new events.
@@ -30,14 +29,15 @@ public final class EventManager: ObservableObject {
         eventStore.calendarForReminders()
     }
 
-    // MARK: Static accessor
-    public static let shared = EventManager()
-
     public static func configureWithAppName(_ appName: String) {
         self.appName = appName
     }
+    
+    // MARK: Static accessor
+    public static let shared = EventKitManager()
 
     private init() {} // This prevents others from using the default '()' initializer for this class.
+    
     // MARK: - Flow
     /// Request event store authorization for Events
     /// - Returns: EKAuthorizationStatus enum
@@ -115,10 +115,10 @@ public final class EventManager: ObservableObject {
     /// - Parameter completion: completion handler
     /// - Parameter filterCalendarIDs: filterable Calendar IDs
     /// Returns: events for today
-    @discardableResult
-    public func fetchEventsForToday(filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
+    @MainActor
+    public func fetchEventsForToday(filterCalendarIDs: [String] = []) async throws {
         let today = Date()
-        return try await fetchEvents(startDate: today.startOfDay, endDate: today.endOfDay, filterCalendarIDs: filterCalendarIDs)
+        self.events = try await fetchEvents(startDate: today.startOfDay, endDate: today.endOfDay, filterCalendarIDs: filterCalendarIDs)
     }
 
     /// Fetch events for a specific day
@@ -166,12 +166,22 @@ public final class EventManager: ObservableObject {
         let predicate = self.eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: calendars)
         let events = self.eventStore
             .events(matching: predicate)
-        // MainActor is a type that runs code on main thread.
-        await MainActor.run {
-            self.events = events
-        }
-
         return events
+    }
+    
+    // MARK: Fetch Reminders
+    /// Fetch events for today
+    /// - Parameter completion: completion handler
+    /// - Parameter filterCalendarIDs: filterable Calendar IDs
+    /// Returns: events for today
+    public func fetchRemindersForToday() async throws {
+        let date = Date()
+        try await EventKitManager.shared.fetchReminders(start: date.startOfDay, end: date.endOfDay, completion: { reminders in
+            // MainActor didnt work for callback
+            DispatchQueue.main.async {
+                self.reminders = reminders ?? []
+            }
+        })
     }
     
     /// Fetch events from date range
@@ -181,7 +191,7 @@ public final class EventManager: ObservableObject {
     ///   - completion: completion handler
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
-    public func fetchReminders(filterCalendarIDs: [String] = []) async throws {
+    public func fetchReminders(start: Date, end: Date, filterCalendarIDs: [String] = [], completion: @escaping (([EKReminder]?) -> ())) async throws {
         let authorization = try await requestReminderStoreAuthorization()
         guard authorization == .authorized else {
             throw EventError.eventAuthorizationStatus(nil)
@@ -191,13 +201,8 @@ public final class EventManager: ObservableObject {
             return filterCalendarIDs.contains(calendar.calendarIdentifier)
         }
         let predicate = self.eventStore.predicateForReminders(in: calendars)
-        self.eventStore
-            .fetchReminders(matching: predicate) { newReminders in
-                DispatchQueue.main.async {
-                    print(newReminders)
-                    self.reminders = newReminders ?? []
-                }
-            }
+        self.eventStore.predicateForEvents(withStart: start, end: end, calendars: calendars)
+        self.eventStore.fetchReminders(matching: predicate, completion: completion)
     }
 
     // MARK: Private

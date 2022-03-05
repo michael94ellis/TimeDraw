@@ -13,7 +13,7 @@ struct TimeDrawApp: App {
     let persistenceController = CoreDataManager.shared
     
     init() {
-        EventManager.configureWithAppName("TimeDraw")
+        EventKitManager.configureWithAppName("TimeDraw")
     }
     
     var body: some Scene {

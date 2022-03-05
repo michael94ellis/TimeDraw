@@ -14,14 +14,16 @@ struct MainView: View {
     private let date = Date()
     
     @FocusState private var isDailyGoalFocused: Bool
-    @ObservedObject private var eventManager: EventManager = .shared
+    @ObservedObject private var eventManager: EventKitManager = .shared
     
     @StateObject private var addEventViewModel: AddEventViewModel = AddEventViewModel()
     
     init() {
         Task {
-            EventManager.shared.events = try await EventManager.shared.fetchEventsForToday()
-            try await EventManager.shared.fetchReminders()
+            try await EventKitManager.shared.fetchEventsForToday()
+        }
+        Task {
+            try await EventKitManager.shared.fetchRemindersForToday()
         }
     }
     

@@ -93,12 +93,6 @@ class AddEventViewModel: ObservableObject {
     
     public func createEventOrReminder() {
         self.addEvent()
-        if let recurrenceEnd = self.endRecurrenceDate, let recurrenceEndDate = Calendar.current.date(from: recurrenceEnd) {
-            self.recurrenceEnd = EKRecurrenceEnd(end: recurrenceEndDate)
-        } else if let numberOfOccurences = numberOfOccurences {
-            self.recurrenceEnd = EKRecurrenceEnd(occurrenceCount: numberOfOccurences)
-        }
-        self.setRecurrenceRule()
     }
     
     private func setRecurrenceRule() {
@@ -142,14 +136,14 @@ class AddEventViewModel: ObservableObject {
         }
         Task {
             do {
-                let newEvent = try await EventManager.shared.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
+                let newEvent = try await EventKitManager.shared.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
                 if self.isRecurrencePickerOpen, let recurrenceRule = recurrenceRule {
                     newEvent.addRecurrenceRule(recurrenceRule)
-                    try? EventManager.shared.eventStore.save(newEvent, span: .futureEvents)
+                    try? EventKitManager.shared.eventStore.save(newEvent, span: .futureEvents)
                 }
                 // TODO add recurrence and stuff
                 await MainActor.run {
-                    EventManager.shared.events.append(newEvent)
+                    EventKitManager.shared.events.append(newEvent)
                 }
                 print("Saved Event")
                 self.reset()
@@ -162,14 +156,14 @@ class AddEventViewModel: ObservableObject {
     private func addReminder() {
         Task {
             do {
-                let newReminder = try await EventManager.shared.createReminder(self.newItemTitle, startDate: self.newItemStartDate, dueDate: self.newItemEndDate)
+                let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: self.newItemStartDate, dueDate: self.newItemEndDate)
                 if self.isRecurrencePickerOpen, let recurrenceRule = recurrenceRule {
                     newReminder.addRecurrenceRule(recurrenceRule)
-                    try? EventManager.shared.eventStore.save(newReminder, commit: true)
+                    try? EventKitManager.shared.eventStore.save(newReminder, commit: true)
                 }
                 // TODO add recurrence and stuff
                 await MainActor.run {
-                    EventManager.shared.reminders.append(newReminder)
+                    EventKitManager.shared.reminders.append(newReminder)
                 }
                 print("Saved Reminder")
                 self.reset()

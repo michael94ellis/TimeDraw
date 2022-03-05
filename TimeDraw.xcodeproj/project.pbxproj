@@ -156,7 +156,7 @@
 		2F6505112791370C00AF90F7 /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
 		2F6505122791370D00AF90F7 /* Inter-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Black.ttf"; sourceTree = "<group>"; };
 		2F6505132791370D00AF90F7 /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
-		2F6505272791373800AF90F7 /* TimeDraw--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "TimeDraw--iOS--Info.plist"; sourceTree = "<group>"; };
+		2F6505272791373800AF90F7 /* TimeDraw--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TimeDraw--iOS--Info.plist"; sourceTree = "<group>"; };
 		2F6505282791384500AF90F7 /* Inter-Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Inter-Font.swift"; sourceTree = "<group>"; };
 		2F81230B2797B59500458B1A /* AddEventDateTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventDateTimePicker.swift; sourceTree = "<group>"; };
 		2F81230E2798957C00458B1A /* DateTimePickerInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerInputView.swift; sourceTree = "<group>"; };
@@ -221,10 +221,9 @@
 		2F39B83B27823CF600FE72C3 = {
 			isa = PBXGroup;
 			children = (
-				2F6505272791373800AF90F7 /* TimeDraw--iOS--Info.plist */,
 				2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */,
-				2F39B88427823DEC00FE72C3 /* TimeDraw (iOS).entitlements */,
 				2F39B84027823CF600FE72C3 /* Shared */,
+				5F654E2C27D3722F00D6F53C /* iOS */,
 				2F39B85227823CF600FE72C3 /* macOS */,
 				2F39B85B27823CF600FE72C3 /* Tests iOS */,
 				2F39B86727823CF700FE72C3 /* Tests macOS */,
@@ -363,6 +362,15 @@
 				2F42C5962784A87100F0BEB2 /* PopoverLink.swift */,
 			);
 			path = SettingsMenu;
+			sourceTree = "<group>";
+		};
+		5F654E2C27D3722F00D6F53C /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				2F6505272791373800AF90F7 /* TimeDraw--iOS--Info.plist */,
+				2F39B88427823DEC00FE72C3 /* TimeDraw (iOS).entitlements */,
+			);
+			path = iOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -765,13 +773,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "TimeDraw (iOS).entitlements";
+				CODE_SIGN_ENTITLEMENTS = "iOS/TimeDraw (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "TimeDraw--iOS--Info.plist";
+				INFOPLIST_FILE = "iOS/TimeDraw--iOS--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Time Draw";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
@@ -803,13 +811,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "TimeDraw (iOS).entitlements";
+				CODE_SIGN_ENTITLEMENTS = "iOS/TimeDraw (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "TimeDraw--iOS--Info.plist";
+				INFOPLIST_FILE = "iOS/TimeDraw--iOS--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Time Draw";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";

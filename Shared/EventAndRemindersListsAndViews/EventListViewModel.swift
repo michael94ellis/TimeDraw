@@ -10,9 +10,11 @@ import EventKit
 
 @MainActor
 class EventListViewModel: ObservableObject {
-    // MARK: - Properties
-    @Published public var events = [EKEvent]()
-    @Published public var reminders = [EKReminder]()
+    
+    @Published public var displayDate: Date = Date()
+    
+    @Published public var events: [EKEvent] = []
+    @Published public var reminders: [EKReminder] = []
     
     // MARK: Static accessor
     public static let shared = EventListViewModel()
@@ -28,7 +30,7 @@ class EventListViewModel: ObservableObject {
         }
         Task {
             try await self.fetchRemindersForToday()
-            print(self.reminders    )
+            print(self.reminders)
         }
     }
     

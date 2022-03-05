@@ -12,15 +12,23 @@ import SwiftUI
 /// Used for creating an EKCalendarItem Event/Reminder with the Floating Input Views
 class ModifyCalendarItemViewModel: ObservableObject {
     
+    // Utility vars
+    let weekdayFormatter = DateFormatter(format: "E")
+    var daysOfTheWeek = [String]()
+    
+    // MARK: - New EKCalendarItem Data
     // New Event/Reminder Data
     @Published var newItemTitle: String = ""
+    /// Convenience binding to pass a published variable as
+    public var newItemTitleBinding: Binding<String> {  Binding<String>(get: { self.newItemTitle }, set: { self.newItemTitle = $0 }) }
     // For the "Add Time" feature
     @Published var newItemStartTime: DateComponents?
     @Published var newItemEndTime: DateComponents?
     // For the "Add Date/Time" feature
     @Published var newItemStartDate: DateComponents?
     @Published var newItemEndDate: DateComponents?
-    // Recurrence Rule Data
+    
+    // MARK: - Recurrence Rule Data
     private var recurrenceRule: EKRecurrenceRule?
     private var recurrenceEnd: EKRecurrenceEnd?
     @Published var endRecurrenceDate: DateComponents?
@@ -36,17 +44,13 @@ class ModifyCalendarItemViewModel: ObservableObject {
         }
     }
     
-    let weekdayFormatter = DateFormatter(format: "E")
-    var daysOfTheWeek = [String]()
-    
-    public var newItemTitleBinding: Binding<String> {  Binding<String>(get: { self.newItemTitle }, set: { self.newItemTitle = $0 }) }
+    // MARK: - Display State vars
     
     @Published var isAddEventTextFieldFocused: Bool = false
     @Published var isDisplayingOptions: Bool = false
     @Published var isDateTimePickerOpen: Bool = false
     @Published var isRecurrencePickerOpen: Bool = false
     @Published var isLocationTextFieldOpen: Bool = false
-    
     public var isFocused: Bool {
         self.isDateTimePickerOpen || self.isRecurrencePickerOpen || self.isLocationTextFieldOpen
     }
@@ -131,12 +135,31 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     private func addEvent() {
         guard let startDateComponents = self.newItemStartDate,
-              let startDate = Calendar.current.date(from: startDateComponents),
               let endDateComponents = self.newItemEndDate,
-              let endDate = Calendar.current.date(from: endDateComponents) else {
-            self.addReminder()
-            return
-        }
+              let startTimeComponents = self.newItemStartTime,
+              let endTimeComponents = self.newItemEndTime else {
+                  self.addReminder()
+                  return
+              }
+        var mergedStartComponments = DateComponents()
+        mergedStartComponments.year = startDateComponents.year
+        mergedStartComponments.month = startDateComponents.month
+        mergedStartComponments.day = startDateComponents.day
+        mergedStartComponments.hour = startTimeComponents.hour
+        mergedStartComponments.minute = startTimeComponents.minute
+        mergedStartComponments.second = startTimeComponents.second
+        var mergedEndComponments = DateComponents()
+        mergedEndComponments.year = endDateComponents.year
+        mergedEndComponments.month = endDateComponents.month
+        mergedEndComponments.day = endDateComponents.day
+        mergedEndComponments.hour = endTimeComponents.hour
+        mergedEndComponments.minute = endTimeComponents.minute
+        mergedEndComponments.second = endTimeComponents.second
+        guard let startDate = Calendar.current.date(from: mergedStartComponments),
+              let endDate = Calendar.current.date(from: mergedEndComponments) else {
+                  self.addReminder()
+                  return
+              }
         Task {
             do {
                 let newEvent = try await EventKitManager.shared.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
@@ -154,8 +177,26 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     private func addReminder() {
         Task {
+            let startDateComponents = self.newItemStartDate
+            let startTimeComponents = self.newItemStartTime
+            var mergedStartComponments = DateComponents()
+            let endTimeComponents = self.newItemEndTime
+            let endDateComponents = self.newItemEndDate
+            var mergedEndComponments = DateComponents()
+            mergedStartComponments.year = startDateComponents?.year
+            mergedStartComponments.month = startDateComponents?.month
+            mergedStartComponments.day = startDateComponents?.day
+            mergedStartComponments.hour = startTimeComponents?.hour
+            mergedStartComponments.minute = startTimeComponents?.minute
+            mergedStartComponments.second = startTimeComponents?.second
+            mergedEndComponments.year = endDateComponents?.year
+            mergedEndComponments.month = endDateComponents?.month
+            mergedEndComponments.day = endDateComponents?.day
+            mergedEndComponments.hour = endTimeComponents?.hour
+            mergedEndComponments.minute = endTimeComponents?.minute
+            mergedEndComponments.second = endTimeComponents?.second 
             do {
-                let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: self.newItemStartDate, dueDate: self.newItemEndDate)
+                let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: mergedStartComponments, dueDate: mergedEndComponments)
                 if self.isRecurrencePickerOpen, let recurrenceRule = recurrenceRule {
                     newReminder.addRecurrenceRule(recurrenceRule)
                     try? EventKitManager.shared.eventStore.save(newReminder, commit: true)

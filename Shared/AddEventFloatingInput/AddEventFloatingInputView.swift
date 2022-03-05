@@ -10,7 +10,7 @@ import EventKit
 
 struct AddEventFloatingInputView: View {
     
-    @EnvironmentObject var viewModel: AddEventViewModel
+    @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
     @FocusState var isNewEventFocused: Bool
     @State var isShowingEmojiPicker: Bool = false
     @Binding var isBackgroundBlurred: Bool

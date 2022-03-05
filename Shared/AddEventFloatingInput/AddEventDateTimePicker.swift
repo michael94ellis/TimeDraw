@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddEventDateTimePicker: View {
     
-    @EnvironmentObject var viewModel: AddEventViewModel
+    @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
     @State var showDates: Bool = true
     private let barHeight: CGFloat = 96
     

@@ -1,5 +1,5 @@
 //
-//  EventKitWrapper.swift
+//  EventKitManager.swift
 //  TimeDraw
 //
 //  Created by Michael Ellis on 1/4/22.

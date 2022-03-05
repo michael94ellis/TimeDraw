@@ -1,5 +1,5 @@
 //
-//  AddEventViewModel.swift
+//  ModifyCalendarItemViewModel.swift
 //  TimeDraw
 //
 //  Created by Michael Ellis on 1/21/22.
@@ -9,7 +9,8 @@ import Foundation
 import EventKit
 import SwiftUI
 
-class AddEventViewModel: ObservableObject {
+/// Used for creating an EKCalendarItem Event/Reminder with the Floating Input Views
+class ModifyCalendarItemViewModel: ObservableObject {
     
     // New Event/Reminder Data
     @Published var newItemTitle: String = ""

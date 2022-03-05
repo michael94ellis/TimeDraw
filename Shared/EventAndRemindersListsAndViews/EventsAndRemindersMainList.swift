@@ -48,14 +48,17 @@ struct EventsAndRemindersMainList: View {
                                 .foregroundColor(Color(uiColor: .darkGray))
                         } else {
                             Text("\(self.timeOnly.string(from: item.startDate)) - \(self.timeOnly.string(from: item.startDate))")
-                             .font(.caption)
-                             .foregroundColor(Color(uiColor: .darkGray))
+                                .font(.caption)
+                                .foregroundColor(Color(uiColor: .darkGray))
                         }
                     }
                     .padding(.vertical, 6)
                     .padding(.horizontal)
                     .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
                     .padding(.horizontal)
+                    .onTapGesture(perform: {
+                        print(item)
+                    })
                 }
                 ForEach(EventKitManager.shared.reminders) { item in
                     HStack {
@@ -96,7 +99,6 @@ struct EventsAndRemindersMainList: View {
                     .padding(.horizontal)
                     .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
                     .padding(.horizontal)
-                    
                 }
                 Spacer(minLength: 120)
             }

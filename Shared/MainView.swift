@@ -16,7 +16,7 @@ struct MainView: View {
     @FocusState private var isDailyGoalFocused: Bool
     @ObservedObject private var eventManager: EventKitManager = .shared
     
-    @StateObject private var addEventViewModel: AddEventViewModel = AddEventViewModel()
+    @StateObject private var addEventViewModel: ModifyCalendarItemViewModel = ModifyCalendarItemViewModel()
     
     init() {
         Task {

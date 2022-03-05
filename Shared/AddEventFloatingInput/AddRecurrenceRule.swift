@@ -10,7 +10,7 @@ import EventKit
 
 struct AddRecurrenceRule: View {
     
-    @EnvironmentObject var viewModel: AddEventViewModel
+    @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
     
     var selectedRecurrenceRuleBinding: Binding<EKRecurrenceFrequency> { Binding<EKRecurrenceFrequency>(get: { self.viewModel.selectedRule }, set: { self.viewModel.selectedRule = $0 })}
     

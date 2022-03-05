@@ -17,6 +17,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     let weekdayFormatter = DateFormatter(format: "E")
     var daysOfTheWeek = [String]()
     
+    @Published var newItemCreated: Bool = false
     // MARK: - New EKCalendarItem Data
     // New Event/Reminder Data
     @Published var newItemTitle: String = ""
@@ -220,6 +221,9 @@ class ModifyCalendarItemViewModel: ObservableObject {
                 }
                 print("Saved Event")
                 await self.reset()
+                await MainActor.run {
+                    self.newItemCreated = true
+                }
             } catch let error as NSError {
                 print("Error: failed to save event with error : \(error)")
             }
@@ -259,6 +263,9 @@ class ModifyCalendarItemViewModel: ObservableObject {
                     try? EventKitManager.shared.eventStore.save(newReminder, commit: true)
                 }
                 print("Saved Reminder")
+                await MainActor.run {
+                    self.newItemCreated = true
+                }
                 await self.reset()
             } catch let error as NSError {
                 print("Error: failed to save reminder with error : \(error)")

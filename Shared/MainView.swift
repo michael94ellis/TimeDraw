@@ -29,6 +29,7 @@ struct MainView: View {
                 // Clock View todo in v2
                 Divider()
                 EventsAndRemindersMainList()
+                    .environmentObject(self.addEventViewModel)
             }
             // Blurred Background
             .if(self.addEventViewModel.isAddEventTextFieldFocused) { view in

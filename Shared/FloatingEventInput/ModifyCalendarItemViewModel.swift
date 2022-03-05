@@ -10,6 +10,7 @@ import EventKit
 import SwiftUI
 
 /// Used for creating an EKCalendarItem Event/Reminder with the Floating Input Views
+/// 
 class ModifyCalendarItemViewModel: ObservableObject {
     
     // Utility vars
@@ -70,6 +71,48 @@ class ModifyCalendarItemViewModel: ObservableObject {
         }
         let daysInThisWeek = Calendar.current.daysWithSameWeekOfYear(as: Date())
         self.daysOfTheWeek = daysInThisWeek.compactMap { self.weekdayFormatter.string(from: $0) }
+    }
+    
+    @MainActor func open(event: EKEvent) {
+        self.reset()
+        self.newItemTitle = event.title
+        self.newItemStartTime = event.startDate.get(.hour, .minute, .second)
+        self.newItemEndTime = event.endDate.get(.hour, .minute, .second)
+        self.newItemStartDate = event.startDate.get(.month, .day, .year)
+        self.newItemEndDate = event.endDate.get(.month, .day, .year)
+        if let recurrenceRule = event.recurrenceRules?.first {
+            self.recurrenceRule = recurrenceRule
+            self.recurrenceEnd = recurrenceRule.recurrenceEnd
+            if let recurrenceEndDate = recurrenceRule.recurrenceEnd?.endDate {
+                self.endRecurrenceDate = recurrenceEndDate.get(.month, .day, .year)
+                self.endRecurrenceTime = recurrenceEndDate.get(.hour, .minute, .second)
+            }
+            // FIXME
+            self.numberOfOccurences = nil
+            self.frequencyDayValueInt = nil
+            self.frequencyMonthDate = nil
+        }
+    }
+    
+    @MainActor func open(reminder: EKReminder) {
+        self.reset()
+        self.newItemTitle = reminder.title
+        self.newItemStartTime = reminder.startDateComponents?.date?.get(.hour, .minute, .second)
+        self.newItemEndTime = reminder.dueDateComponents?.date?.get(.hour, .minute, .second)
+        self.newItemStartDate = reminder.startDateComponents?.date?.get(.month, .day, .year)
+        self.newItemEndDate = reminder.dueDateComponents?.date?.get(.month, .day, .year)
+        if let recurrenceRule = reminder.recurrenceRules?.first {
+            self.recurrenceRule = recurrenceRule
+            self.recurrenceEnd = recurrenceRule.recurrenceEnd
+            if let recurrenceEndDate = recurrenceRule.recurrenceEnd?.endDate {
+                self.endRecurrenceDate = recurrenceEndDate.get(.month, .day, .year)
+                self.endRecurrenceTime = recurrenceEndDate.get(.hour, .minute, .second)
+            }
+            // FIXME
+            self.numberOfOccurences = nil
+            self.frequencyDayValueInt = nil
+            self.frequencyMonthDate = nil
+        }
     }
     
     func addTimeToEvent() {

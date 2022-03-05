@@ -10,6 +10,7 @@ import SwiftUI
 struct EventsAndRemindersMainList: View {
     
     @ObservedObject private var eventList: EventListViewModel = .shared
+    @EnvironmentObject var floatingModifyViewModel: ModifyCalendarItemViewModel
     
     private let timeOnly = DateFormatter()
     
@@ -23,6 +24,7 @@ struct EventsAndRemindersMainList: View {
                 ForEach(self.eventList.events) { item in
                     Button(action: {
                         print(item)
+                        self.floatingModifyViewModel.open(event: item)
                         // DELETE ITEM TEST CODE
 //                        Task {
 //                            try? await EventKitManager.shared.eventStore.deleteEvent(identifier: item.calendarItemIdentifier)
@@ -62,6 +64,7 @@ struct EventsAndRemindersMainList: View {
                 ForEach(self.eventList.reminders) { item in
                     Button(action: {
                         print(item)
+                        self.floatingModifyViewModel.open(reminder: item)
                         // DELETE ITEM TEST CODE
 //                        Task {
 //                            try? await EventKitManager.shared.eventStore.deleteReminder(identifier: item.calendarItemIdentifier)

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F1F8FA427D3AAEF00648234 /* EventListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1F8FA327D3AAEF00648234 /* EventListViewModel.swift */; };
+		2F1F8FA527D3AAEF00648234 /* EventListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1F8FA327D3AAEF00648234 /* EventListViewModel.swift */; };
 		2F21112D279908450041EE85 /* View-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21112C279908450041EE85 /* View-Extension.swift */; };
 		2F21112E279908450041EE85 /* View-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21112C279908450041EE85 /* View-Extension.swift */; };
 		2F2111302799B62D0041EE85 /* EventsAndRemindersMainList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21112F2799B62D0041EE85 /* EventsAndRemindersMainList.swift */; };
@@ -115,6 +117,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2F1F8FA327D3AAEF00648234 /* EventListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListViewModel.swift; sourceTree = "<group>"; };
 		2F21112C279908450041EE85 /* View-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View-Extension.swift"; sourceTree = "<group>"; };
 		2F21112F2799B62D0041EE85 /* EventsAndRemindersMainList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsAndRemindersMainList.swift; sourceTree = "<group>"; };
 		2F211133279A4F4E0041EE85 /* AddRecurrenceRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecurrenceRule.swift; sourceTree = "<group>"; };
@@ -351,6 +354,7 @@
 			isa = PBXGroup;
 			children = (
 				2F21112F2799B62D0041EE85 /* EventsAndRemindersMainList.swift */,
+				2F1F8FA327D3AAEF00648234 /* EventListViewModel.swift */,
 			);
 			path = EventAndRemindersListsAndViews;
 			sourceTree = "<group>";
@@ -580,6 +584,7 @@
 				2F39B87027823CF700FE72C3 /* MainView.swift in Sources */,
 				2F42C5A02784E6C800F0BEB2 /* Array-Extension.swift in Sources */,
 				2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */,
+				2F1F8FA427D3AAEF00648234 /* EventListViewModel.swift in Sources */,
 				2F42C5972784A87100F0BEB2 /* PopoverLink.swift in Sources */,
 				2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */,
 			);
@@ -618,6 +623,7 @@
 				2F39B87127823CF700FE72C3 /* MainView.swift in Sources */,
 				2F42C5A12784E6C800F0BEB2 /* Array-Extension.swift in Sources */,
 				2F6505042787A09900AF90F7 /* MainHeader.swift in Sources */,
+				2F1F8FA527D3AAEF00648234 /* EventListViewModel.swift in Sources */,
 				2F42C5982784A87100F0BEB2 /* PopoverLink.swift in Sources */,
 				2F42C59527848DF700F0BEB2 /* Date-Extension.swift in Sources */,
 			);

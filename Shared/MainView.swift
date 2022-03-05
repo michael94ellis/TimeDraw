@@ -44,15 +44,20 @@ struct MainView: View {
                         }
                     }
             }
-            VStack {
-                Spacer()
+            // Cover up the event list and background views when the Floating Event Input is open
+            if self.addEventViewModel.isAddEventTextFieldFocused {
+                Rectangle()
+                    .fill(Color.clear)
                     .contentShape(Rectangle())
                     .onTapGesture {
                         withAnimation {
                             self.addEventViewModel.isAddEventTextFieldFocused = false
                         }
                     }
-                AddEventFloatingInputView(isBackgroundBlurred: self.$addEventViewModel.isAddEventTextFieldFocused)
+            }
+            VStack {
+                Spacer()
+                FloatingEventInput(isBackgroundBlurred: self.$addEventViewModel.isAddEventTextFieldFocused)
                     .onChange(of: self.addEventViewModel.isAddEventTextFieldFocused, perform: { isFocused in
                         if isFocused { self.addEventViewModel.isAddEventTextFieldFocused = true }
                     })

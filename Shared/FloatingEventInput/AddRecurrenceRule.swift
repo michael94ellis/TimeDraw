@@ -138,6 +138,8 @@ struct AddRecurrenceRule: View {
                         self.dayFrequencyTextField("On:")
                         Spacer()
                     }
+                @unknown default:
+                    EmptyView()
                 }
                 HStack {
                     if self.viewModel.isRecurrenceUsingOccurences {

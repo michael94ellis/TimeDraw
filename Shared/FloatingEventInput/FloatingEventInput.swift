@@ -1,5 +1,5 @@
 //
-//  AddEventFloatingTextField.swift
+//  FloatingEventInput.swift
 //  TimeDraw
 //
 //  Created by Michael Ellis on 1/6/22.
@@ -8,7 +8,7 @@
 import SwiftUI
 import EventKit
 
-struct AddEventFloatingInputView: View {
+struct FloatingEventInput: View {
     
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
     @FocusState var isNewEventFocused: Bool

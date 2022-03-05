@@ -23,7 +23,7 @@ struct FloatingEventInput: View {
             Spacer()
             Button(action: {
                 withAnimation {
-                    self.viewModel.reset()
+                    self.viewModel.delete()
                 }
             }) {
                 Image(systemName: "trash")

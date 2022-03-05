@@ -19,6 +19,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     @Published var newItemCreated: Bool = false
     // MARK: - New EKCalendarItem Data
+    @Published var calendarItem: EKCalendarItem?
     // New Event/Reminder Data
     @Published var newItemTitle: String = ""
     /// Convenience binding to pass a published variable as
@@ -76,6 +77,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     @MainActor func open(event: EKEvent) {
         self.reset()
+        self.calendarItem = event
         self.newItemTitle = event.title
         self.newItemStartTime = event.startDate.get(.hour, .minute, .second)
         self.newItemEndTime = event.endDate.get(.hour, .minute, .second)
@@ -97,6 +99,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     @MainActor func open(reminder: EKReminder) {
         self.reset()
+        self.calendarItem = reminder
         self.newItemTitle = reminder.title
         self.newItemStartTime = reminder.startDateComponents?.date?.get(.hour, .minute, .second)
         self.newItemEndTime = reminder.dueDateComponents?.date?.get(.hour, .minute, .second)
@@ -169,6 +172,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.isRecurrencePickerOpen = false
             self.isLocationTextFieldOpen = false
             
+            self.calendarItem = nil
             self.newItemTitle = ""
             self.newItemStartTime = nil
             self.newItemEndTime = nil
@@ -183,6 +187,16 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.frequencyMonthDate = nil
         }
         EventListViewModel.shared.updateData()
+    }
+    
+    @MainActor func delete() {
+        if let event = self.calendarItem as? EKEvent {
+            try? EventKitManager.shared.eventStore.deleteEvent(identifier: event.calendarItemIdentifier)
+        }
+        if let reminder = self.calendarItem as? EKReminder {
+            try? EventKitManager.shared.eventStore.deleteReminder(identifier: reminder.calendarItemIdentifier)
+        }
+        self.reset()
     }
     
     private func addEvent() {

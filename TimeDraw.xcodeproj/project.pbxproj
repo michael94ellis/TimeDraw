@@ -221,6 +221,7 @@
 		2F39B83B27823CF600FE72C3 = {
 			isa = PBXGroup;
 			children = (
+				5F654E2C27D3722F00D6F53C /* iOS */,
 				2F6505272791373800AF90F7 /* TimeDraw--iOS--Info.plist */,
 				2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */,
 				2F39B88427823DEC00FE72C3 /* TimeDraw (iOS).entitlements */,
@@ -363,6 +364,13 @@
 				2F42C5962784A87100F0BEB2 /* PopoverLink.swift */,
 			);
 			path = SettingsMenu;
+			sourceTree = "<group>";
+		};
+		5F654E2C27D3722F00D6F53C /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = iOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

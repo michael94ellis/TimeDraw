@@ -68,6 +68,9 @@ struct DateAndTimePickers: View {
             .background(RoundedRectangle(cornerRadius: 4)
                             .fill(Color(uiColor: .systemGray5)))
             .onTapGesture {
+                if self.dateDate == nil {
+                    self.dateDate = Date().get(.year, .month, .day)
+                }
                 if self.dateTime == nil {
                     self.dateTime = Date().get(.hour, .minute, .second)
                 }

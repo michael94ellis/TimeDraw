@@ -117,20 +117,28 @@ class ModifyCalendarItemViewModel: ObservableObject {
         
     }
     
-    func reset() {
-        DispatchQueue.main.async {
-            withAnimation {
-                self.isAddEventTextFieldFocused = false
-                self.isDisplayingOptions = false
-                self.isDateTimePickerOpen = false
-                self.isRecurrencePickerOpen = false
-                self.isLocationTextFieldOpen = false
-                
-                self.newItemTitle = ""
-                self.newItemStartDate = nil
-                self.newItemEndDate = nil
-            }
+    @MainActor func reset() {
+        withAnimation {
+            self.isAddEventTextFieldFocused = false
+            self.isDisplayingOptions = false
+            self.isDateTimePickerOpen = false
+            self.isRecurrencePickerOpen = false
+            self.isLocationTextFieldOpen = false
+            
+            self.newItemTitle = ""
+            self.newItemStartTime = nil
+            self.newItemEndTime = nil
+            self.newItemStartDate = nil
+            self.newItemEndDate = nil
+            self.recurrenceRule = nil
+            self.recurrenceEnd = nil
+            self.endRecurrenceDate = nil
+            self.endRecurrenceTime = nil
+            self.numberOfOccurences = nil
+            self.frequencyDayValueInt = nil
+            self.frequencyMonthDate = nil
         }
+        EventListViewModel.shared.updateData()
     }
     
     private func addEvent() {
@@ -168,7 +176,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
                     try? EventKitManager.shared.eventStore.save(newEvent, span: .futureEvents)
                 }
                 print("Saved Event")
-                self.reset()
+                await self.reset()
             } catch let error as NSError {
                 print("Error: failed to save event with error : \(error)")
             }
@@ -179,22 +187,28 @@ class ModifyCalendarItemViewModel: ObservableObject {
         Task {
             let startDateComponents = self.newItemStartDate
             let startTimeComponents = self.newItemStartTime
-            var mergedStartComponments = DateComponents()
+            var mergedStartComponments: DateComponents?
             let endTimeComponents = self.newItemEndTime
             let endDateComponents = self.newItemEndDate
-            var mergedEndComponments = DateComponents()
-            mergedStartComponments.year = startDateComponents?.year
-            mergedStartComponments.month = startDateComponents?.month
-            mergedStartComponments.day = startDateComponents?.day
-            mergedStartComponments.hour = startTimeComponents?.hour
-            mergedStartComponments.minute = startTimeComponents?.minute
-            mergedStartComponments.second = startTimeComponents?.second
-            mergedEndComponments.year = endDateComponents?.year
-            mergedEndComponments.month = endDateComponents?.month
-            mergedEndComponments.day = endDateComponents?.day
-            mergedEndComponments.hour = endTimeComponents?.hour
-            mergedEndComponments.minute = endTimeComponents?.minute
-            mergedEndComponments.second = endTimeComponents?.second 
+            var mergedEndComponments: DateComponents?
+            if startDateComponents != nil || startTimeComponents != nil {
+                mergedStartComponments = DateComponents()
+                mergedStartComponments?.year = startDateComponents?.year
+                mergedStartComponments?.month = startDateComponents?.month
+                mergedStartComponments?.day = startDateComponents?.day
+                mergedStartComponments?.hour = startTimeComponents?.hour
+                mergedStartComponments?.minute = startTimeComponents?.minute
+                mergedStartComponments?.second = startTimeComponents?.second
+            }
+            if endDateComponents != nil || endTimeComponents != nil {
+                mergedEndComponments = DateComponents()
+                mergedEndComponments?.year = endDateComponents?.year
+                mergedEndComponments?.month = endDateComponents?.month
+                mergedEndComponments?.day = endDateComponents?.day
+                mergedEndComponments?.hour = endTimeComponents?.hour
+                mergedEndComponments?.minute = endTimeComponents?.minute
+                mergedEndComponments?.second = endTimeComponents?.second
+            }
             do {
                 let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: mergedStartComponments, dueDate: mergedEndComponments)
                 if self.isRecurrencePickerOpen, let recurrenceRule = recurrenceRule {
@@ -202,7 +216,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
                     try? EventKitManager.shared.eventStore.save(newReminder, commit: true)
                 }
                 print("Saved Reminder")
-                self.reset()
+                await self.reset()
             } catch let error as NSError {
                 print("Error: failed to save reminder with error : \(error)")
             }

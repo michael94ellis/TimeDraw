@@ -57,6 +57,10 @@ struct EventsAndRemindersMainList: View {
                 ForEach(self.eventList.reminders) { item in
                     Button(action: {
                         print(item)
+                        Task {
+                            try? await EventKitManager.shared.eventStore.deleteReminder(identifier: item.calendarItemIdentifier)
+                            try? EventKitManager.shared.eventStore.save(item, commit: true)
+                        }
                     }) {
                         HStack {
                             Circle().fill(Color(cgColor: item.calendar.cgColor))

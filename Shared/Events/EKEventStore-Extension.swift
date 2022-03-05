@@ -46,7 +46,8 @@ extension EKEventAvailability {
 
 extension EKEventStore {
 
-    // MARK: - CRUD
+    // MARK: - Create
+    
     /// Create an event
     /// - Parameters:
     ///   - title: title of the event
@@ -93,6 +94,8 @@ extension EKEventStore {
         return reminder
     }
     
+    // MARK: - Delete
+    
     /// Delete event
     /// - Parameters:
     ///   - identifier: event identifier
@@ -116,11 +119,10 @@ extension EKEventStore {
         identifier: String,
         span: EKSpan = .thisEvent
     ) throws {
-        guard let event = fetchEvent(identifier: identifier) else {
+        guard let reminder = self.fetchReminder(identifier: identifier) else {
             throw EventError.invalidEvent
         }
-
-        try remove(event, span: span, commit: true)
+        try? self.remove(reminder, commit: true)
     }
 
     // MARK: - Fetch
@@ -162,24 +164,45 @@ extension EKEventStore {
         } else {
             let newCalendar = EKCalendar(for: .reminder, eventStore: self)
             newCalendar.title = appName
-            newCalendar.source = defaultCalendarForNewEvents?.source
+            newCalendar.source = self.defaultCalendarForNewEvents?.source
             newCalendar.cgColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
-            try? saveCalendar(newCalendar, commit: true)
+            try? self.saveCalendar(newCalendar, commit: true)
             return newCalendar
         }
     }
-
+    
     /// Fetch an EKEvent instance with given identifier
     /// - Parameter identifier: event identifier
     /// - Returns: an EKEvent instance with given identifier
     func fetchEvent(identifier: String) -> EKEvent? {
-        event(withIdentifier: identifier)
+        self.event(withIdentifier: identifier)
     }
+    
     /// Fetch an EKEvent instance with given identifier
     /// - Parameter identifier: event identifier
     /// - Returns: an EKEvent instance with given identifier
-    func getReminders(matching predicate: NSPredicate?, completion: @escaping ([EKReminder]?) -> Void) {
-        let reminderPredicate: NSPredicate = predicate ?? self.predicateForReminders(in: nil)
+    func fetchReminder(identifier: String) -> EKReminder? {
+        self.calendarItem(withIdentifier: identifier) as? EKReminder
+    }
+    /// Fetch an EKEvent instance with given identifier
+    /// - Returns: All EKReminders that are incomplete
+    func getIncompleteReminders(completion: @escaping ([EKReminder]?) -> Void) {
+        let reminderPredicate: NSPredicate = self.predicateForIncompleteReminders(withDueDateStarting: nil, ending: nil, calendars: nil)
         self.fetchReminders(matching: reminderPredicate, completion: completion)
+    }
+    
+    // Unused - Future Feature
+    func removeExpiredReminders() {
+        let pastPredicate = self.predicateForIncompleteReminders(withDueDateStarting: nil, ending: Date(), calendars:[])
+        self.fetchReminders(matching: pastPredicate) { foundReminders in
+            guard let remindersToDelete = foundReminders,
+                  !remindersToDelete.isEmpty else {
+                      return
+                  }
+            for reminder in remindersToDelete {
+                try? self.remove(reminder, commit: false)
+            }
+            try? self.commit()
+        }
     }
 }

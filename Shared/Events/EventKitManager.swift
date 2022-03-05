@@ -17,11 +17,11 @@ public final class EventKitManager {
 
     /// Returns calendar object from event kit
     public var defaultEventCalendar: EKCalendar? {
-        eventStore.calendarForEvents()
+        self.eventStore.calendarForEvents()
     }
     /// Returns calendar object from event kit
     public var defaultReminderCalendar: EKCalendar? {
-        eventStore.calendarForReminders()
+        self.eventStore.calendarForReminders()
     }
 
     public static func configureWithAppName(_ appName: String) {
@@ -174,7 +174,8 @@ public final class EventKitManager {
         self.eventStore.fetchReminders(matching: predicate, completion: completion)
     }
 
-    // MARK: Private
+    // MARK: Access Calendars
+    
     /// Request access to Events calendar
     /// - Returns: calendar object
     @discardableResult

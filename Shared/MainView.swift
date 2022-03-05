@@ -21,6 +21,7 @@ struct MainView: View {
     
     var body: some View {
         ZStack {
+            // Primary Display
             VStack {
                 MainHeader(for: self.date)
                 DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
@@ -29,6 +30,7 @@ struct MainView: View {
                 Divider()
                 EventsAndRemindersMainList()
             }
+            // Blurred Background
             .if(self.addEventViewModel.isAddEventTextFieldFocused) { view in
                 view.background(Color.black.opacity(0.6)
                                     .blur(radius: 1))
@@ -43,7 +45,7 @@ struct MainView: View {
                     }
             }
             VStack {
-                Rectangle().fill(Color.clear)
+                Spacer()
                     .contentShape(Rectangle())
                     .onTapGesture {
                         withAnimation {

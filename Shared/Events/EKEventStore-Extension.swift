@@ -107,7 +107,6 @@ extension EKEventStore {
         guard let event = fetchEvent(identifier: identifier) else {
             throw EventError.invalidEvent
         }
-
         try remove(event, span: span, commit: true)
     }
     

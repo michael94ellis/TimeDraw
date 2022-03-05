@@ -23,6 +23,11 @@ struct EventsAndRemindersMainList: View {
                 ForEach(self.eventList.events) { item in
                     Button(action: {
                         print(item)
+                        // DELETE ITEM TEST CODE
+//                        Task {
+//                            try? await EventKitManager.shared.eventStore.deleteEvent(identifier: item.calendarItemIdentifier)
+//                            try? EventKitManager.shared.eventStore.save(item, span: .thisEvent)
+//                        }
                     }) {
                         HStack {
                             Circle().fill(Color(cgColor: item.calendar.cgColor))
@@ -57,10 +62,11 @@ struct EventsAndRemindersMainList: View {
                 ForEach(self.eventList.reminders) { item in
                     Button(action: {
                         print(item)
-                        Task {
-                            try? await EventKitManager.shared.eventStore.deleteReminder(identifier: item.calendarItemIdentifier)
-                            try? EventKitManager.shared.eventStore.save(item, commit: true)
-                        }
+                        // DELETE ITEM TEST CODE
+//                        Task {
+//                            try? await EventKitManager.shared.eventStore.deleteReminder(identifier: item.calendarItemIdentifier)
+//                            try? EventKitManager.shared.eventStore.save(item, commit: true)
+//                        }
                     }) {
                         HStack {
                             Circle().fill(Color(cgColor: item.calendar.cgColor))

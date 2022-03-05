@@ -797,7 +797,6 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Time Draw";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -809,7 +808,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.2;
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw;
 				PRODUCT_NAME = TimeDraw;
 				SDKROOT = iphoneos;
@@ -835,7 +834,6 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Time Draw";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -847,7 +845,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.2;
+				MARKETING_VERSION = 0.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw;
 				PRODUCT_NAME = TimeDraw;
 				SDKROOT = iphoneos;

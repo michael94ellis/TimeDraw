@@ -82,19 +82,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.newItemEndTime = endDate.get(.hour, .minute, .second)
             self.newItemEndDate = endDate.get(.month, .day, .year)
         }
-        if let recurrenceRule = event.recurrenceRules?.first {
-            self.isRecurrencePickerOpen = true
-            self.recurrenceRule = recurrenceRule
-            self.recurrenceEnd = recurrenceRule.recurrenceEnd
-            if let recurrenceEndDate = recurrenceRule.recurrenceEnd?.endDate {
-                self.endRecurrenceDate = recurrenceEndDate.get(.month, .day, .year)
-                self.endRecurrenceTime = recurrenceEndDate.get(.hour, .minute, .second)
-            }
-            // FIXME
-            self.numberOfOccurences = nil
-            self.frequencyDayValueInt = nil
-            self.frequencyMonthDate = nil
-        }
+        self.extractRecurrenceRules(for: event)
     }
     
     @MainActor func open(reminder: EKReminder) {
@@ -113,19 +101,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.newItemEndTime = endDate.get(.hour, .minute, .second)
             self.newItemEndDate = endDate.get(.month, .day, .year)
         }
-        if let recurrenceRule = reminder.recurrenceRules?.first {
-            self.isRecurrencePickerOpen = true
-            self.recurrenceRule = recurrenceRule
-            self.recurrenceEnd = recurrenceRule.recurrenceEnd
-            if let recurrenceEndDate = recurrenceRule.recurrenceEnd?.endDate {
-                self.endRecurrenceDate = recurrenceEndDate.get(.month, .day, .year)
-                self.endRecurrenceTime = recurrenceEndDate.get(.hour, .minute, .second)
-            }
-            // FIXME
-            self.numberOfOccurences = nil
-            self.frequencyDayValueInt = nil
-            self.frequencyMonthDate = nil
-        }
+        self.extractRecurrenceRules(for: reminder)
     }
     
     func addTimeToEvent() {
@@ -141,6 +117,22 @@ class ModifyCalendarItemViewModel: ObservableObject {
     }
     
     // MARK: - Recurrence
+    
+    private func extractRecurrenceRules(for item: EKCalendarItem) {
+        if let recurrenceRule = item.recurrenceRules?.first {
+            self.isRecurrencePickerOpen = true
+            self.recurrenceRule = recurrenceRule
+            self.recurrenceEnd = recurrenceRule.recurrenceEnd
+            if let recurrenceEndDate = recurrenceRule.recurrenceEnd?.endDate {
+                self.endRecurrenceDate = recurrenceEndDate.get(.month, .day, .year)
+                self.endRecurrenceTime = recurrenceEndDate.get(.hour, .minute, .second)
+            }
+            // FIXME
+            self.numberOfOccurences = nil
+            self.frequencyDayValueInt = recurrenceRule.daysOfTheWeek?.first?.dayOfTheWeek.rawValue
+            self.frequencyMonthDate = recurrenceRule.daysOfTheMonth?.first?.intValue
+        }
+    }
     
     func openRecurrencePicker() {
         withAnimation {

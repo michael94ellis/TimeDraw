@@ -31,10 +31,11 @@ struct MainView: View {
                 EventsAndRemindersMainList()
                     .environmentObject(self.addEventViewModel)
             }
+            
             // Blurred Background
             .if(self.addEventViewModel.isAddEventTextFieldFocused) { view in
                 view.overlay(Color.black.opacity(0.6)
-                                    .blur(radius: 1))
+                                .blur(radius: 1))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .edgesIgnoringSafeArea(.all)
                     .blur(radius: 1)

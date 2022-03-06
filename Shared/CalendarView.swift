@@ -31,11 +31,9 @@ struct CalendarDateSelection: View {
                         Text("00")
                             .padding(10)
                             .foregroundColor(.clear)
-                            .background(
-                                Calendar.current.isDate(date, inSameDayAs: selectedDate) ? Color(uiColor: .systemGray2)
-                                : Calendar.current.isDateInToday(date) ? Color(uiColor: .systemGray4)
-                                : Color(uiColor: .systemGray6)
-                            )
+                            .background(display ? Color(uiColor: .systemGray2)
+                                : today ? Color(uiColor: .systemGray4)
+                                : Color(uiColor: .systemGray6))
                             .frame(width: 36, height: 36)
                             .cornerRadius(8)
                             .accessibilityHidden(true)
@@ -44,10 +42,9 @@ struct CalendarDateSelection: View {
                             .if(today || display) { view in
                                 view.font(.interBold)
                             }
-                            .foregroundColor(
-                                Calendar.current.isDate(date, inSameDayAs: selectedDate) ? Color.white
-                                : Calendar.current.isDateInToday(date) ? Color(uiColor: .label)
-                                : Color(uiColor: .darkGray))
+                            .foregroundColor(today ? .red1
+                                             : display ? Color(uiColor: .label)
+                                             : .gray2)
                     }
                 },
                 excessDays: { date in

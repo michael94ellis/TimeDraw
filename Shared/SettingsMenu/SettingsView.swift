@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     
     @Binding var showSettingsPopover: Bool
+    @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
     
     public init(display: Binding<Bool>) {
         self._showSettingsPopover = display
@@ -22,6 +23,10 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             VStack {
+                Toggle("Enable Daily Goal Text Area", isOn: self.$isDailyGoalEnabled)
+                    .padding(.horizontal)
+                Spacer()
+                Divider()
                 
                 Link(destination: URL(string: self.vineetURL)!) {
                     Spacer()
@@ -69,7 +74,9 @@ struct SettingsView: View {
                                     .fill(Color(uiColor: .systemGray6)))
                     .padding(.horizontal, 20)
                 Spacer()
+                Spacer()
             }
+            .padding(.horizontal)
             .padding(.top, 22)
             .navigationTitle("Settings")
             .toolbar(content:  {

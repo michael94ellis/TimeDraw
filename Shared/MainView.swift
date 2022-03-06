@@ -14,6 +14,7 @@ struct MainView: View {
     private let date = Date()
     
     @FocusState private var isDailyGoalFocused: Bool
+    @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
     
     @StateObject private var addEventViewModel: ModifyCalendarItemViewModel = ModifyCalendarItemViewModel()
     
@@ -24,7 +25,9 @@ struct MainView: View {
             // Primary Display
             VStack {
                 MainHeader(for: self.date)
-                DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
+                if self.isDailyGoalEnabled {
+                    DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
+                }
                 Spacer()
                 // Clock View todo in v2
                 Divider()

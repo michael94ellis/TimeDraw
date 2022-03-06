@@ -38,7 +38,7 @@ struct MainHeader: View {
     @State var swipeDirection: SwipeDirection = .left
     
     func transitionDirection(direction: SwipeDirection) -> AnyTransition {
-        let slideOut: Edge = direction == .left ? .trailing : .leading
+        let slideOut: Edge = direction == .left ? .leading : .trailing
         return .asymmetric(insertion: .opacity, removal: .move(edge: slideOut))
     }
     
@@ -78,11 +78,26 @@ struct MainHeader: View {
             }
             .frame(width: 45)
             .padding(.vertical, 8)
+            .padding(.horizontal, 1)
             .if(Calendar.current.isDate(date, inSameDayAs: self.eventList.displayDate)) { view in
                 view.background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.2)))
             }
         }
         .buttonStyle(.plain)
+    }
+    
+    func handleGesture(value: SwipeDirection) {
+        self.swipeDirection = value
+        let type: Calendar.Component = self.showCompactCalendar ? .day : .month
+        let amount: Int = self.showCompactCalendar ? 7 : 1
+        switch value {
+        case .left:
+            self.eventList.displayDate = Calendar.current.date(byAdding: type, value: -amount, to: self.eventList.displayDate) ?? Date()
+        case .right:
+            self.eventList.displayDate = Calendar.current.date(byAdding: type, value: amount, to: self.eventList.displayDate) ?? Date()
+        default:
+            self.showCompactCalendar.toggle()
+        }
     }
     
     var body: some View {
@@ -96,6 +111,8 @@ struct MainHeader: View {
                     Text(self.monthYearFormatter.string(from: self.eventList.displayDate))
                         .font(.interExtraBoldTitle)
                         .fontWeight(.semibold)
+                        .foregroundColor(Color.red1)
+                    Image(systemName: self.showCompactCalendar ? "chevron.up" : "chevron.down")
                         .foregroundColor(Color.red1)
                 }
                 Spacer()
@@ -120,15 +137,7 @@ struct MainHeader: View {
                             .onEnded { value in
                     withAnimation {
                         let direction = value.detectDirection()
-                        self.swipeDirection = direction
-                        switch direction {
-                        case .left:
-                            self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: -7, to: self.eventList.displayDate) ?? Date()
-                        case .right:
-                            self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: 7, to: self.eventList.displayDate) ?? Date()
-                        default:
-                            self.showCompactCalendar.toggle()
-                        }
+                        self.handleGesture(value: direction)
                     }
                 })
             } else {
@@ -140,15 +149,7 @@ struct MainHeader: View {
                                 .onEnded { value in
                         withAnimation {
                             let direction = value.detectDirection()
-                            self.swipeDirection = direction
-                            switch direction {
-                            case .left:
-                                self.eventList.displayDate = Calendar.current.date(byAdding: .month, value: -1, to: self.eventList.displayDate) ?? Date()
-                            case .right:
-                                self.eventList.displayDate = Calendar.current.date(byAdding: .month, value: 1, to: self.eventList.displayDate) ?? Date()
-                            default:
-                                self.showCompactCalendar.toggle()
-                            }
+                            self.handleGesture(value: direction)
                         }
                     })
             }

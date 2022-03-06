@@ -11,7 +11,11 @@ import EventKit
 @MainActor
 class EventListViewModel: ObservableObject {
     
-    @Published public var displayDate: Date = Date()
+    @Published public var displayDate: Date = Date() {
+        didSet {
+            self.updateData()
+        }
+    }
     
     @Published public var events: [EKEvent] = []
     @Published public var reminders: [EKReminder] = []

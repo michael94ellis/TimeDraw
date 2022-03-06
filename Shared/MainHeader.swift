@@ -47,12 +47,10 @@ struct MainHeader: View {
     
     var weekHeader: some View {
         HStack {
-            Spacer()
             ForEach(Calendar.current.daysWithSameWeekOfYear(as: date), id: \.self) { date in
                 if Calendar.current.isDateInToday(date) {
                     Button(action: {
                         self.eventList.displayDate = date
-                        self.eventList.updateData()
                     }) {
                         VStack {
                             Text(self.weekdayFormatter.string(from: date))
@@ -71,7 +69,6 @@ struct MainHeader: View {
                 } else {
                     Button(action: {
                         self.eventList.displayDate = date
-                        self.eventList.updateData()
                     }) {
                         VStack {
                             Text(self.weekdayFormatter.string(from: date))
@@ -87,13 +84,8 @@ struct MainHeader: View {
                     }
                     .buttonStyle(.plain)
                 }
-                Spacer()
             }
         }
-    }
-    
-    var monthHeader: some View {
-        CalendarView2(calendar: .current)
     }
     
     var body: some View {
@@ -130,7 +122,8 @@ struct MainHeader: View {
                         }
                     })
             } else {
-                self.monthHeader
+                CalendarDateSelection(calendar: .current, date: self.$eventList.displayDate)
+                    .padding(.horizontal, 25)
             }
         }
     }

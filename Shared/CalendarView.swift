@@ -7,21 +7,21 @@
 
 import SwiftUI
 
-struct CalendarView2: View {
+struct CalendarDateSelection: View {
     private let calendar: Calendar
     private let monthFormatter: DateFormatter
     private let dayFormatter: DateFormatter
     private let weekDayFormatter: DateFormatter
     private let fullFormatter: DateFormatter
 
-    @State private var selectedDate = Self.now
-    private static var now = Date() // Cache now
+    @Binding private var selectedDate: Date
 
-    init(calendar: Calendar) {
+    init(calendar: Calendar, date: Binding<Date>) {
+        self._selectedDate = date
         self.calendar = calendar
         self.monthFormatter = DateFormatter(dateFormat: "MMMM", calendar: calendar)
         self.dayFormatter = DateFormatter(dateFormat: "d", calendar: calendar)
-        self.weekDayFormatter = DateFormatter(dateFormat: "EEEEE", calendar: calendar)
+        self.weekDayFormatter = DateFormatter(dateFormat: "EEE", calendar: calendar)
         self.fullFormatter = DateFormatter(dateFormat: "MMMM dd, yyyy", calendar: calendar)
     }
 
@@ -36,16 +36,18 @@ struct CalendarView2: View {
                             .padding(8)
                             .foregroundColor(.clear)
                             .background(
-                                calendar.isDate(date, inSameDayAs: selectedDate) ? Color.red
-                                    : calendar.isDateInToday(date) ? .green
-                                    : .blue
+                                self.calendar.isDate(date, inSameDayAs: selectedDate) ? Color.darkGray
+                                    : calendar.isDateInToday(date) ? Color.gray
+                                : Color(uiColor: .systemGray5)
                             )
                             .cornerRadius(8)
                             .accessibilityHidden(true)
                             .overlay(
                                 Text(dayFormatter.string(from: date))
-                                    .foregroundColor(.white)
-                            )
+                                    .foregroundColor(
+                                        self.calendar.isDate(date, inSameDayAs: selectedDate) ? Color.white
+                                        : calendar.isDateInToday(date) ? Color.white
+                                        : Color(uiColor: .darkGray)))
                     }
                 },
                 trailing: { date in
@@ -54,6 +56,7 @@ struct CalendarView2: View {
                 },
                 header: { date in
                     Text(weekDayFormatter.string(from: date))
+                        .padding(.vertical, 10)
                 },
                 title: { date in
                     HStack {
@@ -109,7 +112,6 @@ struct CalendarView2: View {
             )
             .equatable()
         }
-        .padding()
     }
 }
 

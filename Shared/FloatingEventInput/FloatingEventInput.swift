@@ -42,7 +42,7 @@ struct FloatingEventInput: View {
                 self.topButton(image: "xmark.square", color: .lightGray, action: { self.viewModel.reset() })
             }
             Spacer()
-            self.topButton(image: "trash", color: .lightGray, action: { self.viewModel.delete() })
+            self.topButton(image: "trash", color: .red1, action: { self.viewModel.delete() })
         }
         .padding(.bottom, 8)
         HStack {

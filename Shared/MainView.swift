@@ -33,22 +33,11 @@ struct MainView: View {
             }
             // Blurred Background
             .if(self.addEventViewModel.isAddEventTextFieldFocused) { view in
-                view.background(Color.black.opacity(0.6)
+                view.overlay(Color.black.opacity(0.6)
                                     .blur(radius: 1))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .edgesIgnoringSafeArea(.all)
                     .blur(radius: 1)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        withAnimation {
-                            self.addEventViewModel.isAddEventTextFieldFocused = false
-                        }
-                    }
-            }
-            // Cover up the event list and background views when the Floating Event Input is open
-            if self.addEventViewModel.isAddEventTextFieldFocused {
-                Rectangle()
-                    .fill(Color.clear)
                     .contentShape(Rectangle())
                     .onTapGesture {
                         withAnimation {

@@ -273,7 +273,16 @@ class ModifyCalendarItemViewModel: ObservableObject {
     private func addEvent(start startDate: Date, end endDate: Date) {
         Task {
             if let existingEvent = self.calendarItem as? EKEvent {
-                
+                existingEvent.startDate = startDate
+                existingEvent.endDate = endDate
+                self.setRecurrenceRule()
+                if let recurrenceRule = recurrenceRule {
+                    existingEvent.recurrenceRules = nil
+                    existingEvent.addRecurrenceRule(recurrenceRule)
+                } else {
+                    existingEvent.recurrenceRules = nil
+                }
+                try? EventKitManager.shared.eventStore.save(existingEvent, span: .futureEvents)
                 await MainActor.run {
                     self.toastMessage = "Event Modified"
                     self.displayToast = true
@@ -302,7 +311,16 @@ class ModifyCalendarItemViewModel: ObservableObject {
     private func addReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) {
         Task {
             if let existingReminder = self.calendarItem as? EKReminder {
-                
+                existingReminder.startDateComponents = startComponents
+                existingReminder.dueDateComponents = endComponents
+                self.setRecurrenceRule()
+                if let recurrenceRule = recurrenceRule {
+                    existingReminder.recurrenceRules = nil
+                    existingReminder.addRecurrenceRule(recurrenceRule)
+                } else {
+                    existingReminder.recurrenceRules = nil
+                }
+                try? EventKitManager.shared.eventStore.save(existingReminder, commit: true)
                 await MainActor.run {
                     self.toastMessage = "Reminder Modified"
                     self.displayToast = true

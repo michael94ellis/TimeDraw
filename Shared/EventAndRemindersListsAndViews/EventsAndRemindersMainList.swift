@@ -101,6 +101,7 @@ struct EventsAndRemindersMainList: View {
             Spacer(minLength: 120)
                 .listRowSeparator(.hidden)
         }
+        .buttonStyle(.plain)
         .listStyle(.plain)
         .refreshable(action: {
             self.eventList.updateData()

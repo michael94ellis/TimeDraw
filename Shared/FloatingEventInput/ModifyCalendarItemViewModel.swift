@@ -20,7 +20,8 @@ class ModifyCalendarItemViewModel: ObservableObject {
     /// Used to determine if the event is being created or edited
     private(set) var editMode: Bool = false
     /// Used to display the toast for when new things are mode
-    @Published var newItemCreated: Bool = false
+    @Published var displayToast: Bool = false
+    @Published var toastMessage: String = ""
     
     // MARK: - New EKCalendarItem Data
     
@@ -209,6 +210,11 @@ class ModifyCalendarItemViewModel: ObservableObject {
     }
     
     private func setRecurrenceRule() {
+        if let recurrenceEnd = self.endRecurrenceDate, let recurrenceEndDate = Calendar.current.date(from: recurrenceEnd) {
+            self.recurrenceEnd = EKRecurrenceEnd(end: recurrenceEndDate)
+        } else if let numberOfOccurences = numberOfOccurences {
+            self.recurrenceEnd = EKRecurrenceEnd(occurrenceCount: numberOfOccurences)
+        }
         let interval = self.frequencyDayValueInt ?? 1
         switch self.selectedRule {
         case .daily:
@@ -266,23 +272,27 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     private func addEvent(start startDate: Date, end endDate: Date) {
         Task {
-            if let recurrenceEnd = self.endRecurrenceDate, let recurrenceEndDate = Calendar.current.date(from: recurrenceEnd) {
-                self.recurrenceEnd = EKRecurrenceEnd(end: recurrenceEndDate)
-            } else if let numberOfOccurences = numberOfOccurences {
-                self.recurrenceEnd = EKRecurrenceEnd(occurrenceCount: numberOfOccurences)
+            if let existingEvent = self.calendarItem as? EKEvent {
+                
+                await MainActor.run {
+                    self.toastMessage = "Event Modified"
+                    self.displayToast = true
+                }
+                await self.reset()
+                return
             }
-            self.setRecurrenceRule()
             do {
                 let newEvent = try await EventKitManager.shared.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
-                if self.isRecurrencePickerOpen, let recurrenceRule = recurrenceRule {
+                self.setRecurrenceRule()
+                if let recurrenceRule = recurrenceRule {
                     newEvent.addRecurrenceRule(recurrenceRule)
-                    try? EventKitManager.shared.eventStore.save(newEvent, span: .futureEvents)
                 }
-                print("Saved Event")
-                await self.reset()
+                try? EventKitManager.shared.eventStore.save(newEvent, span: .futureEvents)
                 await MainActor.run {
-                    self.newItemCreated = true
+                    self.toastMessage = "Event Saved"
+                    self.displayToast = true
                 }
+                await self.reset()
             } catch let error as NSError {
                 print("Error: failed to save event with error : \(error)")
             }
@@ -291,24 +301,25 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     private func addReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) {
         Task {
-            if let reminder = self.calendarItem as? EKReminder {
+            if let existingReminder = self.calendarItem as? EKReminder {
+                
+                await MainActor.run {
+                    self.toastMessage = "Reminder Modified"
+                    self.displayToast = true
+                }
+                await self.reset()
                 return
             }
-            if let recurrenceEnd = self.endRecurrenceDate, let recurrenceEndDate = Calendar.current.date(from: recurrenceEnd) {
-                self.recurrenceEnd = EKRecurrenceEnd(end: recurrenceEndDate)
-            } else if let numberOfOccurences = numberOfOccurences {
-                self.recurrenceEnd = EKRecurrenceEnd(occurrenceCount: numberOfOccurences)
-            }
-            self.setRecurrenceRule()
             do {
                 let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
-                if self.isRecurrencePickerOpen, let recurrenceRule = recurrenceRule {
+                self.setRecurrenceRule()
+                if let recurrenceRule = recurrenceRule {
                     newReminder.addRecurrenceRule(recurrenceRule)
-                    try? EventKitManager.shared.eventStore.save(newReminder, commit: true)
                 }
-                print("Saved Reminder")
+                try? EventKitManager.shared.eventStore.save(newReminder, commit: true)
                 await MainActor.run {
-                    self.newItemCreated = true
+                    self.toastMessage = "Reminder Saved"
+                    self.displayToast = true
                 }
                 await self.reset()
             } catch let error as NSError {

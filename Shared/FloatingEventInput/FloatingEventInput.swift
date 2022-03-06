@@ -126,7 +126,7 @@ struct FloatingEventInput: View {
                         self.viewModel.createEventOrReminder()
                         self.isNewEventFocused = false
                     }) {
-                        if self.viewModel.newItemCreated {
+                        if self.viewModel.displayToast {
                             Image(systemName: "checkmark.circle")
                                 .frame(width: self.barHeight, height: self.barHeight)
                                 .foregroundColor(Color(uiColor: .label))
@@ -145,15 +145,15 @@ struct FloatingEventInput: View {
             }
         }
         .padding(14)
-        .toast(isPresenting: Binding<Bool>(get: { self.viewModel.newItemCreated }, set: { self.viewModel.newItemCreated = $0 }), duration: 2, tapToDismiss: true, alert: {
-            AlertToast(displayMode: .alert, type: .regular, title: "New Item Created")
+        .toast(isPresenting: Binding<Bool>(get: { self.viewModel.displayToast }, set: { self.viewModel.displayToast = $0 }), duration: 2, tapToDismiss: true, alert: {
+            AlertToast(displayMode: .alert, type: .regular, title: self.viewModel.toastMessage)
            //AlertToast goes here
         }, onTap: {
            //onTap would call either if `tapToDismis` is true/false
            //If tapToDismiss is true, onTap would call and then dismis the alert
         }, completion: {
            //Completion block after dismiss
-            self.viewModel.newItemCreated = false
+            self.viewModel.displayToast = false
         })
     }
 }

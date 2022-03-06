@@ -211,11 +211,10 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @MainActor func reset() {
         withAnimation {
             self.editMode = false
-            self.isAddEventTextFieldFocused = false
-            self.isDisplayingOptions = false
-            
             self.calendarItem = nil
             self.newItemTitle = ""
+            self.isAddEventTextFieldFocused = false
+            self.isDisplayingOptions = false
             
             self.clearTimeInput()
             self.clearRecurrence()

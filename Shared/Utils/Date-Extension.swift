@@ -17,13 +17,17 @@ extension DateFormatter {
         self.dateFormat = dateFormat
         self.calendar = calendar
     }
+    public static let monthFormatter = DateFormatter(dateFormat: "MMMM", calendar: Calendar.current)
+    public static let dayFormatter: DateFormatter = DateFormatter(dateFormat: "d", calendar: Calendar.current)
+    public static let weekDayFormatter: DateFormatter = DateFormatter(dateFormat: "EEE", calendar: Calendar.current)
+    public static let fullFormatter: DateFormatter = DateFormatter(dateFormat: "MMMM dd, yyyy", calendar: Calendar.current)
 }
 extension Date {
     
     func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
         return calendar.dateComponents(Set(components), from: self)
     }
-
+    
     func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
         return calendar.component(component, from: self)
     }
@@ -37,7 +41,7 @@ extension Date {
             from: calendar.dateComponents([.year, .month], from: self)
         ) ?? self
     }
-
+    
     var endOfDay: Date {
         var components = DateComponents()
         components.day = 1

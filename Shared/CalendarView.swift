@@ -8,19 +8,12 @@
 import SwiftUI
 
 struct CalendarDateSelection: View {
-    private let monthFormatter: DateFormatter
-    private let dayFormatter: DateFormatter
-    private let weekDayFormatter: DateFormatter
-    private let fullFormatter: DateFormatter
-
+    
     @Binding private var selectedDate: Date
+    @ObservedObject private var eventList: EventListViewModel = .shared
 
     init(date: Binding<Date>) {
         self._selectedDate = date
-        self.monthFormatter = DateFormatter(dateFormat: "MMMM", calendar: Calendar.current)
-        self.dayFormatter = DateFormatter(dateFormat: "d", calendar: Calendar.current)
-        self.weekDayFormatter = DateFormatter(dateFormat: "EEE", calendar: Calendar.current)
-        self.fullFormatter = DateFormatter(dateFormat: "MMMM dd, yyyy", calendar: Calendar.current)
     }
 
     var body: some View {
@@ -33,6 +26,8 @@ struct CalendarDateSelection: View {
                             selectedDate = date
                         }
                     }) {
+                        let today = Calendar.current.isDateInToday(date)
+                        let display = Calendar.current.isDate(date, inSameDayAs: self.eventList.displayDate)
                         Text("00")
                             .padding(10)
                             .foregroundColor(.clear)
@@ -45,11 +40,14 @@ struct CalendarDateSelection: View {
                             .cornerRadius(8)
                             .accessibilityHidden(true)
                             .overlay(
-                                Text(dayFormatter.string(from: date))
-                                    .foregroundColor(
-                                        Calendar.current.isDate(date, inSameDayAs: selectedDate) ? Color.white
-                                        : Calendar.current.isDateInToday(date) ? Color(uiColor: .label)
-                                        : Color(uiColor: .darkGray)))
+                                Text(DateFormatter.dayFormatter.string(from: date)))
+                            .if(today || display) { view in
+                                view.font(.interBold)
+                            }
+                            .foregroundColor(
+                                Calendar.current.isDate(date, inSameDayAs: selectedDate) ? Color.white
+                                : Calendar.current.isDateInToday(date) ? Color(uiColor: .label)
+                                : Color(uiColor: .darkGray))
                     }
                 },
                 excessDays: { date in
@@ -58,13 +56,13 @@ struct CalendarDateSelection: View {
                             selectedDate = date
                         }
                     }) {
-                        Text(dayFormatter.string(from: date))
+                        Text(DateFormatter.dayFormatter.string(from: date))
                             .foregroundColor(.secondary)
                             .frame(width: 45, height: 30)
                     }
                 },
                 header: { date in
-                    Text(weekDayFormatter.string(from: date))
+                    Text(DateFormatter.weekDayFormatter.string(from: date))
                         .frame(width: 45, height: 30)
                 }
             )

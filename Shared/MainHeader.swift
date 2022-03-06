@@ -58,7 +58,9 @@ struct MainHeader: View {
                             }
                             .frame(maxWidth: 45)
                             .padding(.vertical, 10)
-                            .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.2)))
+                            .if(Calendar.current.isDate(date, inSameDayAs: self.eventList.displayDate)) { view in
+                                view.background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.2)))
+                            }
                         }
                         .buttonStyle(.plain)
                     } else {
@@ -74,6 +76,9 @@ struct MainHeader: View {
                             }
                             .frame(maxWidth: 45)
                             .padding(.vertical, 10)
+                            .if(Calendar.current.isDate(date, inSameDayAs: self.eventList.displayDate)) { view in
+                                view.background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.2)))
+                            }
                         }
                         .buttonStyle(.plain)
                     }

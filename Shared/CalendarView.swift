@@ -36,9 +36,9 @@ struct CalendarDateSelection: View {
                             .padding(8)
                             .foregroundColor(.clear)
                             .background(
-                                self.calendar.isDate(date, inSameDayAs: selectedDate) ? Color.darkGray
-                                    : calendar.isDateInToday(date) ? Color.gray
-                                : Color(uiColor: .systemGray5)
+                                self.calendar.isDate(date, inSameDayAs: selectedDate) ? Color(uiColor: .systemGray2)
+                                : calendar.isDateInToday(date) ? Color(uiColor: .systemGray4)
+                                : Color(uiColor: .systemGray6)
                             )
                             .cornerRadius(8)
                             .accessibilityHidden(true)
@@ -46,7 +46,7 @@ struct CalendarDateSelection: View {
                                 Text(dayFormatter.string(from: date))
                                     .foregroundColor(
                                         self.calendar.isDate(date, inSameDayAs: selectedDate) ? Color.white
-                                        : calendar.isDateInToday(date) ? Color.white
+                                        : calendar.isDateInToday(date) ? Color(uiColor: .label)
                                         : Color(uiColor: .darkGray)))
                     }
                 },

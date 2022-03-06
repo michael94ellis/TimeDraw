@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum SwipeDirection: String {
+public enum SwipeDirection: String {
     case left, right, up, down, none
 }
 
@@ -34,7 +34,13 @@ struct MainHeader: View {
     @State private var showSettingsPopover = false
     @AppStorage("compactHeader") private var showCompactCalendar = true
     @ObservedObject private var eventList: EventListViewModel = .shared
-
+    @State var swipeDirection: SwipeDirection = .left
+    func transitionDirection(direction: SwipeDirection) -> AnyTransition {
+        let _: Edge = direction == .right ? .trailing : .leading
+        let slideOut: Edge = direction == .right ? .leading : .trailing
+        return .asymmetric(insertion: .opacity, removal: .move(edge: slideOut))
+    }
+    
     private let date: Date
     private let weekdayFormatter = DateFormatter()
     private let monthYearFormatter = DateFormatter()
@@ -87,14 +93,14 @@ struct MainHeader: View {
                         .foregroundColor(Color.red1)
                 }
                 Spacer()
-//                Menu(content: {
-//                    Button("Settings", action: { self.showSettingsPopover.toggle() })
-//                    Button("Feedback", action: { })
-//                }, label: { Image(systemName: "ellipsis")
-//                    .frame(width: 40, height: 30) })
-//                    .fullScreenCover(isPresented: self.$showSettingsPopover, content: {
-//                        SettingsView(display: $showSettingsPopover)
-//                    })
+                //                Menu(content: {
+                //                    Button("Settings", action: { self.showSettingsPopover.toggle() })
+                //                    Button("Feedback", action: { })
+                //                }, label: { Image(systemName: "ellipsis")
+                //                    .frame(width: 40, height: 30) })
+                //                    .fullScreenCover(isPresented: self.$showSettingsPopover, content: {
+                //                        SettingsView(display: $showSettingsPopover)
+                //                    })
             }
             .padding(.horizontal, 25)
             .padding(.vertical, 10)
@@ -103,24 +109,35 @@ struct MainHeader: View {
                     ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.eventList.displayDate), id: \.self) { date in
                         self.weekDayHeader(for: date)
                     }
-                }.gesture(DragGesture()
+                    .transition(self.transitionDirection(direction: self.swipeDirection))
+                }
+                .gesture(DragGesture()
                             .onEnded { value in
                     let direction = value.detectDirection()
-                    if direction == .left {
-                        self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: -7, to: self.eventList.displayDate) ?? Date()
-                    } else if direction == .right {
-                        self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: 7, to: self.eventList.displayDate) ?? Date()
+                    self.swipeDirection = direction
+                    withAnimation {
+                        if direction == .left {
+                            self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: -7, to: self.eventList.displayDate) ?? Date()
+                        } else if direction == .right {
+                            self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: 7, to: self.eventList.displayDate) ?? Date()
+                        }
                     }
                 })
             } else {
-                CalendarDateSelection(calendar: .current, date: self.$eventList.displayDate)
+                CalendarDateSelection(date: self.$eventList.displayDate)
+                    .padding(.top, 8)
+                    .padding(.horizontal, 25)
+                    .transition(self.transitionDirection(direction: self.swipeDirection))
                     .gesture(DragGesture()
                                 .onEnded { value in
                         let direction = value.detectDirection()
-                        if direction == .left {
-                            self.eventList.displayDate = Calendar.current.date(byAdding: .month, value: -1, to: self.eventList.displayDate) ?? Date()
-                        } else if direction == .right {
-                            self.eventList.displayDate = Calendar.current.date(byAdding: .month, value: 1, to: self.eventList.displayDate) ?? Date()
+                        self.swipeDirection = direction
+                        withAnimation {
+                            if direction == .left {
+                                self.eventList.displayDate = Calendar.current.date(byAdding: .month, value: -1, to: self.eventList.displayDate) ?? Date()
+                            } else if direction == .right {
+                                self.eventList.displayDate = Calendar.current.date(byAdding: .month, value: 1, to: self.eventList.displayDate) ?? Date()
+                            }
                         }
                     })
             }

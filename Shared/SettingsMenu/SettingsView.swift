@@ -18,7 +18,21 @@ struct SettingsView: View {
     
     let vineetURL = "https://www.vineetk.com/"
     let michaelURL = "https://www.michaelrobertellis.com/"
-    let byaruhofURL = "https://www.byaruhof.com/"
+    let byaruhofURL = "https://github.com/byaruhaf"
+    
+    func link(for url: String, title: String) -> some View {
+        Link(destination: URL(string: url)!) {
+            Spacer()
+            Text(title)
+                .lineLimit(2)
+                .multilineTextAlignment(.leading)
+            Spacer()
+        }
+        .padding()
+        .background(RoundedRectangle(cornerRadius: 34)
+                        .fill(Color(uiColor: .systemGray6)))
+        .padding(.horizontal, 20)
+    }
     
     var body: some View {
         NavigationView {
@@ -28,38 +42,9 @@ struct SettingsView: View {
                 Spacer()
                 Divider()
                 
-                Link(destination: URL(string: self.vineetURL)!) {
-                    Spacer()
-                    Text("Design: Vineet Kapil")
-                    Spacer()
-                }
-                    .padding()
-                    .frame(height: 48)
-                    .background(RoundedRectangle(cornerRadius: 34)
-                                    .fill(Color(uiColor: .systemGray6)))
-                    .padding(.horizontal, 20)
-                
-                Link(destination: URL(string: self.michaelURL)!) {
-                    Spacer()
-                    Text("iOS Development: Michael Robert Ellis")
-                    Spacer()
-                }
-                    .padding()
-                    .frame(height: 48)
-                    .background(RoundedRectangle(cornerRadius: 34)
-                                    .fill(Color(uiColor: .systemGray6)))
-                    .padding(.horizontal, 20)
-                
-                Link(destination: URL(string: self.byaruhofURL)!) {
-                    Spacer()
-                    Text("iOS Development: Franklin Byaruhof")
-                    Spacer()
-                }
-                    .padding()
-                    .frame(height: 48)
-                    .background(RoundedRectangle(cornerRadius: 34)
-                                    .fill(Color(uiColor: .systemGray6)))
-                    .padding(.horizontal, 20)
+                self.link(for: self.vineetURL, title: "Design: Vineet Kapil")
+                self.link(for: self.michaelURL, title: "iOS: Michael Robert Ellis")
+                self.link(for: self.byaruhofURL, title: "iOS: Franklin Byaruhof")
                 Button(action: { }, label: {
                     Spacer()
                     Image("smile.face")

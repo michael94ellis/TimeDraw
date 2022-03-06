@@ -154,8 +154,20 @@ class ModifyCalendarItemViewModel: ObservableObject {
         }
     }
     
+    private func handleRecurrence(for item: EKCalendarItem) {
+        self.setRecurrenceRule()
+        if self.isRecurrencePickerOpen,
+           let recurrenceRule = recurrenceRule {
+            item.recurrenceRules = nil
+            item.addRecurrenceRule(recurrenceRule)
+        } else if let existingRule = item.recurrenceRules?.first {
+            item.removeRecurrenceRule(existingRule)
+        }
+    }
+    
     private func setRecurrenceRule() {
-        if let recurrenceEnd = self.endRecurrenceDate, let recurrenceEndDate = Calendar.current.date(from: recurrenceEnd) {
+        if let recurrenceEnd = self.endRecurrenceDate,
+           let recurrenceEndDate = Calendar.current.date(from: recurrenceEnd) {
             self.recurrenceEnd = EKRecurrenceEnd(end: recurrenceEndDate)
         } else if let numberOfOccurences = numberOfOccurences {
             self.recurrenceEnd = EKRecurrenceEnd(occurrenceCount: numberOfOccurences)
@@ -232,11 +244,19 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     @MainActor func delete() {
         if let reminder = self.calendarItem as? EKReminder {
-            try? EventKitManager.shared.eventStore.deleteReminder(identifier: reminder.calendarItemIdentifier)
+            do {
+                try EventKitManager.shared.eventStore.deleteReminder(identifier: reminder.calendarItemIdentifier)
+            } catch  {
+                print(error)
+            }
             self.save(reminder: reminder, "Reminder Deleted")
         }
         if let event = self.calendarItem as? EKEvent {
-            try? EventKitManager.shared.eventStore.deleteEvent(identifier: event.calendarItemIdentifier)
+            do {
+                try EventKitManager.shared.eventStore.deleteEvent(identifier: event.eventIdentifier, span: .futureEvents)
+            } catch  {
+                print(error)
+            }
             self.save(event: event, "Event Deleted")
         }
         self.reset()
@@ -290,14 +310,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
             existingEvent.title = self.newItemTitle
             existingEvent.startDate = startDate
             existingEvent.endDate = endDate
-            self.setRecurrenceRule()
-            if self.isRecurrencePickerOpen,
-               let recurrenceRule = recurrenceRule {
-                existingEvent.recurrenceRules = nil
-                existingEvent.addRecurrenceRule(recurrenceRule)
-            } else if let existingRule = existingEvent.recurrenceRules?.first {
-                existingEvent.removeRecurrenceRule(existingRule)
-            }
+            self.handleRecurrence(for: existingEvent)
             self.save(event: existingEvent, "Event Saved")
         }
     }
@@ -305,10 +318,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @MainActor private func createEvent(start startDate: Date, end endDate: Date) async {
         do {
             let newEvent = try await EventKitManager.shared.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
-            self.setRecurrenceRule()
-            if let recurrenceRule = recurrenceRule {
-                newEvent.addRecurrenceRule(recurrenceRule)
-            }
+            self.handleRecurrence(for: newEvent)
             self.save(event: newEvent, "Event Created")
         } catch let error as NSError {
             print("Error: failed to save event with error : \(error)")
@@ -316,7 +326,11 @@ class ModifyCalendarItemViewModel: ObservableObject {
     }
     
     @MainActor private func save(event: EKEvent, _ message: String) {
-        try? EventKitManager.shared.eventStore.save(event, span: .thisEvent)
+        do {
+            try EventKitManager.shared.eventStore.save(event, span: .thisEvent)
+        } catch  {
+            print(error)
+        }
         self.displayToast(message)
         self.reset()
     }
@@ -331,14 +345,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
             existingReminder.title = self.newItemTitle
             existingReminder.startDateComponents = startComponents
             existingReminder.dueDateComponents = endComponents
-            self.setRecurrenceRule()
-            if self.isRecurrencePickerOpen,
-               let recurrenceRule = recurrenceRule {
-                existingReminder.recurrenceRules = nil
-                existingReminder.addRecurrenceRule(recurrenceRule)
-            } else {
-                existingReminder.recurrenceRules = nil
-            }
+            self.handleRecurrence(for: existingReminder)
             self.save(reminder: existingReminder, "Reminder Created")
         }
     }
@@ -346,10 +353,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @MainActor private func createReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) async {
         do {
             let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
-            self.setRecurrenceRule()
-            if let recurrenceRule = recurrenceRule {
-                newReminder.addRecurrenceRule(recurrenceRule)
-            }
+            self.handleRecurrence(for: newReminder)
             self.save(reminder: newReminder, "Reminder Saved")
         } catch let error as NSError {
             print("Error: failed to save reminder with error : \(error)")

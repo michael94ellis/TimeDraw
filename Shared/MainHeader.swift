@@ -45,47 +45,35 @@ struct MainHeader: View {
         self.monthYearFormatter.dateFormat = "LLLL YYYY"
     }
     
-    var weekHeader: some View {
-        HStack {
-            ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.eventList.displayDate), id: \.self) { date in
+    func weekDayHeader(for date: Date) -> some View {
+        Button(action: {
+            self.eventList.displayDate = date
+        }) {
+            VStack {
                 if Calendar.current.isDateInToday(date) {
-                    Button(action: {
-                        self.eventList.displayDate = date
-                    }) {
-                        VStack {
-                            Text(self.weekdayFormatter.string(from: date))
-                                .padding(.bottom, 5)
-                            Text(date.get(.day).formatted())
-                                .fontWeight(.semibold)
-                                .foregroundColor(Color.red1)
-                        }
-                        .frame(maxWidth: 45)
-                        .padding(.vertical, 10)
-                        .if(Calendar.current.isDate(date, inSameDayAs: self.eventList.displayDate)) { view in
-                            view.background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.2)))
-                        }
-                    }
-                    .buttonStyle(.plain)
+                    Text(self.weekdayFormatter.string(from: date))
+                        .frame(width: 45, height: 30)
+                    Text(date.get(.day).formatted())
+                        .fontWeight(.semibold)
+                        .foregroundColor(Color.red1)
+                } else if Calendar.current.isDate(date, inSameDayAs: self.eventList.displayDate) {
+                    Text(self.weekdayFormatter.string(from: date))
+                        .frame(width: 45, height: 30)
+                    Text(date.get(.day).formatted())
                 } else {
-                    Button(action: {
-                        self.eventList.displayDate = date
-                    }) {
-                        VStack {
-                            Text(self.weekdayFormatter.string(from: date))
-                                .foregroundColor(Color.gray2)
-                                .padding(.bottom, 5)
-                            Text(date.get(.day).formatted())
-                        }
-                        .frame(maxWidth: 45)
-                        .padding(.vertical, 10)
-                        .if(Calendar.current.isDate(date, inSameDayAs: self.eventList.displayDate)) { view in
-                            view.background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.2)))
-                        }
-                    }
-                    .buttonStyle(.plain)
+                    Text(self.weekdayFormatter.string(from: date))
+                        .frame(width: 45, height: 30)
+                        .foregroundColor(Color.gray2)
+                    Text(date.get(.day).formatted())
                 }
             }
+            .frame(width: 45)
+            .padding(.vertical, 8)
+            .if(Calendar.current.isDate(date, inSameDayAs: self.eventList.displayDate)) { view in
+                view.background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.2)))
+            }
         }
+        .buttonStyle(.plain)
     }
     
     var body: some View {
@@ -114,19 +102,21 @@ struct MainHeader: View {
             .padding(.horizontal, 25)
             .padding(.vertical, 10)
             if self.showCompactCalendar {
-                self.weekHeader
-                    .gesture(DragGesture()
-                                .onEnded { value in
-                        let direction = value.detectDirection()
-                        if direction == .left {
-                            self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: -7, to: self.eventList.displayDate) ?? Date()
-                        } else if direction == .right {
-                            self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: 7, to: self.eventList.displayDate) ?? Date()
-                        }
-                    })
+                HStack {
+                    ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.eventList.displayDate), id: \.self) { date in
+                        self.weekDayHeader(for: date)
+                    }
+                }.gesture(DragGesture()
+                            .onEnded { value in
+                    let direction = value.detectDirection()
+                    if direction == .left {
+                        self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: -7, to: self.eventList.displayDate) ?? Date()
+                    } else if direction == .right {
+                        self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: 7, to: self.eventList.displayDate) ?? Date()
+                    }
+                })
             } else {
                 CalendarDateSelection(calendar: .current, date: self.$eventList.displayDate)
-                    .padding(.horizontal, 25)
                     .gesture(DragGesture()
                                 .onEnded { value in
                         let direction = value.detectDirection()

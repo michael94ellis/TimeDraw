@@ -273,14 +273,16 @@ class ModifyCalendarItemViewModel: ObservableObject {
     private func addEvent(start startDate: Date, end endDate: Date) {
         Task {
             if let existingEvent = self.calendarItem as? EKEvent {
+                existingEvent.title = self.newItemTitle
                 existingEvent.startDate = startDate
                 existingEvent.endDate = endDate
                 self.setRecurrenceRule()
-                if let recurrenceRule = recurrenceRule {
+                if self.isRecurrencePickerOpen,
+                   let recurrenceRule = recurrenceRule {
                     existingEvent.recurrenceRules = nil
                     existingEvent.addRecurrenceRule(recurrenceRule)
-                } else {
-                    existingEvent.recurrenceRules = nil
+                } else if let existingRule = existingEvent.recurrenceRules?.first {
+                    existingEvent.removeRecurrenceRule(existingRule)
                 }
                 try? EventKitManager.shared.eventStore.save(existingEvent, span: .futureEvents)
                 await MainActor.run {
@@ -311,10 +313,12 @@ class ModifyCalendarItemViewModel: ObservableObject {
     private func addReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) {
         Task {
             if let existingReminder = self.calendarItem as? EKReminder {
+                existingReminder.title = self.newItemTitle
                 existingReminder.startDateComponents = startComponents
                 existingReminder.dueDateComponents = endComponents
                 self.setRecurrenceRule()
-                if let recurrenceRule = recurrenceRule {
+                if self.isRecurrencePickerOpen,
+                   let recurrenceRule = recurrenceRule {
                     existingReminder.recurrenceRules = nil
                     existingReminder.addRecurrenceRule(recurrenceRule)
                 } else {

@@ -32,22 +32,22 @@ extension DragGesture.Value {
 struct MainHeader: View {
     
     @State private var showSettingsPopover = false
-    @State private var showCompactCalendar = true
+    @AppStorage("compactHeader") private var showCompactCalendar = true
     @ObservedObject private var eventList: EventListViewModel = .shared
 
     private let date: Date
     private let weekdayFormatter = DateFormatter()
-    private let monthNameFormatter = DateFormatter()
+    private let monthYearFormatter = DateFormatter()
     
     init(for date: Date) {
         self.date = date
         self.weekdayFormatter.dateFormat = "EEE"
-        self.monthNameFormatter.dateFormat = "LLLL"
+        self.monthYearFormatter.dateFormat = "LLLL YYYY"
     }
     
     var weekHeader: some View {
         HStack {
-            ForEach(Calendar.current.daysWithSameWeekOfYear(as: date), id: \.self) { date in
+            ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.eventList.displayDate), id: \.self) { date in
                 if Calendar.current.isDateInToday(date) {
                     Button(action: {
                         self.eventList.displayDate = date
@@ -97,7 +97,7 @@ struct MainHeader: View {
                         self.eventList.displayDate = Date()
                     }
                 }) {
-                    Text(self.monthNameFormatter.string(from: self.date))
+                    Text(self.monthYearFormatter.string(from: self.eventList.displayDate))
                         .fontWeight(.semibold)
                         .foregroundColor(Color.red1)
                 }
@@ -119,14 +119,23 @@ struct MainHeader: View {
                                 .onEnded { value in
                         let direction = value.detectDirection()
                         if direction == .left {
-                            print("prev week")
+                            self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: -7, to: self.eventList.displayDate) ?? Date()
                         } else if direction == .right {
-                            print("next week")
+                            self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: 7, to: self.eventList.displayDate) ?? Date()
                         }
                     })
             } else {
                 CalendarDateSelection(calendar: .current, date: self.$eventList.displayDate)
                     .padding(.horizontal, 25)
+                    .gesture(DragGesture()
+                                .onEnded { value in
+                        let direction = value.detectDirection()
+                        if direction == .left {
+                            self.eventList.displayDate = Calendar.current.date(byAdding: .month, value: -1, to: self.eventList.displayDate) ?? Date()
+                        } else if direction == .right {
+                            self.eventList.displayDate = Calendar.current.date(byAdding: .month, value: 1, to: self.eventList.displayDate) ?? Date()
+                        }
+                    })
             }
         }
     }

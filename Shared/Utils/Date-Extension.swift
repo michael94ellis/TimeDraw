@@ -12,8 +12,12 @@ extension DateFormatter {
         self.init()
         self.dateFormat = format
     }
+    convenience init(dateFormat: String, calendar: Calendar) {
+        self.init()
+        self.dateFormat = dateFormat
+        self.calendar = calendar
+    }
 }
-
 extension Date {
     
     func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
@@ -26,6 +30,12 @@ extension Date {
     
     var startOfDay: Date {
         Calendar.current.startOfDay(for: self)
+    }
+    
+    func startOfMonth(using calendar: Calendar) -> Date {
+        calendar.date(
+            from: calendar.dateComponents([.year, .month], from: self)
+        ) ?? self
     }
 
     var endOfDay: Date {

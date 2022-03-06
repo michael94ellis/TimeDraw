@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import EventKit
 
 struct AddEventDateTimePicker: View {
     
@@ -20,10 +21,12 @@ struct AddEventDateTimePicker: View {
                     Text("Time")
                         .padding(.horizontal)
                     Spacer()
-                    Button(action: { self.viewModel.removeTimeFromEvent() }) {
-                        Text("Remove").foregroundColor(.red1)
+                    if !self.viewModel.editMode || self.viewModel.calendarItem as? EKReminder != nil {
+                        Button(action: { self.viewModel.removeTimeFromEvent() }) {
+                            Text("Remove").foregroundColor(.red1)
+                        }
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
                 }
                 .padding(.top)
                 Divider()

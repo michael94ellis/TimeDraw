@@ -25,10 +25,10 @@ class EventListViewModel: ObservableObject {
     
     public func updateData() {
         Task {
-            try await self.fetchEventsForToday()
+            try await self.fetchEventsForDisplayDate()
         }
         Task {
-            try await self.fetchRemindersForToday()
+            try await self.fetchRemindersForDisplayDate()
         }
     }
     
@@ -36,18 +36,16 @@ class EventListViewModel: ObservableObject {
     /// Fetch events for today
     /// - Parameter filterCalendarIDs: filterable Calendar IDs
     /// Returns: events for today
-    public func fetchEventsForToday(filterCalendarIDs: [String] = []) async throws {
-        let today = Date()
-        self.events = try await EventKitManager.shared.fetchEvents(startDate: today.startOfDay, endDate: today.endOfDay, filterCalendarIDs: filterCalendarIDs)
+    public func fetchEventsForDisplayDate(filterCalendarIDs: [String] = []) async throws {
+        self.events = try await EventKitManager.shared.fetchEvents(startDate: self.displayDate.startOfDay, endDate: self.displayDate.endOfDay, filterCalendarIDs: filterCalendarIDs)
     }
     
     // MARK: Fetch Reminders
     /// Fetch events for today
     /// - Parameter filterCalendarIDs: filterable Calendar IDs
     /// Returns: events for today
-    public func fetchRemindersForToday() async throws {
-        let date = Date()
-        try await EventKitManager.shared.fetchReminders(start: date.startOfDay, end: date.endOfDay, completion: { reminders in
+    public func fetchRemindersForDisplayDate() async throws {
+        try await EventKitManager.shared.fetchReminders(start: self.displayDate.startOfDay, end: self.displayDate.endOfDay, completion: { reminders in
             // MainActor didnt work for callback
             DispatchQueue.main.async {
                 self.reminders = reminders ?? []

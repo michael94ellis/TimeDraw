@@ -13,6 +13,7 @@ struct DateAndTimePickers: View {
     
     @Binding public var dateTime: DateComponents?
     @Binding public var dateDate: DateComponents?
+    public var onTap: () -> ()
     
     public var dateSuggestBinding: Binding<Date?> { Binding<Date?>(
         get: {
@@ -58,9 +59,7 @@ struct DateAndTimePickers: View {
             .frame(maxWidth: 200)
             .frame(height: 30)
             .onTapGesture {
-                if self.dateDate == nil {
-                    self.dateDate = Date().get(.year, .month, .day)
-                }
+                self.onTap()
             }
         DateTimePickerInputView(date: self.timeSuggestBinding, placeholder: "Time", mode: .time, format: "hh:mm a")
             .frame(maxWidth: 200)
@@ -68,6 +67,7 @@ struct DateAndTimePickers: View {
             .background(RoundedRectangle(cornerRadius: 4)
                             .fill(Color(uiColor: .systemGray5)))
             .onTapGesture {
+                self.onTap()
                 if self.dateDate == nil {
                     self.dateDate = Date().get(.year, .month, .day)
                 }

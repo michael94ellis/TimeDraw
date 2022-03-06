@@ -28,28 +28,46 @@ struct AddEventDateTimePicker: View {
                 .padding(.top)
                 Divider()
                     .padding(.horizontal)
-                    VStack {
-                        HStack {
-                            Spacer()
-                            Text("Start:")
-                                .frame(width: 75, height: 30, alignment: .leading)  
-                            Spacer()
-                            DateAndTimePickers(dateTime: self.$viewModel.newItemStartTime, dateDate: self.$viewModel.newItemStartDate)
-                            Spacer()
-                        }
-                        .padding(.horizontal, 16)
-                        HStack {
-                            Spacer()
-                            Text("End:")
-                                .frame(width: 75, height: 30, alignment: .leading)
-                            Spacer()
-                            DateAndTimePickers(dateTime: self.$viewModel.newItemEndTime, dateDate: self.$viewModel.newItemEndDate)
-                            Spacer()
-                        }
-                        .padding(.horizontal, 16)
+                VStack {
+                    HStack {
+                        Spacer()
+                        Text("Start:")
+                            .frame(width: 75, height: 30, alignment: .leading)
+                        Spacer()
+                        DateAndTimePickers(dateTime: self.$viewModel.newItemStartTime,
+                                           dateDate: self.$viewModel.newItemStartDate,
+                                           onTap: {
+                            if self.viewModel.newItemStartTime == nil {
+                                self.viewModel.newItemStartTime = Date().get(.hour, .minute, .second)
+                            }
+                            if self.viewModel.newItemStartDate == nil {
+                                self.viewModel.newItemStartDate = Date().get(.year, .month, .day)
+                            }
+                        })
+                        Spacer()
                     }
-                    .padding(.bottom)
-               
+                    .padding(.horizontal, 16)
+                    HStack {
+                        Spacer()
+                        Text("End:")
+                            .frame(width: 75, height: 30, alignment: .leading)
+                        Spacer()
+                        DateAndTimePickers(dateTime: self.$viewModel.newItemEndTime,
+                                           dateDate: self.$viewModel.newItemEndDate,
+                                           onTap: {
+                            if self.viewModel.newItemEndTime == nil {
+                                self.viewModel.newItemEndTime = Date().get(.hour, .minute, .second)
+                            }
+                            if self.viewModel.newItemEndDate == nil {
+                                self.viewModel.newItemEndDate = Date().get(.year, .month, .day)
+                            }
+                        })
+                        Spacer()
+                    }
+                    .padding(.horizontal, 16)
+                }
+                .padding(.bottom)
+                
             }
             .frame(maxWidth: 600)
             .background(RoundedRectangle(cornerRadius: 13)

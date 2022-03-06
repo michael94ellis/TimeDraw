@@ -81,9 +81,6 @@ struct MainHeader: View {
             HStack {
                 Button(action: {
                     self.showCompactCalendar.toggle()
-                    if self.showCompactCalendar {
-                        self.eventList.displayDate = Date()
-                    }
                 }) {
                     Text(self.monthYearFormatter.string(from: self.eventList.displayDate))
                         .fontWeight(.semibold)

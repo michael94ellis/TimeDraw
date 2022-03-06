@@ -18,24 +18,31 @@ struct FloatingEventInput: View {
     private let barHeight: CGFloat = 44
     @State var emojiSelection: String = ""
     
+    @ViewBuilder func topButton(image: String, color: Color, action: @escaping () -> ()) -> some View {
+        Button(action: {
+            withAnimation {
+                action()
+            }
+        }) {
+            Image(systemName: image)
+                .resizable()
+                .frame(width: 30, height: 32)
+                .foregroundColor(color)
+        }
+        .buttonStyle(.plain)
+        .frame(width: 55, height: 55)
+        .background(RoundedRectangle(cornerRadius: 13)
+                        .fill(Color(uiColor: .systemGray6))
+                        .shadow(radius: 4, x: 2, y: 4))
+    }
+    
     @ViewBuilder var eventOptions: some View {
         HStack {
-            Spacer()
-            Button(action: {
-                withAnimation {
-                    self.viewModel.delete()
-                }
-            }) {
-                Image(systemName: "trash")
-                    .resizable()
-                    .frame(width: 30, height: 32)
-                    .foregroundColor(.red1)
+            if self.viewModel.editMode {
+                self.topButton(image: "xmark.square", color: .lightGray, action: { self.viewModel.reset() })
             }
-            .buttonStyle(.plain)
-            .frame(width: 55, height: 55)
-            .background(RoundedRectangle(cornerRadius: 13)
-                            .fill(Color(uiColor: .systemGray6))
-                            .shadow(radius: 4, x: 2, y: 4))
+            Spacer()
+            self.topButton(image: "trash", color: .lightGray, action: { self.viewModel.delete() })
         }
         .padding(.bottom, 8)
         HStack {
@@ -119,9 +126,15 @@ struct FloatingEventInput: View {
                         self.viewModel.createEventOrReminder()
                         self.isNewEventFocused = false
                     }) {
-                        Image(systemName: "plus")
-                            .frame(width: self.barHeight, height: self.barHeight)
-                            .foregroundColor(Color(uiColor: .label))
+                        if self.viewModel.newItemCreated {
+                            Image(systemName: "checkmark.circle")
+                                .frame(width: self.barHeight, height: self.barHeight)
+                                .foregroundColor(Color(uiColor: .label))
+                        } else {
+                            Image(systemName: self.viewModel.editMode ? "circle" : "plus")
+                                .frame(width: self.barHeight, height: self.barHeight)
+                                .foregroundColor(Color(uiColor: .label))
+                        }
                     }.buttonStyle(.plain)
                 }
                 .frame(height: self.barHeight)

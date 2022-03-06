@@ -50,6 +50,8 @@
 		2F42C5A72784E6FC00F0BEB2 /* EventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A52784E6FC00F0BEB2 /* EventError.swift */; };
 		2F542010279B4AE90046696B /* ModifyCalendarItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */; };
 		2F542011279B4AE90046696B /* ModifyCalendarItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */; };
+		2F56876F27D436F900D5D9DA /* RefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F56876E27D436F900D5D9DA /* RefreshControl.swift */; };
+		2F56877027D436F900D5D9DA /* RefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F56876E27D436F900D5D9DA /* RefreshControl.swift */; };
 		2F65050027879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */; };
 		2F65050127879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */; };
 		2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505022787A09900AF90F7 /* MainHeader.swift */; };
@@ -147,6 +149,7 @@
 		2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKEventStore-Extension.swift"; sourceTree = "<group>"; };
 		2F42C5A52784E6FC00F0BEB2 /* EventError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventError.swift; sourceTree = "<group>"; };
 		2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyCalendarItemViewModel.swift; sourceTree = "<group>"; };
+		2F56876E27D436F900D5D9DA /* RefreshControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshControl.swift; sourceTree = "<group>"; };
 		2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBarButtonItem.swift; sourceTree = "<group>"; };
 		2F6505022787A09900AF90F7 /* MainHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeader.swift; sourceTree = "<group>"; };
 		2F6505052787DA3C00AF90F7 /* FloatingEventInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingEventInput.swift; sourceTree = "<group>"; };
@@ -212,6 +215,7 @@
 			children = (
 				2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */,
 				2F6505052787DA3C00AF90F7 /* FloatingEventInput.swift */,
+				2F56876E27D436F900D5D9DA /* RefreshControl.swift */,
 				2F81230B2797B59500458B1A /* AddEventDateTimePicker.swift */,
 				2F211133279A4F4E0041EE85 /* AddRecurrenceRule.swift */,
 				2F8AB30C27A220E400654FEF /* DateAndTimePickers.swift */,
@@ -584,6 +588,7 @@
 				2F42C59D2784E3DE00F0BEB2 /* EventKitManager.swift in Sources */,
 				2F211134279A4F4E0041EE85 /* AddRecurrenceRule.swift in Sources */,
 				2F39B86C27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
+				2F56876F27D436F900D5D9DA /* RefreshControl.swift in Sources */,
 				2F42C5A32784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
 				2F8AB31027A229DA00654FEF /* Utils.swift in Sources */,
 				2F65050027879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */,
@@ -623,6 +628,7 @@
 				2F42C59E2784E3DE00F0BEB2 /* EventKitManager.swift in Sources */,
 				2F211135279A4F4E0041EE85 /* AddRecurrenceRule.swift in Sources */,
 				2F39B86D27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
+				2F56877027D436F900D5D9DA /* RefreshControl.swift in Sources */,
 				2F42C5A42784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
 				2F8AB31127A229DA00654FEF /* Utils.swift in Sources */,
 				2F65050127879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */,

@@ -17,8 +17,13 @@ class ModifyCalendarItemViewModel: ObservableObject {
     let weekdayFormatter = DateFormatter(format: "E")
     var daysOfTheWeek = [String]()
     
+    /// Used to determine if the event is being created or edited
+    private(set) var editMode: Bool = false
+    /// Used to display the toast for when new things are mode
     @Published var newItemCreated: Bool = false
+    
     // MARK: - New EKCalendarItem Data
+    
     @Published var calendarItem: EKCalendarItem?
     // New Event/Reminder Data
     @Published var newItemTitle: String = ""
@@ -73,6 +78,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     @MainActor func open(event: EKEvent) {
         self.reset()
+        self.editMode = true
         self.isAddEventTextFieldFocused = true
         self.calendarItem = event
         self.newItemTitle = event.title
@@ -103,6 +109,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     @MainActor func open(reminder: EKReminder) {
         self.reset()
+        self.editMode = true
         self.isAddEventTextFieldFocused = true
         self.calendarItem = reminder
         self.newItemTitle = reminder.title
@@ -223,6 +230,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     @MainActor func reset() {
         withAnimation {
+            self.editMode = false
             self.isAddEventTextFieldFocused = false
             self.isDisplayingOptions = false
             self.isDateTimePickerOpen = false
@@ -283,6 +291,9 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     private func addReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) {
         Task {
+            if let reminder = self.calendarItem as? EKReminder {
+                return
+            }
             if let recurrenceEnd = self.endRecurrenceDate, let recurrenceEndDate = Calendar.current.date(from: recurrenceEnd) {
                 self.recurrenceEnd = EKRecurrenceEnd(end: recurrenceEndDate)
             } else if let numberOfOccurences = numberOfOccurences {

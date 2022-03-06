@@ -37,7 +37,8 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var newItemStartDate: DateComponents?
     @Published var newItemEndDate: DateComponents?
     
-    // MARK: - Recurrence Rule Data
+    // MARK: - Recurrence Rule vars
+    
     private var recurrenceRule: EKRecurrenceRule?
     private var recurrenceEnd: EKRecurrenceEnd?
     @Published var endRecurrenceDate: DateComponents?
@@ -175,19 +176,6 @@ class ModifyCalendarItemViewModel: ObservableObject {
         @unknown default:
             print(self.selectedRule)
         }
-        
-    }
-    
-    // MARK: - Utility
-    
-    func getRecentEmojis() -> [String] {
-        guard let prefs = UserDefaults(suiteName: "com.apple.EmojiPreferences"),
-              let defaults = prefs.dictionary(forKey: "EMFDefaultsKey"),
-              let recents = defaults["EMFRecentsKey"] as? [String] else {
-                  // No Recent Emojis
-                  return ["No Recent Emojis"]
-              }
-        return recents
     }
     
     func setSuggestedEndRecurrenceDate() {
@@ -243,11 +231,13 @@ class ModifyCalendarItemViewModel: ObservableObject {
     }
     
     @MainActor func delete() {
-        if let event = self.calendarItem as? EKEvent {
-            try? EventKitManager.shared.eventStore.deleteEvent(identifier: event.calendarItemIdentifier)
-        }
         if let reminder = self.calendarItem as? EKReminder {
             try? EventKitManager.shared.eventStore.deleteReminder(identifier: reminder.calendarItemIdentifier)
+            self.save(reminder: reminder, "Reminder Deleted")
+        }
+        if let event = self.calendarItem as? EKEvent {
+            try? EventKitManager.shared.eventStore.deleteEvent(identifier: event.calendarItemIdentifier)
+            self.save(event: event, "Event Deleted")
         }
         self.reset()
     }
@@ -376,5 +366,17 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @MainActor private func displayToast(_ message: String) {
         self.toastMessage = message
         self.displayToast = true
+    }
+    
+    // MARK: - Utility
+    
+    func getRecentEmojis() -> [String] {
+        guard let prefs = UserDefaults(suiteName: "com.apple.EmojiPreferences"),
+              let defaults = prefs.dictionary(forKey: "EMFDefaultsKey"),
+              let recents = defaults["EMFRecentsKey"] as? [String] else {
+                  // No Recent Emojis
+                  return ["No Recent Emojis"]
+              }
+        return recents
     }
 }

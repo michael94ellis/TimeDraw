@@ -87,14 +87,14 @@ struct MainHeader: View {
                         .foregroundColor(Color.red1)
                 }
                 Spacer()
-                Menu(content: {
-                    Button("Settings", action: { self.showSettingsPopover.toggle() })
-                    Button("Feedback", action: { })
-                }, label: { Image(systemName: "ellipsis")
-                    .frame(width: 40, height: 30) })
-                    .fullScreenCover(isPresented: self.$showSettingsPopover, content: {
-                        SettingsView(display: $showSettingsPopover)
-                    })
+//                Menu(content: {
+//                    Button("Settings", action: { self.showSettingsPopover.toggle() })
+//                    Button("Feedback", action: { })
+//                }, label: { Image(systemName: "ellipsis")
+//                    .frame(width: 40, height: 30) })
+//                    .fullScreenCover(isPresented: self.$showSettingsPopover, content: {
+//                        SettingsView(display: $showSettingsPopover)
+//                    })
             }
             .padding(.horizontal, 25)
             .padding(.vertical, 10)

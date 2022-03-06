@@ -44,9 +44,7 @@ struct MainHeader: View {
     
     func switchTransition(direction: SwipeDirection) -> AnyTransition {
         let slideOut: Edge = self.showCompactCalendar ? .top : .bottom
-        let insert: AnyTransition = self.showCompactCalendar ? .move(edge: slideOut) : .opacity
-        let remove: AnyTransition = self.showCompactCalendar ? .opacity : .move(edge: slideOut)
-        return .asymmetric(insertion: insert, removal: remove)
+        return .asymmetric(insertion: .move(edge: slideOut), removal: .opacity)
     }
     
     private let date: Date

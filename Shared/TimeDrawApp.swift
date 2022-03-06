@@ -14,6 +14,7 @@ struct TimeDrawApp: App {
     
     init() {
         EventKitManager.configureWithAppName("TimeDraw")
+        UIFont.overrideInitialize()
     }
     
     var body: some Scene {

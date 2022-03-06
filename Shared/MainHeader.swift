@@ -55,23 +55,19 @@ struct MainHeader: View {
         Button(action: {
             self.eventList.displayDate = date
         }) {
+            let today = Calendar.current.isDateInToday(date)
+            let display = Calendar.current.isDate(date, inSameDayAs: self.eventList.displayDate)
             VStack {
-                if Calendar.current.isDateInToday(date) {
-                    Text(self.weekdayFormatter.string(from: date))
-                        .frame(width: 45, height: 30)
-                    Text(date.get(.day).formatted())
-                        .fontWeight(.semibold)
-                        .foregroundColor(Color.red1)
-                } else if Calendar.current.isDate(date, inSameDayAs: self.eventList.displayDate) {
-                    Text(self.weekdayFormatter.string(from: date))
-                        .frame(width: 45, height: 30)
-                    Text(date.get(.day).formatted())
-                } else {
-                    Text(self.weekdayFormatter.string(from: date))
-                        .frame(width: 45, height: 30)
-                        .foregroundColor(Color.gray2)
-                    Text(date.get(.day).formatted())
-                }
+                Text(self.weekdayFormatter.string(from: date))
+                    .if(today || display) { view in
+                        view.font(.interBold)
+                    }
+                    .frame(width: 45, height: 30)
+                Text(date.get(.day).formatted())
+                    .if(today || display) { view in
+                        view.font(.interBold)
+                    }
+                    .foregroundColor(today ? Color.red1 : display ? Color(uiColor: .label) : Color.gray2)
             }
             .frame(width: 45)
             .padding(.vertical, 8)

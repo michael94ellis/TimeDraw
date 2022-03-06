@@ -18,6 +18,7 @@ extension Font {
     static let interRegular = Font.custom("Inter-Regular", size: 18, relativeTo: .body)
     static let interSemiBold = Font.custom("Inter-SemiBold", size: 18, relativeTo: .body)
     static let interThin = Font.custom("Inter-Thin", size: 18, relativeTo: .body)
+    static let interExtraBoldTitle = Font.custom("Inter-ExtraBold", size: 22, relativeTo: .title3)
 }
 
 struct AppFontName {

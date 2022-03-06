@@ -62,6 +62,7 @@ struct MainHeader: View {
                     .if(today || display) { view in
                         view.font(.interBold)
                     }
+                    .foregroundColor(today || display ? Color(uiColor: .label) : Color.gray1)
                     .frame(width: 45, height: 30)
                 Text(date.get(.day).formatted())
                     .if(today || display) { view in
@@ -85,20 +86,20 @@ struct MainHeader: View {
                     self.showCompactCalendar.toggle()
                 }) {
                     Text(self.monthYearFormatter.string(from: self.eventList.displayDate))
+                        .font(.interExtraBoldTitle)
                         .fontWeight(.semibold)
                         .foregroundColor(Color.red1)
                 }
                 Spacer()
-                //                Menu(content: {
-                //                    Button("Settings", action: { self.showSettingsPopover.toggle() })
-                //                    Button("Feedback", action: { })
-                //                }, label: { Image(systemName: "ellipsis")
-                //                    .frame(width: 40, height: 30) })
-                //                    .fullScreenCover(isPresented: self.$showSettingsPopover, content: {
-                //                        SettingsView(display: $showSettingsPopover)
-                //                    })
+                Menu(content: {
+                    Button("Settings", action: { self.showSettingsPopover.toggle() })
+                }, label: { Image(systemName: "ellipsis")
+                    .frame(width: 40, height: 30) })
+                    .fullScreenCover(isPresented: self.$showSettingsPopover, content: {
+                        SettingsView(display: $showSettingsPopover)
+                    })
             }
-            .padding(.horizontal, 25)
+            .padding(.horizontal, 20)
             .padding(.vertical, 10)
             if self.showCompactCalendar {
                 HStack {

@@ -36,3 +36,14 @@ extension EKWeekday: CaseIterable, CustomStringConvertible {
         }
     }
 }
+
+extension EKWeekday {
+    public static func getSelectedWeekDays(for value: EKWeekday) -> [EKRecurrenceDayOfWeek] {
+        return EKWeekday.allCases.compactMap {
+            guard value == $0 else {
+                return nil
+            }
+            return EKRecurrenceDayOfWeek($0)
+        }
+    }
+}

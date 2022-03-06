@@ -55,19 +55,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var isDisplayingOptions: Bool = false
     @Published var isDateTimePickerOpen: Bool = false
     @Published var isRecurrencePickerOpen: Bool = false
-    @Published var isLocationTextFieldOpen: Bool = false
-    public var isFocused: Bool {
-        self.isDateTimePickerOpen || self.isRecurrencePickerOpen || self.isLocationTextFieldOpen
-    }
-    
-    private var getSelectedWeekDays: [EKRecurrenceDayOfWeek] {
-        return EKWeekday.allCases.compactMap {
-            guard self.frequencyWeekdayValue == $0 else {
-                return nil
-            }
-            return EKRecurrenceDayOfWeek($0)
-        }
-    }
+    public var isFocused: Bool { self.isDateTimePickerOpen || self.isRecurrencePickerOpen }
     
     init() {
         if let month = Calendar.current.dateComponents([.month], from: Date()).month {
@@ -147,13 +135,11 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     func removeTimeFromEvent() {
         withAnimation {
-            self.isDateTimePickerOpen = false
-            self.newItemStartTime = nil
-            self.newItemEndTime = nil
-            self.newItemStartDate = nil
-            self.newItemEndDate = nil
+            self.clearTimeInput()
         }
     }
+    
+    // MARK: - Recurrence
     
     func openRecurrencePicker() {
         withAnimation {
@@ -163,18 +149,113 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     func removeRecurrenceFromEvent() {
         withAnimation {
-            self.isRecurrencePickerOpen = false
-            self.recurrenceRule = nil
-            self.recurrenceEnd = nil
-            self.endRecurrenceDate = nil
-            self.endRecurrenceTime = nil
-            self.numberOfOccurences = nil
-            self.frequencyDayValueInt = nil
-            self.frequencyMonthDate = nil
+            self.clearRecurrence()
         }
     }
     
-    public func createEventOrReminder() {
+    private func setRecurrenceRule() {
+        if let recurrenceEnd = self.endRecurrenceDate, let recurrenceEndDate = Calendar.current.date(from: recurrenceEnd) {
+            self.recurrenceEnd = EKRecurrenceEnd(end: recurrenceEndDate)
+        } else if let numberOfOccurences = numberOfOccurences {
+            self.recurrenceEnd = EKRecurrenceEnd(occurrenceCount: numberOfOccurences)
+        }
+        let interval = self.frequencyDayValueInt ?? 1
+        switch self.selectedRule {
+        case .daily:
+            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: selectedRule, interval: interval, end: self.recurrenceEnd)
+        case .weekly:
+            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: interval, daysOfTheWeek: EKWeekday.getSelectedWeekDays(for: self.frequencyWeekdayValue), daysOfTheMonth: nil, monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+        case .monthly:
+            if let frequencyValue = self.frequencyDayValueInt {
+                let recurrenceDay = frequencyValue as NSNumber
+                self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [recurrenceDay], monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+            }
+        case .yearly:
+            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [NSNumber(nonretainedObject: self.frequencyDayValueInt)], monthsOfTheYear: (1...12).compactMap { NSNumber(value: $0) }, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+        @unknown default:
+            print(self.selectedRule)
+        }
+        
+    }
+    
+    // MARK: - Utility
+    
+    func getRecentEmojis() -> [String] {
+        guard let prefs = UserDefaults(suiteName: "com.apple.EmojiPreferences"),
+              let defaults = prefs.dictionary(forKey: "EMFDefaultsKey"),
+              let recents = defaults["EMFRecentsKey"] as? [String] else {
+                  // No Recent Emojis
+                  return ["No Recent Emojis"]
+              }
+        return recents
+    }
+    
+    func setSuggestedEndRecurrenceDate() {
+        if self.endRecurrenceDate == nil {
+            var suggestedEndDate: Date
+            switch self.selectedRule {
+            case .daily: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 31)
+            case .weekly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 7 * 4)
+            case .monthly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 30 * 6)
+            case .yearly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 366 * 2)
+            default: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 5)
+            }
+            self.endRecurrenceDate = Calendar.current.dateComponents([.day, .month, .year], from: suggestedEndDate)
+            self.endRecurrenceTime = Calendar.current.dateComponents([.hour, .minute, .second], from: suggestedEndDate)
+            self.numberOfOccurences = nil
+        }
+    }
+    
+    // MARK: - Delete
+    
+    @MainActor func reset() {
+        withAnimation {
+            self.editMode = false
+            self.isAddEventTextFieldFocused = false
+            self.isDisplayingOptions = false
+            
+            self.calendarItem = nil
+            self.newItemTitle = ""
+            
+            self.clearTimeInput()
+            self.clearRecurrence()
+        }
+        EventListViewModel.shared.updateData()
+    }
+    
+    private func clearTimeInput() {
+        self.isDateTimePickerOpen = false
+        self.newItemStartTime = nil
+        self.newItemEndTime = nil
+        self.newItemStartDate = nil
+        self.newItemEndDate = nil
+    }
+    
+    private func clearRecurrence() {
+        self.isRecurrencePickerOpen = false
+        self.recurrenceRule = nil
+        self.recurrenceEnd = nil
+        self.endRecurrenceDate = nil
+        self.endRecurrenceTime = nil
+        self.numberOfOccurences = nil
+        self.frequencyDayValueInt = nil
+        self.frequencyMonthDate = nil
+    }
+    
+    @MainActor func delete() {
+        if let event = self.calendarItem as? EKEvent {
+            try? EventKitManager.shared.eventStore.deleteEvent(identifier: event.calendarItemIdentifier)
+        }
+        if let reminder = self.calendarItem as? EKReminder {
+            try? EventKitManager.shared.eventStore.deleteReminder(identifier: reminder.calendarItemIdentifier)
+        }
+        self.reset()
+    }
+    
+    // MARK: - Create
+    
+    /// Create an EKCalendarItem for the given information OR the currently displayed EKCalendarItem will be saved
+    @MainActor public func submitEventOrReminder() {
         let startDateComponents = self.newItemStartDate
         let startTimeComponents = self.newItemStartTime
         var mergedStartComponments: DateComponents?
@@ -203,176 +284,97 @@ class ModifyCalendarItemViewModel: ObservableObject {
               let mergedEndComponments = mergedEndComponments,
               let startDate = Calendar.current.date(from: mergedStartComponments),
               let endDate = Calendar.current.date(from: mergedEndComponments) else {
-                  self.addReminder(start: mergedStartComponments, end: mergedEndComponments)
+                  self.saveReminder(start: mergedStartComponments, end: mergedEndComponments)
                   return
               }
-        self.addEvent(start: startDate, end: endDate)
+        self.saveEvent(start: startDate, end: endDate)
     }
     
-    private func setRecurrenceRule() {
-        if let recurrenceEnd = self.endRecurrenceDate, let recurrenceEndDate = Calendar.current.date(from: recurrenceEnd) {
-            self.recurrenceEnd = EKRecurrenceEnd(end: recurrenceEndDate)
-        } else if let numberOfOccurences = numberOfOccurences {
-            self.recurrenceEnd = EKRecurrenceEnd(occurrenceCount: numberOfOccurences)
-        }
-        let interval = self.frequencyDayValueInt ?? 1
-        switch self.selectedRule {
-        case .daily:
-            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: selectedRule, interval: interval, end: self.recurrenceEnd)
-        case .weekly:
-            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: interval, daysOfTheWeek: self.getSelectedWeekDays, daysOfTheMonth: nil, monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
-        case .monthly:
-            if let frequencyValue = self.frequencyDayValueInt {
-                let recurrenceDay = frequencyValue as NSNumber
-                self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [recurrenceDay], monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+    /// If there is a Start and End date make an Event from the given info, or save an existing Event with any modified info
+    @MainActor private func saveEvent(start startDate: Date, end endDate: Date) {
+        Task {
+            guard let existingEvent = self.calendarItem as? EKEvent else {
+                await self.createEvent(start: startDate, end: endDate)
+                return
             }
-        case .yearly:
-            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [NSNumber(nonretainedObject: self.frequencyDayValueInt)], monthsOfTheYear: (1...12).compactMap { NSNumber(value: $0) }, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
-        @unknown default:
-            print(self.selectedRule)
+            existingEvent.title = self.newItemTitle
+            existingEvent.startDate = startDate
+            existingEvent.endDate = endDate
+            self.setRecurrenceRule()
+            if self.isRecurrencePickerOpen,
+               let recurrenceRule = recurrenceRule {
+                existingEvent.recurrenceRules = nil
+                existingEvent.addRecurrenceRule(recurrenceRule)
+            } else if let existingRule = existingEvent.recurrenceRules?.first {
+                existingEvent.removeRecurrenceRule(existingRule)
+            }
+            self.save(event: existingEvent, "Event Saved")
         }
-        
     }
     
-    @MainActor func reset() {
-        withAnimation {
-            self.editMode = false
-            self.isAddEventTextFieldFocused = false
-            self.isDisplayingOptions = false
-            self.isDateTimePickerOpen = false
-            self.isRecurrencePickerOpen = false
-            self.isLocationTextFieldOpen = false
-            
-            self.calendarItem = nil
-            self.newItemTitle = ""
-            self.newItemStartTime = nil
-            self.newItemEndTime = nil
-            self.newItemStartDate = nil
-            self.newItemEndDate = nil
-            self.recurrenceRule = nil
-            self.recurrenceEnd = nil
-            self.endRecurrenceDate = nil
-            self.endRecurrenceTime = nil
-            self.numberOfOccurences = nil
-            self.frequencyDayValueInt = nil
-            self.frequencyMonthDate = nil
+    @MainActor private func createEvent(start startDate: Date, end endDate: Date) async {
+        do {
+            let newEvent = try await EventKitManager.shared.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
+            self.setRecurrenceRule()
+            if let recurrenceRule = recurrenceRule {
+                newEvent.addRecurrenceRule(recurrenceRule)
+            }
+            self.save(event: newEvent, "Event Created")
+        } catch let error as NSError {
+            print("Error: failed to save event with error : \(error)")
         }
-        EventListViewModel.shared.updateData()
     }
     
-    @MainActor func delete() {
-        if let event = self.calendarItem as? EKEvent {
-            try? EventKitManager.shared.eventStore.deleteEvent(identifier: event.calendarItemIdentifier)
-        }
-        if let reminder = self.calendarItem as? EKReminder {
-            try? EventKitManager.shared.eventStore.deleteReminder(identifier: reminder.calendarItemIdentifier)
-        }
+    @MainActor private func save(event: EKEvent, _ message: String) {
+        try? EventKitManager.shared.eventStore.save(event, span: .thisEvent)
+        self.displayToast(message)
         self.reset()
     }
     
-    private func addEvent(start startDate: Date, end endDate: Date) {
+    /// If there is a Start and End date make an Reminder from the given info, or save an existing Reminder with any modified info
+    @MainActor private func saveReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) {
         Task {
-            if let existingEvent = self.calendarItem as? EKEvent {
-                existingEvent.title = self.newItemTitle
-                existingEvent.startDate = startDate
-                existingEvent.endDate = endDate
-                self.setRecurrenceRule()
-                if self.isRecurrencePickerOpen,
-                   let recurrenceRule = recurrenceRule {
-                    existingEvent.recurrenceRules = nil
-                    existingEvent.addRecurrenceRule(recurrenceRule)
-                } else if let existingRule = existingEvent.recurrenceRules?.first {
-                    existingEvent.removeRecurrenceRule(existingRule)
-                }
-                try? EventKitManager.shared.eventStore.save(existingEvent, span: .futureEvents)
-                await MainActor.run {
-                    self.toastMessage = "Event Modified"
-                    self.displayToast = true
-                }
-                await self.reset()
+            guard let existingReminder = self.calendarItem as? EKReminder else {
+                await self.createReminder(start: startComponents, end: endComponents)
                 return
             }
-            do {
-                let newEvent = try await EventKitManager.shared.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
-                self.setRecurrenceRule()
-                if let recurrenceRule = recurrenceRule {
-                    newEvent.addRecurrenceRule(recurrenceRule)
-                }
-                try? EventKitManager.shared.eventStore.save(newEvent, span: .futureEvents)
-                await MainActor.run {
-                    self.toastMessage = "Event Saved"
-                    self.displayToast = true
-                }
-                await self.reset()
-            } catch let error as NSError {
-                print("Error: failed to save event with error : \(error)")
+            existingReminder.title = self.newItemTitle
+            existingReminder.startDateComponents = startComponents
+            existingReminder.dueDateComponents = endComponents
+            self.setRecurrenceRule()
+            if self.isRecurrencePickerOpen,
+               let recurrenceRule = recurrenceRule {
+                existingReminder.recurrenceRules = nil
+                existingReminder.addRecurrenceRule(recurrenceRule)
+            } else {
+                existingReminder.recurrenceRules = nil
             }
+            self.save(reminder: existingReminder, "Reminder Created")
         }
     }
     
-    private func addReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) {
-        Task {
-            if let existingReminder = self.calendarItem as? EKReminder {
-                existingReminder.title = self.newItemTitle
-                existingReminder.startDateComponents = startComponents
-                existingReminder.dueDateComponents = endComponents
-                self.setRecurrenceRule()
-                if self.isRecurrencePickerOpen,
-                   let recurrenceRule = recurrenceRule {
-                    existingReminder.recurrenceRules = nil
-                    existingReminder.addRecurrenceRule(recurrenceRule)
-                } else {
-                    existingReminder.recurrenceRules = nil
-                }
-                try? EventKitManager.shared.eventStore.save(existingReminder, commit: true)
-                await MainActor.run {
-                    self.toastMessage = "Reminder Modified"
-                    self.displayToast = true
-                }
-                await self.reset()
-                return
+    @MainActor private func createReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) async {
+        do {
+            let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
+            self.setRecurrenceRule()
+            if let recurrenceRule = recurrenceRule {
+                newReminder.addRecurrenceRule(recurrenceRule)
             }
-            do {
-                let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
-                self.setRecurrenceRule()
-                if let recurrenceRule = recurrenceRule {
-                    newReminder.addRecurrenceRule(recurrenceRule)
-                }
-                try? EventKitManager.shared.eventStore.save(newReminder, commit: true)
-                await MainActor.run {
-                    self.toastMessage = "Reminder Saved"
-                    self.displayToast = true
-                }
-                await self.reset()
-            } catch let error as NSError {
-                print("Error: failed to save reminder with error : \(error)")
-            }
+            self.save(reminder: newReminder, "Reminder Saved")
+        } catch let error as NSError {
+            print("Error: failed to save reminder with error : \(error)")
         }
     }
     
-    func getRecentEmojis() -> [String] {
-        guard let prefs = UserDefaults(suiteName: "com.apple.EmojiPreferences"),
-              let defaults = prefs.dictionary(forKey: "EMFDefaultsKey"),
-              let recents = defaults["EMFRecentsKey"] as? [String] else {
-                  // No Recent Emojis
-                  return ["No Recent Emojis"]
-              }
-        return recents
+    @MainActor private func save(reminder: EKReminder, _ message: String) {
+        try? EventKitManager.shared.eventStore.save(reminder, commit: true)
+        self.displayToast(message)
+        self.reset()
     }
     
-    func setSuggestedEndRecurrenceDate() {
-        if self.endRecurrenceDate == nil {
-            var suggestedEndDate: Date
-            switch self.selectedRule {
-            case .daily: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 31)
-            case .weekly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 7 * 4)
-            case .monthly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 30 * 6)
-            case .yearly: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 366 * 2)
-            default: suggestedEndDate = Date().addingTimeInterval(60 * 60 * 24 * 5)
-            }
-            self.endRecurrenceDate = Calendar.current.dateComponents([.day, .month, .year], from: suggestedEndDate)
-            self.endRecurrenceTime = Calendar.current.dateComponents([.hour, .minute, .second], from: suggestedEndDate)
-            self.numberOfOccurences = nil
-        }
+    /// Update the Toast notification to alert the user
+    @MainActor private func displayToast(_ message: String) {
+        self.toastMessage = message
+        self.displayToast = true
     }
 }

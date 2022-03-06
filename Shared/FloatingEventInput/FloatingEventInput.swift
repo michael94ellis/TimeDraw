@@ -44,6 +44,7 @@ struct FloatingEventInput: View {
             Spacer()
             self.topButton(image: "trash", color: .red1, action: { self.viewModel.delete() })
         }
+        .frame(maxWidth: 600)
         .padding(.bottom, 8)
         HStack {
             AddRecurrenceRule()
@@ -108,7 +109,7 @@ struct FloatingEventInput: View {
                         .submitLabel(.done)
                         .onSubmit {
                             // User tapped Keyboard Done button
-                            self.viewModel.createEventOrReminder()
+                            self.viewModel.submitEventOrReminder()
                             self.isNewEventFocused = false
                         }
                         .onTapGesture {
@@ -123,7 +124,7 @@ struct FloatingEventInput: View {
                         }
                     Button(action: {
                         // User submitted event by tapping plus
-                        self.viewModel.createEventOrReminder()
+                        self.viewModel.submitEventOrReminder()
                         self.isNewEventFocused = false
                     }) {
                         if self.viewModel.displayToast {
@@ -147,12 +148,8 @@ struct FloatingEventInput: View {
         .padding(14)
         .toast(isPresenting: Binding<Bool>(get: { self.viewModel.displayToast }, set: { self.viewModel.displayToast = $0 }), duration: 2, tapToDismiss: true, alert: {
             AlertToast(displayMode: .alert, type: .regular, title: self.viewModel.toastMessage)
-           //AlertToast goes here
-        }, onTap: {
-           //onTap would call either if `tapToDismis` is true/false
-           //If tapToDismiss is true, onTap would call and then dismis the alert
         }, completion: {
-           //Completion block after dismiss
+            //Completion block after dismiss
             self.viewModel.displayToast = false
         })
     }
@@ -163,10 +160,9 @@ extension View {
         when shouldShow: Bool,
         alignment: Alignment = .leading,
         @ViewBuilder placeholder: () -> Content) -> some View {
-
-        ZStack(alignment: alignment) {
-            placeholder().opacity(shouldShow ? 1 : 0)
-            self
+            ZStack(alignment: alignment) {
+                placeholder().opacity(shouldShow ? 1 : 0)
+                self
+            }
         }
-    }
 }

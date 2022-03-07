@@ -34,13 +34,15 @@ struct MainView: View {
                 EventsAndRemindersMainList()
                     .environmentObject(self.addEventViewModel)
             }
-            
+            .ignoresSafeArea(.keyboard)
+            .edgesIgnoringSafeArea(.bottom)
             // Blurred Background
             .if(self.addEventViewModel.isAddEventTextFieldFocused) { view in
                 view.overlay(Color.black.opacity(0.6)
                                 .blur(radius: 1))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .edgesIgnoringSafeArea(.all)
+                    .ignoresSafeArea(.keyboard)
+                    .edgesIgnoringSafeArea(.vertical)
                     .blur(radius: 1)
                     .contentShape(Rectangle())
                     .onTapGesture {

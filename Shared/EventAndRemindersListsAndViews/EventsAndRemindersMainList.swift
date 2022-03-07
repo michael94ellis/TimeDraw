@@ -56,7 +56,9 @@ struct EventsAndRemindersMainList: View {
             }
             ForEach(self.eventList.reminders) { item in
                 Button(action: {
-                    self.floatingModifyViewModel.open(reminder: item)
+                    withAnimation {
+                        self.floatingModifyViewModel.open(reminder: item)
+                    }
                 }) {
                     HStack {
                         Circle().fill(Color(cgColor: item.calendar.cgColor))

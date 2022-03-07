@@ -38,8 +38,8 @@ struct MainHeader: View {
     @State var swipeDirection: SwipeDirection = .left
     
     func transitionDirection(direction: SwipeDirection) -> AnyTransition {
-        let slideOut: Edge = direction == .left ? .leading : .trailing
-        return .asymmetric(insertion: .opacity, removal: .move(edge: slideOut))
+        let slideIn: Edge = direction == .right ? .trailing : .leading
+        return .asymmetric(insertion: .move(edge: slideIn), removal: .opacity)
     }
     
     func switchTransition(direction: SwipeDirection) -> AnyTransition {
@@ -66,7 +66,7 @@ struct MainHeader: View {
             VStack {
                 Text(self.weekdayFormatter.string(from: date))
                     .if(today || display) { view in
-                        view.font(.interBold)
+                        view.font(.interSemiBold)
                     }
                     .foregroundColor(today || display ? Color(uiColor: .label) : Color.gray1)
                     .frame(width: 45, height: 30)

@@ -25,7 +25,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     // MARK: - New EKCalendarItem Data
     
-    @Published var calendarItem: EKCalendarItem?
+    var calendarItem: EKCalendarItem?
     // New Event/Reminder Data
     @Published var newItemTitle: String = ""
     /// Convenience binding to pass a published variable as
@@ -48,7 +48,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var frequencyDayValueInt: Int?
     @Published var frequencyWeekdayValue: EKWeekday = .monday
     @Published var frequencyMonthDate: Int?
-    @Published var selectedRule: EKRecurrenceFrequency = .weekly 
+    @Published var selectedRule: EKRecurrenceFrequency = .weekly
     
     // MARK: - Display State vars
     
@@ -261,9 +261,9 @@ class ModifyCalendarItemViewModel: ObservableObject {
         Task {
             let startDateComponents = self.newItemStartDate
             let startTimeComponents = self.newItemStartTime
-            var mergedStartComponments: DateComponents = DateComponents()
             let endTimeComponents = self.newItemEndTime
             let endDateComponents = self.newItemEndDate
+            var mergedStartComponments: DateComponents = DateComponents()
             var mergedEndComponments: DateComponents = DateComponents()
             if startDateComponents != nil || startTimeComponents != nil {
                 mergedStartComponments.year = startDateComponents?.year
@@ -281,17 +281,16 @@ class ModifyCalendarItemViewModel: ObservableObject {
                 mergedEndComponments.minute = endTimeComponents?.minute
                 mergedEndComponments.second = endTimeComponents?.second
             }
-            if self.newItemStartDate != nil, self.newItemEndDate != nil, let startDate = Calendar.current.date(from: mergedStartComponments),
-               let endDate = Calendar.current.date(from: mergedEndComponments) {
-                if self.editMode, let event = self.calendarItem as? EKEvent {
-                    self.saveEvent(event, start: startDate, end: endDate)
-                } else {
-                    await self.createEvent(start: startDate, end: endDate)
-                }
+            if self.newItemStartDate != nil,
+               self.newItemEndDate != nil,
+               let startDate = Calendar.current.date(from: mergedStartComponments),
+               let endDate = Calendar.current.date(from: mergedEndComponments),
+               let event = self.calendarItem as? EKEvent {
+                self.saveEvent(event, start: startDate, end: endDate)
             } else {
                 let start = self.newItemStartDate != nil ? mergedStartComponments : nil
                 let end = self.newItemEndDate != nil ? mergedEndComponments : nil
-                if self.editMode, let reminder = self.calendarItem as? EKReminder {
+                if let reminder = self.calendarItem as? EKReminder {
                     self.saveReminder(reminder: reminder, start: start, end: end)
                 } else {
                     await self.createReminder(start: start, end: end)

@@ -71,9 +71,7 @@ struct MainHeader: View {
                     .foregroundColor(today || display ? Color(uiColor: .label) : Color.gray1)
                     .frame(width: 45, height: 30)
                 Text(date.get(.day).formatted())
-                    .if(today) { view in
-                        view.font(.interBold)
-                    }
+                    .font(today ? .interBold : display ? .interSemiBold : .interRegular)
                     .foregroundColor(today ? Color.red1 : display ? Color(uiColor: .label) : Color.gray2)
             }
             .frame(width: 45)

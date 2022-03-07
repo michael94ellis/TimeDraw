@@ -41,8 +41,6 @@ struct MainView: View {
                 view.overlay(Color.black.opacity(0.6)
                                 .blur(radius: 1))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .ignoresSafeArea(.keyboard)
-                    .edgesIgnoringSafeArea(.vertical)
                     .blur(radius: 1)
                     .contentShape(Rectangle())
                     .onTapGesture {
@@ -50,6 +48,7 @@ struct MainView: View {
                             self.addEventViewModel.isAddEventTextFieldFocused = false
                         }
                     }
+                    .edgesIgnoringSafeArea(.all)
             }
             VStack {
                 Spacer()

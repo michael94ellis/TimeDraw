@@ -22,6 +22,8 @@
 		2F2343FD27D454BC0064B635 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2343FB27D454BC0064B635 /* CalendarView.swift */; };
 		2F24457F27D797C9005BF37D /* EKWeekday-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24457E27D797C9005BF37D /* EKWeekday-Extension.swift */; };
 		2F24458027D797C9005BF37D /* EKWeekday-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24457E27D797C9005BF37D /* EKWeekday-Extension.swift */; };
+		2F24458227D7F0EB005BF37D /* MultiDateSelectCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458127D7F0EB005BF37D /* MultiDateSelectCalendar.swift */; };
+		2F24458327D7F0EB005BF37D /* MultiDateSelectCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458127D7F0EB005BF37D /* MultiDateSelectCalendar.swift */; };
 		2F39B85D27823CF600FE72C3 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85C27823CF600FE72C3 /* Tests_iOS.swift */; };
 		2F39B85F27823CF700FE72C3 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85E27823CF700FE72C3 /* Tests_iOSLaunchTests.swift */; };
 		2F39B86927823CF700FE72C3 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B86827823CF700FE72C3 /* Tests_macOS.swift */; };
@@ -127,6 +129,7 @@
 		2F2343F827D452C20064B635 /* Calendar-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Calendar-Extension.swift"; path = "../Events/Calendar-Extension.swift"; sourceTree = "<group>"; };
 		2F2343FB27D454BC0064B635 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		2F24457E27D797C9005BF37D /* EKWeekday-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKWeekday-Extension.swift"; sourceTree = "<group>"; };
+		2F24458127D7F0EB005BF37D /* MultiDateSelectCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiDateSelectCalendar.swift; sourceTree = "<group>"; };
 		2F39B84227823CF600FE72C3 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawApp.swift; sourceTree = "<group>"; };
 		2F39B84427823CF600FE72C3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -217,6 +220,7 @@
 				2F6505052787DA3C00AF90F7 /* FloatingEventInput.swift */,
 				2F81230B2797B59500458B1A /* AddEventDateTimePicker.swift */,
 				2F211133279A4F4E0041EE85 /* AddRecurrenceRule.swift */,
+				2F24458127D7F0EB005BF37D /* MultiDateSelectCalendar.swift */,
 				2F8AB30C27A220E400654FEF /* DateAndTimePickers.swift */,
 				2F81230E2798957C00458B1A /* DateTimePickerInputView.swift */,
 				2F8AB2FC279BB4F000654FEF /* DateTimePickerTextField.swift */,
@@ -576,6 +580,7 @@
 				2F8AB303279D140E00654FEF /* PopoverButton.swift in Sources */,
 				2F8AB30A27A1026500654FEF /* PickerField.swift in Sources */,
 				2F21112D279908450041EE85 /* View-Extension.swift in Sources */,
+				2F24458227D7F0EB005BF37D /* MultiDateSelectCalendar.swift in Sources */,
 				2F8AB2FD279BB4F000654FEF /* DateTimePickerTextField.swift in Sources */,
 				2F39B889278241B500FE72C3 /* Colors.swift in Sources */,
 				2F8AB30727A1025100654FEF /* UIPickerTextField.swift in Sources */,
@@ -616,6 +621,7 @@
 				2F8AB304279D140E00654FEF /* PopoverButton.swift in Sources */,
 				2F8AB30B27A1026500654FEF /* PickerField.swift in Sources */,
 				2F21112E279908450041EE85 /* View-Extension.swift in Sources */,
+				2F24458327D7F0EB005BF37D /* MultiDateSelectCalendar.swift in Sources */,
 				2F8AB2FE279BB4F000654FEF /* DateTimePickerTextField.swift in Sources */,
 				2F39B88A278241B500FE72C3 /* Colors.swift in Sources */,
 				2F8AB30827A1025100654FEF /* UIPickerTextField.swift in Sources */,

@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct DateAndTimePickers: View {
-    
-    public var suggestTimeInterval: Int?
-    
+        
     @Binding public var dateTime: DateComponents?
     @Binding public var dateDate: DateComponents?
     public var onTap: () -> ()
@@ -18,11 +16,7 @@ struct DateAndTimePickers: View {
     public var dateSuggestBinding: Binding<Date?> { Binding<Date?>(
         get: {
             guard let date = self.dateDate else {
-                guard let suggestTimeInterval = suggestTimeInterval else {
-                    return nil
-                }
-                let suggestedDate = Date().addingTimeInterval(TimeInterval(suggestTimeInterval))
-                return suggestedDate
+                return nil
             }
             return Calendar.current.date(from: date)
         }, set: {
@@ -36,11 +30,7 @@ struct DateAndTimePickers: View {
     public var timeSuggestBinding: Binding<Date?> { Binding<Date?>(
         get: {
             guard let time = self.dateTime else {
-                guard let suggestTimeInterval = suggestTimeInterval else {
-                    return nil
-                }
-                let suggestedDate = Date().addingTimeInterval(TimeInterval(suggestTimeInterval))
-                return suggestedDate
+                return nil
             }
             return Calendar.current.date(from: time)
         }, set: {
@@ -68,12 +58,6 @@ struct DateAndTimePickers: View {
                             .fill(Color(uiColor: .systemGray5)))
             .onTapGesture {
                 self.onTap()
-                if self.dateDate == nil {
-                    self.dateDate = Date().get(.year, .month, .day)
-                }
-                if self.dateTime == nil {
-                    self.dateTime = Date().get(.hour, .minute, .second)
-                }
             }
     }
 }

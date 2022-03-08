@@ -92,17 +92,27 @@ public final class EventKitManager {
         let newReminder = try self.eventStore.createReminder(title: title, startDate: startDate, dueDate: dueDate, calendar: calendar)
         return newReminder
     }
-
+    
     /// Delete an event
     /// - Parameters:
     ///   - identifier: event identifier
-    ///   - span: even't span
+    ///   - span: event span
     public func deleteEvent(
         identifier: String,
         span: EKSpan = .thisEvent
     ) async throws {
         try await accessEventsCalendar()
         try self.eventStore.deleteEvent(identifier: identifier, span: span)
+    }
+    
+    /// Delete a reminder
+    /// - Parameters:
+    ///   - identifier: event identifier
+    public func deleteReminder(
+        identifier: String
+    ) async throws {
+        try await accessEventsCalendar()
+        try self.eventStore.deleteReminder(identifier: identifier)
     }
 
     /// Fetch events for a specific day

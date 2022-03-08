@@ -14,6 +14,24 @@ struct AddEventDateTimePicker: View {
     @State var showDates: Bool = true
     private let barHeight: CGFloat = 96
     
+    func setStartTime() {
+        if self.viewModel.newItemStartTime == nil {
+            self.viewModel.newItemStartTime = Date().get(.hour, .minute, .second)
+        }
+        if self.viewModel.newItemStartDate == nil {
+            self.viewModel.newItemStartDate = Date().get(.year, .month, .day)
+        }
+    }
+    
+    func setEndTime() {
+        if self.viewModel.newItemEndTime == nil {
+            self.viewModel.newItemEndTime = Calendar.current.date(byAdding: .hour, value: 1, to: Date())?.get(.hour, .minute, .second)
+        }
+        if self.viewModel.newItemEndDate == nil {
+            self.viewModel.newItemEndDate = Date().get(.year, .month, .day)
+        }
+    }
+    
     var body: some View {
         if self.viewModel.isDateTimePickerOpen {
             VStack {
@@ -40,12 +58,7 @@ struct AddEventDateTimePicker: View {
                         DateAndTimePickers(dateTime: self.$viewModel.newItemStartTime,
                                            dateDate: self.$viewModel.newItemStartDate,
                                            onTap: {
-                            if self.viewModel.newItemStartTime == nil {
-                                self.viewModel.newItemStartTime = Date().get(.hour, .minute, .second)
-                            }
-                            if self.viewModel.newItemStartDate == nil {
-                                self.viewModel.newItemStartDate = Date().get(.year, .month, .day)
-                            }
+                            self.setStartTime()
                         })
                         Spacer()
                     }
@@ -58,12 +71,8 @@ struct AddEventDateTimePicker: View {
                         DateAndTimePickers(dateTime: self.$viewModel.newItemEndTime,
                                            dateDate: self.$viewModel.newItemEndDate,
                                            onTap: {
-                            if self.viewModel.newItemEndTime == nil {
-                                self.viewModel.newItemEndTime = Date().get(.hour, .minute, .second)
-                            }
-                            if self.viewModel.newItemEndDate == nil {
-                                self.viewModel.newItemEndDate = Date().get(.year, .month, .day)
-                            }
+                            self.setStartTime()
+                            self.setEndTime()
                         })
                         Spacer()
                     }

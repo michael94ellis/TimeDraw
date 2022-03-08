@@ -88,8 +88,12 @@ extension EKEventStore {
         let reminder = EKReminder(eventStore: self)
         reminder.title = title
         reminder.calendar = calendar
-        reminder.startDateComponents = startDate
-        reminder.dueDateComponents = dueDate
+        if let startDate = startDate {
+            reminder.startDateComponents = startDate
+        }
+        if let dueDate = dueDate {
+            reminder.dueDateComponents = dueDate
+        }
         try save(reminder, commit: true)
         return reminder
     }
@@ -115,8 +119,7 @@ extension EKEventStore {
     ///   - identifier: event identifier
     ///   - span: event's span
     public func deleteReminder(
-        identifier: String,
-        span: EKSpan = .thisEvent
+        identifier: String
     ) throws {
         guard let reminder = self.fetchReminder(identifier: identifier) else {
             throw EventError.invalidEvent

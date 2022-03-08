@@ -129,9 +129,18 @@ class ModifyCalendarItemViewModel: ObservableObject {
                 self.endRecurrenceTime = recurrenceEndDate.get(.hour, .minute, .second)
             }
             // FIXME
-            self.numberOfOccurences = nil
-            self.frequencyDayValueInt = recurrenceRule.daysOfTheWeek?.first?.dayOfTheWeek.rawValue
-            self.frequencyMonthDate = recurrenceRule.daysOfTheMonth?.first?.intValue
+            switch recurrenceRule.frequency {
+            case .daily:
+                self.frequencyDayValueInt = recurrenceRule.interval
+            case .weekly:
+                if let selectedDay = recurrenceRule.daysOfTheWeek?.first?.dayOfTheWeek {
+                    self.frequencyWeekdayValue = selectedDay
+                }
+            case .monthly:
+                self.frequencyDayValueInt = recurrenceRule.daysOfTheMonth?.first?.intValue
+            default:
+                break
+            }
         }
     }
     
@@ -147,11 +156,11 @@ class ModifyCalendarItemViewModel: ObservableObject {
         }
     }
     
+    // The implementation only supports a single recurrence rule. Adding a recurrence rule replaces the single recurrence rule
     private func handleRecurrence(for item: EKCalendarItem) {
         self.setRecurrenceRule()
         if self.isRecurrencePickerOpen,
            let recurrenceRule = recurrenceRule {
-            item.recurrenceRules = nil
             item.addRecurrenceRule(recurrenceRule)
         } else if let existingRule = item.recurrenceRules?.first {
             item.removeRecurrenceRule(existingRule)
@@ -159,11 +168,14 @@ class ModifyCalendarItemViewModel: ObservableObject {
     }
     
     private func setRecurrenceRule() {
+        // Optional recurrence end rule
         if let recurrenceEnd = self.endRecurrenceDate,
            let recurrenceEndDate = Calendar.current.date(from: recurrenceEnd) {
             self.recurrenceEnd = EKRecurrenceEnd(end: recurrenceEndDate)
         } else if let numberOfOccurences = numberOfOccurences {
             self.recurrenceEnd = EKRecurrenceEnd(occurrenceCount: numberOfOccurences)
+        } else {
+            self.recurrenceEnd = nil
         }
         let interval = self.frequencyDayValueInt ?? 1
         switch self.selectedRule {
@@ -176,9 +188,9 @@ class ModifyCalendarItemViewModel: ObservableObject {
                 let recurrenceDay = frequencyValue as NSNumber
                 self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [recurrenceDay], monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
             }
-        case .yearly:
-            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [NSNumber(nonretainedObject: self.frequencyDayValueInt)], monthsOfTheYear: (1...12).compactMap { NSNumber(value: $0) }, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
-        @unknown default:
+//        case .yearly:
+//            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [NSNumber(nonretainedObject: self.frequencyDayValueInt)], monthsOfTheYear: (1...12).compactMap { NSNumber(value: $0) }, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+        default:
             print(self.selectedRule)
         }
     }
@@ -263,50 +275,57 @@ class ModifyCalendarItemViewModel: ObservableObject {
             let startTimeComponents = self.newItemStartTime
             let endTimeComponents = self.newItemEndTime
             let endDateComponents = self.newItemEndDate
-            var mergedStartComponments: DateComponents = DateComponents()
-            var mergedEndComponments: DateComponents = DateComponents()
-            if startDateComponents != nil || startTimeComponents != nil {
-                mergedStartComponments.year = startDateComponents?.year
-                mergedStartComponments.month = startDateComponents?.month
-                mergedStartComponments.day = startDateComponents?.day
-                mergedStartComponments.hour = startTimeComponents?.hour
-                mergedStartComponments.minute = startTimeComponents?.minute
-                mergedStartComponments.second = startTimeComponents?.second
-            }
-            if endDateComponents != nil || endTimeComponents != nil {
-                mergedEndComponments.year = endDateComponents?.year
-                mergedEndComponments.month = endDateComponents?.month
-                mergedEndComponments.day = endDateComponents?.day
-                mergedEndComponments.hour = endTimeComponents?.hour
-                mergedEndComponments.minute = endTimeComponents?.minute
-                mergedEndComponments.second = endTimeComponents?.second
-            }
-            if self.newItemStartDate != nil,
-               self.newItemEndDate != nil,
-               let startDate = Calendar.current.date(from: mergedStartComponments),
-               let endDate = Calendar.current.date(from: mergedEndComponments),
-               let event = self.calendarItem as? EKEvent {
-                self.saveEvent(event, start: startDate, end: endDate)
-            } else {
-                let start = self.newItemStartDate != nil ? mergedStartComponments : nil
-                let end = self.newItemEndDate != nil ? mergedEndComponments : nil
-                if let reminder = self.calendarItem as? EKReminder {
-                    self.saveReminder(reminder: reminder, start: start, end: end)
-                } else {
-                    await self.createReminder(start: start, end: end)
+            var mergedStartComponments: DateComponents?
+            var mergedEndComponments: DateComponents?
+            if startDateComponents != nil {
+                mergedStartComponments = DateComponents()
+                mergedStartComponments?.year = startDateComponents?.year
+                mergedStartComponments?.month = startDateComponents?.month
+                mergedStartComponments?.day = startDateComponents?.day
+                // Not possible to have a date without the first three
+                if startTimeComponents != nil {
+                    mergedStartComponments?.hour = startTimeComponents?.hour
+                    mergedStartComponments?.minute = startTimeComponents?.minute
+                    mergedStartComponments?.second = startTimeComponents?.second
                 }
             }
-        }
-    }
-    
-    /// If there is a Start and End date make an Event from the given info, or save an existing Event with any modified info
-    @MainActor private func saveEvent(_ event: EKEvent, start startDate: Date, end endDate: Date) {
-        Task {
-            event.title = self.newItemTitle
-            event.startDate = startDate
-            event.endDate = endDate
-            self.handleRecurrence(for: event)
-            self.save(event: event, "Event Saved")
+            if endDateComponents != nil {
+                mergedEndComponments = DateComponents()
+                mergedEndComponments?.year = endDateComponents?.year
+                mergedEndComponments?.month = endDateComponents?.month
+                mergedEndComponments?.day = endDateComponents?.day
+                if endTimeComponents != nil {
+                    mergedEndComponments?.hour = endTimeComponents?.hour
+                    mergedEndComponments?.minute = endTimeComponents?.minute
+                    mergedEndComponments?.second = endTimeComponents?.second
+                }
+            }
+            if self.editMode {
+                if let event = self.calendarItem as? EKEvent,
+                   let startComponents = mergedStartComponments,
+                   let endComponents = mergedEndComponments,
+                   let startDate = Calendar.current.date(from: startComponents),
+                   let endDate = Calendar.current.date(from: endComponents) {
+                    self.saveNewDates(for: event, newStart: startDate, newEnd: endDate)
+                } else if let reminder = self.calendarItem as? EKReminder {
+                    self.saveNewDates(for: reminder, newStart: mergedStartComponments, newEnd: mergedEndComponments)
+                }
+            } else {
+                if let startComponents = mergedStartComponments,
+                   let endComponents = mergedEndComponments,
+                   let startDate = Calendar.current.date(from: startComponents),
+                   let endDate = Calendar.current.date(from: endComponents) {
+                    await self.createEvent(start: startDate, end: endDate)
+                } else {
+                    let start = mergedStartComponments != nil ? mergedStartComponments : nil
+                    let end = mergedEndComponments != nil ? mergedEndComponments : nil
+                    if self.editMode, let reminder = self.calendarItem as? EKReminder {
+                        self.saveNewDates(for: reminder, newStart: start, newEnd: end)
+                    } else {
+                        await self.createReminder(start: start, end: end)
+                    }
+                }
+            }
         }
     }
     
@@ -320,6 +339,17 @@ class ModifyCalendarItemViewModel: ObservableObject {
         }
     }
     
+    /// If there is a Start and End date make an Event from the given info, or save an existing Event with any modified info
+    @MainActor private func saveNewDates(for event: EKEvent, newStart startDate: Date, newEnd endDate: Date) {
+        Task {
+            event.title = self.newItemTitle
+            event.startDate = startDate
+            event.endDate = endDate
+            self.handleRecurrence(for: event)
+            self.save(event: event, "Event Saved")
+        }
+    }
+    
     @MainActor private func save(event: EKEvent, _ message: String) {
         do {
             try EventKitManager.shared.eventStore.save(event, span: .thisEvent)
@@ -330,24 +360,24 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.reset()
     }
     
+    @MainActor private func createReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) async {
+        do {
+            let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
+            self.handleRecurrence(for: newReminder)
+            self.save(reminder: newReminder, "Reminder Created")
+        } catch let error as NSError {
+            print("Error: failed to save reminder with error : \(error)")
+        }
+    }
+    
     /// If there is a Start and End date make an Reminder from the given info, or save an existing Reminder with any modified info
-    @MainActor private func saveReminder(reminder: EKReminder, start startComponents: DateComponents?, end endComponents: DateComponents?) {
+    @MainActor private func saveNewDates(for reminder: EKReminder, newStart startComponents: DateComponents?, newEnd endComponents: DateComponents?) {
         Task {
             reminder.title = self.newItemTitle
             reminder.startDateComponents = startComponents
             reminder.dueDateComponents = endComponents
             self.handleRecurrence(for: reminder)
-            self.save(reminder: reminder, "Reminder Created")
-        }
-    }
-    
-    @MainActor private func createReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) async {
-        do {
-            let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
-            self.handleRecurrence(for: newReminder)
-            self.save(reminder: newReminder, "Reminder Saved")
-        } catch let error as NSError {
-            print("Error: failed to save reminder with error : \(error)")
+            self.save(reminder: reminder, "Reminder Saved")
         }
     }
     

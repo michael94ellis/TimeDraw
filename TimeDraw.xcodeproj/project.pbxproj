@@ -44,8 +44,6 @@
 		2F42C5982784A87100F0BEB2 /* PopoverLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5962784A87100F0BEB2 /* PopoverLink.swift */; };
 		2F42C59D2784E3DE00F0BEB2 /* EventKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59C2784E3DE00F0BEB2 /* EventKitManager.swift */; };
 		2F42C59E2784E3DE00F0BEB2 /* EventKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59C2784E3DE00F0BEB2 /* EventKitManager.swift */; };
-		2F42C5A02784E6C800F0BEB2 /* Array-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59F2784E6C800F0BEB2 /* Array-Extension.swift */; };
-		2F42C5A12784E6C800F0BEB2 /* Array-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59F2784E6C800F0BEB2 /* Array-Extension.swift */; };
 		2F42C5A32784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */; };
 		2F42C5A42784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */; };
 		2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A52784E6FC00F0BEB2 /* EventError.swift */; };
@@ -146,7 +144,6 @@
 		2F42C59327848DF700F0BEB2 /* Date-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date-Extension.swift"; sourceTree = "<group>"; };
 		2F42C5962784A87100F0BEB2 /* PopoverLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverLink.swift; sourceTree = "<group>"; };
 		2F42C59C2784E3DE00F0BEB2 /* EventKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventKitManager.swift; sourceTree = "<group>"; };
-		2F42C59F2784E6C800F0BEB2 /* Array-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array-Extension.swift"; sourceTree = "<group>"; };
 		2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKEventStore-Extension.swift"; sourceTree = "<group>"; };
 		2F42C5A52784E6FC00F0BEB2 /* EventError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventError.swift; sourceTree = "<group>"; };
 		2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyCalendarItemViewModel.swift; sourceTree = "<group>"; };
@@ -312,7 +309,6 @@
 				2F39B888278241B500FE72C3 /* Colors.swift */,
 				2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */,
 				2F8AB302279D140E00654FEF /* PopoverButton.swift */,
-				2F42C59F2784E6C800F0BEB2 /* Array-Extension.swift */,
 				2F2343F827D452C20064B635 /* Calendar-Extension.swift */,
 				2F42C59327848DF700F0BEB2 /* Date-Extension.swift */,
 				2F8AB30F27A229DA00654FEF /* Utils.swift */,
@@ -595,7 +591,6 @@
 				2F81230F2798957C00458B1A /* DateTimePickerInputView.swift in Sources */,
 				2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2F39B87027823CF700FE72C3 /* MainView.swift in Sources */,
-				2F42C5A02784E6C800F0BEB2 /* Array-Extension.swift in Sources */,
 				2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */,
 				2F1F8FA427D3AAEF00648234 /* EventListViewModel.swift in Sources */,
 				2F42C5972784A87100F0BEB2 /* PopoverLink.swift in Sources */,
@@ -635,7 +630,6 @@
 				2F8123102798957C00458B1A /* DateTimePickerInputView.swift in Sources */,
 				2F42C5A72784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2F39B87127823CF700FE72C3 /* MainView.swift in Sources */,
-				2F42C5A12784E6C800F0BEB2 /* Array-Extension.swift in Sources */,
 				2F6505042787A09900AF90F7 /* MainHeader.swift in Sources */,
 				2F1F8FA527D3AAEF00648234 /* EventListViewModel.swift in Sources */,
 				2F42C5982784A87100F0BEB2 /* PopoverLink.swift in Sources */,

@@ -128,13 +128,7 @@ struct AddRecurrenceRule: View {
                     .frame(height: 33)
                 case .monthly:
                     self.dayFrequencyTextField("On Day:")
-                    MultiSelectCalendarView(viewDate: Binding(get: { Date() }, set: { _ in }), selectedDates: Binding(get: { [] }, set: { _ in }), content: { date in
-                        Text(DateFormatter.dayFormatter.string(from: date))
-                    }, excessDays: { date in
-                        Text(DateFormatter.dayFormatter.string(from: date))
-                    }, header: { date in
-                        Text(DateFormatter.weekDayFormatter.string(from: date))
-                    })
+                    CalendarMultiDateSelection(viewDate: Date(), selectedDates: self.$viewModel.selectedMonthDays)
                 case .yearly:
                     HStack {
                         Spacer()

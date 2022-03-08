@@ -9,19 +9,19 @@ import SwiftUI
 
 struct CalendarMultiDateSelection: View {
     
-    @Binding private var viewDate: Date
+    private var viewDate: Date
     @Binding private var selectedDates: [Date]
     @ObservedObject private var eventList: EventListViewModel = .shared
     
-    init(viewDate: Binding<Date>, selectedDates: Binding<[Date]>) {
-        self._viewDate = viewDate
+    init(viewDate: Date, selectedDates: Binding<[Date]>) {
+        self.viewDate = viewDate
         self._selectedDates = selectedDates
     }
     
     var body: some View {
         VStack {
             MultiSelectCalendarView(
-                viewDate: self.$viewDate,
+                viewDate: self.viewDate,
                 selectedDates: self.$selectedDates,
                 content: { date in
                     Button(action: {
@@ -38,7 +38,7 @@ struct CalendarMultiDateSelection: View {
                         }
                     }) {
                         let today = Calendar.current.isDateInToday(date)
-                        let display = Calendar.current.isDate(date, inSameDayAs: self.eventList.displayDate)
+                        let display = self.selectedDates.contains(date)
                         Text("00")
                             .padding(10)
                             .foregroundColor(.clear)
@@ -92,7 +92,7 @@ struct CalendarMultiDateSelection: View {
 
 public struct MultiSelectCalendarView<Day: View, Header: View, ExcessDay: View>: View {
     // Injected dependencies
-    @Binding private var viewDate: Date
+    private var viewDate: Date
     @Binding private var selectedDates: [Date]
     private let content: (Date) -> Day
     private let excessDays: (Date) -> ExcessDay
@@ -105,19 +105,19 @@ public struct MultiSelectCalendarView<Day: View, Header: View, ExcessDay: View>:
     private var weeks: [[Date]] = []
     
     public init(
-        viewDate: Binding<Date>,
+        viewDate: Date,
         selectedDates: Binding<[Date]>,
         @ViewBuilder content: @escaping (Date) -> Day,
         @ViewBuilder excessDays: @escaping (Date) -> ExcessDay,
         @ViewBuilder header: @escaping (Date) -> Header
     ) {
-        self._viewDate = viewDate
+        self.viewDate = viewDate
         self._selectedDates = selectedDates
         self.content = content
         self.excessDays = excessDays
         self.header = header
         
-        self.month = viewDate.wrappedValue.startOfMonth(using: Calendar.current)
+        self.month = viewDate.startOfMonth(using: Calendar.current)
         let displayDates = self.makeDays()
         self.days = displayDates
         self.weeks = displayDates.chunked(into: 7)

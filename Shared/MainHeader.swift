@@ -43,8 +43,8 @@ struct MainHeader: View {
     }
     
     func switchTransition(direction: SwipeDirection) -> AnyTransition {
-        let slideOut: Edge = self.showCompactCalendar ? .top : .bottom
-        return .asymmetric(insertion: .move(edge: slideOut), removal: .opacity)
+        let slideOut: Edge = self.showCompactCalendar ? .top : .top
+        return .asymmetric(insertion: .move(edge: slideOut), removal: .move(edge: .top))
     }
     
     private let date: Date
@@ -65,11 +65,9 @@ struct MainHeader: View {
             let display = Calendar.current.isDate(date, inSameDayAs: self.eventList.displayDate)
             VStack {
                 Text(self.weekdayFormatter.string(from: date))
-                    .if(today || display) { view in
-                        view.font(.interSemiBold)
-                    }
-                    .foregroundColor(today || display ? Color(uiColor: .label) : Color.gray1)
-                    .frame(width: 45, height: 30)
+                    .font(today || display ? .interSemiBold : .interLight)
+                    .foregroundColor(Color(uiColor: .label))
+                    .frame(height: 30)
                 Text(date.get(.day).formatted())
                     .font(today ? .interBold : display ? .interSemiBold : .interRegular)
                     .foregroundColor(today ? Color.red1 : display ? Color(uiColor: .label) : Color.gray2)

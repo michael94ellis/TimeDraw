@@ -15,20 +15,22 @@ struct AddEventDateTimePicker: View {
     private let barHeight: CGFloat = 96
     
     func setStartTime() {
+        let displayDate = EventListViewModel.shared.displayDate
         if self.viewModel.newItemStartTime == nil {
-            self.viewModel.newItemStartTime = Date().get(.hour, .minute, .second)
+            self.viewModel.newItemStartTime = displayDate.get(.hour, .minute, .second)
         }
         if self.viewModel.newItemStartDate == nil {
-            self.viewModel.newItemStartDate = Date().get(.year, .month, .day)
+            self.viewModel.newItemStartDate = displayDate.get(.year, .month, .day)
         }
     }
     
     func setEndTime() {
+        let displayDate = EventListViewModel.shared.displayDate
         if self.viewModel.newItemEndTime == nil {
-            self.viewModel.newItemEndTime = Calendar.current.date(byAdding: .hour, value: 1, to: Date())?.get(.hour, .minute, .second)
+            self.viewModel.newItemEndTime = Calendar.current.date(byAdding: .hour, value: 1, to: displayDate)?.get(.hour, .minute, .second)
         }
         if self.viewModel.newItemEndDate == nil {
-            self.viewModel.newItemEndDate = Date().get(.year, .month, .day)
+            self.viewModel.newItemEndDate = displayDate.get(.year, .month, .day)
         }
     }
     

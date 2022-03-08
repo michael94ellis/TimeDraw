@@ -20,6 +20,8 @@
 		2F2343FA27D452C20064B635 /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2343F827D452C20064B635 /* Calendar-Extension.swift */; };
 		2F2343FC27D454BC0064B635 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2343FB27D454BC0064B635 /* CalendarView.swift */; };
 		2F2343FD27D454BC0064B635 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2343FB27D454BC0064B635 /* CalendarView.swift */; };
+		2F24457F27D797C9005BF37D /* EKWeekday-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24457E27D797C9005BF37D /* EKWeekday-Extension.swift */; };
+		2F24458027D797C9005BF37D /* EKWeekday-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24457E27D797C9005BF37D /* EKWeekday-Extension.swift */; };
 		2F39B85D27823CF600FE72C3 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85C27823CF600FE72C3 /* Tests_iOS.swift */; };
 		2F39B85F27823CF700FE72C3 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85E27823CF700FE72C3 /* Tests_iOSLaunchTests.swift */; };
 		2F39B86927823CF700FE72C3 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B86827823CF700FE72C3 /* Tests_macOS.swift */; };
@@ -124,6 +126,7 @@
 		2F211133279A4F4E0041EE85 /* AddRecurrenceRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecurrenceRule.swift; sourceTree = "<group>"; };
 		2F2343F827D452C20064B635 /* Calendar-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Calendar-Extension.swift"; path = "../Events/Calendar-Extension.swift"; sourceTree = "<group>"; };
 		2F2343FB27D454BC0064B635 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		2F24457E27D797C9005BF37D /* EKWeekday-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKWeekday-Extension.swift"; sourceTree = "<group>"; };
 		2F39B84227823CF600FE72C3 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawApp.swift; sourceTree = "<group>"; };
 		2F39B84427823CF600FE72C3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -310,6 +313,7 @@
 				2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */,
 				2F8AB302279D140E00654FEF /* PopoverButton.swift */,
 				2F2343F827D452C20064B635 /* Calendar-Extension.swift */,
+				2F24457E27D797C9005BF37D /* EKWeekday-Extension.swift */,
 				2F42C59327848DF700F0BEB2 /* Date-Extension.swift */,
 				2F8AB30F27A229DA00654FEF /* Utils.swift */,
 				2F21112C279908450041EE85 /* View-Extension.swift */,
@@ -338,6 +342,7 @@
 		2F6505262791371400AF90F7 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				2F6505282791384500AF90F7 /* Inter-Font.swift */,
 				2F6505122791370D00AF90F7 /* Inter-Black.ttf */,
 				2F6505132791370D00AF90F7 /* Inter-Bold.ttf */,
 				2F6505112791370C00AF90F7 /* Inter-ExtraBold.ttf */,
@@ -347,7 +352,6 @@
 				2F65050E2791370C00AF90F7 /* Inter-ExtraLight.ttf */,
 				2F6505102791370C00AF90F7 /* Inter-Light.ttf */,
 				2F65050D2791370C00AF90F7 /* Inter-Medium.ttf */,
-				2F6505282791384500AF90F7 /* Inter-Font.swift */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -591,6 +595,7 @@
 				2F81230F2798957C00458B1A /* DateTimePickerInputView.swift in Sources */,
 				2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2F39B87027823CF700FE72C3 /* MainView.swift in Sources */,
+				2F24457F27D797C9005BF37D /* EKWeekday-Extension.swift in Sources */,
 				2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */,
 				2F1F8FA427D3AAEF00648234 /* EventListViewModel.swift in Sources */,
 				2F42C5972784A87100F0BEB2 /* PopoverLink.swift in Sources */,
@@ -630,6 +635,7 @@
 				2F8123102798957C00458B1A /* DateTimePickerInputView.swift in Sources */,
 				2F42C5A72784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2F39B87127823CF700FE72C3 /* MainView.swift in Sources */,
+				2F24458027D797C9005BF37D /* EKWeekday-Extension.swift in Sources */,
 				2F6505042787A09900AF90F7 /* MainHeader.swift in Sources */,
 				2F1F8FA527D3AAEF00648234 /* EventListViewModel.swift in Sources */,
 				2F42C5982784A87100F0BEB2 /* PopoverLink.swift in Sources */,

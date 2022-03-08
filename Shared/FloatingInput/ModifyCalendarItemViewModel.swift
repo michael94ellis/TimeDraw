@@ -314,21 +314,15 @@ class ModifyCalendarItemViewModel: ObservableObject {
                 } else if let reminder = self.calendarItem as? EKReminder {
                     self.saveNewDates(for: reminder, newStart: mergedStartComponments, newEnd: mergedEndComponments)
                 }
+            } else if let startComponents = mergedStartComponments,
+                      let endComponents = mergedEndComponments,
+                      let startDate = Calendar.current.date(from: startComponents),
+                      let endDate = Calendar.current.date(from: endComponents) {
+                await self.createEvent(start: startDate, end: endDate)
             } else {
-                if let startComponents = mergedStartComponments,
-                   let endComponents = mergedEndComponments,
-                   let startDate = Calendar.current.date(from: startComponents),
-                   let endDate = Calendar.current.date(from: endComponents) {
-                    await self.createEvent(start: startDate, end: endDate)
-                } else {
-                    let start = mergedStartComponments != nil ? mergedStartComponments : nil
-                    let end = mergedEndComponments != nil ? mergedEndComponments : nil
-                    if self.editMode, let reminder = self.calendarItem as? EKReminder {
-                        self.saveNewDates(for: reminder, newStart: start, newEnd: end)
-                    } else {
-                        await self.createReminder(start: start, end: end)
-                    }
-                }
+                let start = mergedStartComponments != nil ? mergedStartComponments : nil
+                let end = mergedEndComponments != nil ? mergedEndComponments : nil
+                await self.createReminder(start: start, end: end)
             }
         }
     }

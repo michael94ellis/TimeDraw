@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import EventKit
 
 public var ordinalFormatter: NumberFormatter = {
     let formatter = NumberFormatter()
@@ -20,30 +19,19 @@ extension Int {
     }
 }
 
-extension EKWeekday: CaseIterable, CustomStringConvertible {
-    public static var allCases: [EKWeekday] {
-        return [.sunday, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
+extension Bundle {
+    var releaseVersionNumber: String {
+        infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     }
-    public var description: String {
-        switch self {
-        case .sunday: return "Sunday"
-        case .monday: return "Monday"
-        case .tuesday: return "Tuesday"
-        case .wednesday: return "Wednesday"
-        case .thursday: return "Thursday"
-        case .friday: return "Friday"
-        case .saturday: return "Saturday"
-        }
+    var buildVersionNumber: String {
+        infoDictionary?["CFBundleVersion"] as? String ?? ""
     }
 }
 
-extension EKWeekday {
-    public static func getSelectedWeekDays(for value: EKWeekday) -> [EKRecurrenceDayOfWeek] {
-        return EKWeekday.allCases.compactMap {
-            guard value == $0 else {
-                return nil
-            }
-            return EKRecurrenceDayOfWeek($0)
+extension Array {
+    func chunked(into size: Int) -> [[Element]] {
+        return stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
         }
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    
+
     @Binding var showSettingsPopover: Bool
     @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
     
@@ -60,6 +60,8 @@ struct SettingsView: View {
                     .padding(.horizontal, 20)
                 Spacer()
                 Spacer()
+                Text("Version:\(Bundle.main.releaseVersionNumber) (\(Bundle.main.buildVersionNumber))")
+                    .font(.interFine)
             }
             .padding(.horizontal)
             .padding(.top, 22)

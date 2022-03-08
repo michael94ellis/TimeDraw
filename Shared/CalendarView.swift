@@ -11,11 +11,11 @@ struct CalendarDateSelection: View {
     
     @Binding private var selectedDate: Date
     @ObservedObject private var eventList: EventListViewModel = .shared
-
+    
     init(date: Binding<Date>) {
         self._selectedDate = date
     }
-
+    
     var body: some View {
         VStack {
             CalendarView(
@@ -32,8 +32,8 @@ struct CalendarDateSelection: View {
                             .padding(10)
                             .foregroundColor(.clear)
                             .background(display ? Color(uiColor: .systemGray2)
-                                : today ? Color(uiColor: .systemGray4)
-                                : Color(uiColor: .systemGray6))
+                                        : today ? Color(uiColor: .systemGray4)
+                                        : Color(uiColor: .systemGray6))
                             .frame(width: 36, height: 36)
                             .cornerRadius(8)
                             .accessibilityHidden(true)
@@ -63,7 +63,7 @@ struct CalendarDateSelection: View {
                         .frame(width: 45, height: 30)
                 }
             )
-            .equatable()
+                .equatable()
         }
     }
 }
@@ -76,12 +76,13 @@ public struct CalendarView<Day: View, Header: View, ExcessDay: View>: View {
     private let content: (Date) -> Day
     private let excessDays: (Date) -> ExcessDay
     private let header: (Date) -> Header
-
+    
     // Constants
     private let daysInWeek = 7
     private var days: [Date] = []
     private let month: Date
-
+    private var weeks: [[Date]] = []
+    
     public init(
         date: Binding<Date>,
         @ViewBuilder content: @escaping (Date) -> Day,
@@ -94,17 +95,28 @@ public struct CalendarView<Day: View, Header: View, ExcessDay: View>: View {
         self.header = header
         
         self.month = date.wrappedValue.startOfMonth(using: Calendar.current)
-        self.days = self.makeDays()
+        let displayDates = self.makeDays()
+        self.days = displayDates
+        self.weeks = displayDates.chunked(into: 7)
     }
-
+    
     public var body: some View {
-        LazyVGrid(columns: Array(repeating: GridItem(), count: self.daysInWeek)) {
-            ForEach(self.days.prefix(self.daysInWeek), id: \.self, content: self.header)
-            ForEach(self.days, id: \.self) { date in
-                if Calendar.current.isDate(date, equalTo: month, toGranularity: .month) {
-                    self.content(date)
-                } else {
-                    self.excessDays(date)
+        VStack {
+            HStack {
+                ForEach(self.days.prefix(self.daysInWeek), id: \.self, content: self.header)
+                    .frame(width: 45)
+            }
+            ForEach(self.weeks, id: \.self) { week in
+                HStack {
+                    ForEach(week, id: \.self) { day in
+                        if Calendar.current.isDate(date, equalTo: month, toGranularity: .month) {
+                            self.content(day)
+                                .frame(width: 45)
+                        } else {
+                            self.excessDays(day)
+                                .frame(width: 45)
+                        }
+                    }
                 }
             }
         }
@@ -129,7 +141,7 @@ private extension CalendarView {
         else {
             return []
         }
-
+        
         let dateInterval = DateInterval(start: monthFirstWeek.start, end: monthLastWeek.end)
         return Calendar.current.generateDays(for: dateInterval)
     }

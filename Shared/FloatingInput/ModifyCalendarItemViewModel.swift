@@ -47,7 +47,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var isRecurrenceUsingOccurences: Bool = false
     @Published var dayFrequencyText: String = ""
     @Published var frequencyDayValueInt: Int?
-    @Published var selectedMonthDays: [Date] = []
+    @Published var selectedMonthDays: [Int] = []
     @Published var frequencyWeekdayValue: EKWeekday = .monday
     @Published var frequencyMonthDate: Int?
     @Published var selectedRule: EKRecurrenceFrequency = .weekly

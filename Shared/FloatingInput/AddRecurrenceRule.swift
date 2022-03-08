@@ -127,23 +127,18 @@ struct AddRecurrenceRule: View {
                     }
                     .frame(height: 33)
                 case .monthly:
-                    self.dayFrequencyTextField("On Day:")
-                    CalendarMultiDateSelection(viewDate: Date(), selectedDates: self.$viewModel.selectedMonthDays)
+                    CalendarMultiDateSelection(selectedDates: self.$viewModel.selectedMonthDays)
                 case .yearly:
                     HStack {
                         Spacer()
-                        HStack {
-                            Spacer()
-                            Text("Every:")
-                            PickerField("Month", data: Calendar.current.monthSymbols, selectionIndex: self.$viewModel.frequencyMonthDate)
-                                .frame(width: 90, height: 30)
-                                .multilineTextAlignment(TextAlignment.center)
-                                .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
-                        }
-                        .frame(height: 33)
-                        self.dayFrequencyTextField("On:")
+                        Text("Every:")
+                        PickerField("Month", data: Calendar.current.monthSymbols, selectionIndex: self.$viewModel.frequencyMonthDate)
+                            .frame(width: 90, height: 30)
+                            .multilineTextAlignment(TextAlignment.center)
+                            .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
                         Spacer()
                     }
+                    CalendarMultiDateSelection(selectedDates: self.$viewModel.selectedMonthDays)
                 @unknown default:
                     EmptyView()
                 }

@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
+import EventKit
 
 struct CalendarMultiDateSelection: View {
     
-    private var viewDate: Date
-    @Binding private var selectedDates: [Date]
+    private var viewDate: Date = Date()
+    @Binding private var selectedDates: [Int]
     @ObservedObject private var eventList: EventListViewModel = .shared
     
-    init(viewDate: Date, selectedDates: Binding<[Date]>) {
-        self.viewDate = viewDate
+    init(selectedDates: Binding<[Int]>) {
         self._selectedDates = selectedDates
     }
     
@@ -25,7 +25,7 @@ struct CalendarMultiDateSelection: View {
                 selectedDates: self.$selectedDates,
                 content: { date in
                     Button(action: {
-                        var newDates: [Date] = []
+                        var newDates: [Int] = []
                         if self.selectedDates.contains(date) {
                             newDates = self.selectedDates.filter({ $0 != date })
                         } else {
@@ -37,50 +37,26 @@ struct CalendarMultiDateSelection: View {
                             self.selectedDates = newDates
                         }
                     }) {
-                        let today = Calendar.current.isDateInToday(date)
                         let display = self.selectedDates.contains(date)
                         Text("00")
                             .padding(10)
                             .foregroundColor(.clear)
                             .background(display ? Color(uiColor: .systemGray2)
-                                        : today ? Color(uiColor: .systemGray4)
                                         : Color(uiColor: .systemGray6))
-                            .frame(width: 36, height: 36)
+                            .frame(width: 40, height: 30)
                             .cornerRadius(8)
                             .accessibilityHidden(true)
-                            .overlay(
-                                Text(DateFormatter.dayFormatter.string(from: date)))
-                            .if(today || display) { view in
+                            .overlay(Text(String(date)))
+                            .if(display) { view in
                                 view.font(.interBold)
                             }
-                            .foregroundColor(today ? .red1
-                                             : display ? .white
-                                             : .gray2)
+                            .foregroundColor(display ? .white : .gray2)
                     }
                 },
-                excessDays: { date in
-                    Button(action: {
-                        var newDates: [Date] = []
-                        if self.selectedDates.contains(date) {
-                            newDates = self.selectedDates.filter({ $0 != date })
-                        } else {
-                            self.selectedDates.append(date)
-                            newDates = self.selectedDates
-                        }
-                        
-                        withAnimation {
-                            self.selectedDates = newDates
-                        }
-                    }) {
-                        Text(DateFormatter.dayFormatter.string(from: date))
-                            .foregroundColor(.secondary)
-                            .frame(width: 45, height: 30)
-                    }
-                },
-                header: { date in
-                    Text(DateFormatter.weekDayFormatter.string(from: date))
+                header: { day in
+                    Text(EKWeekday.init(rawValue: day)?.shortDescription ?? "")
                         .font(.interLight)
-                        .frame(width: 45, height: 30)
+                        .frame(width: 40, height: 30)
                 }
             )
                 .equatable()
@@ -90,55 +66,45 @@ struct CalendarMultiDateSelection: View {
 
 // MARK: - Component
 
-public struct MultiSelectCalendarView<Day: View, Header: View, ExcessDay: View>: View {
+public struct MultiSelectCalendarView<Day: View, Header: View>: View {
     // Injected dependencies
     private var viewDate: Date
-    @Binding private var selectedDates: [Date]
-    private let content: (Date) -> Day
-    private let excessDays: (Date) -> ExcessDay
-    private let header: (Date) -> Header
+    @Binding private var selectedDates: [Int]
+    private let content: (Int) -> Day
+    private let header: (Int) -> Header
     
     // Constants
     private let daysInWeek = 7
-    private var days: [Date] = []
+    private var days: [Int] = []
     private let month: Date
-    private var weeks: [[Date]] = []
+    private var weeks: [[Int]] = []
     
     public init(
         viewDate: Date,
-        selectedDates: Binding<[Date]>,
-        @ViewBuilder content: @escaping (Date) -> Day,
-        @ViewBuilder excessDays: @escaping (Date) -> ExcessDay,
-        @ViewBuilder header: @escaping (Date) -> Header
+        selectedDates: Binding<[Int]>,
+        @ViewBuilder content: @escaping (Int) -> Day,
+        @ViewBuilder header: @escaping (Int) -> Header
     ) {
         self.viewDate = viewDate
         self._selectedDates = selectedDates
         self.content = content
-        self.excessDays = excessDays
         self.header = header
         
         self.month = viewDate.startOfMonth(using: Calendar.current)
-        let displayDates = self.makeDays()
+        let displayDates = Array(1...31)
         self.days = displayDates
         self.weeks = displayDates.chunked(into: 7)
     }
     
     public var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             HStack {
                 ForEach(self.days.prefix(self.daysInWeek), id: \.self, content: self.header)
-                    .frame(width: 45)
             }
             ForEach(self.weeks, id: \.self) { week in
                 HStack {
                     ForEach(week, id: \.self) { day in
-                        if Calendar.current.isDate(self.viewDate, equalTo: month, toGranularity: .month) {
-                            self.content(day)
-                                .frame(width: 45)
-                        } else {
-                            self.excessDays(day)
-                                .frame(width: 45)
-                        }
+                        self.content(day)
                     }
                 }
             }
@@ -149,23 +115,7 @@ public struct MultiSelectCalendarView<Day: View, Header: View, ExcessDay: View>:
 // MARK: - Conformances
 
 extension MultiSelectCalendarView: Equatable {
-    public static func == (lhs: MultiSelectCalendarView<Day, Header, ExcessDay>, rhs: MultiSelectCalendarView<Day, Header, ExcessDay>) -> Bool {
+    public static func == (lhs: MultiSelectCalendarView<Day, Header>, rhs: MultiSelectCalendarView<Day, Header>) -> Bool {
         lhs.viewDate == rhs.viewDate
-    }
-}
-
-// MARK: - Helpers
-
-private extension MultiSelectCalendarView {
-    func makeDays() -> [Date] {
-        guard let monthInterval = Calendar.current.dateInterval(of: .month, for: self.viewDate),
-              let monthFirstWeek = Calendar.current.dateInterval(of: .weekOfMonth, for: monthInterval.start),
-              let monthLastWeek = Calendar.current.dateInterval(of: .weekOfMonth, for: monthInterval.end - 1)
-        else {
-            return []
-        }
-        
-        let dateInterval = DateInterval(start: monthFirstWeek.start, end: monthLastWeek.end)
-        return Calendar.current.generateDays(for: dateInterval)
     }
 }

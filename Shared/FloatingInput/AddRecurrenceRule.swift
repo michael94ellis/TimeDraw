@@ -57,7 +57,7 @@ struct AddRecurrenceRule: View {
         HStack {
             Spacer()
             Picker("", selection: self.$viewModel.selectedRule) {
-                ForEach([EKRecurrenceFrequency.daily, .weekly, .monthly], id: \.self) { frequency in
+                ForEach([EKRecurrenceFrequency.daily, .weekly, .monthly, .yearly], id: \.self) { frequency in
                     Text(frequency.description)
                         .font(.title)
                 }
@@ -68,16 +68,21 @@ struct AddRecurrenceRule: View {
         }
         .padding(.horizontal)
     }
-    
+    @State var dayFrequencyText: String = ""
     func dayFrequencyTextField(_ label: String) -> some View {
         HStack {
             Spacer()
             Text(label)
-            TextField(1.ordinal ?? "", value: self.$viewModel.frequencyDayValueInt, formatter: ordinalFormatter)
+            TextField("", text: self.$dayFrequencyText)
                 .keyboardType(.numberPad)
                 .frame(width: 90, height: 30)
                 .multilineTextAlignment(TextAlignment.center)
                 .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
+                .onChange(of: self.dayFrequencyText, perform: { newText in
+                    if let intValue = Int(newText) {
+                        self.viewModel.frequencyDayValueInt = intValue
+                    }
+                })
             Spacer()
         }
         .frame(height: 33)

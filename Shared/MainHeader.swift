@@ -96,59 +96,56 @@ struct MainHeader: View {
         }
     }
     
+    var headerNav: some View {
+        HStack {
+            Button(action: {
+                withAnimation {
+                    self.showCompactCalendar.toggle()
+                }
+            }) {
+                Text(self.monthYearFormatter.string(from: self.eventList.displayDate))
+                    .font(.interExtraBoldTitle)
+                    .fontWeight(.semibold)
+                    .foregroundColor(Color.red1)
+            }
+            Spacer()
+            Menu(content: {
+                Button("Settings", action: { self.showSettingsPopover.toggle() })
+            }, label: { Image(systemName: "ellipsis")
+                .frame(width: 40, height: 30) })
+                .fullScreenCover(isPresented: self.$showSettingsPopover, content: {
+                    SettingsView(display: $showSettingsPopover)
+                })
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 10)
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
-            HStack {
-                Button(action: {
-                    withAnimation {
-                        self.showCompactCalendar.toggle()
-                    }
-                }) {
-                    Text(self.monthYearFormatter.string(from: self.eventList.displayDate))
-                        .font(.interExtraBoldTitle)
-                        .fontWeight(.semibold)
-                        .foregroundColor(Color.red1)
-                    Image(systemName: self.showCompactCalendar ? "chevron.up" : "chevron.down")
-                        .foregroundColor(Color.red1)
-                }
-                Spacer()
-                Menu(content: {
-                    Button("Settings", action: { self.showSettingsPopover.toggle() })
-                }, label: { Image(systemName: "ellipsis")
-                    .frame(width: 40, height: 30) })
-                    .fullScreenCover(isPresented: self.$showSettingsPopover, content: {
-                        SettingsView(display: $showSettingsPopover)
-                    })
-            }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 10)
             if self.showCompactCalendar {
+                self.headerNav
                 HStack {
                     ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.eventList.displayDate), id: \.self) { date in
                         self.weekDayHeader(for: date)
                     }
                     .transition(self.transitionDirection(direction: self.swipeDirection))
                 }
-                .gesture(DragGesture()
-                            .onEnded { value in
-                    withAnimation {
-                        let direction = value.detectDirection()
-                        self.handleGesture(value: direction)
-                    }
-                })
             } else {
+                self.headerNav
                 CalendarDateSelection(date: self.$eventList.displayDate)
                     .transition(self.switchTransition(direction: self.swipeDirection))
                     .padding(.top, 8)
                     .padding(.horizontal, 25)
-                    .gesture(DragGesture()
-                                .onEnded { value in
-                        withAnimation {
-                            let direction = value.detectDirection()
-                            self.handleGesture(value: direction)
-                        }
-                    })
             }
         }
+        .transition(self.switchTransition(direction: self.swipeDirection))
+        .gesture(DragGesture()
+                    .onEnded { value in
+            withAnimation {
+                let direction = value.detectDirection()
+                self.handleGesture(value: direction)
+            }
+        })
     }
 }

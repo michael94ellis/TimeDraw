@@ -45,7 +45,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var endRecurrenceTime: DateComponents?
     @Published var numberOfOccurences: Int?
     @Published var isRecurrenceUsingOccurences: Bool = false
-    @Published var frequencyDayValueInt: Int?
+    @Published var frequencyDayValueInt: Int = 1
     @Published var frequencyWeekdayValue: EKWeekday = .monday
     @Published var frequencyMonthDate: Int?
     @Published var selectedRule: EKRecurrenceFrequency = .weekly
@@ -137,7 +137,10 @@ class ModifyCalendarItemViewModel: ObservableObject {
                     self.frequencyWeekdayValue = selectedDay
                 }
             case .monthly:
-                self.frequencyDayValueInt = recurrenceRule.daysOfTheMonth?.first?.intValue
+                self.frequencyDayValueInt = recurrenceRule.daysOfTheMonth?.first?.intValue ?? 1
+            case .yearly:
+                self.frequencyDayValueInt = recurrenceRule.daysOfTheMonth?.first?.intValue ?? 1
+                self.frequencyMonthDate = recurrenceRule.monthsOfTheYear?.first?.intValue
             default:
                 break
             }
@@ -160,7 +163,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     private func handleRecurrence(for item: EKCalendarItem) {
         self.setRecurrenceRule()
         if self.isRecurrencePickerOpen,
-           let recurrenceRule = recurrenceRule {
+           let recurrenceRule = self.recurrenceRule {
             item.addRecurrenceRule(recurrenceRule)
         } else if let existingRule = item.recurrenceRules?.first {
             item.removeRecurrenceRule(existingRule)
@@ -177,19 +180,20 @@ class ModifyCalendarItemViewModel: ObservableObject {
         } else {
             self.recurrenceEnd = nil
         }
-        let interval = self.frequencyDayValueInt ?? 1
         switch self.selectedRule {
         case .daily:
+            let interval = self.frequencyDayValueInt ?? 1
             self.recurrenceRule = EKRecurrenceRule(recurrenceWith: selectedRule, interval: interval, end: self.recurrenceEnd)
         case .weekly:
+            let interval = self.frequencyDayValueInt ?? 1
             self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: interval, daysOfTheWeek: EKWeekday.getSelectedWeekDays(for: self.frequencyWeekdayValue), daysOfTheMonth: nil, monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
         case .monthly:
-            if let frequencyValue = self.frequencyDayValueInt {
-                let recurrenceDay = frequencyValue as NSNumber
-                self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [recurrenceDay], monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
-            }
-//        case .yearly:
-//            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [NSNumber(nonretainedObject: self.frequencyDayValueInt)], monthsOfTheYear: (1...12).compactMap { NSNumber(value: $0) }, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+            let recurrenceDay = self.frequencyDayValueInt as NSNumber
+            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [recurrenceDay], monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+        case .yearly:
+            let recurrenceDay = self.frequencyDayValueInt as NSNumber
+            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [recurrenceDay], monthsOfTheYear: (1...12).compactMap { NSNumber(value: $0) }, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+            
         default:
             print(self.selectedRule)
         }
@@ -242,7 +246,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.endRecurrenceDate = nil
         self.endRecurrenceTime = nil
         self.numberOfOccurences = nil
-        self.frequencyDayValueInt = nil
+        self.frequencyDayValueInt = 1
         self.frequencyMonthDate = nil
     }
     
@@ -330,7 +334,6 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @MainActor private func createEvent(start startDate: Date, end endDate: Date) async {
         do {
             let newEvent = try await EventKitManager.shared.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
-            self.handleRecurrence(for: newEvent)
             self.save(event: newEvent, "Event Created")
         } catch let error as NSError {
             print("Error: failed to save event with error : \(error)")
@@ -343,12 +346,12 @@ class ModifyCalendarItemViewModel: ObservableObject {
             event.title = self.newItemTitle
             event.startDate = startDate
             event.endDate = endDate
-            self.handleRecurrence(for: event)
             self.save(event: event, "Event Saved")
         }
     }
     
     @MainActor private func save(event: EKEvent, _ message: String) {
+        self.handleRecurrence(for: event)
         do {
             try EventKitManager.shared.eventStore.save(event, span: .futureEvents)
         } catch  {
@@ -361,7 +364,6 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @MainActor private func createReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) async {
         do {
             let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
-            self.handleRecurrence(for: newReminder)
             self.save(reminder: newReminder, "Reminder Created")
         } catch let error as NSError {
             print("Error: failed to save reminder with error : \(error)")
@@ -374,12 +376,12 @@ class ModifyCalendarItemViewModel: ObservableObject {
             reminder.title = self.newItemTitle
             reminder.startDateComponents = startComponents
             reminder.dueDateComponents = endComponents
-            self.handleRecurrence(for: reminder)
             self.save(reminder: reminder, "Reminder Saved")
         }
     }
     
     @MainActor public func save(reminder: EKReminder, _ message: String) {
+        self.handleRecurrence(for: reminder)
         try? EventKitManager.shared.eventStore.save(reminder, commit: true)
         self.displayToast(message)
         self.reset()

@@ -60,6 +60,7 @@ struct CalendarDateSelection: View {
                 },
                 header: { date in
                     Text(DateFormatter.weekDayFormatter.string(from: date))
+                        .font(.interLight)
                         .frame(width: 45, height: 30)
                 }
             )

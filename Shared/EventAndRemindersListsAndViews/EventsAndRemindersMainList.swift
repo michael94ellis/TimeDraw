@@ -72,19 +72,25 @@ struct EventsAndRemindersMainList: View {
                     .font(.caption)
                     .foregroundColor(Color(uiColor: .darkGray))
             }
-            if let startDate = item.startDateComponents,
-               let startHour = startDate.hour, let startMinute = startDate.minute {
-                let startTime = "\(startHour):\(startMinute < 10 ? "0" : "")\(startMinute) \(startHour > 11 ? "PM" : "AM")"
-                Text("\(startTime)")
+            if item.isCompleted, let completionDate = item.completionDate {
+                Text(DateFormatter.timeFormatter.string(from: completionDate))
                     .font(.callout)
                     .foregroundColor(Color(uiColor: .darkGray))
-            }
-            if let dueDate = item.dueDateComponents,
-               let dueHour = dueDate.hour, let dueMinute = dueDate.minute,
-               let dueTime = "\(dueHour):\(dueMinute < 10 ? "0" : "")\(dueMinute) \(dueHour > 11 ? "PM" : "AM")" {
-                Text(" - \(dueTime)")
-                    .font(.callout)
-                    .foregroundColor(Color(uiColor: .darkGray))
+            } else {
+                if let startDate = item.startDateComponents,
+                   let startHour = startDate.hour, let startMinute = startDate.minute {
+                    let startTime = "\(startHour):\(startMinute < 10 ? "0" : "")\(startMinute) \(startHour > 11 ? "PM" : "AM")"
+                    Text("\(startTime)")
+                        .font(.callout)
+                        .foregroundColor(Color(uiColor: .darkGray))
+                }
+                if let dueDate = item.dueDateComponents,
+                   let dueHour = dueDate.hour, let dueMinute = dueDate.minute,
+                   let dueTime = "\(dueHour):\(dueMinute < 10 ? "0" : "")\(dueMinute) \(dueHour > 11 ? "PM" : "AM")" {
+                    Text(" - \(dueTime)")
+                        .font(.callout)
+                        .foregroundColor(Color(uiColor: .darkGray))
+                }
             }
         }
         .padding(.vertical, 8)
@@ -104,6 +110,8 @@ struct EventsAndRemindersMainList: View {
                             } else if direction == .right {
                                 Task {
                                     try? await EventKitManager.shared.deleteEvent(identifier: item.eventIdentifier, span: .thisEvent)
+                                    self.floatingModifyViewModel.displayToast("Event Deleted")
+                                    self.eventList.updateData()
                                 }
                             } else {
                             }
@@ -121,9 +129,13 @@ struct EventsAndRemindersMainList: View {
                             let direction = value.detectDirection()
                             if direction == .left {
                                 item.isCompleted = true
+                                self.floatingModifyViewModel.save(reminder: item, "Completed")
+                                self.eventList.updateData()
                             } else if direction == .right {
                                 Task {
                                     try? await EventKitManager.shared.deleteReminder(identifier: item.calendarItemIdentifier)
+                                    self.floatingModifyViewModel.displayToast("Reminder Deleted")
+                                    self.eventList.updateData()
                                 }
                             } else {
                                 print(direction)

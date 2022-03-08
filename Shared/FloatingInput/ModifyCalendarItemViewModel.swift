@@ -270,6 +270,10 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     /// Create an EKCalendarItem for the given information OR the currently displayed EKCalendarItem will be saved
     @MainActor public func submitEventOrReminder() {
+        if self.isRecurrencePickerOpen, !self.isDateTimePickerOpen || self.newItemEndDate == nil {
+            self.displayToast("End Date Required")
+            return
+        }
         Task {
             let startDateComponents = self.newItemStartDate
             let startTimeComponents = self.newItemStartTime
@@ -352,7 +356,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     @MainActor private func save(event: EKEvent, _ message: String) {
         do {
-            try EventKitManager.shared.eventStore.save(event, span: .thisEvent)
+            try EventKitManager.shared.eventStore.save(event, span: .futureEvents)
         } catch  {
             print(error)
         }
@@ -381,14 +385,14 @@ class ModifyCalendarItemViewModel: ObservableObject {
         }
     }
     
-    @MainActor private func save(reminder: EKReminder, _ message: String) {
+    @MainActor public func save(reminder: EKReminder, _ message: String) {
         try? EventKitManager.shared.eventStore.save(reminder, commit: true)
         self.displayToast(message)
         self.reset()
     }
     
     /// Update the Toast notification to alert the user
-    @MainActor private func displayToast(_ message: String) {
+    @MainActor public func displayToast(_ message: String) {
         self.toastMessage = message
         self.displayToast = true
     }

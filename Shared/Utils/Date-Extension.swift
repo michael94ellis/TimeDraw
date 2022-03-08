@@ -21,6 +21,7 @@ extension DateFormatter {
     public static let dayFormatter: DateFormatter = DateFormatter(dateFormat: "d", calendar: Calendar.current)
     public static let weekDayFormatter: DateFormatter = DateFormatter(dateFormat: "EEE", calendar: Calendar.current)
     public static let fullFormatter: DateFormatter = DateFormatter(dateFormat: "MMMM dd, yyyy", calendar: Calendar.current)
+    public static let timeFormatter: DateFormatter = DateFormatter(dateFormat: "M/d, hh:mm a", calendar: Calendar.current)
 }
 extension Date {
     

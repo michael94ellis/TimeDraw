@@ -207,7 +207,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2F2111322799EE370041EE85 /* FloatingEventInput */ = {
+		2F2111322799EE370041EE85 /* FloatingInput */ = {
 			isa = PBXGroup;
 			children = (
 				2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */,
@@ -220,7 +220,7 @@
 				2F8AB30927A1026500654FEF /* PickerField.swift */,
 				2F8AB30627A1025100654FEF /* UIPickerTextField.swift */,
 			);
-			path = FloatingEventInput;
+			path = FloatingInput;
 			sourceTree = "<group>";
 		};
 		2F39B83B27823CF600FE72C3 = {
@@ -245,7 +245,7 @@
 				2F2343FB27D454BC0064B635 /* CalendarView.swift */,
 				2F8AB31227A25D9F00654FEF /* SettingsMenu */,
 				2F8AB305279EDFD600654FEF /* EventAndRemindersListsAndViews */,
-				2F2111322799EE370041EE85 /* FloatingEventInput */,
+				2F2111322799EE370041EE85 /* FloatingInput */,
 				2F6504FE27879B8900AF90F7 /* DailyGoal */,
 				2F42C5A82784E70C00F0BEB2 /* Events */,
 				2F42C5AD2784E74000F0BEB2 /* Model */,

@@ -109,9 +109,7 @@ struct EventsAndRemindersMainList: View {
                             if direction == .left {
                             } else if direction == .right {
                                 Task {
-                                    try? await EventKitManager.shared.deleteEvent(identifier: item.eventIdentifier, span: .thisEvent)
-                                    self.floatingModifyViewModel.displayToast("Event Deleted")
-                                    self.eventList.updateData()
+                                    self.eventList.delete(item)
                                 }
                             } else {
                             }
@@ -129,13 +127,11 @@ struct EventsAndRemindersMainList: View {
                             let direction = value.detectDirection()
                             if direction == .left {
                                 item.isCompleted = true
-                                self.floatingModifyViewModel.save(reminder: item, "Completed")
+                                self.eventList.save(reminder: item, "Completed")
                                 self.eventList.updateData()
                             } else if direction == .right {
                                 Task {
-                                    try? await EventKitManager.shared.deleteReminder(identifier: item.calendarItemIdentifier)
-                                    self.floatingModifyViewModel.displayToast("Reminder Deleted")
-                                    self.eventList.updateData()
+                                    self.eventList.delete(item)
                                 }
                             } else {
                                 print(direction)

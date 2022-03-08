@@ -93,11 +93,13 @@ class EventListViewModel: ObservableObject {
             print(error)
         }
         self.displayToast(message)
+        self.updateData()
     }
     
     
     @MainActor public func save(reminder: EKReminder, _ message: String) {
         try? EventKitManager.shared.eventStore.save(reminder, commit: true)
         self.displayToast(message)
+        self.updateData()
     }
 }

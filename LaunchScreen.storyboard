@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="visualize your time." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IKu-lt-FTX">
-                                <rect key="frame" x="20" y="433" width="374" height="30"/>
+                                <rect key="frame" x="105.5" y="433" width="203" height="30"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -45,11 +45,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="IKu-lt-FTX" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="2lG-PH-DsH"/>
+                            <constraint firstItem="eeH-bw-8Is" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="JF4-VT-Lqq"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="eeH-bw-8Is" secondAttribute="bottom" constant="40" id="QWv-NU-Fho"/>
                             <constraint firstItem="eeH-bw-8Is" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="R6H-pk-ha1"/>
-                            <constraint firstItem="IKu-lt-FTX" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="pbL-MR-IkR"/>
+                            <constraint firstItem="IKu-lt-FTX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="pbL-MR-IkR"/>
                             <constraint firstItem="IKu-lt-FTX" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="qh8-hH-PFl"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="IKu-lt-FTX" secondAttribute="trailing" constant="20" id="vkQ-wP-cEB"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="eeH-bw-8Is" secondAttribute="trailing" constant="20" id="tAe-zp-bHd"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="IKu-lt-FTX" secondAttribute="trailing" constant="20" id="vkQ-wP-cEB"/>
                         </constraints>
                     </view>
                 </viewController>

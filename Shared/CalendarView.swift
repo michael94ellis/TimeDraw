@@ -43,7 +43,7 @@ struct CalendarDateSelection: View {
                                 view.font(.interBold)
                             }
                             .foregroundColor(today ? .red1
-                                             : display ? Color(uiColor: .label)
+                                             : display ? .white
                                              : .gray2)
                     }
                 },

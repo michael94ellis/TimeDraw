@@ -131,7 +131,10 @@ class ModifyCalendarItemViewModel: ObservableObject {
                 self.endRecurrenceDate = recurrenceEndDate.get(.month, .day, .year)
                 self.endRecurrenceTime = recurrenceEndDate.get(.hour, .minute, .second)
             }
-            // FIXME
+            if let occurences = recurrenceRule.recurrenceEnd?.occurrenceCount {
+                self.numberOfOccurences = occurences
+                self.isRecurrenceUsingOccurences = true
+            }
             switch recurrenceRule.frequency {
             case .daily:
                 self.frequencyDayValueInt = recurrenceRule.interval
@@ -141,11 +144,9 @@ class ModifyCalendarItemViewModel: ObservableObject {
                     self.frequencyWeekdayValue = selectedDay
                 }
             case .monthly:
-                self.frequencyDayValueInt = recurrenceRule.daysOfTheMonth?.first?.intValue ?? 1
-                self.dayFrequencyText = String(self.frequencyDayValueInt ?? 1)
+                self.selectedMonthDays = (recurrenceRule.daysOfTheMonth ?? []) as? [Int] ?? []
             case .yearly:
-                self.frequencyDayValueInt = start.get(.day)
-                self.dayFrequencyText = String(start.get(.day))
+                self.selectedMonthDays = (recurrenceRule.daysOfTheMonth ?? []) as? [Int] ?? []
                 self.frequencyMonthDate = start.get(.month) - 1
             default:
                 break
@@ -194,12 +195,12 @@ class ModifyCalendarItemViewModel: ObservableObject {
             let interval = self.frequencyDayValueInt ?? 1
             self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: interval, daysOfTheWeek: EKWeekday.getSelectedWeekDays(for: self.frequencyWeekdayValue), daysOfTheMonth: nil, monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
         case .monthly:
-            if let recurrenceDay = self.frequencyDayValueInt as? NSNumber {
-                self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [recurrenceDay], monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
-            }
+            let recurrenceDays = self.selectedMonthDays.compactMap({ $0 }) as [NSNumber]
+            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: recurrenceDays, monthsOfTheYear: (1...12).compactMap { NSNumber(value: $0) }, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
         case .yearly:
-            if let recurrenceDay = self.frequencyDayValueInt as? NSNumber {
-                self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [recurrenceDay], monthsOfTheYear: (1...12).compactMap { NSNumber(value: $0) }, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+            let recurrenceDays = self.selectedMonthDays.compactMap({ $0 }) as [NSNumber]
+            if let month = self.frequencyMonthDate {
+                self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: recurrenceDays, monthsOfTheYear: [month as NSNumber], weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
             }
         default:
             print(self.selectedRule)

@@ -68,17 +68,17 @@ struct AddRecurrenceRule: View {
         }
         .padding(.horizontal)
     }
-    @State var dayFrequencyText: String = ""
+    
     func dayFrequencyTextField(_ label: String) -> some View {
         HStack {
             Spacer()
             Text(label)
-            TextField("", text: self.$dayFrequencyText)
+            TextField("", text: self.$viewModel.dayFrequencyText)
                 .keyboardType(.numberPad)
                 .frame(width: 90, height: 30)
                 .multilineTextAlignment(TextAlignment.center)
                 .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
-                .onChange(of: self.dayFrequencyText, perform: { newText in
+                .onChange(of: self.viewModel.dayFrequencyText, perform: { newText in
                     if let intValue = Int(newText) {
                         self.viewModel.frequencyDayValueInt = intValue
                     }

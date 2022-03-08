@@ -45,7 +45,8 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var endRecurrenceTime: DateComponents?
     @Published var numberOfOccurences: Int?
     @Published var isRecurrenceUsingOccurences: Bool = false
-    @Published var frequencyDayValueInt: Int = 1
+    @Published var dayFrequencyText: String = ""
+    @Published var frequencyDayValueInt: Int?
     @Published var frequencyWeekdayValue: EKWeekday = .monday
     @Published var frequencyMonthDate: Int?
     @Published var selectedRule: EKRecurrenceFrequency = .weekly
@@ -63,8 +64,8 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.frequencyMonthDate = month - 1
         }
         let daysInThisWeek = Calendar.current.daysWithSameWeekOfYear(as: Date())
-        self.daysOfTheWeek = daysInThisWeek.compactMap { self.weekdayFormatter.string(from: $0) }
         self.editMode = false
+        self.daysOfTheWeek = daysInThisWeek.compactMap { self.weekdayFormatter.string(from: $0) }
     }
     
     @MainActor func open(event: EKEvent) {
@@ -77,13 +78,13 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.isDateTimePickerOpen = true
             self.newItemStartTime = startDate.get(.hour, .minute, .second)
             self.newItemStartDate = startDate.get(.month, .day, .year)
+            self.extractRecurrenceRules(for: event, start: startDate)
         }
         if let endDate = event.endDate {
             self.isDateTimePickerOpen = true
             self.newItemEndTime = endDate.get(.hour, .minute, .second)
             self.newItemEndDate = endDate.get(.month, .day, .year)
         }
-        self.extractRecurrenceRules(for: event)
     }
     
     @MainActor func open(reminder: EKReminder) {
@@ -96,13 +97,13 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.isDateTimePickerOpen = true
             self.newItemStartTime = startDate.get(.hour, .minute, .second)
             self.newItemStartDate = startDate.get(.month, .day, .year)
+            self.extractRecurrenceRules(for: reminder, start: startDate)
         }
         if let endDate = reminder.dueDateComponents?.date {
             self.isDateTimePickerOpen = true
             self.newItemEndTime = endDate.get(.hour, .minute, .second)
             self.newItemEndDate = endDate.get(.month, .day, .year)
         }
-        self.extractRecurrenceRules(for: reminder)
     }
     
     func addTimeToEvent() {
@@ -119,9 +120,10 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     // MARK: - Recurrence
     
-    private func extractRecurrenceRules(for item: EKCalendarItem) {
+    private func extractRecurrenceRules(for item: EKCalendarItem, start: Date) {
         if let recurrenceRule = item.recurrenceRules?.first {
             self.isRecurrencePickerOpen = true
+            self.selectedRule = recurrenceRule.frequency
             self.recurrenceRule = recurrenceRule
             self.recurrenceEnd = recurrenceRule.recurrenceEnd
             if let recurrenceEndDate = recurrenceRule.recurrenceEnd?.endDate {
@@ -132,15 +134,18 @@ class ModifyCalendarItemViewModel: ObservableObject {
             switch recurrenceRule.frequency {
             case .daily:
                 self.frequencyDayValueInt = recurrenceRule.interval
+                self.dayFrequencyText = String(recurrenceRule.interval)
             case .weekly:
                 if let selectedDay = recurrenceRule.daysOfTheWeek?.first?.dayOfTheWeek {
                     self.frequencyWeekdayValue = selectedDay
                 }
             case .monthly:
                 self.frequencyDayValueInt = recurrenceRule.daysOfTheMonth?.first?.intValue ?? 1
+                self.dayFrequencyText = String(self.frequencyDayValueInt ?? 1)
             case .yearly:
-                self.frequencyDayValueInt = recurrenceRule.daysOfTheMonth?.first?.intValue ?? 1
-                self.frequencyMonthDate = recurrenceRule.monthsOfTheYear?.first?.intValue
+                self.frequencyDayValueInt = start.get(.day)
+                self.dayFrequencyText = String(start.get(.day))
+                self.frequencyMonthDate = start.get(.month) - 1
             default:
                 break
             }
@@ -188,12 +193,13 @@ class ModifyCalendarItemViewModel: ObservableObject {
             let interval = self.frequencyDayValueInt ?? 1
             self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: interval, daysOfTheWeek: EKWeekday.getSelectedWeekDays(for: self.frequencyWeekdayValue), daysOfTheMonth: nil, monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
         case .monthly:
-            let recurrenceDay = self.frequencyDayValueInt as NSNumber
-            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [recurrenceDay], monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+            if let recurrenceDay = self.frequencyDayValueInt as? NSNumber {
+                self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [recurrenceDay], monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+            }
         case .yearly:
-            let recurrenceDay = self.frequencyDayValueInt as NSNumber
-            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [recurrenceDay], monthsOfTheYear: (1...12).compactMap { NSNumber(value: $0) }, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
-            
+            if let recurrenceDay = self.frequencyDayValueInt as? NSNumber {
+                self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: [recurrenceDay], monthsOfTheYear: (1...12).compactMap { NSNumber(value: $0) }, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+            }
         default:
             print(self.selectedRule)
         }
@@ -246,7 +252,8 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.endRecurrenceDate = nil
         self.endRecurrenceTime = nil
         self.numberOfOccurences = nil
-        self.frequencyDayValueInt = 1
+        self.frequencyDayValueInt = nil
+        self.dayFrequencyText = ""
         self.frequencyMonthDate = nil
     }
     

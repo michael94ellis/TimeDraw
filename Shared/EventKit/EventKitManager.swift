@@ -122,8 +122,8 @@ public final class EventKitManager {
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
     @discardableResult
-    public func fetchEvents(for date: Date, filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
-        try await fetchEvents(startDate: date.startOfDay, endDate: date.endOfDay, filterCalendarIDs: filterCalendarIDs)
+    public func fetchEvents(for date: Date, calendars filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
+        try await fetchEvents(startDate: date.startOfDay, endDate: date.endOfDay, calendars: filterCalendarIDs)
     }
 
     /// Fetch events for a specific day
@@ -134,8 +134,8 @@ public final class EventKitManager {
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
     @discardableResult
-    public func fetchEventsRangeUntilEndOfDay(from startDate: Date, filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
-        try await fetchEvents(startDate: startDate, endDate: startDate.endOfDay, filterCalendarIDs: filterCalendarIDs)
+    public func fetchEventsRangeUntilEndOfDay(from startDate: Date, calendars filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
+        try await fetchEvents(startDate: startDate, endDate: startDate.endOfDay, calendars: filterCalendarIDs)
     }
     
     /// Fetch events from date range
@@ -146,7 +146,7 @@ public final class EventKitManager {
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
     @discardableResult
-    public func fetchEvents(startDate: Date, endDate: Date, filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
+    public func fetchEvents(startDate: Date, endDate: Date, calendars filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
         let authorization = try await requestEventStoreAuthorization()
         guard authorization == .authorized else {
             throw EventError.eventAuthorizationStatus(nil)
@@ -163,14 +163,12 @@ public final class EventKitManager {
         return events
     }
     
-    /// Fetch events from date range
+    /// Fetch all reminders
     /// - Parameters:
-    ///   - startDate: start date range
-    ///   - endDate: end date range
     ///   - completion: completion handler
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
-    public func fetchReminders(start: Date, end: Date, filterCalendarIDs: [String] = [], completion: @escaping (([EKReminder]?) -> ())) async throws {
+    public func fetchReminders(calendars filterCalendarIDs: [String] = [], completion: @escaping (([EKReminder]?) -> ())) async throws {
         let authorization = try await requestReminderStoreAuthorization()
         guard authorization == .authorized else {
             throw EventError.eventAuthorizationStatus(nil)
@@ -180,7 +178,26 @@ public final class EventKitManager {
             return filterCalendarIDs.contains(calendar.calendarIdentifier)
         }
         let predicate = self.eventStore.predicateForReminders(in: calendars)
-        self.eventStore.predicateForEvents(withStart: start, end: end, calendars: calendars)
+        self.eventStore.fetchReminders(matching: predicate, completion: completion)
+    }
+    
+    /// Fetch reminders from date range
+    /// - Parameters:
+    ///   - startDate: start date range
+    ///   - endDate: end date range
+    ///   - completion: completion handler
+    ///   - filterCalendarIDs: filterable Calendar IDs
+    /// Returns: events
+    public func fetchReminders(start: Date, end: Date, calendars filterCalendarIDs: [String] = [], completion: @escaping (([EKReminder]?) -> ())) async throws {
+        let authorization = try await requestReminderStoreAuthorization()
+        guard authorization == .authorized else {
+            throw EventError.eventAuthorizationStatus(nil)
+        }
+        let calendars = self.eventStore.calendars(for: .reminder).filter { calendar in
+            if filterCalendarIDs.isEmpty { return true }
+            return filterCalendarIDs.contains(calendar.calendarIdentifier)
+        }
+        let predicate = self.eventStore.predicateForReminders(in: calendars)
         self.eventStore.fetchReminders(matching: predicate, completion: completion)
     }
 

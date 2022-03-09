@@ -45,7 +45,7 @@ class EventListViewModel: ObservableObject {
     /// - Parameter filterCalendarIDs: filterable Calendar IDs
     /// Returns: events for today
     public func fetchEventsForDisplayDate(filterCalendarIDs: [String] = []) async throws {
-        self.events = try await EventKitManager.shared.fetchEvents(startDate: self.displayDate.startOfDay, endDate: self.displayDate.endOfDay, filterCalendarIDs: filterCalendarIDs)
+        self.events = try await EventKitManager.shared.fetchEvents(startDate: self.displayDate.startOfDay, endDate: self.displayDate.endOfDay, calendars: filterCalendarIDs)
     }
     
     // MARK: Fetch Reminders
@@ -53,10 +53,10 @@ class EventListViewModel: ObservableObject {
     /// - Parameter filterCalendarIDs: filterable Calendar IDs
     /// Returns: events for today
     public func fetchRemindersForDisplayDate() async throws {
-        try await EventKitManager.shared.fetchReminders(start: self.displayDate.startOfDay, end: self.displayDate.endOfDay, completion: { reminders in
+        try await EventKitManager.shared.fetchReminders(completion: { reminders in
             // MainActor didnt work for callback
             DispatchQueue.main.async {
-                self.reminders = reminders ?? []
+                self.reminders = reminders?.filter({ !$0.isCompleted }) ?? []
             }
         })
     }
@@ -101,6 +101,11 @@ class EventListViewModel: ObservableObject {
     
     
     @MainActor public func save(reminder: EKReminder, _ message: String) {
+        do {
+            try EventKitManager.shared.eventStore.save(reminder, commit: true)
+        } catch  {
+            print(error)
+        }
         self.displayToast(message)
         self.updateData()
     }

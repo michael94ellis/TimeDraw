@@ -110,6 +110,7 @@ struct EventsAndRemindersMainList: View {
                             } else if direction == .right {
                                 Task {
                                     self.eventList.delete(item)
+                                    self.floatingModifyViewModel.displayToast("Event Deleted")
                                 }
                             } else {
                             }
@@ -127,11 +128,13 @@ struct EventsAndRemindersMainList: View {
                             let direction = value.detectDirection()
                             if direction == .left {
                                 item.isCompleted = true
-                                self.eventList.save(reminder: item, "Completed")
+                                self.floatingModifyViewModel.save(reminder: item, "Completed")
+                                self.floatingModifyViewModel.displayToast("Reminder Completed")
                                 self.eventList.updateData()
                             } else if direction == .right {
                                 Task {
                                     self.eventList.delete(item)
+                                    self.floatingModifyViewModel.displayToast("Reminder Deleted")
                                 }
                             } 
                         }

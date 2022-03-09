@@ -16,8 +16,6 @@
 		2F2111312799B62D0041EE85 /* EventsAndRemindersMainList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21112F2799B62D0041EE85 /* EventsAndRemindersMainList.swift */; };
 		2F211134279A4F4E0041EE85 /* AddRecurrenceRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F211133279A4F4E0041EE85 /* AddRecurrenceRule.swift */; };
 		2F211135279A4F4E0041EE85 /* AddRecurrenceRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F211133279A4F4E0041EE85 /* AddRecurrenceRule.swift */; };
-		2F2343F927D452C20064B635 /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2343F827D452C20064B635 /* Calendar-Extension.swift */; };
-		2F2343FA27D452C20064B635 /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2343F827D452C20064B635 /* Calendar-Extension.swift */; };
 		2F2343FC27D454BC0064B635 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2343FB27D454BC0064B635 /* CalendarView.swift */; };
 		2F2343FD27D454BC0064B635 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2343FB27D454BC0064B635 /* CalendarView.swift */; };
 		2F24457F27D797C9005BF37D /* EKWeekday-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24457E27D797C9005BF37D /* EKWeekday-Extension.swift */; };
@@ -26,6 +24,10 @@
 		2F24458327D7F0EB005BF37D /* MultiDateSelectCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458127D7F0EB005BF37D /* MultiDateSelectCalendar.swift */; };
 		2F24458527D824DF005BF37D /* MultiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458427D824DF005BF37D /* MultiPicker.swift */; };
 		2F24458627D824DF005BF37D /* MultiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458427D824DF005BF37D /* MultiPicker.swift */; };
+		2F24458827D8BDD0005BF37D /* SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458727D8BDD0005BF37D /* SwipeGesture.swift */; };
+		2F24458927D8BDD0005BF37D /* SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458727D8BDD0005BF37D /* SwipeGesture.swift */; };
+		2F24458B27D8BE37005BF37D /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458A27D8BE37005BF37D /* Calendar-Extension.swift */; };
+		2F24458C27D8BE37005BF37D /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458A27D8BE37005BF37D /* Calendar-Extension.swift */; };
 		2F39B85D27823CF600FE72C3 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85C27823CF600FE72C3 /* Tests_iOS.swift */; };
 		2F39B85F27823CF700FE72C3 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85E27823CF700FE72C3 /* Tests_iOSLaunchTests.swift */; };
 		2F39B86927823CF700FE72C3 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B86827823CF700FE72C3 /* Tests_macOS.swift */; };
@@ -128,11 +130,12 @@
 		2F21112C279908450041EE85 /* View-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View-Extension.swift"; sourceTree = "<group>"; };
 		2F21112F2799B62D0041EE85 /* EventsAndRemindersMainList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsAndRemindersMainList.swift; sourceTree = "<group>"; };
 		2F211133279A4F4E0041EE85 /* AddRecurrenceRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecurrenceRule.swift; sourceTree = "<group>"; };
-		2F2343F827D452C20064B635 /* Calendar-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Calendar-Extension.swift"; path = "../Events/Calendar-Extension.swift"; sourceTree = "<group>"; };
 		2F2343FB27D454BC0064B635 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		2F24457E27D797C9005BF37D /* EKWeekday-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKWeekday-Extension.swift"; sourceTree = "<group>"; };
 		2F24458127D7F0EB005BF37D /* MultiDateSelectCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiDateSelectCalendar.swift; sourceTree = "<group>"; };
 		2F24458427D824DF005BF37D /* MultiPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPicker.swift; sourceTree = "<group>"; };
+		2F24458727D8BDD0005BF37D /* SwipeGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGesture.swift; sourceTree = "<group>"; };
+		2F24458A27D8BE37005BF37D /* Calendar-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Calendar-Extension.swift"; sourceTree = "<group>"; };
 		2F39B84227823CF600FE72C3 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawApp.swift; sourceTree = "<group>"; };
 		2F39B84427823CF600FE72C3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -258,7 +261,7 @@
 				2F8AB305279EDFD600654FEF /* EventAndRemindersListsAndViews */,
 				2F2111322799EE370041EE85 /* FloatingInput */,
 				2F6504FE27879B8900AF90F7 /* DailyGoal */,
-				2F42C5A82784E70C00F0BEB2 /* Events */,
+				2F42C5A82784E70C00F0BEB2 /* EventKit */,
 				2F42C5AD2784E74000F0BEB2 /* Model */,
 				2F42C5A92784E71500F0BEB2 /* Utils */,
 				2F39B84627823CF600FE72C3 /* Assets.xcassets */,
@@ -304,23 +307,24 @@
 			path = "Tests macOS";
 			sourceTree = "<group>";
 		};
-		2F42C5A82784E70C00F0BEB2 /* Events */ = {
+		2F42C5A82784E70C00F0BEB2 /* EventKit */ = {
 			isa = PBXGroup;
 			children = (
+				2F24458A27D8BE37005BF37D /* Calendar-Extension.swift */,
 				2F42C59C2784E3DE00F0BEB2 /* EventKitManager.swift */,
 				2F42C5A52784E6FC00F0BEB2 /* EventError.swift */,
 				2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */,
 			);
-			path = Events;
+			path = EventKit;
 			sourceTree = "<group>";
 		};
 		2F42C5A92784E71500F0BEB2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				2F24458727D8BDD0005BF37D /* SwipeGesture.swift */,
 				2F39B888278241B500FE72C3 /* Colors.swift */,
 				2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */,
 				2F8AB302279D140E00654FEF /* PopoverButton.swift */,
-				2F2343F827D452C20064B635 /* Calendar-Extension.swift */,
 				2F24457E27D797C9005BF37D /* EKWeekday-Extension.swift */,
 				2F42C59327848DF700F0BEB2 /* Date-Extension.swift */,
 				2F8AB30F27A229DA00654FEF /* Utils.swift */,
@@ -591,9 +595,9 @@
 				2F6505292791384500AF90F7 /* Inter-Font.swift in Sources */,
 				2F6505092787F87A00AF90F7 /* SettingsView.swift in Sources */,
 				2F39B87227823CF700FE72C3 /* CoreDataManager.swift in Sources */,
+				2F24458827D8BDD0005BF37D /* SwipeGesture.swift in Sources */,
 				2F2111302799B62D0041EE85 /* EventsAndRemindersMainList.swift in Sources */,
 				2F6505062787DA3C00AF90F7 /* FloatingEventInput.swift in Sources */,
-				2F2343F927D452C20064B635 /* Calendar-Extension.swift in Sources */,
 				2F42C59D2784E3DE00F0BEB2 /* EventKitManager.swift in Sources */,
 				2F2343FC27D454BC0064B635 /* CalendarView.swift in Sources */,
 				2F211134279A4F4E0041EE85 /* AddRecurrenceRule.swift in Sources */,
@@ -605,6 +609,7 @@
 				2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2F39B87027823CF700FE72C3 /* MainView.swift in Sources */,
 				2F24457F27D797C9005BF37D /* EKWeekday-Extension.swift in Sources */,
+				2F24458B27D8BE37005BF37D /* Calendar-Extension.swift in Sources */,
 				2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */,
 				2F1F8FA427D3AAEF00648234 /* EventListViewModel.swift in Sources */,
 				2F42C5972784A87100F0BEB2 /* PopoverLink.swift in Sources */,
@@ -633,9 +638,9 @@
 				2F65052A2791384500AF90F7 /* Inter-Font.swift in Sources */,
 				2F65050A2787F87A00AF90F7 /* SettingsView.swift in Sources */,
 				2F39B87327823CF700FE72C3 /* CoreDataManager.swift in Sources */,
+				2F24458927D8BDD0005BF37D /* SwipeGesture.swift in Sources */,
 				2F2111312799B62D0041EE85 /* EventsAndRemindersMainList.swift in Sources */,
 				2F6505072787DA3C00AF90F7 /* FloatingEventInput.swift in Sources */,
-				2F2343FA27D452C20064B635 /* Calendar-Extension.swift in Sources */,
 				2F42C59E2784E3DE00F0BEB2 /* EventKitManager.swift in Sources */,
 				2F2343FD27D454BC0064B635 /* CalendarView.swift in Sources */,
 				2F211135279A4F4E0041EE85 /* AddRecurrenceRule.swift in Sources */,
@@ -647,6 +652,7 @@
 				2F42C5A72784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2F39B87127823CF700FE72C3 /* MainView.swift in Sources */,
 				2F24458027D797C9005BF37D /* EKWeekday-Extension.swift in Sources */,
+				2F24458C27D8BE37005BF37D /* Calendar-Extension.swift in Sources */,
 				2F6505042787A09900AF90F7 /* MainHeader.swift in Sources */,
 				2F1F8FA527D3AAEF00648234 /* EventListViewModel.swift in Sources */,
 				2F42C5982784A87100F0BEB2 /* PopoverLink.swift in Sources */,

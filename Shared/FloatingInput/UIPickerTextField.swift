@@ -41,8 +41,13 @@ class UIPickerTextField: UITextField, UIPickerViewDelegate, UIPickerViewDataSour
     // MARK: - Private properties
     private lazy var pickerView: UIPickerView = {
         let pickerView = UIPickerView()
+        // set delgates first
         pickerView.delegate = self
         pickerView.dataSource = self
+        // order matters
+        if let selected = self.selectionIndex {
+            pickerView.selectRow(selected, inComponent: 0, animated: false)
+        }
         return pickerView
     }()
 

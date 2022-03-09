@@ -11,6 +11,13 @@ import EventKit
 struct AddRecurrenceRule: View {
     
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
+    @State var frequencyMonthDateAdaptor: Int? {
+        didSet {
+            if let frequencyMonthDateAdaptor = frequencyMonthDateAdaptor {
+                self.viewModel.frequencyMonthDate = frequencyMonthDateAdaptor - 1
+            }
+        }
+    }
     
     var selectedRecurrenceRuleBinding: Binding<EKRecurrenceFrequency> { Binding<EKRecurrenceFrequency>(get: { self.viewModel.selectedRule }, set: { self.viewModel.selectedRule = $0 })}
     

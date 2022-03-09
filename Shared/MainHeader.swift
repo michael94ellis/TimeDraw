@@ -7,27 +7,6 @@
 
 import SwiftUI
 
-public enum SwipeDirection: String {
-    case left, right, up, down, none
-}
-
-extension DragGesture.Value {
-    func detectDirection() -> SwipeDirection {
-        if self.startLocation.x < self.location.x - 24 {
-            return .left
-        }
-        if self.startLocation.x > self.location.x + 24 {
-            return .right
-        }
-        if self.startLocation.y < self.location.y - 24 {
-            return .down
-        }
-        if self.startLocation.y > self.location.y + 24 {
-            return .up
-        }
-        return .none
-    }
-}
 
 struct MainHeader: View {
     

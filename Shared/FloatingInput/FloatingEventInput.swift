@@ -127,16 +127,12 @@ struct FloatingEventInput: View {
                         self.viewModel.submitEventOrReminder()
                         self.isNewEventFocused = false
                     }) {
-                        if self.viewModel.displayToast {
-                            Image(systemName: "checkmark.circle")
-                                .frame(width: self.barHeight, height: self.barHeight)
-                                .foregroundColor(Color(uiColor: .label))
-                        } else {
-                            Image(systemName: self.viewModel.editMode ? "circle" : "plus")
-                                .frame(width: self.barHeight, height: self.barHeight)
-                                .foregroundColor(Color(uiColor: .label))
-                        }
-                    }.buttonStyle(.plain)
+                        Image(systemName: self.viewModel.displayToast ? "checkmark.circle" : self.viewModel.editMode ? "circle" : "plus")
+                            .frame(width: self.barHeight, height: self.barHeight)
+                            .foregroundColor(Color(uiColor: .label))
+                            .frame(width: 60, height: 55)
+                            .background(.clear)
+                    }
                 }
                 .frame(height: self.barHeight)
                 .frame(maxWidth: 600)

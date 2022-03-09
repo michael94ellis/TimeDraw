@@ -14,7 +14,6 @@ struct MultiPicker<T: Hashable & CustomStringConvertible>: View {
     
     init(_ options: [T], selections: Binding<[T]>) {
         self.options = options
-        print(options)
         self._selections = selections
     }
     

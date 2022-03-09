@@ -50,7 +50,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var dayFrequencyText: String = ""
     @Published var frequencyDayValueInt: Int?
     @Published var selectedMonthDays: [Int] = []
-    @Published var frequencyWeekdayValues: [EKWeekday] = [.monday]
+    @Published var frequencyWeekdayValues: [EKWeekday] = []
     @Published var frequencyMonthDate: Int?
     
     
@@ -144,6 +144,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
             case .weekly:
                 if let selectedDays = recurrenceRule.daysOfTheWeek?.compactMap({ $0.dayOfTheWeek }) {
                     self.frequencyWeekdayValues = selectedDays
+                    print(selectedDays)
                 }
             case .monthly:
                 self.selectedMonthDays = (recurrenceRule.daysOfTheMonth ?? []) as? [Int] ?? []
@@ -180,11 +181,12 @@ class ModifyCalendarItemViewModel: ObservableObject {
     // The implementation only supports a single recurrence rule. Adding a recurrence rule replaces the single recurrence rule
     private func handleRecurrence(for item: EKCalendarItem) {
         self.setRecurrenceRule()
+        if let existingRule = item.recurrenceRules?.first {
+            item.removeRecurrenceRule(existingRule)
+        }
         if self.isRecurrencePickerOpen,
            let recurrenceRule = self.recurrenceRule {
             item.addRecurrenceRule(recurrenceRule)
-        } else if let existingRule = item.recurrenceRules?.first {
-            item.removeRecurrenceRule(existingRule)
         }
     }
     
@@ -203,8 +205,9 @@ class ModifyCalendarItemViewModel: ObservableObject {
             let interval = self.frequencyDayValueInt ?? 1
             self.recurrenceRule = EKRecurrenceRule(recurrenceWith: selectedRule, interval: interval, end: self.recurrenceEnd)
         case .weekly:
-            let interval = self.frequencyDayValueInt ?? 1
-            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: interval, daysOfTheWeek: EKWeekday.getSelectedWeekDays(for: self.frequencyWeekdayValues), daysOfTheMonth: nil, monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+            let recurrenceDays = EKWeekday.getSelectedWeekDays(for: self.frequencyWeekdayValues)
+            print(recurrenceDays)
+            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: recurrenceDays, daysOfTheMonth: nil, monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
         case .monthly:
             let recurrenceDays = self.selectedMonthDays.compactMap({ $0 }) as [NSNumber]
             self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: recurrenceDays, monthsOfTheYear: (1...12).compactMap { NSNumber(value: $0) }, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
@@ -387,7 +390,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
             let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
             self.save(reminder: newReminder, "Reminder Created")
         } catch let error as NSError {
-            print("Error: failed to save reminder with error : \(error)")
+            print("Error: failed to Create Reminder with error: \(error)")
         }
     }
     
@@ -403,7 +406,11 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     @MainActor public func save(reminder: EKReminder, _ message: String) {
         self.handleRecurrence(for: reminder)
-        try? EventKitManager.shared.eventStore.save(reminder, commit: true)
+        do {
+            try EventKitManager.shared.eventStore.save(reminder, commit: true)
+        } catch let error as NSError {
+            print("Error: failed to Save Reminder with error: \(error)")
+        }
         self.displayToast(message)
         self.reset()
     }

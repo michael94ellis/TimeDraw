@@ -120,10 +120,12 @@ struct AddRecurrenceRule: View {
                         Text("Days")
                         Spacer()
                     }
-                    .frame(height: 33)
+                    .frame(height: 40)
+                    .padding(.bottom, 10)
                 case .weekly:
                     MultiPicker(EKWeekday.allCases, selections: self.$viewModel.frequencyWeekdayValues)
-                    .frame(height: 33)
+                    .frame(height: 40)
+                    .padding(.bottom, 10)
                 case .monthly:
                     CalendarMultiDateSelection(selectedDates: self.$viewModel.selectedMonthDays)
                 case .yearly:

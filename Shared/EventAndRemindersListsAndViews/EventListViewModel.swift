@@ -69,20 +69,23 @@ class EventListViewModel: ObservableObject {
     
     @MainActor func delete(_ item: EKCalendarItem) {
         if let reminder = item as? EKReminder {
+            self.reminders.removeAll(where: { $0 == reminder })
             do {
-                try EventKitManager.shared.eventStore.deleteReminder(identifier: reminder.calendarItemIdentifier)
+                try EventKitManager.shared.eventStore.remove(reminder, commit: true)
+                self.save(reminder: reminder, "Reminder Deleted")
             } catch  {
-                print(error)
+                print("Error could not delete reminder: \(error)")
             }
-            self.save(reminder: reminder, "Reminder Deleted")
         }
         if let event = item as? EKEvent {
+            self.events.removeAll(where: { $0 == event })
             do {
-                try EventKitManager.shared.eventStore.deleteEvent(identifier: event.eventIdentifier, span: .futureEvents)
+                try EventKitManager.shared.eventStore.remove(event, span: .futureEvents, commit: true)
             } catch  {
-                print(error)
+                print("Error could not delete event: \(error)")
             }
-            self.save(event: event, "Event Deleted")
+            self.displayToast("Event Deleted")
+            self.updateData()
         }
     }
     
@@ -98,7 +101,6 @@ class EventListViewModel: ObservableObject {
     
     
     @MainActor public func save(reminder: EKReminder, _ message: String) {
-        try? EventKitManager.shared.eventStore.save(reminder, commit: true)
         self.displayToast(message)
         self.updateData()
     }

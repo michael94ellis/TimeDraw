@@ -52,11 +52,6 @@ struct CalendarMultiDateSelection: View {
                             }
                             .foregroundColor(display ? .white : .gray2)
                     }
-                },
-                header: { day in
-                    Text(EKWeekday.init(rawValue: day)?.shortDescription ?? "")
-                        .font(.interLight)
-                        .frame(width: 40, height: 30)
                 }
             )
                 .equatable()
@@ -66,12 +61,11 @@ struct CalendarMultiDateSelection: View {
 
 // MARK: - Component
 
-public struct MultiSelectCalendarView<Day: View, Header: View>: View {
+public struct MultiSelectCalendarView<Day: View>: View {
     // Injected dependencies
     private var viewDate: Date
     @Binding private var selectedDates: [Int]
     private let content: (Int) -> Day
-    private let header: (Int) -> Header
     
     // Constants
     private let daysInWeek = 7
@@ -82,13 +76,11 @@ public struct MultiSelectCalendarView<Day: View, Header: View>: View {
     public init(
         viewDate: Date,
         selectedDates: Binding<[Int]>,
-        @ViewBuilder content: @escaping (Int) -> Day,
-        @ViewBuilder header: @escaping (Int) -> Header
+        @ViewBuilder content: @escaping (Int) -> Day
     ) {
         self.viewDate = viewDate
         self._selectedDates = selectedDates
         self.content = content
-        self.header = header
         
         self.month = viewDate.startOfMonth(using: Calendar.current)
         let displayDates = Array(1...31)
@@ -98,9 +90,6 @@ public struct MultiSelectCalendarView<Day: View, Header: View>: View {
     
     public var body: some View {
         VStack(alignment: .leading) {
-            HStack {
-                ForEach(self.days.prefix(self.daysInWeek), id: \.self, content: self.header)
-            }
             ForEach(self.weeks, id: \.self) { week in
                 HStack {
                     ForEach(week, id: \.self) { day in
@@ -115,7 +104,7 @@ public struct MultiSelectCalendarView<Day: View, Header: View>: View {
 // MARK: - Conformances
 
 extension MultiSelectCalendarView: Equatable {
-    public static func == (lhs: MultiSelectCalendarView<Day, Header>, rhs: MultiSelectCalendarView<Day, Header>) -> Bool {
+    public static func == (lhs: MultiSelectCalendarView<Day>, rhs: MultiSelectCalendarView<Day>) -> Bool {
         lhs.viewDate == rhs.viewDate
     }
 }

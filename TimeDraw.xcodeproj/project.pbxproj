@@ -223,6 +223,7 @@
 				2F6505052787DA3C00AF90F7 /* FloatingEventInput.swift */,
 				2F81230B2797B59500458B1A /* AddEventDateTimePicker.swift */,
 				2F211133279A4F4E0041EE85 /* AddRecurrenceRule.swift */,
+				2F24458427D824DF005BF37D /* MultiPicker.swift */,
 				2F24458127D7F0EB005BF37D /* MultiDateSelectCalendar.swift */,
 				2F8AB30C27A220E400654FEF /* DateAndTimePickers.swift */,
 				2F81230E2798957C00458B1A /* DateTimePickerInputView.swift */,
@@ -236,7 +237,6 @@
 		2F39B83B27823CF600FE72C3 = {
 			isa = PBXGroup;
 			children = (
-				2F24458427D824DF005BF37D /* MultiPicker.swift */,
 				2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */,
 				2F39B84027823CF600FE72C3 /* Shared */,
 				5F654E2C27D3722F00D6F53C /* iOS */,

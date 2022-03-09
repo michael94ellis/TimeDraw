@@ -32,6 +32,7 @@ struct MultiPicker<T: Hashable & CustomStringConvertible>: View {
                 }
             }
         }
+        .background(RoundedRectangle(cornerRadius: 8).fill(Color.darkGray.opacity(0.2)))
     }
 }
 
@@ -39,6 +40,7 @@ struct MultipleSelectionItem: View {
     var title: String
     var isSelected: Bool
     var action: () -> Void
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
     
     init(title: String, selected: Bool, action: @escaping () -> ()) {
         self.title = title
@@ -51,19 +53,17 @@ struct MultipleSelectionItem: View {
             Text(self.title)
                 .frame(width: 40, height: 32)
                 .padding(.horizontal, 4)
-                .overlay(
+                .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color(red: 236/255, green: 234/255, blue: 235/255), lineWidth: 4)
+                        .fill(self.isSelected ? (self.colorScheme == .dark ? Color.lightGray2.opacity(0.3) : Color.gray2.opacity(0.3)) : Color.clear)
                         .if(self.isSelected) { view in
-                            view.shadow(color: Color.darkGray,radius: 3, x: 2, y: 3)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .shadow(color: Color.white, radius: 2, x: -2, y: -2)
+                            view.shadow(color: Color.darkGray,radius: 1, x: 0, y: 0)
+                                .shadow(color: Color.white, radius: 1, x: 0, y: 0)
                                 .clipShape(
                                     RoundedRectangle(cornerRadius: 8)
                                 )
                         }
                 )
-                .background(RoundedRectangle(cornerRadius: 8).fill(self.isSelected ? Color(uiColor: .systemGray4) : Color.clear))
         }
         .buttonStyle(.plain)
     }

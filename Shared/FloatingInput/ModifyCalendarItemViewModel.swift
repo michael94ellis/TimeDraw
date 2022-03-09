@@ -266,6 +266,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.numberOfOccurences = nil
         self.frequencyDayValueInt = nil
         self.selectedMonthDays = []
+        self.frequencyWeekdayValues = []
         self.dayFrequencyText = ""
         self.frequencyMonthDate = Date().get(.month) - 1
     }

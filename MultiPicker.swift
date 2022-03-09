@@ -32,7 +32,6 @@ struct MultiPicker<T: Hashable & CustomStringConvertible>: View {
                 }
             }
         }
-        .background(RoundedRectangle(cornerRadius: 14).fill(Color(uiColor: .systemGray6)))
     }
 }
 
@@ -52,6 +51,18 @@ struct MultipleSelectionItem: View {
             Text(self.title)
                 .frame(width: 40, height: 32)
                 .padding(.horizontal, 4)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color(red: 236/255, green: 234/255, blue: 235/255), lineWidth: 4)
+                        .if(self.isSelected) { view in
+                            view.shadow(color: Color.darkGray,radius: 3, x: 2, y: 3)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .shadow(color: Color.white, radius: 2, x: -2, y: -2)
+                                .clipShape(
+                                    RoundedRectangle(cornerRadius: 8)
+                                )
+                        }
+                )
                 .background(RoundedRectangle(cornerRadius: 8).fill(self.isSelected ? Color(uiColor: .systemGray4) : Color.clear))
         }
         .buttonStyle(.plain)

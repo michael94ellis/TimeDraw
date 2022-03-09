@@ -133,9 +133,7 @@ struct EventsAndRemindersMainList: View {
                                 Task {
                                     self.eventList.delete(item)
                                 }
-                            } else {
-                                print(direction)
-                            }
+                            } 
                         }
                     }).exclusively(before:TapGesture().onEnded({
                         withAnimation {

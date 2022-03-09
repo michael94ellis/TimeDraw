@@ -24,6 +24,8 @@
 		2F24458027D797C9005BF37D /* EKWeekday-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24457E27D797C9005BF37D /* EKWeekday-Extension.swift */; };
 		2F24458227D7F0EB005BF37D /* MultiDateSelectCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458127D7F0EB005BF37D /* MultiDateSelectCalendar.swift */; };
 		2F24458327D7F0EB005BF37D /* MultiDateSelectCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458127D7F0EB005BF37D /* MultiDateSelectCalendar.swift */; };
+		2F24458527D824DF005BF37D /* MultiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458427D824DF005BF37D /* MultiPicker.swift */; };
+		2F24458627D824DF005BF37D /* MultiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458427D824DF005BF37D /* MultiPicker.swift */; };
 		2F39B85D27823CF600FE72C3 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85C27823CF600FE72C3 /* Tests_iOS.swift */; };
 		2F39B85F27823CF700FE72C3 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85E27823CF700FE72C3 /* Tests_iOSLaunchTests.swift */; };
 		2F39B86927823CF700FE72C3 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B86827823CF700FE72C3 /* Tests_macOS.swift */; };
@@ -130,6 +132,7 @@
 		2F2343FB27D454BC0064B635 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		2F24457E27D797C9005BF37D /* EKWeekday-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKWeekday-Extension.swift"; sourceTree = "<group>"; };
 		2F24458127D7F0EB005BF37D /* MultiDateSelectCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiDateSelectCalendar.swift; sourceTree = "<group>"; };
+		2F24458427D824DF005BF37D /* MultiPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPicker.swift; sourceTree = "<group>"; };
 		2F39B84227823CF600FE72C3 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawApp.swift; sourceTree = "<group>"; };
 		2F39B84427823CF600FE72C3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -233,6 +236,7 @@
 		2F39B83B27823CF600FE72C3 = {
 			isa = PBXGroup;
 			children = (
+				2F24458427D824DF005BF37D /* MultiPicker.swift */,
 				2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */,
 				2F39B84027823CF600FE72C3 /* Shared */,
 				5F654E2C27D3722F00D6F53C /* iOS */,
@@ -604,6 +608,7 @@
 				2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */,
 				2F1F8FA427D3AAEF00648234 /* EventListViewModel.swift in Sources */,
 				2F42C5972784A87100F0BEB2 /* PopoverLink.swift in Sources */,
+				2F24458527D824DF005BF37D /* MultiPicker.swift in Sources */,
 				2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -645,6 +650,7 @@
 				2F6505042787A09900AF90F7 /* MainHeader.swift in Sources */,
 				2F1F8FA527D3AAEF00648234 /* EventListViewModel.swift in Sources */,
 				2F42C5982784A87100F0BEB2 /* PopoverLink.swift in Sources */,
+				2F24458627D824DF005BF37D /* MultiPicker.swift in Sources */,
 				2F42C59527848DF700F0BEB2 /* Date-Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

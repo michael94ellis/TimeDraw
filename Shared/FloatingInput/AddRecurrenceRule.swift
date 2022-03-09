@@ -115,28 +115,17 @@ struct AddRecurrenceRule: View {
                     }
                     .frame(height: 33)
                 case .weekly:
-                    HStack {
-                        Picker("", selection: self.$viewModel.frequencyWeekdayValue) { // S M T W T F S
-                            ForEach(EKWeekday.allCases, id: \.self) { day in
-                                Text(day.description.prefix(3))
-                                    .font(.callout)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                        .padding(.horizontal, 12)
-                    }
+                    MultiPicker(EKWeekday.allCases, selections: self.$viewModel.frequencyWeekdayValues)
                     .frame(height: 33)
                 case .monthly:
                     CalendarMultiDateSelection(selectedDates: self.$viewModel.selectedMonthDays)
                 case .yearly:
                     HStack {
-                        Spacer()
                         Text("Every:")
                         PickerField("Month", data: Calendar.current.monthSymbols, selectionIndex: self.$viewModel.frequencyMonthDate)
                             .frame(width: 90, height: 30)
                             .multilineTextAlignment(TextAlignment.center)
                             .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
-                        Spacer()
                     }
                     CalendarMultiDateSelection(selectedDates: self.$viewModel.selectedMonthDays)
                 @unknown default:

@@ -18,8 +18,7 @@ struct MainView: View {
     
     @StateObject private var addEventViewModel: ModifyCalendarItemViewModel = ModifyCalendarItemViewModel()
     
-    init() {}
-    
+    init() { }
     var body: some View {
         ZStack {
             // Primary Display

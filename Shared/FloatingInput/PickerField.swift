@@ -10,7 +10,7 @@ import SwiftUI
 struct PickerField: UIViewRepresentable {
     // MARK: - Public properties
     @Binding var selectionIndex: Int?
-
+    
     // MARK: - Initializers
     init<S>(_ title: S, data: [String], selectionIndex: Binding<Int?>) where S: StringProtocol {
         self.placeholder = String(title)

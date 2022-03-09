@@ -33,9 +33,9 @@ extension EKWeekday: CaseIterable, CustomStringConvertible {
         case .saturday: return "Sat"
         }
     }
-    public static func getSelectedWeekDays(for value: EKWeekday) -> [EKRecurrenceDayOfWeek] {
+    public static func getSelectedWeekDays(for values: [EKWeekday]) -> [EKRecurrenceDayOfWeek] {
         return EKWeekday.allCases.compactMap {
-            guard value == $0 else {
+            guard values.contains($0) else {
                 return nil
             }
             return EKRecurrenceDayOfWeek($0)

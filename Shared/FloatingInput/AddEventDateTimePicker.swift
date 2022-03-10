@@ -59,9 +59,7 @@ struct AddEventDateTimePicker: View {
                         Spacer()
                         DateAndTimePickers(dateTime: self.$viewModel.newItemStartTime,
                                            dateDate: self.$viewModel.newItemStartDate,
-                                           onTap: {
-                            self.setStartTime()
-                        })
+                                           onTap: { })
                         Spacer()
                     }
                     .padding(.horizontal, 16)
@@ -72,10 +70,7 @@ struct AddEventDateTimePicker: View {
                         Spacer()
                         DateAndTimePickers(dateTime: self.$viewModel.newItemEndTime,
                                            dateDate: self.$viewModel.newItemEndDate,
-                                           onTap: {
-                            self.setStartTime()
-                            self.setEndTime()
-                        })
+                                           onTap: { })
                         Spacer()
                     }
                     .padding(.horizontal, 16)
@@ -87,6 +82,10 @@ struct AddEventDateTimePicker: View {
             .background(RoundedRectangle(cornerRadius: 13)
                             .fill(Color(uiColor: .systemGray6))
                             .shadow(radius: 4, x: 2, y: 4))
+            .onAppear(perform: {
+                self.setStartTime()
+                self.setEndTime()
+            })
         } else {
             Button(action: self.viewModel.addTimeToEvent) {
                 Text("Add Time")

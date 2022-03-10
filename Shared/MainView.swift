@@ -15,6 +15,7 @@ struct MainView: View {
     @State var showClockView: Bool = true
     @FocusState private var isDailyGoalFocused: Bool
     @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
+    @AppStorage("isTimeDrawClockEnabled") var isTimeDrawClockEnabled: Bool = true
     @ObservedObject private var eventList: EventListViewModel = .shared
     @State var swipeDirection: SwipeDirection = .left
     
@@ -29,25 +30,27 @@ struct MainView: View {
                     DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
                 }
                 Spacer()
-                if self.showClockView {
-                    TimeDrawClock()
-                        .gesture(DragGesture().onEnded({ value in
-                            let direction = value.detectDirection()
-                            if direction == .down || direction == .up {
-                                withAnimation {
-                                    self.showClockView.toggle()
+                if self.isTimeDrawClockEnabled {
+                    if self.showClockView {
+                        TimeDrawClock()
+                            .gesture(DragGesture().onEnded({ value in
+                                let direction = value.detectDirection()
+                                if direction == .down || direction == .up {
+                                    withAnimation {
+                                        self.showClockView.toggle()
+                                    }
                                 }
-                            }
-                        }))
-                }
-                Button(action: {
-                    withAnimation {
-                        self.showClockView.toggle()
+                            }))
                     }
-                }) {
-                    Image(systemName: self.showClockView ? "chevron.up" : "chevron.down")
+                    Button(action: {
+                        withAnimation {
+                            self.showClockView.toggle()
+                        }
+                    }) {
+                        Image(systemName: self.showClockView ? "chevron.up" : "chevron.down")
+                    }
+                    .frame(height: 35)
                 }
-                .frame(height: 35)
                 // Clock View todo in v2
                 Divider()
                 EventsAndRemindersMainList()

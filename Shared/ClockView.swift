@@ -18,6 +18,7 @@ struct TimeDrawClock: View {
     @State var currentTime = Time(sec: 0, min: 0, hour: 0)
     @State var timer = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
     var width: CGFloat = 100
+    @ObservedObject var eventList: EventListViewModel = .shared
     
     func setCurrentTime()  {
         let calender = Calendar.current
@@ -62,30 +63,41 @@ struct TimeDrawClock: View {
             .rotationEffect(.init(degrees: Double(currentTime.sec) * 6))
     }
     
+    @ViewBuilder var timeCircles: some View {
+        ForEach(self.eventList.events ,id: \.self) { event in
+            PartialCircleBorder(start: event.startDate, end: event.endDate, radius: self.width)
+                .foregroundColor(Color(cgColor: event.calendar.cgColor))
+        }
+        ForEach(self.eventList.reminders ,id: \.self) { reminder in
+            PartialCircleBorder(startComponents: reminder.startDateComponents, endComponents: reminder.dueDateComponents, radius: self.width / 2)
+                .foregroundColor(Color(reminder.calendar.cgColor))
+        }
+    }
+    
     var body: some View {
         VStack {
             ZStack {// Dial
                 Circle()
                     .fill(Color(uiColor: .systemBackground))
                 // Seconds And Min dots...
-                ForEach(0..<60, id: \.self){ i in
-                    Rectangle()
-                        .fill(Color.primary)
-                        .frame(width: 2, height: (i % 5) == 0 ? 15 : 5)// 60/12 = 5
-                        .offset(y: self.width)
-                        .rotationEffect(.init(degrees: Double(i) * 6))
+                ForEach(0..<60, id: \.self) { i in
+                    if i % 5 == 0 {
+                        let num = (i / 5) + 6
+                        Text("\(num > 12 ? num - 12 : num)")
+                            .font(.interClock)
+                            .rotationEffect(.degrees(Double(((num-12)) * -30) - 180))
+                            .offset(y: self.width)
+                            .rotationEffect(Angle(degrees: Double(i) * 6))
+                    } else {
+                        Ellipse()
+                            .fill(Color.primary)
+                            .frame(width: 1, height: 5)
+                            .offset(y: self.width)
+                            .rotationEffect(.init(degrees: Double(i) * 6))
+                    }
                 }
                 self.clockHands
-                ForEach(EventListViewModel.shared.events ,id: \.self) { event in
-                    PartialCircleBorder(start: event.startDate, end: event.endDate, radius: self.width)
-                        .foregroundColor(Color(cgColor: event.calendar.cgColor))
-                    PartialCircleBorder(start: event.startDate, end: event.endDate, radius: self.width)
-                        .foregroundColor(Color(cgColor: event.calendar.cgColor))
-                }
-                ForEach(EventListViewModel.shared.reminders ,id: \.self) { reminder in
-                    PartialCircleBorder(startComponents: reminder.startDateComponents, endComponents: reminder.dueDateComponents, radius: self.width / 2)
-                        .foregroundColor(Color(reminder.calendar.cgColor))
-                }
+                self.timeCircles
             }
             .frame(width: self.width, height: self.width)
         }

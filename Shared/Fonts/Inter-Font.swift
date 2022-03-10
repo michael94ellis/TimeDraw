@@ -20,6 +20,7 @@ extension Font {
     static let interExtraBold = Font.custom("Inter-ExtraBold", size: 18, relativeTo: .body)
     
     // Custom Use Font styles
+    static let interClock = Font.custom("Inter-Regular", size: 12, relativeTo: .caption)
     static let interFine = Font.custom("Inter-ExtraLight", size: 16, relativeTo: .callout)
     static let interExtraBoldTitle = Font.custom("Inter-ExtraBold", size: 22, relativeTo: .title3)
 }

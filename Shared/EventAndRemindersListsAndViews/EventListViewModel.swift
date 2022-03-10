@@ -17,6 +17,7 @@ class EventListViewModel: ObservableObject {
         }
     }
     
+    @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .events
     @Published public var events: [EKEvent] = []
     @Published public var reminders: [EKReminder] = []
     
@@ -27,12 +28,26 @@ class EventListViewModel: ObservableObject {
         self.updateData()
     }
     
-    public func updateData() {
+    func fetchEvents() {
         Task {
             try await self.fetchEventsForDisplayDate()
         }
+    }
+    func fetchReminders() {
         Task {
             try await self.fetchRemindersForDisplayDate()
+        }
+    }
+    
+    public func updateData() {
+        switch self.showCalendarItemType {
+        case .events:
+            self.fetchEvents()
+        case .reminders:
+            self.fetchReminders()
+        case .all:
+            self.fetchEvents()
+            self.fetchReminders()
         }
     }
     

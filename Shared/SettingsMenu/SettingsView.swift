@@ -12,6 +12,7 @@ struct SettingsView: View {
     @Binding var showSettingsPopover: Bool
     @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
     @AppStorage("isTimeDrawClockEnabled") var isTimeDrawClockEnabled: Bool = true
+    @AppStorage("hideRecurringItems") var hideRecurringItems: Bool = false
     @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .events
     
     public init(display: Binding<Bool>) {
@@ -59,6 +60,8 @@ struct SettingsView: View {
         NavigationView {
             VStack {
                 Toggle("Enable Daily Goal Text Area", isOn: self.$isDailyGoalEnabled)
+                    .padding(.horizontal)
+                Toggle("Hide Recurring Events", isOn: self.$hideRecurringItems)
                     .padding(.horizontal)
                 Toggle("Enable Time Draw Clock", isOn: self.$isTimeDrawClockEnabled)
                     .padding(.horizontal)

@@ -18,6 +18,7 @@ class EventListViewModel: ObservableObject {
     }
     
     @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .events
+    @AppStorage("hideRecurringItems") var hideRecurringItems: Bool = false
     @Published public var events: [EKEvent] = []
     @Published public var reminders: [EKReminder] = []
     
@@ -57,6 +58,9 @@ class EventListViewModel: ObservableObject {
     /// Returns: events for today
     public func fetchEventsForDisplayDate(filterCalendarIDs: [String] = []) async throws {
         self.events = try await EventKitManager.shared.fetchEvents(startDate: self.displayDate.startOfDay, endDate: self.displayDate.endOfDay, calendars: filterCalendarIDs)
+        if self.hideRecurringItems {
+            self.events.removeAll(where: { $0.hasRecurrenceRules })
+        }
     }
     
     // MARK: Fetch Reminders
@@ -68,6 +72,9 @@ class EventListViewModel: ObservableObject {
             // MainActor didnt work for callback
             DispatchQueue.main.async {
                 self.reminders = reminders?.filter({ !$0.isCompleted }) ?? []
+                if self.hideRecurringItems {
+                    self.reminders.removeAll(where: { $0.hasRecurrenceRules })
+                }
             }
         })
     }

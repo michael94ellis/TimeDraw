@@ -190,6 +190,6 @@ struct PartialCircleBorder: Shape {
             print(self.endDegrees)
         }
 
-        return p.strokedPath(.init(lineWidth: 16))
+        return p.strokedPath(.init(lineWidth: 16, lineCap: .round, lineJoin: .round))
     }
 }

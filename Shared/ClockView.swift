@@ -77,9 +77,9 @@ struct TimeDrawClock: View {
                 }
                 self.clockHands
                 ForEach(EventListViewModel.shared.events ,id: \.self) { event in
-                    PartialCircleBorder(start: event.startDate, end: event.endDate, radius: self.width * 0.88)
+                    PartialCircleBorder(start: event.startDate, end: event.endDate, radius: self.width)
                         .foregroundColor(Color(cgColor: event.calendar.cgColor))
-                    PartialCircleBorder(start: event.startDate, end: event.endDate, radius: self.width * 1.12)
+                    PartialCircleBorder(start: event.startDate, end: event.endDate, radius: self.width)
                         .foregroundColor(Color(cgColor: event.calendar.cgColor))
                 }
                 ForEach(EventListViewModel.shared.reminders ,id: \.self) { reminder in
@@ -118,6 +118,8 @@ struct PartialCircleBorder: Shape {
     let radius: Double
     var startDegrees: Double = 0.0
     var endDegrees: Double = 0.0
+    var isAM: Bool = false
+    var isPM: Bool = false
     
     func getAngle(for date: Date? = nil, with components: DateComponents? = nil) -> Double {
         if let date = date {
@@ -138,6 +140,13 @@ struct PartialCircleBorder: Shape {
         self.radius = radius
         self.startDegrees = self.getAngle(for: start)
         self.endDegrees = self.getAngle(for: end)
+        if start.get(.hour) <= 12 {
+            if end.get(.hour) <= 12 {
+                self.isAM = true
+            }
+        } else {
+            self.isPM = true
+        }
     }
     init(startComponents: DateComponents?, endComponents: DateComponents?, radius: Double) {
         self.startComponents = startComponents ?? DateComponents()
@@ -151,7 +160,12 @@ struct PartialCircleBorder: Shape {
     
     func path(in rect: CGRect) -> Path {
         var p = Path()
-        p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius, startAngle: .degrees(self.startDegrees - 90), endAngle: .degrees(self.endDegrees - 90), clockwise: false)
+        if self.isAM {
+            p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius * 0.8, startAngle: .degrees(self.startDegrees - 90), endAngle: .degrees(self.endDegrees - 90), clockwise: false)
+        }
+        if self.isPM {
+            p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius * 1.2, startAngle: .degrees(self.startDegrees - 90), endAngle: .degrees(self.endDegrees - 90), clockwise: false)
+        }
 
         return p.strokedPath(.init(lineWidth: 16))
     }

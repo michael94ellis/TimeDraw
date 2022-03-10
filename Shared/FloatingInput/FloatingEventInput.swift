@@ -53,9 +53,8 @@ struct FloatingEventInput: View {
         HStack {
             AddEventDateTimePicker()
         }
-        .padding(.bottom, 8)
     }
-    
+        
     let numberOfEmojiColumns: Int = 5
     let emojiButtonWidth: Int = 45
     let emojiButtonHeight: Int = 40
@@ -71,75 +70,72 @@ struct FloatingEventInput: View {
     
     var body: some View {
         VStack {
-            eventOptions
+            self.eventOptions
                 .opacity(self.isBackgroundBlurred ? 1 : 0)
             HStack {
-                HStack {
-                    PopoverButton(showPopover: self.$isShowingEmojiPicker,
-                                  popoverSize: self.emojiPopoverSize,
-                                  content: {
-                        Image("smile.face")
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                            .onTapGesture {
-                                self.isShowingEmojiPicker.toggle()
-                            }
-                    }, popoverContent: {
-                        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: self.numberOfEmojiColumns)) {
-                            ForEach(self.viewModel.getRecentEmojis(), id: \.self) { emoji in
-                                Button(emoji, action: {
-                                    self.viewModel.newItemTitle = "\(emoji) \(self.viewModel.newItemTitle)"
-                                    self.isShowingEmojiPicker.toggle()
-                                })
-                                    .frame(width: CGFloat(self.emojiButtonWidth), height: CGFloat(self.emojiButtonHeight))
-                            }
-                        }
-                        .padding(.horizontal)
-                    })
-                        .padding(.leading, 12)
-                        .padding(.trailing, 5)
-                        .edgesIgnoringSafeArea(.bottom)
-                    TextField("", text: self.viewModel.newItemTitleBinding)
-                        .focused(self.$isNewEventFocused)
-                        .onChange(of: self.viewModel.isAddEventTextFieldFocused) {
-                            // Handle changes of the textfield focus from the view model's perspective
-                            self.viewModel.isAddEventTextFieldFocused = $0
-                            self.isNewEventFocused = $0
-                        }
-                        .submitLabel(.done)
-                        .onSubmit {
-                            // User tapped Keyboard Done button
-                            self.viewModel.submitEventOrReminder()
-                            self.isNewEventFocused = false
-                        }
+                PopoverButton(showPopover: self.$isShowingEmojiPicker,
+                              popoverSize: self.emojiPopoverSize,
+                              content: {
+                    Image("smile.face")
+                        .resizable()
+                        .frame(width: 25, height: 25)
                         .onTapGesture {
-                            // User tapped textfield - is attempting to add event
-                            withAnimation {
-                                self.isBackgroundBlurred = true
-                                self.isNewEventFocused = true
-                            }
+                            self.isShowingEmojiPicker.toggle()
                         }
-                        .placeholder(when: self.viewModel.newItemTitle.isEmpty) {
-                            Text("New Event or Reminder").foregroundColor(.gray)
+                }, popoverContent: {
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: self.numberOfEmojiColumns)) {
+                        ForEach(self.viewModel.getRecentEmojis(), id: \.self) { emoji in
+                            Button(emoji, action: {
+                                self.viewModel.newItemTitle = "\(emoji) \(self.viewModel.newItemTitle)"
+                                self.isShowingEmojiPicker.toggle()
+                            })
+                                .frame(width: CGFloat(self.emojiButtonWidth), height: CGFloat(self.emojiButtonHeight))
                         }
-                    Button(action: {
-                        // User submitted event by tapping plus
+                    }
+                    .padding(.horizontal)
+                })
+                    .padding(.leading, 12)
+                    .padding(.trailing, 5)
+                TextField("", text: self.viewModel.newItemTitleBinding)
+                    .focused(self.$isNewEventFocused)
+                    .onChange(of: self.viewModel.isAddEventTextFieldFocused) {
+                        // Handle changes of the textfield focus from the view model's perspective
+                        self.viewModel.isAddEventTextFieldFocused = $0
+                        self.isNewEventFocused = $0
+                    }
+                    .submitLabel(.done)
+                    .onSubmit {
+                        // User tapped Keyboard Done button
                         self.viewModel.submitEventOrReminder()
                         self.isNewEventFocused = false
-                    }) {
-                        Image(systemName: self.viewModel.displayToast ? "checkmark.circle" : self.viewModel.editMode ? "circle" : "plus")
-                            .frame(width: self.barHeight, height: self.barHeight)
-                            .foregroundColor(Color(uiColor: .label))
-                            .frame(width: 60, height: 55)
-                            .background(.clear)
                     }
+                    .onTapGesture {
+                        // User tapped textfield - is attempting to add event
+                        withAnimation {
+                            self.isBackgroundBlurred = true
+                            self.isNewEventFocused = true
+                        }
+                    }
+                    .placeholder(when: self.viewModel.newItemTitle.isEmpty) {
+                        Text("New Event or Reminder").foregroundColor(.gray)
+                    }
+                Button(action: {
+                    // User submitted event by tapping plus
+                    self.viewModel.submitEventOrReminder()
+                    self.isNewEventFocused = false
+                }) {
+                    Image(systemName: self.viewModel.displayToast ? "checkmark.circle" : self.viewModel.editMode ? "circle" : "plus")
+                        .frame(width: self.barHeight, height: self.barHeight)
+                        .foregroundColor(Color(uiColor: .label))
+                        .frame(width: 60, height: 55)
+                        .background(.clear)
                 }
-                .frame(height: self.barHeight)
-                .frame(maxWidth: 600)
-                .background(RoundedRectangle(cornerRadius: 13)
-                                .fill(Color(uiColor: .systemGray6))
-                                .shadow(radius: 4, x: 2, y: 2))
             }
+            .frame(height: self.barHeight)
+            .frame(maxWidth: 600)
+            .background(RoundedRectangle(cornerRadius: 13)
+                            .fill(Color(uiColor: .systemGray6))
+                            .shadow(radius: 4, x: 2, y: 2))
         }
         .padding(14)
         .toast(isPresenting: Binding<Bool>(get: { self.viewModel.displayToast }, set: { self.viewModel.displayToast = $0 }), duration: 2, tapToDismiss: true, alert: {

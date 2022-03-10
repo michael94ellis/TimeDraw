@@ -95,6 +95,7 @@ struct MainView: View {
                         if isFocused { self.addEventViewModel.isAddEventTextFieldFocused = true }
                     })
                     .environmentObject(self.addEventViewModel)
+                    .padding(.bottom, 16)
             }
         }
     }

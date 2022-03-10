@@ -43,7 +43,7 @@ struct MainView: View {
                     DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
                 }
                 Spacer()
-                Home()
+                TimeDrawClock()
                 // Clock View todo in v2
                 Divider()
                 EventsAndRemindersMainList()

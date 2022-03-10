@@ -14,11 +14,10 @@ struct Time {
 }
 
 struct TimeDrawClock: View {
-    
-    
+
     @State var currentTime = Time(sec: 0, min: 0, hour: 0)
     @State var timer = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
-    var width = UIScreen.main.bounds.width
+    var width: CGFloat = 100
     
     func setCurrentTime()  {
         let calender = Calendar.current
@@ -33,8 +32,8 @@ struct TimeDrawClock: View {
         // Hours
         RoundedRectangle(cornerRadius: 24)
             .fill(Color.darkGray)
-            .frame(width: 6, height: (width - 240) / 2)
-            .offset(y: -(width - 240) / 4)
+            .frame(width: 6, height: self.width * 0.5)
+            .offset(y: -(self.width * 0.5) / 2)
             .rotationEffect(.init(degrees: Double(currentTime.hour + currentTime.min / 60) * 30))
         Circle()
             .fill(Color.darkGray)
@@ -42,8 +41,8 @@ struct TimeDrawClock: View {
         // Minutes
         RoundedRectangle(cornerRadius: 24)
             .fill(Color.darkGray)
-            .frame(width: 4, height: (width - 150) / 2)
-            .offset(y: -(width - 200) / 4)
+            .frame(width: 4, height: self.width * 0.8)
+            .offset(y: -(self.width * 0.8) / 3)
             .rotationEffect(.init(degrees: Double(currentTime.min) * 6))
         // RED1
         Circle()
@@ -52,8 +51,8 @@ struct TimeDrawClock: View {
         // Seconds
         RoundedRectangle(cornerRadius: 24)
             .fill(Color.red1)
-            .frame(width: 2, height: (width - 180) / 2)
-            .offset(y: -(width - 180) / 4)
+            .frame(width: 2, height: self.width * 0.8)
+            .offset(y: -(self.width * 0.8) / 2)
             .rotationEffect(.init(degrees: Double(currentTime.sec) * 6))
         // Shows the extended hand on the other side of the circle
         RoundedRectangle(cornerRadius: 24)
@@ -73,33 +72,35 @@ struct TimeDrawClock: View {
                     Rectangle()
                         .fill(Color.primary)
                         .frame(width: 2, height: (i % 5) == 0 ? 15 : 5)// 60/12 = 5
-                        .offset(y: (width - 110) / 2)
+                        .offset(y: self.width)
                         .rotationEffect(.init(degrees: Double(i) * 6))
                 }
                 self.clockHands
                 ForEach(EventListViewModel.shared.events ,id: \.self) { event in
-                    PartialCircleBorder(start: event.startDate, end: event.endDate, radius: 180)
+                    PartialCircleBorder(start: event.startDate, end: event.endDate, radius: self.width * 0.88)
+                        .foregroundColor(Color(cgColor: event.calendar.cgColor))
+                    PartialCircleBorder(start: event.startDate, end: event.endDate, radius: self.width * 1.12)
                         .foregroundColor(Color(cgColor: event.calendar.cgColor))
                 }
                 ForEach(EventListViewModel.shared.reminders ,id: \.self) { reminder in
-                    PartialCircleBorder(startComponents: reminder.startDateComponents, endComponents: reminder.dueDateComponents, radius: 180)
+                    PartialCircleBorder(startComponents: reminder.startDateComponents, endComponents: reminder.dueDateComponents, radius: self.width / 2)
                         .foregroundColor(Color(reminder.calendar.cgColor))
                 }
             }
-            .frame(width: width - 80, height: width - 80)
-            Spacer()
+            .frame(width: self.width, height: self.width)
         }
+        .frame(width: self.width * 2.5, height: self.width * 2.5)
         .onAppear(perform: {
             let calender = Calendar.current
             let sec = calender.component(.second, from: Date())
             let min = calender.component(.minute, from: Date())
             let hour = calender.component(.hour, from: Date())
-            withAnimation(Animation.linear(duration: 0.01)){
+            withAnimation(Animation.linear(duration: 0.01)) {
                 self.currentTime = Time(sec: sec, min: min, hour: hour)
             }
         })
         .onReceive(self.timer) { _ in
-            withAnimation(Animation.linear(duration: 0.01)){
+            withAnimation(Animation.linear(duration: 0.01)) {
                 self.setCurrentTime()
             }
         }
@@ -150,28 +151,8 @@ struct PartialCircleBorder: Shape {
     
     func path(in rect: CGRect) -> Path {
         var p = Path()
-        p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius, startAngle: .degrees(self.startDegrees), endAngle: .degrees(self.endDegrees), clockwise: false)
+        p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius, startAngle: .degrees(self.startDegrees - 90), endAngle: .degrees(self.endDegrees - 90), clockwise: false)
 
         return p.strokedPath(.init(lineWidth: 16))
-    }
-}
-
-
-struct PartialCircleBorder2: Shape {
-    
-    // Minute is 0.5 Degrees
-    // Hour is 30 Degrees
-    let start: Time
-    let end: Time
-    let radius: Double
-    
-    func getAngle(for time: Time) -> Double {
-        return Double(time.hour) * 30.0 + Double(time.min) * 0.5
-    }
-    
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius, startAngle: .degrees(self.getAngle(for: start)), endAngle: .degrees(self.getAngle(for: end)), clockwise: false)
-        return path.strokedPath(.init(lineWidth: 16))
     }
 }

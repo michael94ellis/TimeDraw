@@ -26,12 +26,10 @@ struct MainHeader: View {
         return .asymmetric(insertion: .move(edge: slideOut), removal: .move(edge: .top))
     }
     
-    private let date: Date
     private let weekdayFormatter = DateFormatter()
     private let monthYearFormatter = DateFormatter()
     
-    init(for date: Date) {
-        self.date = date
+    init() {
         self.weekdayFormatter.dateFormat = "EEE"
         self.monthYearFormatter.dateFormat = "LLLL YYYY"
     }

@@ -12,6 +12,8 @@ import EventKit
 struct MainView: View {
     
     private let date = Date()
+    @State var isDark: Bool = false
+    @State var is12h: Bool = false
     
     @FocusState private var isDailyGoalFocused: Bool
     @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
@@ -41,6 +43,7 @@ struct MainView: View {
                     DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
                 }
                 Spacer()
+                Home()
                 // Clock View todo in v2
                 Divider()
                 EventsAndRemindersMainList()

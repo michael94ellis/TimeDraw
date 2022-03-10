@@ -21,8 +21,8 @@ struct EventsAndRemindersMainList: View {
             ForEach(self.eventList.reminders) { item in
                 ReminderListCell(item: item)
             }
-            Spacer(minLength: 120)
-                .listRowSeparator(.hidden)
+//            Spacer(minLength: 120)
+//                .listRowSeparator(.hidden)
         }
         .buttonStyle(.plain)
         .listStyle(.plain)

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-
+    
     @Binding var showSettingsPopover: Bool
     @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
     @AppStorage("isTimeDrawClockEnabled") var isTimeDrawClockEnabled: Bool = true
@@ -58,50 +58,53 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                Toggle("Enable Daily Goal Text Area", isOn: self.$isDailyGoalEnabled)
-                    .padding(.horizontal)
-                Toggle("Enable Time Draw Clock", isOn: self.$isTimeDrawClockEnabled)
-                    .padding(.horizontal)
+            ScrollView {
                 VStack {
-                    Text("Show Only:")
-                    Picker("", selection: self.$showCalendarItemType) {
-                        ForEach(CalendarItemType.allCases ,id: \.self) { item in
-                            Text(item.displayName)
+                    Toggle("Enable Daily Goal Text Area", isOn: self.$isDailyGoalEnabled)
+                        .padding(.horizontal)
+                    Toggle("Enable Time Draw Clock", isOn: self.$isTimeDrawClockEnabled)
+                        .padding(.horizontal)
+                    VStack {
+                        Text("Show Only:")
+                        Picker("", selection: self.$showCalendarItemType) {
+                            ForEach(CalendarItemType.allCases ,id: \.self) { item in
+                                Text(item.displayName)
+                            }
                         }
-                    }
-                    .pickerStyle(.segmented)
-                    .onChange(of: self.showCalendarItemType, perform: { _ in
-                        EventListViewModel.shared.updateData()
-                    })
-                    Picker("", selection: self.$showItemRecurrenceType) {
-                        ForEach(ItemRecurrenceType.allCases ,id: \.self) { item in
-                            Text(item.displayName)
+                        .pickerStyle(.segmented)
+                        .onChange(of: self.showCalendarItemType, perform: { _ in
+                            EventListViewModel.shared.updateData()
+                        })
+                        Picker("", selection: self.$showItemRecurrenceType) {
+                            ForEach(ItemRecurrenceType.allCases ,id: \.self) { item in
+                                Text(item.displayName)
+                            }
                         }
+                        .pickerStyle(.segmented)
+                        .padding(.top, 6)
+                        .onChange(of: self.showItemRecurrenceType, perform: { _ in
+                            EventListViewModel.shared.updateData()
+                        })
                     }
-                    .pickerStyle(.segmented)
-                    .onChange(of: self.showItemRecurrenceType, perform: { _ in
-                        EventListViewModel.shared.updateData()
-                    })
-                }
-                .padding()
-                Spacer()
-                Divider()
-                self.buttons
-                Spacer()
-                Spacer()
-                Text("Version:\(Bundle.main.releaseVersionNumber) (\(Bundle.main.buildVersionNumber))")
-                    .font(.interFine)
-            }
-            .padding(.horizontal)
-            .padding(.top, 22)
-            .navigationTitle("Settings")
-            .toolbar(content:  {
-                HStack {
+                    .padding()
                     Spacer()
-                    Button("Done", action: { self.showSettingsPopover.toggle() })
+                    Divider()
+                    self.buttons
+                    Spacer()
+                    Spacer()
+                    Text("Version:\(Bundle.main.releaseVersionNumber) (\(Bundle.main.buildVersionNumber))")
+                        .font(.interFine)
                 }
-            })
+                .padding(.horizontal)
+                .padding(.top, 22)
+                .navigationTitle("Settings")
+                .toolbar(content:  {
+                    HStack {
+                        Spacer()
+                        Button("Done", action: { self.showSettingsPopover.toggle() })
+                    }
+                })
+            }
         }
     }
 }
@@ -120,9 +123,9 @@ enum CalendarItemType: Int, CaseIterable {
     }
 }
 enum ItemRecurrenceType: Int, CaseIterable {
-    case all = 0
-    case recurring = 1
-    case nonRecurring = 2
+    case recurring = 0
+    case nonRecurring = 1
+    case all = 2
     
     var displayName: String {
         switch(self) {

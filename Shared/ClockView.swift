@@ -109,6 +109,12 @@ struct TimeDrawClock: View {
 
 struct PartialCircleBorder: Shape {
     
+    enum EventType {
+        case morning
+        case evening
+        case both
+    }
+    
     // Minute is 0.5 Degrees
     // Hour is 30 Degrees
     let start: Date?
@@ -118,15 +124,17 @@ struct PartialCircleBorder: Shape {
     let radius: Double
     var startDegrees: Double = 0.0
     var endDegrees: Double = 0.0
-    var isAM: Bool = false
-    var isPM: Bool = false
+    let type: EventType
     
     func getAngle(for date: Date? = nil, with components: DateComponents? = nil) -> Double {
         if let date = date {
-            return Double(date.get(.hour) * 30) + Double(date.get(.minute)) * 0.5
+            let hour = date.get(.hour)
+            let trueHour = hour > 12 ? hour - 12 : hour
+            return Double(trueHour * 30) + Double(date.get(.minute)) * 0.5
         } else if let hour = components?.hour,
                   let min = components?.minute {
-            return Double(hour) * 30.0 + Double(min) * 0.5
+            let trueHour = hour > 12 ? hour - 12 : hour
+            return Double(trueHour) * 30.0 + Double(min) * 0.5
         } else {
             return 0.0
         }
@@ -138,15 +146,17 @@ struct PartialCircleBorder: Shape {
         self.startComponents = nil
         self.endComponents = nil
         self.radius = radius
-        self.startDegrees = self.getAngle(for: start)
-        self.endDegrees = self.getAngle(for: end)
         if start.get(.hour) <= 12 {
-            if end.get(.hour) <= 12 {
-                self.isAM = true
+            if end.get(.hour) > 12 {
+                self.type = .both
+            } else {
+                self.type = .morning
             }
         } else {
-            self.isPM = true
+            self.type = .evening
         }
+        self.startDegrees = self.getAngle(for: start)
+        self.endDegrees = self.getAngle(for: end)
     }
     init(startComponents: DateComponents?, endComponents: DateComponents?, radius: Double) {
         self.startComponents = startComponents ?? DateComponents()
@@ -154,17 +164,30 @@ struct PartialCircleBorder: Shape {
         self.start = nil
         self.end = nil
         self.radius = radius
+        if startComponents?.hour ?? 0 <= 12 {
+            if endComponents?.hour ?? 0 > 12 {
+                self.type = .both
+            } else {
+                self.type = .morning
+            }
+        } else {
+            self.type = .evening
+        }
         self.startDegrees = self.getAngle(with: startComponents)
         self.endDegrees = self.getAngle(with: endComponents)
     }
     
     func path(in rect: CGRect) -> Path {
         var p = Path()
-        if self.isAM {
+        switch self.type {
+        case .morning:
             p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius * 0.8, startAngle: .degrees(self.startDegrees - 90), endAngle: .degrees(self.endDegrees - 90), clockwise: false)
-        }
-        if self.isPM {
+        case.evening:
             p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius * 1.2, startAngle: .degrees(self.startDegrees - 90), endAngle: .degrees(self.endDegrees - 90), clockwise: false)
+        case .both:
+            p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius * 0.8, startAngle: .degrees(self.startDegrees - 90), endAngle: .degrees(-90), clockwise: false)
+            p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius * 1.2, startAngle: .degrees(-90), endAngle: .degrees(self.endDegrees - 90), clockwise: false)
+            print(self.endDegrees)
         }
 
         return p.strokedPath(.init(lineWidth: 16))

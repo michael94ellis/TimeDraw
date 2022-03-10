@@ -20,18 +20,6 @@ struct MainView: View {
     
     @StateObject private var addEventViewModel: ModifyCalendarItemViewModel = ModifyCalendarItemViewModel()
     
-    func handleSwipeGesture(value: SwipeDirection) {
-        self.swipeDirection = value
-        switch value {
-        case .left:
-            self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: -1, to: self.eventList.displayDate) ?? Date()
-        case .right:
-            self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: 1, to: self.eventList.displayDate) ?? Date()
-        default:
-            break
-        }
-    }
-    
     var body: some View {
         ZStack {
             // Primary Display
@@ -64,12 +52,6 @@ struct MainView: View {
                 Divider()
                 EventsAndRemindersMainList()
                     .environmentObject(self.addEventViewModel)
-                    .gesture(DragGesture()
-                                .onEnded { value in
-                        withAnimation {
-                            self.handleSwipeGesture(value: value.detectDirection())
-                        }
-                    })
             }
             .transition(.opacity)
             .ignoresSafeArea(.keyboard)

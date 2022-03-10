@@ -73,6 +73,17 @@ struct MainHeader: View {
         }
     }
     
+    func toggleMonthButton(forward: Bool) -> some View {
+        Button(action: {
+            withAnimation {
+                self.eventList.displayDate = Calendar.current.date(byAdding: .month, value: forward ? 1 : -1, to: self.eventList.displayDate) ?? Date()
+            }
+        }) {
+            Image(systemName: forward ? "chevron.right" : "chevron.left")
+                .foregroundColor(Color.red1)
+        }
+    }
+    
     var headerNav: some View {
         HStack {
             Button(action: {
@@ -84,6 +95,12 @@ struct MainHeader: View {
                     .font(.interExtraBoldTitle)
                     .fontWeight(.semibold)
                     .foregroundColor(Color.red1)
+            }
+            if !self.showCompactCalendar {
+                self.toggleMonthButton(forward: false)
+                    .padding(.leading)
+                self.toggleMonthButton(forward: true)
+                    .padding(.horizontal)
             }
             Spacer()
             Menu(content: {
@@ -110,7 +127,7 @@ struct MainHeader: View {
                 }
             } else {
                 self.headerNav
-                CalendarDateSelection(date: self.$eventList.displayDate)
+                CalendarDateSelection(date: self.$eventList.displayDate, showCompactCalendar: self.$showCompactCalendar)
                     .transition(self.switchTransition(direction: self.swipeDirection))
                     .padding(.top, 8)
                     .padding(.horizontal, 25)

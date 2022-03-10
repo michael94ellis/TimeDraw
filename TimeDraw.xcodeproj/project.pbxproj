@@ -108,6 +108,10 @@
 		2FB41CAC27D97C720067F250 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2FB41CAB27D97C720067F250 /* FirebaseCrashlytics */; };
 		2FB41CAE27D97D710067F250 /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CAD27D97D710067F250 /* ClockView.swift */; };
 		2FB41CAF27D97D710067F250 /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CAD27D97D710067F250 /* ClockView.swift */; };
+		2FB41CB127DA5DBE0067F250 /* ReminderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CB027DA5DBE0067F250 /* ReminderListCell.swift */; };
+		2FB41CB227DA5DBE0067F250 /* ReminderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CB027DA5DBE0067F250 /* ReminderListCell.swift */; };
+		2FB41CB427DA5E220067F250 /* EventListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CB327DA5E220067F250 /* EventListCell.swift */; };
+		2FB41CB527DA5E220067F250 /* EventListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CB327DA5E220067F250 /* EventListCell.swift */; };
 		2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
@@ -190,6 +194,8 @@
 		2F8AB30F27A229DA00654FEF /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		2FB41CA527D975A50067F250 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2FB41CAD27D97D710067F250 /* ClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
+		2FB41CB027DA5DBE0067F250 /* ReminderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListCell.swift; sourceTree = "<group>"; };
+		2FB41CB327DA5E220067F250 /* EventListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListCell.swift; sourceTree = "<group>"; };
 		2FC6C7B42786434600D75568 /* MultiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTextField.swift; sourceTree = "<group>"; };
 		2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -384,6 +390,8 @@
 			isa = PBXGroup;
 			children = (
 				2F21112F2799B62D0041EE85 /* EventsAndRemindersMainList.swift */,
+				2FB41CB327DA5E220067F250 /* EventListCell.swift */,
+				2FB41CB027DA5DBE0067F250 /* ReminderListCell.swift */,
 				2F1F8FA327D3AAEF00648234 /* EventListViewModel.swift */,
 			);
 			path = EventAndRemindersListsAndViews;
@@ -621,10 +629,12 @@
 				2F211134279A4F4E0041EE85 /* AddRecurrenceRule.swift in Sources */,
 				2F39B86C27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
 				2F42C5A32784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
+				2FB41CB427DA5E220067F250 /* EventListCell.swift in Sources */,
 				2F8AB31027A229DA00654FEF /* Utils.swift in Sources */,
 				2F65050027879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */,
 				2F81230F2798957C00458B1A /* DateTimePickerInputView.swift in Sources */,
 				2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */,
+				2FB41CB127DA5DBE0067F250 /* ReminderListCell.swift in Sources */,
 				2F39B87027823CF700FE72C3 /* MainView.swift in Sources */,
 				2F24457F27D797C9005BF37D /* EKWeekday-Extension.swift in Sources */,
 				2F24458B27D8BE37005BF37D /* Calendar-Extension.swift in Sources */,
@@ -665,10 +675,12 @@
 				2F211135279A4F4E0041EE85 /* AddRecurrenceRule.swift in Sources */,
 				2F39B86D27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
 				2F42C5A42784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
+				2FB41CB527DA5E220067F250 /* EventListCell.swift in Sources */,
 				2F8AB31127A229DA00654FEF /* Utils.swift in Sources */,
 				2F65050127879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */,
 				2F8123102798957C00458B1A /* DateTimePickerInputView.swift in Sources */,
 				2F42C5A72784E6FC00F0BEB2 /* EventError.swift in Sources */,
+				2FB41CB227DA5DBE0067F250 /* ReminderListCell.swift in Sources */,
 				2F39B87127823CF700FE72C3 /* MainView.swift in Sources */,
 				2F24458027D797C9005BF37D /* EKWeekday-Extension.swift in Sources */,
 				2F24458C27D8BE37005BF37D /* Calendar-Extension.swift in Sources */,

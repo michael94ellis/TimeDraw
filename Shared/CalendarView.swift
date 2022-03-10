@@ -9,10 +9,12 @@ import SwiftUI
 
 struct CalendarDateSelection: View {
     
+    @Binding var showCompactCalendar: Bool
     @Binding private var selectedDate: Date
     @ObservedObject private var eventList: EventListViewModel = .shared
     
-    init(date: Binding<Date>) {
+    init(date: Binding<Date>, showCompactCalendar: Binding<Bool>) {
+        self._showCompactCalendar = showCompactCalendar
         self._selectedDate = date
     }
     
@@ -23,7 +25,10 @@ struct CalendarDateSelection: View {
                 content: { date in
                     Button(action: {
                         withAnimation {
-                            selectedDate = date
+                            self.selectedDate = date
+                            if UIDevice.current.userInterfaceIdiom == .phone {
+                                self.showCompactCalendar.toggle()
+                            }
                         }
                     }) {
                         let today = Calendar.current.isDateInToday(date)
@@ -31,9 +36,7 @@ struct CalendarDateSelection: View {
                         Text("00")
                             .padding(10)
                             .foregroundColor(.clear)
-                            .background(display ? Color(uiColor: .systemGray2)
-                                        : today ? Color(uiColor: .systemGray4)
-                                        : Color(uiColor: .systemBackground))
+                            .background(display ? Color(uiColor: .systemGray3) : Color(uiColor: .systemBackground))
                             .frame(width: 36, height: 36)
                             .cornerRadius(8)
                             .accessibilityHidden(true)
@@ -44,7 +47,8 @@ struct CalendarDateSelection: View {
                             }
                             .foregroundColor(today ? .red1
                                              : display ? .white
-                                             : .gray2)
+                                             : .darkGray
+                            )
                     }
                 },
                 excessDays: { date in
@@ -54,7 +58,7 @@ struct CalendarDateSelection: View {
                         }
                     }) {
                         Text(DateFormatter.dayFormatter.string(from: date))
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Color.gray)
                             .frame(width: 45, height: 30)
                     }
                 },
@@ -110,7 +114,7 @@ public struct CalendarView<Day: View, Header: View, ExcessDay: View>: View {
             ForEach(self.weeks, id: \.self) { week in
                 HStack {
                     ForEach(week, id: \.self) { day in
-                        if Calendar.current.isDate(date, equalTo: month, toGranularity: .month) {
+                        if Calendar.current.isDate(day, equalTo: month, toGranularity: .month) {
                             self.content(day)
                                 .frame(width: 45)
                         } else {

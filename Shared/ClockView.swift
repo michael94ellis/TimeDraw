@@ -61,7 +61,7 @@ struct TimeDrawClock: View {
             .offset(y: 10)
             .rotationEffect(.init(degrees: Double(currentTime.sec) * 6))
     }
-        
+    
     var body: some View {
         VStack {
             ZStack {// Dial
@@ -76,8 +76,10 @@ struct TimeDrawClock: View {
                         .rotationEffect(.init(degrees: Double(i) * 6))
                 }
                 self.clockHands
-                PartialCircleBorder().frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .foregroundColor(.blue3)
+                ForEach(EventListViewModel.shared.events ,id: \.self) { event in
+                    PartialCircleBorder(start: event.startDate, end: event.endDate, radius: 180)
+                    .foregroundColor(.red2)
+                }
             }
             .frame(width: width - 80, height: width - 80)
             Spacer()
@@ -100,11 +102,15 @@ struct TimeDrawClock: View {
 }
 
 struct PartialCircleBorder : Shape {
+    
+    let start: Date
+    let end: Date
+    let radius: Double
+    
     func path(in rect: CGRect) -> Path {
         var p = Path()
-        print(rect)
-        p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: 140, startAngle: .degrees(34), endAngle: .degrees(73), clockwise: false)
+        p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius, startAngle: .degrees(Double(self.start.get(.hour) * 30)), endAngle: .degrees(Double(self.end.get(.hour) * 30)), clockwise: false)
 
-        return p.strokedPath(.init(lineWidth: 12))
+        return p.strokedPath(.init(lineWidth: 16))
     }
 }

@@ -33,7 +33,7 @@ struct CalendarDateSelection: View {
                             .foregroundColor(.clear)
                             .background(display ? Color(uiColor: .systemGray2)
                                         : today ? Color(uiColor: .systemGray4)
-                                        : Color(uiColor: .systemGray6))
+                                        : Color(uiColor: .systemBackground))
                             .frame(width: 36, height: 36)
                             .cornerRadius(8)
                             .accessibilityHidden(true)

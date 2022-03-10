@@ -147,7 +147,7 @@ struct PartialCircleBorder: Shape {
         self.endComponents = nil
         self.radius = radius
         if start.get(.hour) <= 12 {
-            if end.get(.hour) > 12 {
+            if end.get(.hour) >= 12 {
                 self.type = .both
             } else {
                 self.type = .morning
@@ -165,7 +165,7 @@ struct PartialCircleBorder: Shape {
         self.end = nil
         self.radius = radius
         if startComponents?.hour ?? 0 <= 12 {
-            if endComponents?.hour ?? 0 > 12 {
+            if endComponents?.hour ?? 0 >= 12 {
                 self.type = .both
             } else {
                 self.type = .morning
@@ -185,9 +185,13 @@ struct PartialCircleBorder: Shape {
         case.evening:
             p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius * 1.2, startAngle: .degrees(self.startDegrees - 90), endAngle: .degrees(self.endDegrees - 90), clockwise: false)
         case .both:
-            p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius * 0.8, startAngle: .degrees(self.startDegrees - 90), endAngle: .degrees(-90), clockwise: false)
+            if self.startDegrees < 1 {
+                p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius * 0.8, startAngle: .degrees(self.startDegrees - 90), endAngle: .degrees(90), clockwise: false)
+                p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius * 0.8, startAngle: .degrees(90), endAngle: .degrees(self.startDegrees - 90), clockwise: false)
+            } else {
+                p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius * 0.8, startAngle: .degrees(self.startDegrees - 90), endAngle: .degrees(-90), clockwise: false)
+            }
             p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius * 1.2, startAngle: .degrees(-90), endAngle: .degrees(self.endDegrees - 90), clockwise: false)
-            print(self.endDegrees)
         }
 
         return p.strokedPath(.init(lineWidth: 16, lineCap: .round, lineJoin: .round))

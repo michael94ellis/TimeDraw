@@ -58,7 +58,7 @@ struct EventListCell: View {
                         self.floatingModifyViewModel.displayToast("Event Deleted")
                     }
                 }) {
-                    Image(systemName: "trash").background(Color.red1)
+                    Image(systemName: "trash")
                 }
                 .padding(.horizontal)
                 .padding(.vertical, 8)

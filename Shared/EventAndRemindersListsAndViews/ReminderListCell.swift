@@ -14,10 +14,27 @@ struct ReminderListCell: View {
     var item: EKReminder
     @ObservedObject private var eventList: EventListViewModel = .shared
     @EnvironmentObject var floatingModifyViewModel: ModifyCalendarItemViewModel
+    @State var showComplete: Bool = false
     @State var showDelete: Bool = false
     
     var body: some View {
         HStack {
+            if self.showComplete {
+                Button(action: {
+                    Task {
+                        item.isCompleted = true
+                        self.floatingModifyViewModel.save(reminder: item, "Completed")
+                        self.floatingModifyViewModel.displayToast("Reminder Completed")
+                        self.eventList.updateData()
+                    }
+                }) {
+                    Image(systemName: "checkmark")
+                        .foregroundColor(Color.dark)
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 8)
+                .background(RoundedRectangle(cornerRadius: 12).fill(Color.green1))
+            }
             HStack {
                 Circle().fill(Color(cgColor: item.calendar.cgColor))
                     .frame(width: 8, height: 8)
@@ -70,7 +87,6 @@ struct ReminderListCell: View {
                     }
                 }) {
                     Image(systemName: "trash")
-                        .background(Color.red1)
                 }
                 .padding(.horizontal)
                 .padding(.vertical, 8)
@@ -82,15 +98,10 @@ struct ReminderListCell: View {
             withAnimation {
                 let direction = value.detectDirection()
                 if direction == .left {
-                    if self.showDelete {
-                        self.showDelete = false
-                    } else {
-                        item.isCompleted = true
-                        self.floatingModifyViewModel.save(reminder: item, "Completed")
-                        self.floatingModifyViewModel.displayToast("Reminder Completed")
-                        self.eventList.updateData()
-                    }
+                    self.showDelete = false
+                    self.showComplete = true
                 } else if direction == .right {
+                    self.showComplete = false
                     self.showDelete = true
                 }
             }

@@ -28,7 +28,8 @@ struct TimeDrawClock: View {
     }
     
     @ViewBuilder var clockHands: some View {
-        //Hours
+        // DARKGRAY
+        // Hours
         RoundedRectangle(cornerRadius: 24)
             .fill(Color.darkGray)
             .frame(width: 6, height: (width - 240) / 2)
@@ -37,21 +38,23 @@ struct TimeDrawClock: View {
         Circle()
             .fill(Color.darkGray)
             .frame(width: 16, height: 16)
-        //Minutes
+        // Minutes
         RoundedRectangle(cornerRadius: 24)
             .fill(Color.darkGray)
             .frame(width: 4, height: (width - 150) / 2)
             .offset(y: -(width - 200) / 4)
             .rotationEffect(.init(degrees: Double(currentTime.min) * 6))
+        // RED1
         Circle()
             .fill(Color.red1)
             .frame(width: 10, height: 10)
-        //Seconds
+        // Seconds
         RoundedRectangle(cornerRadius: 24)
             .fill(Color.red1)
             .frame(width: 2, height: (width - 180) / 2)
             .offset(y: -(width - 180) / 4)
             .rotationEffect(.init(degrees: Double(currentTime.sec) * 6))
+        // Shows the extended hand on the other side of the circle
         RoundedRectangle(cornerRadius: 24)
             .fill(Color.red1)
             .frame(width: 2, height: 10)
@@ -73,6 +76,8 @@ struct TimeDrawClock: View {
                         .rotationEffect(.init(degrees: Double(i) * 6))
                 }
                 self.clockHands
+                PartialCircleBorder().frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .foregroundColor(.blue3)
             }
             .frame(width: width - 80, height: width - 80)
             Spacer()
@@ -97,9 +102,9 @@ struct TimeDrawClock: View {
 struct PartialCircleBorder : Shape {
     func path(in rect: CGRect) -> Path {
         var p = Path()
+        print(rect)
+        p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: 140, startAngle: .degrees(34), endAngle: .degrees(73), clockwise: false)
 
-        p.addArc(center: CGPoint(x: 100, y:100), radius: 50, startAngle: .degrees(34), endAngle: .degrees(73), clockwise: true)
-
-        return p.strokedPath(.init(lineWidth: 3, dash: [5, 3], dashPhase: 10))
+        return p.strokedPath(.init(lineWidth: 12))
     }
 }

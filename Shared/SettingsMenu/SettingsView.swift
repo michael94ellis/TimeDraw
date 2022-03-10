@@ -13,7 +13,7 @@ struct SettingsView: View {
     @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
     @AppStorage("isTimeDrawClockEnabled") var isTimeDrawClockEnabled: Bool = true
     @AppStorage("hideRecurringItems") var hideRecurringItems: Bool = false
-    @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .events
+    @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .scheduled
     
     public init(display: Binding<Bool>) {
         self._showSettingsPopover = display
@@ -97,14 +97,14 @@ struct SettingsView: View {
 }
 
 enum CalendarItemType: Int, CaseIterable {
-    case events = 0
-    case reminders = 1
+    case scheduled = 0
+    case unscheduled = 1
     case all = 2
     
     var displayName: String {
         switch(self) {
-        case .events: return "Events"
-        case .reminders: return "Reminders"
+        case .scheduled: return "Scheduled"
+        case .unscheduled: return "Unscheduled"
         case .all: return "All"
         }
     }

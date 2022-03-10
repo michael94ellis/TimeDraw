@@ -17,7 +17,7 @@ class EventListViewModel: ObservableObject {
         }
     }
     
-    @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .events
+    @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .scheduled
     @AppStorage("hideRecurringItems") var hideRecurringItems: Bool = false
     @Published public var events: [EKEvent] = []
     @Published public var reminders: [EKReminder] = []
@@ -42,9 +42,9 @@ class EventListViewModel: ObservableObject {
     
     public func updateData() {
         switch self.showCalendarItemType {
-        case .events:
+        case .scheduled:
             self.fetchEvents()
-        case .reminders:
+        case .unscheduled:
             self.fetchReminders()
         case .all:
             self.fetchEvents()

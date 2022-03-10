@@ -12,7 +12,7 @@ struct SettingsView: View {
     @Binding var showSettingsPopover: Bool
     @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
     @AppStorage("isTimeDrawClockEnabled") var isTimeDrawClockEnabled: Bool = true
-    @AppStorage("hideRecurringItems") var hideRecurringItems: Bool = false
+    @AppStorage("showItemRecurrenceType") var showItemRecurrenceType: ItemRecurrenceType = .all
     @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .scheduled
     
     public init(display: Binding<Bool>) {
@@ -61,8 +61,6 @@ struct SettingsView: View {
             VStack {
                 Toggle("Enable Daily Goal Text Area", isOn: self.$isDailyGoalEnabled)
                     .padding(.horizontal)
-                Toggle("Hide Recurring Events", isOn: self.$hideRecurringItems)
-                    .padding(.horizontal)
                 Toggle("Enable Time Draw Clock", isOn: self.$isTimeDrawClockEnabled)
                     .padding(.horizontal)
                 VStack {
@@ -73,6 +71,18 @@ struct SettingsView: View {
                         }
                     }
                     .pickerStyle(.segmented)
+                    .onChange(of: self.showCalendarItemType, perform: { _ in
+                        EventListViewModel.shared.updateData()
+                    })
+                    Picker("", selection: self.$showItemRecurrenceType) {
+                        ForEach(ItemRecurrenceType.allCases ,id: \.self) { item in
+                            Text(item.displayName)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .onChange(of: self.showItemRecurrenceType, perform: { _ in
+                        EventListViewModel.shared.updateData()
+                    })
                 }
                 .padding()
                 Spacer()
@@ -105,6 +115,19 @@ enum CalendarItemType: Int, CaseIterable {
         switch(self) {
         case .scheduled: return "Scheduled"
         case .unscheduled: return "Unscheduled"
+        case .all: return "All"
+        }
+    }
+}
+enum ItemRecurrenceType: Int, CaseIterable {
+    case all = 0
+    case recurring = 1
+    case nonRecurring = 2
+    
+    var displayName: String {
+        switch(self) {
+        case .recurring: return "Recurring"
+        case .nonRecurring: return "Non Recurring"
         case .all: return "All"
         }
     }

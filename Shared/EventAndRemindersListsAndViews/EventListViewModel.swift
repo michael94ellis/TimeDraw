@@ -41,6 +41,8 @@ class EventListViewModel: ObservableObject {
     }
     
     public func updateData() {
+        self.events = []
+        self.reminders = []
         switch self.showCalendarItemType {
         case .scheduled:
             self.fetchEvents()

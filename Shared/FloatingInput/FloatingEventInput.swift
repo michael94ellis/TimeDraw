@@ -45,9 +45,12 @@ struct FloatingEventInput: View {
     @ViewBuilder var selectCalendarButton: some View {
         if self.appSettings.showCalendarPickerButton {
             Menu(content: {
-                ForEach(EventKitManager.shared.eventStore.calendars(for: .event), id: \.self) { calendar in
-                    Button(calendar.title, action: { self.selectedCalColor = calendar.cgColor })
-                        .foregroundColor(Color(cgColor: calendar.cgColor))
+                ForEach(self.appSettings.userSelectedCalendars.loadCalendarIds(), id: \.self) { calendarId in
+                    if let calendar = EventKitManager.shared.eventStore.calendar(withIdentifier: calendarId) {
+                        Button(action: { self.selectedCalColor = calendar.cgColor }) {
+                            Text(calendar.title)
+                        }
+                    }
                 }
             }) {
                 self.topButton(image: "calendar", color: Color(cgColor: self.selectedCalColor), action: { self.showCalendarPickerMenu.toggle() })

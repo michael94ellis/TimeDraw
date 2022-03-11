@@ -6,6 +6,32 @@
 //
 
 import SwiftUI
+import EventKit
+
+extension Array {
+    func archiveCalendars() -> Data {
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
+            return data
+        } catch {
+            fatalError("Can't encode data: \(error)")
+        }
+    }
+}
+extension Optional where Wrapped == Data {
+    func loadCalendarIds() -> [String] {
+        do {
+            guard let data = self,
+                  let array = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
+                return []
+            }
+            return array
+        } catch {
+            fatalError("loadWStringArray - Can't encode data: \(error)")
+        }
+    }
+}
+
 
 class AppSettings: ObservableObject {
     @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
@@ -14,6 +40,7 @@ class AppSettings: ObservableObject {
     @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .scheduled
     @AppStorage("showListIcons") var showListIcons: Bool = true
     @AppStorage("showCalendarPickerButton") var showCalendarPickerButton: Bool = true
+    @AppStorage("userSelectedCalendars") var userSelectedCalendars: Data?
     
     // ---
     @AppStorage("showRecurringItems") var showRecurringItems: Bool = true
@@ -91,6 +118,12 @@ struct SettingsView: View {
                 .onChange(of: self.appSettings.showListIcons, perform: { newValue in
                     EventListViewModel.shared.updateData()
                 })
+            MultiPicker(self.appSettings.userSelectedCalendars.loadCalendarIds(),
+                        selections: Binding<[String]>(get: {
+                self.appSettings.userSelectedCalendars.loadCalendarIds()
+            }, set: { newArray in
+                self.appSettings.userSelectedCalendars = newArray.archiveCalendars()
+            }))
         }
     }
     

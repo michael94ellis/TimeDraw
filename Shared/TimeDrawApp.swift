@@ -17,6 +17,11 @@ struct TimeDrawApp: App {
         FirebaseApp.configure()
         EventKitManager.configureWithAppName("TimeDraw")
         UIFont.overrideInitialize()
+        if AppSettings.shared.userSelectedCalendars == nil || AppSettings.shared.userSelectedCalendars.loadCalendarIds().isEmpty {
+            var calendars = EventKitManager.shared.eventStore.calendars(for: .event)
+            calendars.append(contentsOf: EventKitManager.shared.eventStore.calendars(for: .reminder))
+            AppSettings.shared.userSelectedCalendars = calendars.compactMap({ $0.calendarIdentifier }).archiveCalendars()
+        }
     }
     
     var body: some Scene {

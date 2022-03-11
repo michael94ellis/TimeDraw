@@ -71,6 +71,9 @@ struct FloatingEventInput: View {
             .rotationEffect(.degrees(self.degreesToFlip))
         }
         .rotationEffect(.degrees(self.degreesToFlip))
+        .onTapGesture {
+            self.viewModel.isAddEventTextFieldFocused.toggle()
+        }
     }
         
     let numberOfEmojiColumns: Int = 5

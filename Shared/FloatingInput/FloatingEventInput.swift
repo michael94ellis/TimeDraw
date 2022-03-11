@@ -39,41 +39,52 @@ struct FloatingEventInput: View {
     let degreesToFlip: Double = 180
     @ViewBuilder var eventOptions: some View {
         ScrollView {
-            HStack {
-                AddEventDateTimePicker()
-            }
-            .rotationEffect(.degrees(self.degreesToFlip))
-            if self.appSettings.showRecurringItems {
+            VStack {
                 HStack {
-                    AddRecurrenceRule()
+                    AddEventDateTimePicker()
                 }
+                .rotationEffect(.degrees(self.degreesToFlip))
+                if self.appSettings.showRecurringItems {
+                    HStack {
+                        AddRecurrenceRule()
+                    }
+                    .padding(.bottom, 8)
+                    .rotationEffect(.degrees(self.degreesToFlip))
+                }
+                if self.appSettings.showNotes {
+                    HStack {
+                        AddNotesInput()
+                            .background(RoundedRectangle(cornerRadius: 13).fill(Color(uiColor: .systemGray6))
+                                            .shadow(radius: 4, x: 2, y: 4))
+                    }
+                    .padding(.bottom, 8)
+                    .rotationEffect(.degrees(self.degreesToFlip))
+                }
+                HStack {
+                    if self.viewModel.editMode {
+                        self.topButton(image: "xmark.square", color: .lightGray, action: { self.viewModel.reset() })
+                        Spacer()
+                    } else {
+                        // Dimiss tap area
+                        Rectangle().fill(Color.gray.opacity(0.01)).onTapGesture {
+                            self.viewModel.isAddEventTextFieldFocused.toggle()
+                        }
+                    }
+                    self.topButton(image: "trash", color: .red1, action: { self.viewModel.delete() })
+                }
+                .frame(maxWidth: 600)
                 .padding(.bottom, 8)
                 .rotationEffect(.degrees(self.degreesToFlip))
-            }
-            if self.appSettings.showNotes {
-                HStack {
-                    AddNotesInput()
-                        .background(RoundedRectangle(cornerRadius: 13).fill(Color(uiColor: .systemGray6))
-                                        .shadow(radius: 4, x: 2, y: 4))
+                Rectangle()
+                    .fill(Color.gray.opacity(0.01))
+                    .frame(height: UIScreen.main.bounds.height * 0.15)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .onTapGesture {
+                    self.viewModel.isAddEventTextFieldFocused.toggle()
                 }
-                .padding(.bottom, 8)
-                .rotationEffect(.degrees(self.degreesToFlip))
             }
-            HStack {
-                if self.viewModel.editMode {
-                    self.topButton(image: "xmark.square", color: .lightGray, action: { self.viewModel.reset() })
-                }
-                Spacer()
-                self.topButton(image: "trash", color: .red1, action: { self.viewModel.delete() })
-            }
-            .frame(maxWidth: 600)
-            .padding(.bottom, 8)
-            .rotationEffect(.degrees(self.degreesToFlip))
         }
         .rotationEffect(.degrees(self.degreesToFlip))
-        .onTapGesture {
-            self.viewModel.isAddEventTextFieldFocused.toggle()
-        }
     }
         
     let numberOfEmojiColumns: Int = 5
@@ -97,6 +108,7 @@ struct FloatingEventInput: View {
                     .opacity(self.isBackgroundBlurred ? 1 : 0)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+            .padding(.bottom, 8)
             HStack {
                 PopoverButton(showPopover: self.$isShowingEmojiPicker,
                               popoverSize: self.emojiPopoverSize,

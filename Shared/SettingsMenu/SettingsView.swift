@@ -13,6 +13,7 @@ class AppSettings: ObservableObject {
     @AppStorage("showItemRecurrenceType") var showItemRecurrenceType: ItemRecurrenceType = .all
     @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .scheduled
     @AppStorage("showCalendarPicker") var showCalendarPicker: Bool = false
+    @AppStorage("showListIcons") var showListIcons: Bool = true
     
     // ---
     @AppStorage("showRecurringItems") var showRecurringItems: Bool = true
@@ -83,6 +84,11 @@ struct SettingsView: View {
                 .padding(.horizontal)
             Toggle("Show Notes", isOn: self.appSettings.$showNotes)
                 .padding(.horizontal)
+            Toggle("Show List Icons", isOn: self.appSettings.$showListIcons)
+                .padding(.horizontal)
+                .onChange(of: self.appSettings.showListIcons, perform: { newValue in
+                    EventListViewModel.shared.updateData()
+                })
         }
     }
     

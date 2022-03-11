@@ -25,8 +25,10 @@ struct EventListCell: View {
     var body: some View {
         HStack {
             HStack {
-                Image(systemName: "calendar")
-                    .foregroundColor(Color(uiColor: .darkGray))
+                if AppSettings.shared.showListIcons {
+                    Image(systemName: "calendar")
+                        .foregroundColor(Color(uiColor: .darkGray))
+                }
                 Circle().fill(Color(cgColor: item.calendar.cgColor))
                     .frame(width: 8, height: 8)
                 Text(item.title.isEmpty ? "Untitled Event": item.title)

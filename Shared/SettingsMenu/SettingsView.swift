@@ -12,8 +12,8 @@ class AppSettings: ObservableObject {
     @AppStorage("isTimeDrawClockEnabled") var isTimeDrawClockEnabled: Bool = true
     @AppStorage("showItemRecurrenceType") var showItemRecurrenceType: ItemRecurrenceType = .all
     @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .scheduled
-    @AppStorage("showCalendarPicker") var showCalendarPicker: Bool = false
     @AppStorage("showListIcons") var showListIcons: Bool = true
+    @AppStorage("showCalendarPickerButton") var showCalendarPickerButton: Bool = true
     
     // ---
     @AppStorage("showRecurringItems") var showRecurringItems: Bool = true
@@ -83,6 +83,8 @@ struct SettingsView: View {
             Toggle("Show Recurrence", isOn: self.appSettings.$showRecurringItems)
                 .padding(.horizontal)
             Toggle("Show Notes", isOn: self.appSettings.$showNotes)
+                .padding(.horizontal)
+            Toggle("Show Calendar Picker", isOn: self.appSettings.$showCalendarPickerButton)
                 .padding(.horizontal)
             Toggle("Show List Icons", isOn: self.appSettings.$showListIcons)
                 .padding(.horizontal)

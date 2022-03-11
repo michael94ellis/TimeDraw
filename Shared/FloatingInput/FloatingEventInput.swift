@@ -17,6 +17,7 @@ struct FloatingEventInput: View {
     @Binding var isBackgroundBlurred: Bool
     private let barHeight: CGFloat = 44
     @State var emojiSelection: String = ""
+    @State var showCalendarPickerMenu: Bool = false
     
     @ViewBuilder func topButton(image: String, color: Color, action: @escaping () -> ()) -> some View {
         Button(action: {
@@ -37,6 +38,21 @@ struct FloatingEventInput: View {
                         .shadow(radius: 4, x: 2, y: 4))
         .buttonStyle(.plain)
         .contentShape(Rectangle())
+    }
+    
+    @State var selectedCalColor: CGColor = EventKitManager.shared.defaultEventCalendar?.cgColor ?? .init(red: 233, green: 0, blue: 0, alpha: 0)
+    
+    @ViewBuilder var selectCalendarButton: some View {
+        if self.appSettings.showCalendarPickerButton {
+            Menu(content: {
+                ForEach(EventKitManager.shared.eventStore.calendars(for: .event), id: \.self) { calendar in
+                    Button(calendar.title, action: { self.selectedCalColor = calendar.cgColor })
+                        .foregroundColor(Color(cgColor: calendar.cgColor))
+                }
+            }) {
+                self.topButton(image: "calendar", color: Color(cgColor: self.selectedCalColor), action: { self.showCalendarPickerMenu.toggle() })
+            }
+        }
     }
     
     let degreesToFlip: Double = 180
@@ -64,8 +80,10 @@ struct FloatingEventInput: View {
                 HStack {
                     if self.viewModel.editMode {
                         self.topButton(image: "xmark.square", color: .lightGray, action: { self.viewModel.reset() })
+                        self.selectCalendarButton
                         Spacer()
                     } else {
+                        self.selectCalendarButton
                         // Dimiss tap area
                         Rectangle().fill(Color.gray.opacity(0.01)).onTapGesture {
                             self.viewModel.isAddEventTextFieldFocused.toggle()

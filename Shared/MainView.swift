@@ -35,9 +35,14 @@ struct MainView: View {
                         TimeDrawClock()
                             .gesture(DragGesture().onEnded({ value in
                                 let direction = value.detectDirection()
-                                if direction == .down || direction == .up {
+                                if [.down, .up].contains(direction) {
                                     withAnimation {
                                         self.showClockView.toggle()
+                                    }
+                                }
+                                if [.left, .right].contains(direction) {
+                                    withAnimation {
+                                        self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: direction == .right ? 1 : -1, to: self.eventList.displayDate) ?? Date()
                                     }
                                 }
                             }))

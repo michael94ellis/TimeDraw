@@ -408,10 +408,11 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.handleRecurrence(for: event)
         do {
             try EventKitManager.shared.eventStore.save(event, span: .futureEvents)
+            self.displayToast(message)
         } catch  {
             print("Error saving event: \(error)")
+            self.displayToast("Error")
         }
-        self.displayToast(message)
         self.reset()
     }
     
@@ -441,10 +442,11 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.handleRecurrence(for: reminder)
         do {
             try EventKitManager.shared.eventStore.save(reminder, commit: true)
+            self.displayToast(message)
         } catch let error as NSError {
             print("Error: failed to Save Reminder with error: \(error)")
+            self.displayToast("Error")
         }
-        self.displayToast(message)
         self.reset()
     }
     

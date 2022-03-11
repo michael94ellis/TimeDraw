@@ -76,6 +76,10 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.isAddEventTextFieldFocused = true
         self.calendarItem = event
         self.newItemTitle = event.title
+        if event.hasNotes {
+            self.notesInput = event.notes ?? ""
+            self.isNotesInputOpen = true
+        }
         if let startDate = event.startDate {
             self.isDateTimePickerOpen = true
             self.newItemStartTime = startDate.get(.hour, .minute, .second)
@@ -95,6 +99,10 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.isAddEventTextFieldFocused = true
         self.calendarItem = reminder
         self.newItemTitle = reminder.title
+        if reminder.hasNotes {
+            self.notesInput = reminder.notes ?? ""
+            self.isNotesInputOpen = true
+        }
         if let startDate = reminder.startDateComponents?.date {
             self.isDateTimePickerOpen = true
             self.newItemStartTime = startDate.get(.hour, .minute, .second)

@@ -24,16 +24,19 @@ struct FloatingEventInput: View {
                 action()
             }
         }) {
-            Image(systemName: image)
-                .resizable()
-                .frame(width: 30, height: 32)
-                .foregroundColor(color)
+            Group { // Meaningless Container}
+                Image(systemName: image)
+                    .resizable()
+                    .frame(width: 30, height: 32)
+                    .foregroundColor(color)
+            }
+            .frame(width: 55, height: 55)
         }
-        .buttonStyle(.plain)
-        .frame(width: 55, height: 55)
         .background(RoundedRectangle(cornerRadius: 13)
                         .fill(Color(uiColor: .systemGray6))
                         .shadow(radius: 4, x: 2, y: 4))
+        .buttonStyle(.plain)
+        .contentShape(Rectangle())
     }
     
     let degreesToFlip: Double = 180
@@ -54,8 +57,6 @@ struct FloatingEventInput: View {
                 if self.appSettings.showNotes {
                     HStack {
                         AddNotesInput()
-                            .background(RoundedRectangle(cornerRadius: 13).fill(Color(uiColor: .systemGray6))
-                                            .shadow(radius: 4, x: 2, y: 4))
                     }
                     .padding(.bottom, 8)
                     .rotationEffect(.degrees(self.degreesToFlip))

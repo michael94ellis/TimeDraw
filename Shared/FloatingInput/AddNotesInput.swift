@@ -41,14 +41,19 @@ struct AddNotesInput: View {
                         .padding(.bottom)
                 }
             }
+            .frame(maxWidth: 600)
+            .background(RoundedRectangle(cornerRadius: 13).fill(Color(uiColor: .systemGray6))
+                            .shadow(radius: 4, x: 2, y: 4))
         } else {
             Button(action: self.viewModel.addNotesToEvent) {
                 Text("Add Notes")
-                    .frame(maxWidth: 600)
                     .frame(height: 48)
                     .foregroundColor(Color.blue1)
-                    .contentShape(Rectangle())
+                    .frame(maxWidth: 600)
+                    .background(RoundedRectangle(cornerRadius: 13).fill(Color(uiColor: .systemGray6))
+                                    .shadow(radius: 4, x: 2, y: 4))
             }
+            .contentShape(Rectangle())
             .buttonStyle(.plain)
         }
     }

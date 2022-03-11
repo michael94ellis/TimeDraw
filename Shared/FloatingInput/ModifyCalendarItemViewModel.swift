@@ -302,18 +302,20 @@ class ModifyCalendarItemViewModel: ObservableObject {
         if let reminder = self.calendarItem as? EKReminder {
             do {
                 try EventKitManager.shared.eventStore.deleteReminder(identifier: reminder.calendarItemIdentifier)
+                self.displayToast("Reminder Deleted")
             } catch  {
                 print(error)
+                self.displayToast(error.localizedDescription)
             }
-            self.save(reminder: reminder, "Reminder Deleted")
         }
         if let event = self.calendarItem as? EKEvent {
             do {
                 try EventKitManager.shared.eventStore.deleteEvent(identifier: event.eventIdentifier, span: .futureEvents)
+                self.displayToast("Event Deleted")
             } catch  {
                 print(error)
+                self.displayToast(error.localizedDescription)
             }
-            self.save(event: event, "Event Deleted")
         }
         self.reset()
     }
@@ -388,9 +390,15 @@ class ModifyCalendarItemViewModel: ObservableObject {
             if self.isNotesInputOpen {
                 newEvent.notes = self.notesInput
             }
-            self.save(event: newEvent, "Event Created")
+            self.saveAndDisplayToast(event: newEvent, "Event Created")
         } catch let error as NSError {
             print("Error: failed to save event with error : \(error)")
+            switch error.code {
+            case 4:
+                self.displayToast("Invalid Dates")
+            default:
+                self.displayToast("Error: \(error.code)")
+            }
         }
     }
     
@@ -400,20 +408,22 @@ class ModifyCalendarItemViewModel: ObservableObject {
             event.title = self.newItemTitle
             event.startDate = startDate
             event.endDate = endDate
-            self.save(event: event, "Event Saved")
+            self.saveAndDisplayToast(event: event, "Event Saved")
         }
     }
     
-    @MainActor private func save(event: EKEvent, _ message: String) {
+    @MainActor private func saveAndDisplayToast(event: EKEvent, _ message: String) {
+        // This is where recurrence is created/updated
+        // You can edit an existing event's recurrence earlier, but this point works for Create & Edit
         self.handleRecurrence(for: event)
         do {
             try EventKitManager.shared.eventStore.save(event, span: .futureEvents)
             self.displayToast(message)
+            self.reset()
         } catch  {
             print("Error saving event: \(error)")
             self.displayToast("Error")
         }
-        self.reset()
     }
     
     @MainActor private func createReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) async {
@@ -422,9 +432,15 @@ class ModifyCalendarItemViewModel: ObservableObject {
             if self.isNotesInputOpen {
                 newReminder.notes = self.notesInput
             }
-            self.save(reminder: newReminder, "Reminder Created")
+            self.saveAndDisplayToast(reminder: newReminder, "Reminder Created")
         } catch let error as NSError {
             print("Error: failed to Create Reminder with error: \(error)")
+            switch error.code {
+            case 4:
+                self.displayToast("Invalid Dates")
+            default:
+                self.displayToast("Error: \(error.code)")
+            }
         }
     }
     
@@ -434,20 +450,27 @@ class ModifyCalendarItemViewModel: ObservableObject {
             reminder.title = self.newItemTitle
             reminder.startDateComponents = startComponents
             reminder.dueDateComponents = endComponents
-            self.save(reminder: reminder, "Reminder Saved")
+            self.saveAndDisplayToast(reminder: reminder, "Reminder Saved")
         }
     }
     
-    @MainActor public func save(reminder: EKReminder, _ message: String) {
+    @MainActor public func saveAndDisplayToast(reminder: EKReminder, _ message: String) {
+        // This is where recurrence is created/updated
+        // You can edit an existing reminder's recurrence earlier, but this point works for Create & Edit
         self.handleRecurrence(for: reminder)
         do {
             try EventKitManager.shared.eventStore.save(reminder, commit: true)
             self.displayToast(message)
+            self.reset()
         } catch let error as NSError {
             print("Error: failed to Save Reminder with error: \(error)")
-            self.displayToast("Error")
+            switch error.code {
+            case 4:
+                self.displayToast("Invalid Dates")
+            default:
+                self.displayToast("Error: \(error.code)")
+            }
         }
-        self.reset()
     }
     
     /// Update the Toast notification to alert the user

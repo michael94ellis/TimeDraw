@@ -91,10 +91,10 @@ struct AddEventDateTimePicker: View {
                     .frame(maxWidth: 600)
                     .frame(height: 48)
                     .foregroundColor(Color.blue1)
-                    .contentShape(Rectangle())
                     .background(RoundedRectangle(cornerRadius: 13).fill(Color(uiColor: .systemGray6))
                                     .shadow(radius: 4, x: 2, y: 4))
             }
+            .contentShape(Rectangle())
             .buttonStyle(.plain)
         }
     }

@@ -23,7 +23,7 @@ struct ReminderListCell: View {
                 Button(action: {
                     Task {
                         item.isCompleted = true
-                        self.floatingModifyViewModel.save(reminder: item, "Completed")
+                        self.floatingModifyViewModel.saveAndDisplayToast(reminder: item, "Completed")
                         self.floatingModifyViewModel.displayToast("Reminder Completed")
                         self.eventList.updateData()
                     }

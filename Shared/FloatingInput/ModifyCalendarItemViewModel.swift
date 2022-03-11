@@ -36,6 +36,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     // For the "Add Date/Time" feature
     @Published var newItemStartDate: DateComponents?
     @Published var newItemEndDate: DateComponents?
+    @Published var notesInput: String = ""
     
     // MARK: - Recurrence Rule vars
     
@@ -58,6 +59,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var isAddEventTextFieldFocused: Bool = false
     @Published var isDisplayingOptions: Bool = false
     @Published var isDateTimePickerOpen: Bool = false
+    @Published var isNotesInputOpen: Bool = false
     @Published var isRecurrencePickerOpen: Bool = false
     public var isFocused: Bool { self.isDateTimePickerOpen || self.isRecurrencePickerOpen }
     
@@ -115,6 +117,18 @@ class ModifyCalendarItemViewModel: ObservableObject {
     func removeTimeFromEvent() {
         withAnimation {
             self.clearTimeInput()
+        }
+    }
+    
+    func addNotesToEvent() {
+        withAnimation {
+            self.isNotesInputOpen = true
+        }
+    }
+    
+    func removeNotesFromEvent() {
+        withAnimation {
+            self.clearNotesInput()
         }
     }
     
@@ -242,6 +256,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.isDisplayingOptions = false
             
             self.clearTimeInput()
+            self.clearNotesInput()
             self.clearRecurrence()
         }
         EventListViewModel.shared.updateData()
@@ -253,6 +268,11 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.newItemEndTime = nil
         self.newItemStartDate = nil
         self.newItemEndDate = nil
+    }
+    
+    private func clearNotesInput() {
+        self.isNotesInputOpen = false
+        self.notesInput = ""
     }
     
     private func clearRecurrence() {        
@@ -329,6 +349,9 @@ class ModifyCalendarItemViewModel: ObservableObject {
                 }
             }
             if self.editMode {
+                if self.isNotesInputOpen {
+                    self.calendarItem?.notes = self.notesInput
+                }
                 if let event = self.calendarItem as? EKEvent,
                    let startComponents = mergedStartComponments,
                    let endComponents = mergedEndComponments,
@@ -354,6 +377,9 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @MainActor private func createEvent(start startDate: Date, end endDate: Date) async {
         do {
             let newEvent = try await EventKitManager.shared.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
+            if self.isNotesInputOpen {
+                newEvent.notes = self.notesInput
+            }
             self.save(event: newEvent, "Event Created")
         } catch let error as NSError {
             print("Error: failed to save event with error : \(error)")
@@ -384,6 +410,9 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @MainActor private func createReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) async {
         do {
             let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
+            if self.isNotesInputOpen {
+                newReminder.notes = self.notesInput
+            }
             self.save(reminder: newReminder, "Reminder Created")
         } catch let error as NSError {
             print("Error: failed to Create Reminder with error: \(error)")

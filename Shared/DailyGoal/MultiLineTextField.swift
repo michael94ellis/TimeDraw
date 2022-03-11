@@ -87,13 +87,6 @@ struct MultilineTextField: View {
     private var onCommit: (() -> Void)?
 
     @Binding private var text: String
-    private var internalText: Binding<String> {
-        Binding<String>(get: { self.text } ) {
-            self.text = $0
-            self.showingPlaceholder = $0.isEmpty
-        }
-    }
-
     @State private var dynamicHeight: CGFloat = 100
     @State private var showingPlaceholder = false
     var isFocused: FocusState<Bool>.Binding
@@ -105,21 +98,53 @@ struct MultilineTextField: View {
         self._text = text
         self._showingPlaceholder = State<Bool>(initialValue: self.text.isEmpty)
     }
+    
+    /// If the string has more characters than components(separated by newline) than we must perform validation through char search
+    private func performStringSearchByChar() {
+        var totalNewLines = 0
+        // Remove newline characters that are not the first or second newline character
+        var newDailyGoalWithoutLastNewlines = ""
+        self.text.forEach {
+            if $0.isNewline {
+                totalNewLines += 1
+                if totalNewLines <= 2 {
+                    newDailyGoalWithoutLastNewlines.append($0)
+                } else {
+                    return
+                }
+            } else {
+                newDailyGoalWithoutLastNewlines.append($0)
+            }
+        }
+        self.text = newDailyGoalWithoutLastNewlines
+    }
 
     var body: some View {
-        UITextViewWrapper(text: self.internalText, calculatedHeight: self.$dynamicHeight, isFocused: self.isFocused, onCommit: self.onCommit)
+        UITextViewWrapper(text: self.$text, calculatedHeight: self.$dynamicHeight, isFocused: self.isFocused, onCommit: self.onCommit)
+            .focused(self.isFocused)
             .frame(minHeight: self.dynamicHeight, maxHeight: self.dynamicHeight)
-            .background(self.placeholderView, alignment: .center)
+            .background(self.placeholderView)
+            .onChange(of: self.text, perform: { newString in
+                // Count of newlines = split by newline count - 1
+                // No need to check every character for `Character.isNewline`
+                let stringComponents = newString.split(separator: "\n")
+                // If there are more characters than components the user has added back-to-back newlines
+                if stringComponents.count < newString.count {
+                    self.performStringSearchByChar()
+                    return
+                } else if stringComponents.count - 1 >= 2 {
+                    // If theres 3 or more newline characters that is 4+ lines of text
+                    self.performStringSearchByChar()
+                }
+            })
     }
     
     @ViewBuilder
     var placeholderView: some View {
-        if showingPlaceholder, !isFocused.wrappedValue {
+        if self.text.isEmpty, self.showingPlaceholder, !self.isFocused.wrappedValue {
             Text(placeholder)
                 .frame(alignment: .center)
                 .foregroundColor(.gray)
-                .padding(.leading, 4)
-                .padding(.top, 8)
         }
     }
 }

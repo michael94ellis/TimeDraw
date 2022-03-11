@@ -7,18 +7,31 @@
 
 import SwiftUI
 
-struct SettingsView: View {
-    
-    @Binding var showSettingsPopover: Bool
+class AppSettings: ObservableObject {
     @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
     @AppStorage("isTimeDrawClockEnabled") var isTimeDrawClockEnabled: Bool = true
     @AppStorage("showItemRecurrenceType") var showItemRecurrenceType: ItemRecurrenceType = .all
     @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .scheduled
+    @AppStorage("showCalendarPicker") var showCalendarPicker: Bool = false
+    
+    // ---
+    @AppStorage("showRecurringItems") var showRecurringItems: Bool = true
+//    @AppStorage("showLocation") var showLocation: Bool = false
+    @AppStorage("showNotes") var showNotes: Bool = false
+    static let shared = AppSettings()
+    
+    private init() { }
+}
+
+struct SettingsView: View {
     
     public init(display: Binding<Bool>) {
         self._showSettingsPopover = display
     }
     
+    @ObservedObject var appSettings: AppSettings = .shared
+    
+    @Binding var showSettingsPopover: Bool
     let vineetURL = "https://www.vineetk.com/"
     let michaelURL = "https://www.michaelrobertellis.com/"
     let byaruhofURL = "https://github.com/byaruhaf"
@@ -54,35 +67,49 @@ struct SettingsView: View {
             .background(RoundedRectangle(cornerRadius: 34)
                             .fill(Color(uiColor: .systemGray6)))
             .padding(.horizontal, 20)
+        Spacer()
+        Spacer()
+        Text("Version:\(Bundle.main.releaseVersionNumber) (\(Bundle.main.buildVersionNumber))")
+            .font(.interFine)
+    }
+    
+    @ViewBuilder var toggles: some View {
+        VStack {
+            Toggle("Enable Daily Goal Text Area", isOn: self.appSettings.$isDailyGoalEnabled)
+                .padding(.horizontal)
+            Toggle("Enable Time Draw Clock", isOn: self.appSettings.$isTimeDrawClockEnabled)
+                .padding(.horizontal)
+            Toggle("Show Recurrence", isOn: self.appSettings.$showRecurringItems)
+                .padding(.horizontal)
+            Toggle("Show Notes", isOn: self.appSettings.$showNotes)
+                .padding(.horizontal)
+        }
     }
     
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
-                    Toggle("Enable Daily Goal Text Area", isOn: self.$isDailyGoalEnabled)
-                        .padding(.horizontal)
-                    Toggle("Enable Time Draw Clock", isOn: self.$isTimeDrawClockEnabled)
-                        .padding(.horizontal)
                     VStack {
-                        Text("Show Only:")
-                        Picker("", selection: self.$showCalendarItemType) {
+                        self.toggles
+                        Text("Show:")
+                        Picker("", selection: self.appSettings.$showCalendarItemType) {
                             ForEach(CalendarItemType.allCases ,id: \.self) { item in
                                 Text(item.displayName)
                             }
                         }
                         .pickerStyle(.segmented)
-                        .onChange(of: self.showCalendarItemType, perform: { _ in
+                        .onChange(of: self.appSettings.showCalendarItemType, perform: { _ in
                             EventListViewModel.shared.updateData()
                         })
-                        Picker("", selection: self.$showItemRecurrenceType) {
+                        Picker("", selection: self.appSettings.$showItemRecurrenceType) {
                             ForEach(ItemRecurrenceType.allCases ,id: \.self) { item in
                                 Text(item.displayName)
                             }
                         }
                         .pickerStyle(.segmented)
                         .padding(.top, 6)
-                        .onChange(of: self.showItemRecurrenceType, perform: { _ in
+                        .onChange(of: self.appSettings.showItemRecurrenceType, perform: { _ in
                             EventListViewModel.shared.updateData()
                         })
                     }
@@ -90,10 +117,6 @@ struct SettingsView: View {
                     Spacer()
                     Divider()
                     self.buttons
-                    Spacer()
-                    Spacer()
-                    Text("Version:\(Bundle.main.releaseVersionNumber) (\(Bundle.main.buildVersionNumber))")
-                        .font(.interFine)
                 }
                 .padding(.horizontal)
                 .padding(.top, 22)

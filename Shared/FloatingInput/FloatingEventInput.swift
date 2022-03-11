@@ -10,7 +10,7 @@ import EventKit
 import AlertToast
 
 struct FloatingEventInput: View {
-    
+    @ObservedObject var appSettings: AppSettings = .shared
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
     @FocusState var isNewEventFocused: Bool
     @State var isShowingEmojiPicker: Bool = false
@@ -36,23 +36,41 @@ struct FloatingEventInput: View {
                         .shadow(radius: 4, x: 2, y: 4))
     }
     
+    let degreesToFlip: Double = 180
     @ViewBuilder var eventOptions: some View {
-        HStack {
-            if self.viewModel.editMode {
-                self.topButton(image: "xmark.square", color: .lightGray, action: { self.viewModel.reset() })
+        ScrollView {
+            HStack {
+                AddEventDateTimePicker()
             }
-            Spacer()
-            self.topButton(image: "trash", color: .red1, action: { self.viewModel.delete() })
+            .rotationEffect(.degrees(self.degreesToFlip))
+            if self.appSettings.showRecurringItems {
+                HStack {
+                    AddRecurrenceRule()
+                }
+                .padding(.bottom, 8)
+                .rotationEffect(.degrees(self.degreesToFlip))
+            }
+            if self.appSettings.showNotes {
+                HStack {
+                    AddNotesInput()
+                        .background(RoundedRectangle(cornerRadius: 13).fill(Color(uiColor: .systemGray6))
+                                        .shadow(radius: 4, x: 2, y: 4))
+                }
+                .padding(.bottom, 8)
+                .rotationEffect(.degrees(self.degreesToFlip))
+            }
+            HStack {
+                if self.viewModel.editMode {
+                    self.topButton(image: "xmark.square", color: .lightGray, action: { self.viewModel.reset() })
+                }
+                Spacer()
+                self.topButton(image: "trash", color: .red1, action: { self.viewModel.delete() })
+            }
+            .frame(maxWidth: 600)
+            .padding(.bottom, 8)
+            .rotationEffect(.degrees(self.degreesToFlip))
         }
-        .frame(maxWidth: 600)
-        .padding(.bottom, 8)
-        HStack {
-            AddRecurrenceRule()
-        }
-        .padding(.bottom, 8)
-        HStack {
-            AddEventDateTimePicker()
-        }
+        .rotationEffect(.degrees(self.degreesToFlip))
     }
         
     let numberOfEmojiColumns: Int = 5
@@ -70,8 +88,12 @@ struct FloatingEventInput: View {
     
     var body: some View {
         VStack {
-            self.eventOptions
-                .opacity(self.isBackgroundBlurred ? 1 : 0)
+            Spacer()
+            HStack(alignment: .bottom) {
+                self.eventOptions
+                    .opacity(self.isBackgroundBlurred ? 1 : 0)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
             HStack {
                 PopoverButton(showPopover: self.$isShowingEmojiPicker,
                               popoverSize: self.emojiPopoverSize,

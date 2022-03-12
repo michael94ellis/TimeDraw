@@ -124,6 +124,8 @@ struct AddRecurrenceRule: View {
                     .padding(.bottom, 10)
                 case .weekly:
                     MultiPicker(EKWeekday.allCases, selections: self.$viewModel.frequencyWeekdayValues)
+                        .background(RoundedRectangle(cornerRadius: 8).fill(Color(uiColor: .systemGray3))
+                                        .shadow(radius: 4, x: 2, y: 4))
                     .frame(height: 40)
                     .padding(.bottom, 10)
                 case .monthly:

@@ -31,7 +31,6 @@ struct MultiPicker<T: Hashable & CustomStringConvertible>: View {
                 }
             }
         }
-        .background(RoundedRectangle(cornerRadius: 8).fill(Color.darkGray.opacity(0.2)))
     }
 }
 

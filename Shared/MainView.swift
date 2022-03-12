@@ -86,11 +86,6 @@ struct MainView: View {
                     })
                     .environmentObject(self.addEventViewModel)
                     .padding(.bottom, 16)
-                    .onTapGesture {
-                        withAnimation {
-                            self.addEventViewModel.isAddEventTextFieldFocused = false
-                        }
-                    }
             }
         }
     }

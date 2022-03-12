@@ -69,6 +69,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
         let daysInThisWeek = Calendar.current.daysWithSameWeekOfYear(as: Date())
         self.editMode = false
         self.daysOfTheWeek = daysInThisWeek.compactMap { self.weekdayFormatter.string(from: $0) }
+        self.selectedCalendar = AppSettings.shared.currentSelectedCalendar.loadEKCalendar()
     }
     
     @MainActor func open(event: EKEvent) {
@@ -392,12 +393,16 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @MainActor private func createEvent(start startDate: Date, end endDate: Date) async {
         do {
             let newEvent = try await EventKitManager.shared.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
-            newEvent.calendar = self.selectedCalendar
+            if let selectedCalendar = self.selectedCalendar {
+                newEvent.calendar = selectedCalendar
+            }
             if self.isNotesInputOpen {
                 newEvent.notes = self.notesInput
             }
             self.saveAndDisplayToast(event: newEvent, "Event Created")
         } catch let error as NSError {
+            print("Error creating event: \(error)")
+            self.handleError(error)
         }
     }
     
@@ -419,22 +424,24 @@ class ModifyCalendarItemViewModel: ObservableObject {
             try EventKitManager.shared.eventStore.save(event, span: .futureEvents)
             self.displayToast(message)
             self.reset()
-        } catch  {
+        } catch let error as NSError {
             print("Error saving event: \(error)")
-            self.displayToast("Error")
+            self.handleError(error)
         }
     }
     
     @MainActor private func createReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) async {
         do {
             let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
-            newReminder.calendar = self.selectedCalendar
+            if let selectedCalendar = self.selectedCalendar {
+                newReminder.calendar = selectedCalendar
+            }
             if self.isNotesInputOpen {
                 newReminder.notes = self.notesInput
             }
             self.saveAndDisplayToast(reminder: newReminder, "Reminder Created")
         } catch let error as NSError {
-            print("Error: failed to Create Reminder with error: \(error)")
+            print("Error: creating reminder: \(error)")
             self.handleError(error)
         }
     }
@@ -458,7 +465,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.displayToast(message)
             self.reset()
         } catch let error as NSError {
-            print("Error: failed to Save Reminder with error: \(error)")
+            print("Error: saving reminder: \(error)")
             self.handleError(error)
         }
     }
@@ -483,9 +490,14 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     @MainActor func handleError(_ error: NSError) {
         switch error.code {
-        case 1:
-            self.displayToast("Invalid Calendar Selected")
+        case 1, 6, 22, 23:
+            // 1   No Calendar Selected
+            // 6   Calendar is Read Only
+            // 22  Calendar is for Reminders Only
+            // 23  Calendar is for Events Only
+            self.displayToast("Invalid Calendar")
         case 4:
+            // 4 Start date is after End date
             self.displayToast("Invalid Dates")
         default:
             self.displayToast("Error: \(error.code)")

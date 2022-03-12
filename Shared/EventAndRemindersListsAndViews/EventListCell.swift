@@ -70,7 +70,6 @@ struct EventListCell: View {
         .listRowSeparator(.hidden)
         .gesture(DragGesture(minimumDistance: 15)
                     .onChanged({ value in
-            print(value.translation)
             withAnimation {
                 let direction = value.detectDirection()
                 if direction == .left {

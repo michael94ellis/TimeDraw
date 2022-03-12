@@ -47,7 +47,10 @@ struct FloatingEventInput: View {
             Menu(content: {
                 ForEach(self.appSettings.userSelectedCalendars.loadCalendarIds(), id: \.self) { calendarId in
                     if let calendar = EventKitManager.shared.eventStore.calendar(withIdentifier: calendarId) {
-                        Button(action: { self.selectedCalColor = calendar.cgColor }) {
+                        Button(action: {
+                            self.selectedCalColor = calendar.cgColor
+                            self.viewModel.selectedCalendar = calendar
+                        }) {
                             Text(calendar.title)
                         }
                     }
@@ -55,6 +58,14 @@ struct FloatingEventInput: View {
             }) {
                 self.topButton(image: "calendar", color: Color(cgColor: self.selectedCalColor), action: { self.showCalendarPickerMenu.toggle() })
             }
+            .onTapGesture {
+                self.viewModel.isAddEventTextFieldFocused = true
+            }
+            .onAppear(perform: {
+                if let newColor = self.viewModel.selectedCalendar?.cgColor {
+                    self.selectedCalColor = newColor
+                }
+            })
         }
     }
     
@@ -94,9 +105,20 @@ struct FloatingEventInput: View {
                 .frame(maxWidth: 600)
                 .padding(.bottom, 8)
                 .rotationEffect(.degrees(self.degreesToFlip))
-            }
+            }.background(
+                Color.gray.opacity(0.01)
+                    .onTapGesture {
+                        withAnimation {
+                            self.viewModel.isAddEventTextFieldFocused = false
+                        }
+                    })
         }
         .rotationEffect(.degrees(self.degreesToFlip))
+        .onTapGesture {
+            withAnimation {
+                self.viewModel.isAddEventTextFieldFocused = false
+            }
+        }
     }
         
     let numberOfEmojiColumns: Int = 5

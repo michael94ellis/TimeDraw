@@ -17,17 +17,21 @@ struct ReminderListCell: View {
     @State var showComplete: Bool = false
     @State var showDelete: Bool = false
     
+    func performComplete() {
+        self.eventList.performAsyncCompleteReminder(for: self.item)
+        self.floatingModifyViewModel.saveAndDisplayToast(reminder: self.item, "Completed")
+        self.floatingModifyViewModel.displayToast("Reminder Completed")
+    }
+    
+    func performDelete() {
+        self.eventList.performAsyncDelete(for: self.item)
+        self.floatingModifyViewModel.displayToast("Event Deleted")
+    }
+    
     var body: some View {
         HStack {
             if self.showComplete {
-                Button(action: {
-                    Task {
-                        item.isCompleted = true
-                        self.floatingModifyViewModel.saveAndDisplayToast(reminder: item, "Completed")
-                        self.floatingModifyViewModel.displayToast("Reminder Completed")
-                        self.eventList.updateData()
-                    }
-                }) {
+                Button(action: self.performComplete) {
                     Image(systemName: "checkmark")
                         .foregroundColor(Color.dark)
                 }
@@ -84,12 +88,7 @@ struct ReminderListCell: View {
             .padding(.horizontal)
             .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
             if self.showDelete {
-                Button(action: {
-                    Task {
-                        self.eventList.delete(item)
-                        self.floatingModifyViewModel.displayToast("Reminder Deleted")
-                    }
-                }) {
+                Button(action: self.performDelete) {
                     Image(systemName: "trash")
                 }
                 .padding(.horizontal)
@@ -98,20 +97,35 @@ struct ReminderListCell: View {
             }
         }
         .listRowSeparator(.hidden)
-        .gesture(DragGesture(minimumDistance: 50).onEnded({ value in
+        .gesture(DragGesture(minimumDistance: 15)
+                    .onChanged({ value in
+            print(value.translation)
             withAnimation {
                 let direction = value.detectDirection()
                 if direction == .left {
-                    self.showDelete = false
-                    self.showComplete = true
+                    if value.translation.width > 150 {
+                        self.performComplete()
+                        self.showDelete = false
+                        self.showComplete = false
+                    } else {
+                        self.showDelete = false
+                        self.showComplete = true
+                    }
                 } else if direction == .right {
-                    self.showComplete = false
-                    self.showDelete = true
+                    if value.translation.width < -150 {
+                        self.performDelete()
+                        self.showDelete = false
+                        self.showComplete = false
+                    } else {
+                        self.showDelete = true
+                        self.showComplete = false
+                    }
                 }
             }
         }).exclusively(before:TapGesture().onEnded({
             withAnimation {
                 self.showDelete = false
+                self.showComplete = false
                 self.floatingModifyViewModel.open(reminder: item)
             }
         })))

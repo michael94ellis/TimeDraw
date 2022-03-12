@@ -12,17 +12,17 @@ public enum SwipeDirection: String {
 }
 
 public extension DragGesture.Value {
-    func detectDirection() -> SwipeDirection {
-        if self.startLocation.x < self.location.x - 24 {
+    func detectDirection(_ tolerance: CGFloat = 24) -> SwipeDirection {
+        if self.startLocation.x < self.location.x - tolerance {
             return .left
         }
-        if self.startLocation.x > self.location.x + 24 {
+        if self.startLocation.x > self.location.x + tolerance {
             return .right
         }
-        if self.startLocation.y < self.location.y - 24 {
+        if self.startLocation.y < self.location.y - tolerance {
             return .down
         }
-        if self.startLocation.y > self.location.y + 24 {
+        if self.startLocation.y > self.location.y + tolerance {
             return .up
         }
         return .none

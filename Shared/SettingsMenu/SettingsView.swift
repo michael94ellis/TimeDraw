@@ -8,31 +8,6 @@
 import SwiftUI
 import EventKit
 
-extension Array {
-    func archiveCalendars() -> Data {
-        do {
-            let data = try NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
-            return data
-        } catch {
-            fatalError("Can't encode data: \(error)")
-        }
-    }
-}
-extension Optional where Wrapped == Data {
-    func loadCalendarIds() -> [String] {
-        do {
-            guard let data = self,
-                  let array = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
-                return []
-            }
-            return array
-        } catch {
-            fatalError("loadWStringArray - Can't encode data: \(error)")
-        }
-    }
-}
-
-
 class AppSettings: ObservableObject {
     @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
     @AppStorage("isTimeDrawClockEnabled") var isTimeDrawClockEnabled: Bool = true
@@ -41,6 +16,7 @@ class AppSettings: ObservableObject {
     @AppStorage("showListIcons") var showListIcons: Bool = true
     @AppStorage("showCalendarPickerButton") var showCalendarPickerButton: Bool = true
     @AppStorage("userSelectedCalendars") var userSelectedCalendars: Data?
+    @AppStorage("currentSelectedCalendar") var currentSelectedCalendar: Data?
     
     // ---
     @AppStorage("showRecurringItems") var showRecurringItems: Bool = true

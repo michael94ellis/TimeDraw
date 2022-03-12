@@ -52,6 +52,20 @@ class EventListViewModel: ObservableObject {
         }
     }
     
+    /// For EKCalendarItmes
+    func performAsyncDelete(for item: EKCalendarItem) {
+        Task {
+            self.delete(item)
+        }
+    }
+    
+    func performAsyncCompleteReminder(for reminder: EKReminder) {
+        Task {
+            reminder.isCompleted = true
+            self.updateData()
+        }
+    }
+    
     // MARK: - Fetch Events
     /// Fetch events for today
     /// - Parameter filterCalendarIDs: filterable Calendar IDs

@@ -37,6 +37,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var newItemStartDate: DateComponents?
     @Published var newItemEndDate: DateComponents?
     @Published var notesInput: String = ""
+    @Published var selectedCalendar: EKCalendar?
     
     // MARK: - Recurrence Rule vars
     
@@ -76,6 +77,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.isAddEventTextFieldFocused = true
         self.calendarItem = event
         self.newItemTitle = event.title
+        self.selectedCalendar = event.calendar
         if event.hasNotes {
             self.notesInput = event.notes ?? ""
             self.isNotesInputOpen = true
@@ -98,6 +100,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.editMode = true
         self.isAddEventTextFieldFocused = true
         self.calendarItem = reminder
+        self.selectedCalendar = reminder.calendar
         self.newItemTitle = reminder.title
         if reminder.hasNotes {
             self.notesInput = reminder.notes ?? ""
@@ -266,6 +269,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.clearTimeInput()
             self.clearNotesInput()
             self.clearRecurrence()
+            self.selectedCalendar = nil
         }
         EventListViewModel.shared.updateData()
     }
@@ -362,6 +366,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
                 if self.isNotesInputOpen {
                     self.calendarItem?.notes = self.notesInput
                 }
+                self.calendarItem?.calendar = self.selectedCalendar
                 if let event = self.calendarItem as? EKEvent,
                    let startComponents = mergedStartComponments,
                    let endComponents = mergedEndComponments,
@@ -387,18 +392,12 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @MainActor private func createEvent(start startDate: Date, end endDate: Date) async {
         do {
             let newEvent = try await EventKitManager.shared.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
+            newEvent.calendar = self.selectedCalendar
             if self.isNotesInputOpen {
                 newEvent.notes = self.notesInput
             }
             self.saveAndDisplayToast(event: newEvent, "Event Created")
         } catch let error as NSError {
-            print("Error: failed to save event with error : \(error)")
-            switch error.code {
-            case 4:
-                self.displayToast("Invalid Dates")
-            default:
-                self.displayToast("Error: \(error.code)")
-            }
         }
     }
     
@@ -429,18 +428,14 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @MainActor private func createReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) async {
         do {
             let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
+            newReminder.calendar = self.selectedCalendar
             if self.isNotesInputOpen {
                 newReminder.notes = self.notesInput
             }
             self.saveAndDisplayToast(reminder: newReminder, "Reminder Created")
         } catch let error as NSError {
             print("Error: failed to Create Reminder with error: \(error)")
-            switch error.code {
-            case 4:
-                self.displayToast("Invalid Dates")
-            default:
-                self.displayToast("Error: \(error.code)")
-            }
+            self.handleError(error)
         }
     }
     
@@ -464,12 +459,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.reset()
         } catch let error as NSError {
             print("Error: failed to Save Reminder with error: \(error)")
-            switch error.code {
-            case 4:
-                self.displayToast("Invalid Dates")
-            default:
-                self.displayToast("Error: \(error.code)")
-            }
+            self.handleError(error)
         }
     }
     
@@ -489,5 +479,16 @@ class ModifyCalendarItemViewModel: ObservableObject {
                   return ["No Recent Emojis"]
               }
         return recents
+    }
+    
+    @MainActor func handleError(_ error: NSError) {
+        switch error.code {
+        case 1:
+            self.displayToast("Invalid Calendar Selected")
+        case 4:
+            self.displayToast("Invalid Dates")
+        default:
+            self.displayToast("Error: \(error.code)")
+        }
     }
 }

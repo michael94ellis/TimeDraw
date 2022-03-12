@@ -18,6 +18,7 @@ struct FloatingEventInput: View {
     private let barHeight: CGFloat = 44
     @State var emojiSelection: String = ""
     @State var showCalendarPickerMenu: Bool = false
+    @State var selectedCalColor: CGColor = EventKitManager.shared.defaultEventCalendar?.cgColor ?? .init(red: 233, green: 0, blue: 0, alpha: 0)
     
     @ViewBuilder func topButton(image: String, color: Color, action: @escaping () -> ()) -> some View {
         Button(action: {
@@ -40,7 +41,6 @@ struct FloatingEventInput: View {
         .contentShape(Rectangle())
     }
     
-    @State var selectedCalColor: CGColor = EventKitManager.shared.defaultEventCalendar?.cgColor ?? .init(red: 233, green: 0, blue: 0, alpha: 0)
     
     @ViewBuilder var selectCalendarButton: some View {
         if self.appSettings.showCalendarPickerButton {
@@ -87,23 +87,13 @@ struct FloatingEventInput: View {
                         Spacer()
                     } else {
                         self.selectCalendarButton
-                        // Dimiss tap area
-                        Rectangle().fill(Color.gray.opacity(0.01)).onTapGesture {
-                            self.viewModel.isAddEventTextFieldFocused.toggle()
-                        }
+                        Spacer()
                     }
                     self.topButton(image: "trash", color: .red1, action: { self.viewModel.delete() })
                 }
                 .frame(maxWidth: 600)
                 .padding(.bottom, 8)
                 .rotationEffect(.degrees(self.degreesToFlip))
-                Rectangle()
-                    .fill(Color.gray.opacity(0.01))
-                    .frame(height: UIScreen.main.bounds.height * 0.15)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .onTapGesture {
-                    self.viewModel.isAddEventTextFieldFocused.toggle()
-                }
             }
         }
         .rotationEffect(.degrees(self.degreesToFlip))

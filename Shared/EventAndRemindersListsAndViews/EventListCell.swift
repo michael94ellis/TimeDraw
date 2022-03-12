@@ -57,10 +57,8 @@ struct EventListCell: View {
             .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
             if self.showDelete {
                 Button(action: {
-                    Task {
-                        self.eventList.delete(item)
-                        self.floatingModifyViewModel.displayToast("Event Deleted")
-                    }
+                    self.eventList.performAsyncDelete(for: self.item)
+                    self.floatingModifyViewModel.displayToast("Event Deleted")
                 }) {
                     Image(systemName: "trash")
                 }
@@ -70,14 +68,20 @@ struct EventListCell: View {
             }
         }
         .listRowSeparator(.hidden)
-        .gesture(DragGesture(minimumDistance: 50).onEnded({ value in
+        .gesture(DragGesture(minimumDistance: 15)
+                    .onChanged({ value in
+            print(value.translation)
             withAnimation {
                 let direction = value.detectDirection()
                 if direction == .left {
                     self.showDelete = false
                 } else if direction == .right {
-                    self.showDelete = true
-                } else {
+                    if value.translation.width < -150 {
+                        self.eventList.performAsyncDelete(for: self.item)
+                        self.floatingModifyViewModel.displayToast("Event Deleted")
+                    } else {
+                        self.showDelete = true
+                    }
                 }
             }
         }).exclusively(before:TapGesture().onEnded({

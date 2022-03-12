@@ -11,6 +11,7 @@ import SwiftUI
 struct MainHeader: View {
     
     @State private var showSettingsPopover = false
+    @State private var showCalendarSelectionPopover = false
     /// True means only show 1 week
     @AppStorage("compactHeader") private var showCompactCalendar = true
     @ObservedObject private var eventList: EventListViewModel = .shared
@@ -105,11 +106,15 @@ struct MainHeader: View {
             Spacer()
             Menu(content: {
                 Button("Settings", action: { self.showSettingsPopover.toggle() })
+                Button("Select Calendars", action: { self.showCalendarSelectionPopover.toggle() })
             }, label: { Image(systemName: "ellipsis")
                 .frame(width: 40, height: 30) })
                 .fullScreenCover(isPresented: self.$showSettingsPopover, content: {
                     SettingsView(display: $showSettingsPopover)
                 })
+                .sheet(isPresented: self.$showCalendarSelectionPopover) {
+                    CalendarSelection(showingCalendarSelection: self.$showCalendarSelectionPopover)
+                }
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 10)

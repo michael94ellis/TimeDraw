@@ -104,8 +104,6 @@
 		2F8AB31127A229DA00654FEF /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB30F27A229DA00654FEF /* Utils.swift */; };
 		2FB41CA627D975A50067F250 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FB41CA527D975A50067F250 /* GoogleService-Info.plist */; };
 		2FB41CA727D975A50067F250 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FB41CA527D975A50067F250 /* GoogleService-Info.plist */; };
-		2FB41CAA27D97C720067F250 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2FB41CA927D97C720067F250 /* FirebaseAnalytics */; };
-		2FB41CAC27D97C720067F250 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2FB41CAB27D97C720067F250 /* FirebaseCrashlytics */; };
 		2FB41CAE27D97D710067F250 /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CAD27D97D710067F250 /* ClockView.swift */; };
 		2FB41CAF27D97D710067F250 /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CAD27D97D710067F250 /* ClockView.swift */; };
 		2FB41CB127DA5DBE0067F250 /* ReminderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CB027DA5DBE0067F250 /* ReminderListCell.swift */; };
@@ -114,6 +112,11 @@
 		2FB41CB527DA5E220067F250 /* EventListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CB327DA5E220067F250 /* EventListCell.swift */; };
 		2FB41CB727DACB8E0067F250 /* AddNotesInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CB627DACB8E0067F250 /* AddNotesInput.swift */; };
 		2FB41CB827DACB8E0067F250 /* AddNotesInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CB627DACB8E0067F250 /* AddNotesInput.swift */; };
+		2FB41CC427DCF5680067F250 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2FB41CC327DCF5680067F250 /* FirebaseAnalytics */; };
+		2FB41CC627DCF5680067F250 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2FB41CC527DCF5680067F250 /* FirebaseCrashlytics */; };
+		2FB41CC827DCF5680067F250 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 2FB41CC727DCF5680067F250 /* FirebaseFirestore */; };
+		2FB41CCA27DCFA8A0067F250 /* CalendarSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CC927DCFA8A0067F250 /* CalendarSelection.swift */; };
+		2FB41CCB27DCFA8A0067F250 /* CalendarSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CC927DCFA8A0067F250 /* CalendarSelection.swift */; };
 		2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
@@ -199,6 +202,7 @@
 		2FB41CB027DA5DBE0067F250 /* ReminderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListCell.swift; sourceTree = "<group>"; };
 		2FB41CB327DA5E220067F250 /* EventListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListCell.swift; sourceTree = "<group>"; };
 		2FB41CB627DACB8E0067F250 /* AddNotesInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNotesInput.swift; sourceTree = "<group>"; };
+		2FB41CC927DCFA8A0067F250 /* CalendarSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CalendarSelection.swift; path = ../../../../CalendarSelection.swift; sourceTree = "<group>"; };
 		2FC6C7B42786434600D75568 /* MultiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTextField.swift; sourceTree = "<group>"; };
 		2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -208,8 +212,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FB41CAC27D97C720067F250 /* FirebaseCrashlytics in Frameworks */,
-				2FB41CAA27D97C720067F250 /* FirebaseAnalytics in Frameworks */,
+				2FB41CC627DCF5680067F250 /* FirebaseCrashlytics in Frameworks */,
+				2FB41CC827DCF5680067F250 /* FirebaseFirestore in Frameworks */,
+				2FB41CC427DCF5680067F250 /* FirebaseAnalytics in Frameworks */,
 				2F1F8FA827D3D11000648234 /* AlertToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,6 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				2F6505082787F87A00AF90F7 /* SettingsView.swift */,
+				2FB41CC927DCFA8A0067F250 /* CalendarSelection.swift */,
 				2F42C5962784A87100F0BEB2 /* PopoverLink.swift */,
 			);
 			path = SettingsMenu;
@@ -437,8 +443,9 @@
 			name = "TimeDraw (iOS)";
 			packageProductDependencies = (
 				2F1F8FA727D3D11000648234 /* AlertToast */,
-				2FB41CA927D97C720067F250 /* FirebaseAnalytics */,
-				2FB41CAB27D97C720067F250 /* FirebaseCrashlytics */,
+				2FB41CC327DCF5680067F250 /* FirebaseAnalytics */,
+				2FB41CC527DCF5680067F250 /* FirebaseCrashlytics */,
+				2FB41CC727DCF5680067F250 /* FirebaseFirestore */,
 			);
 			productName = "TimeDraw (iOS)";
 			productReference = 2F39B84B27823CF600FE72C3 /* TimeDraw.app */;
@@ -534,7 +541,7 @@
 			mainGroup = 2F39B83B27823CF600FE72C3;
 			packageReferences = (
 				2F1F8FA627D3D11000648234 /* XCRemoteSwiftPackageReference "AlertToast" */,
-				2FB41CA827D97C720067F250 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				2FB41CC227DCF5680067F250 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 2F39B84C27823CF600FE72C3 /* Products */;
 			projectDirPath = "";
@@ -640,6 +647,7 @@
 				2F81230F2798957C00458B1A /* DateTimePickerInputView.swift in Sources */,
 				2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2FB41CB127DA5DBE0067F250 /* ReminderListCell.swift in Sources */,
+				2FB41CCA27DCFA8A0067F250 /* CalendarSelection.swift in Sources */,
 				2F39B87027823CF700FE72C3 /* MainView.swift in Sources */,
 				2F24457F27D797C9005BF37D /* EKWeekday-Extension.swift in Sources */,
 				2F24458B27D8BE37005BF37D /* Calendar-Extension.swift in Sources */,
@@ -687,6 +695,7 @@
 				2F8123102798957C00458B1A /* DateTimePickerInputView.swift in Sources */,
 				2F42C5A72784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2FB41CB227DA5DBE0067F250 /* ReminderListCell.swift in Sources */,
+				2FB41CCB27DCFA8A0067F250 /* CalendarSelection.swift in Sources */,
 				2F39B87127823CF700FE72C3 /* MainView.swift in Sources */,
 				2F24458027D797C9005BF37D /* EKWeekday-Extension.swift in Sources */,
 				2F24458C27D8BE37005BF37D /* Calendar-Extension.swift in Sources */,
@@ -1114,12 +1123,12 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		2FB41CA827D97C720067F250 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		2FB41CC227DCF5680067F250 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 8.9.0;
+				branch = master;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1130,15 +1139,20 @@
 			package = 2F1F8FA627D3D11000648234 /* XCRemoteSwiftPackageReference "AlertToast" */;
 			productName = AlertToast;
 		};
-		2FB41CA927D97C720067F250 /* FirebaseAnalytics */ = {
+		2FB41CC327DCF5680067F250 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2FB41CA827D97C720067F250 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 2FB41CC227DCF5680067F250 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
 		};
-		2FB41CAB27D97C720067F250 /* FirebaseCrashlytics */ = {
+		2FB41CC527DCF5680067F250 /* FirebaseCrashlytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2FB41CA827D97C720067F250 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = 2FB41CC227DCF5680067F250 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
+		};
+		2FB41CC727DCF5680067F250 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2FB41CC227DCF5680067F250 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 

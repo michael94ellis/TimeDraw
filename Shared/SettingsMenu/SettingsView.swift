@@ -70,7 +70,6 @@ struct SettingsView: View {
     @ObservedObject var appSettings: AppSettings = .shared
     
     @Binding var showSettingsPopover: Bool
-    @State var showingCalendarSelection: Bool = false
     let vineetURL = "https://www.vineetk.com/"
     let michaelURL = "https://www.michaelrobertellis.com/"
     let byaruhofURL = "https://github.com/byaruhaf"
@@ -98,7 +97,7 @@ struct SettingsView: View {
             Image("smile.face")
                 .resizable()
                 .frame(width: 22, height: 22)
-            Text("Not Finished")
+            Text("Send Feedback!")
                 .frame(height: 48)
             Spacer()
         }).buttonStyle(.plain)
@@ -129,12 +128,6 @@ struct SettingsView: View {
                 .onChange(of: self.appSettings.showListIcons, perform: { newValue in
                     EventListViewModel.shared.updateData()
                 })
-            MultiPicker(self.appSettings.userSelectedCalendars.loadCalendarIds(),
-                        selections: Binding<[String]>(get: {
-                self.appSettings.userSelectedCalendars.loadCalendarIds()
-            }, set: { newArray in
-                self.appSettings.userSelectedCalendars = newArray.archiveCalendars()
-            }))
         }
     }
     
@@ -143,52 +136,8 @@ struct SettingsView: View {
             ScrollView {
                 VStack {
                     VStack {
-                        Button(action: {
-                            self.showingCalendarSelection.toggle()
-                            self.appSettings.fetchAllCalendars()
-                        }) {
-                            Spacer()
-                            Text("Select Calendars")
-                            Spacer()
-                        }
-                        .padding()
-                        .background(RoundedRectangle(cornerRadius: 34)
-                                        .fill(Color(uiColor: .systemGray6)))
-                        .padding(.horizontal, 20)
-                        .sheet(isPresented: self.$showingCalendarSelection) {
-                            let selectedIds = AppSettings.shared.userSelectedCalendars.loadCalendarIds()
-                            HStack {
-                                Spacer()
-                                Text("Select Your Calendars")
-                                    .font(Font.interTitle)
-                                Spacer()
-                            }
-                            .padding(.top)
-                            List {
-                                ForEach(self.appSettings.allCalendars, id: \.self) { calendar in
-                                    Button(action: {
-                                        var newIds = self.appSettings.userSelectedCalendars.loadCalendarIds()
-                                        if newIds.contains(where: { $0 == calendar.calendarIdentifier }) {
-                                            newIds.removeAll(where: { $0 == calendar.calendarIdentifier })
-                                            self.appSettings.userSelectedCalendars = newIds.archiveCalendars()
-                                        } else {
-                                            newIds.append(calendar.calendarIdentifier)
-                                            self.appSettings.userSelectedCalendars = newIds.archiveCalendars()
-                                        }
-                                    }) {
-                                        HStack {
-                                            Circle().fill(Color(cgColor: calendar.cgColor)).frame(width: 20, height: 20)
-                                            Text(calendar.title)
-                                            Spacer()
-                                            if selectedIds.contains(calendar.calendarIdentifier) {
-                                                Image(systemName: "checkmark")
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
                         self.toggles
+                        CalendarSelectionButton()
                         Text("Show:")
                         Picker("", selection: self.appSettings.$showCalendarItemType) {
                             ForEach(CalendarItemType.allCases ,id: \.self) { item in

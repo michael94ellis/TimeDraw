@@ -25,47 +25,56 @@ struct EventListCell: View {
     var body: some View {
         HStack {
             HStack {
-                if AppSettings.shared.showListIcons {
-                    Image(systemName: "calendar")
+                HStack {
+                    if AppSettings.shared.showListIcons {
+                        Image(systemName: "calendar")
+                            .foregroundColor(Color(uiColor: .darkGray))
+                    }
+                    Circle().fill(Color(cgColor: item.calendar.cgColor))
+                        .frame(width: 8, height: 8)
+                    Text(item.title.isEmpty ? "Untitled Event": item.title)
+                        .lineLimit(2)
                         .foregroundColor(Color(uiColor: .darkGray))
+                    Spacer()
+                    if item.hasRecurrenceRules {
+                        Image("repeat")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .font(.subheadline)
+                            .foregroundColor(Color(uiColor: .darkGray))
+                    }
+                    if item.isAllDay {
+                        Text("All Day")
+                            .font(.caption)
+                            .foregroundColor(Color(uiColor: .darkGray))
+                    } else {
+                        Text("\(self.timeOnly.string(from: item.startDate)) - \(self.timeOnly.string(from: item.endDate))")
+                            .font(.callout)
+                            .foregroundColor(Color(uiColor: .darkGray))
+                    }
                 }
-                Circle().fill(Color(cgColor: item.calendar.cgColor))
-                    .frame(width: 8, height: 8)
-                Text(item.title.isEmpty ? "Untitled Event": item.title)
-                    .lineLimit(2)
-                    .foregroundColor(Color(uiColor: .darkGray))
-                Spacer()
-                if item.hasRecurrenceRules {
-                    Image("repeat")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .font(.subheadline)
-                        .foregroundColor(Color(uiColor: .darkGray))
-                }
-                if item.isAllDay {
-                    Text("All Day")
-                        .font(.caption)
-                        .foregroundColor(Color(uiColor: .darkGray))
-                } else {
-                    Text("\(self.timeOnly.string(from: item.startDate)) - \(self.timeOnly.string(from: item.endDate))")
-                        .font(.callout)
-                        .foregroundColor(Color(uiColor: .darkGray))
-                }
-            }
-            .padding(.vertical, 8)
-            .padding(.horizontal)
-            .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
-            if self.showDelete {
-                Button(action: {
-                    self.eventList.performAsyncDelete(for: self.item)
-                    self.floatingModifyViewModel.displayToast("Event Deleted")
-                }) {
-                    Image(systemName: "trash")
-                }
-                .padding(.horizontal)
                 .padding(.vertical, 8)
-                .background(RoundedRectangle(cornerRadius: 12).fill(Color.red1))
+                .padding(.horizontal)
+                if self.showDelete {
+                    Button(action: {
+                        self.eventList.performAsyncDelete(for: self.item)
+                        self.floatingModifyViewModel.displayToast("Event Deleted")
+                    }) {
+                        VStack {
+                            Spacer()
+                            Image(systemName: "trash")
+                                .padding(.horizontal)
+                                .padding(.vertical, 8)
+                            Spacer()
+                        }
+                        .background(Color.red1)
+                    }
+                    .transition(.move(edge: .trailing))
+                }
             }
+            .frame(height: 60)
+            .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
         }
         .listRowSeparator(.hidden)
         .gesture(DragGesture(minimumDistance: 15)

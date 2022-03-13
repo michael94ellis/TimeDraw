@@ -13,7 +13,7 @@ struct AddEventDateTimePicker: View {
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
     private let barHeight: CGFloat = 96
     
-    func setStartTime() {
+    func setSuggestedTime() {
         let displayDate = EventListViewModel.shared.displayDate
         if self.viewModel.newItemStartTime == nil {
             self.viewModel.newItemStartTime = displayDate.get(.hour, .minute, .second)
@@ -21,15 +21,14 @@ struct AddEventDateTimePicker: View {
         if self.viewModel.newItemStartDate == nil {
             self.viewModel.newItemStartDate = displayDate.get(.year, .month, .day)
         }
-    }
-    
-    func setEndTime() {
-        let displayDate = EventListViewModel.shared.displayDate
         if self.viewModel.newItemEndTime == nil {
             self.viewModel.newItemEndTime = Calendar.current.date(byAdding: .hour, value: 1, to: displayDate)?.get(.hour, .minute, .second)
         }
         if self.viewModel.newItemEndDate == nil {
             self.viewModel.newItemEndDate = displayDate.get(.year, .month, .day)
+        }
+        if self.viewModel.selectedCalendar == nil {
+            self.viewModel.selectedCalendar = EventKitManager.shared.eventStore.defaultCalendarForNewEvents
         }
     }
     
@@ -81,10 +80,7 @@ struct AddEventDateTimePicker: View {
             .background(RoundedRectangle(cornerRadius: 13)
                             .fill(Color(uiColor: .systemGray6))
                             .shadow(radius: 4, x: 2, y: 4))
-            .onAppear(perform: {
-                self.setStartTime()
-                self.setEndTime()
-            })
+            .onAppear(perform: self.setSuggestedTime)
         } else {
             Button(action: self.viewModel.addTimeToEvent) {
                 Text("Add Time")

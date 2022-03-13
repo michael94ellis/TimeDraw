@@ -18,7 +18,7 @@ struct FloatingEventInput: View {
     private let barHeight: CGFloat = 44
     @State var emojiSelection: String = ""
     @State var showCalendarPickerMenu: Bool = false
-    @State var selectedCalColor: CGColor = EventKitManager.shared.defaultEventCalendar?.cgColor ?? .init(red: 233, green: 0, blue: 0, alpha: 0)
+    let defaultCalendarColor: CGColor = EventKitManager.shared.defaultReminderCalendar?.cgColor ?? .init(red: 55, green: 91, blue: 190, alpha: 1)
     
     @ViewBuilder func topButton(image: String, color: Color, action: @escaping () -> ()) -> some View {
         Button(action: {
@@ -47,7 +47,6 @@ struct FloatingEventInput: View {
                 ForEach(self.appSettings.userSelectedCalendars.loadCalendarIds(), id: \.self) { calendarId in
                     if let calendar = EventKitManager.shared.eventStore.calendar(withIdentifier: calendarId) {
                         Button(action: {
-                            self.selectedCalColor = calendar.cgColor
                             self.viewModel.selectedCalendar = calendar
                         }) {
                             Text(calendar.title)
@@ -55,16 +54,11 @@ struct FloatingEventInput: View {
                     }
                 }
             }) {
-                self.topButton(image: "calendar", color: Color(cgColor: self.selectedCalColor), action: { self.showCalendarPickerMenu.toggle() })
+                self.topButton(image: "calendar", color: Color(cgColor: self.viewModel.selectedCalendar?.cgColor ?? .init(gray: 256, alpha: 1)), action: { self.showCalendarPickerMenu.toggle() })
             }
             .onTapGesture {
                 self.viewModel.isAddEventTextFieldFocused = true
             }
-            .onAppear(perform: {
-                if let newColor = self.viewModel.selectedCalendar?.cgColor {
-                    self.selectedCalColor = newColor
-                }
-            })
         }
     }
     
@@ -117,7 +111,7 @@ struct FloatingEventInput: View {
             withAnimation {
                 self.viewModel.isAddEventTextFieldFocused = false
             }
-        }), including: .subviews)
+        }))
     }
         
     let numberOfEmojiColumns: Int = 5

@@ -65,23 +65,30 @@ struct TimeDrawClock: View {
     
     @ViewBuilder var timeCircles: some View {
         ForEach(self.eventList.events ,id: \.self) { event in
-            PartialCircleBorder(start: event.startDate, end: event.endDate, radius: self.width)
-                .foregroundColor(Color(cgColor: event.calendar.cgColor))
+            if event.isAllDay {
+                PartialCircleBorder(start: 0, end: 360, radius: self.width * 1.1, width: 2)
+                    .foregroundColor(Color(cgColor: event.calendar.cgColor))
+            } else {
+                PartialCircleBorder(start: event.startDate, end: event.endDate, radius: self.width, width: 16)
+                    .foregroundColor(Color(cgColor: event.calendar.cgColor))
+            }
         }
         ForEach(self.eventList.reminders ,id: \.self) { reminder in
-            PartialCircleBorder(startComponents: reminder.startDateComponents, endComponents: reminder.dueDateComponents, radius: self.width / 2)
+            PartialCircleBorder(startComponents: reminder.startDateComponents, endComponents: reminder.dueDateComponents, radius: self.width / 2, width: 16)
                 .foregroundColor(Color(reminder.calendar.cgColor))
         }
     }
     
     var body: some View {
         VStack {
-            ZStack {// Dial
+            ZStack {
+                // Dial
                 Circle()
                     .fill(Color(uiColor: .systemBackground))
-                // Seconds And Min dots...
+                // Clock Face Markings
                 ForEach(0..<60, id: \.self) { i in
                     if i % 5 == 0 {
+                        // Clock Nums
                         let num = (i / 5) + 6
                         Text("\(num > 12 ? num - 12 : num)")
                             .font(.interClock)
@@ -89,6 +96,7 @@ struct TimeDrawClock: View {
                             .offset(y: self.width)
                             .rotationEffect(Angle(degrees: Double(i) * 6))
                     } else {
+                        // Clock Tick Marks for Minutes
                         Ellipse()
                             .fill(Color.primary)
                             .frame(width: 1, height: 5)
@@ -96,7 +104,9 @@ struct TimeDrawClock: View {
                             .rotationEffect(.init(degrees: Double(i) * 6))
                     }
                 }
+                // Moving Clock Parts
                 self.clockHands
+                // Event Lines
                 self.timeCircles
             }
             .frame(width: self.width, height: self.width)
@@ -134,6 +144,7 @@ struct PartialCircleBorder: Shape {
     let startComponents: DateComponents?
     let endComponents: DateComponents?
     let radius: Double
+    let width: Double
     var startDegrees: Double = 0.0
     var endDegrees: Double = 0.0
     let type: EventType
@@ -152,12 +163,25 @@ struct PartialCircleBorder: Shape {
         }
     }
     
-    init(start: Date, end: Date, radius: Double) {
+    init(start: Double, end: Double, radius: Double, width: Double, type: EventType = .evening) {
+        self.startDegrees = start
+        self.endDegrees = end
+        self.radius = radius
+        self.width = width
+        self.type = type
+        self.start = nil
+        self.end = nil
+        self.startComponents = nil
+        self.endComponents = nil
+    }
+    
+    init(start: Date, end: Date, radius: Double, width: Double) {
         self.start = start
         self.end = end
         self.startComponents = nil
         self.endComponents = nil
         self.radius = radius
+        self.width = width
         if start.get(.hour) <= 12 {
             if end.get(.hour) >= 12 {
                 self.type = .both
@@ -170,12 +194,13 @@ struct PartialCircleBorder: Shape {
         self.startDegrees = self.getAngle(for: start)
         self.endDegrees = self.getAngle(for: end)
     }
-    init(startComponents: DateComponents?, endComponents: DateComponents?, radius: Double) {
+    init(startComponents: DateComponents?, endComponents: DateComponents?, radius: Double, width: Double) {
         self.startComponents = startComponents ?? DateComponents()
         self.endComponents = endComponents ?? DateComponents()
         self.start = nil
         self.end = nil
         self.radius = radius
+        self.width = width
         if startComponents?.hour ?? 0 <= 12 {
             if endComponents?.hour ?? 0 >= 12 {
                 self.type = .both
@@ -205,7 +230,7 @@ struct PartialCircleBorder: Shape {
             }
             p.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: self.radius * 1.2, startAngle: .degrees(-90), endAngle: .degrees(self.endDegrees - 90), clockwise: false)
         }
-
-        return p.strokedPath(.init(lineWidth: 16, lineCap: .round, lineJoin: .round))
+        let lineDashes: [CGFloat] = (self.start == nil && self.startComponents == nil) ? [10, 5] : []
+        return p.strokedPath(.init(lineWidth: self.width, lineCap: .round, lineJoin: .round, dash: lineDashes))
     }
 }

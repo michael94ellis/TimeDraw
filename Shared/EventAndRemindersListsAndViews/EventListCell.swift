@@ -31,21 +31,20 @@ struct EventListCell: View {
                             .foregroundColor(Color(uiColor: .darkGray))
                     }
                     Circle().fill(Color(cgColor: item.calendar.cgColor))
-                        .frame(width: 8, height: 8)
+                        .frame(width: 12, height: 12)
                     Text(item.title.isEmpty ? "Untitled Event": item.title)
                         .lineLimit(2)
                         .foregroundColor(Color(uiColor: .darkGray))
                     Spacer()
-                    if item.hasRecurrenceRules {
+                    if item.isAllDay {
+                        Text("All Day")
+                            .font(.interSemiBold)
+                            .foregroundColor(Color(uiColor: .darkGray))
+                    } else if item.hasRecurrenceRules {
                         Image("repeat")
                             .resizable()
                             .frame(width: 20, height: 20)
                             .font(.subheadline)
-                            .foregroundColor(Color(uiColor: .darkGray))
-                    }
-                    if item.isAllDay {
-                        Text("All Day")
-                            .font(.caption)
                             .foregroundColor(Color(uiColor: .darkGray))
                     } else {
                         Text("\(self.timeOnly.string(from: item.startDate)) - \(self.timeOnly.string(from: item.endDate))")

@@ -62,7 +62,6 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var isDateTimePickerOpen: Bool = false
     @Published var isNotesInputOpen: Bool = false
     @Published var isRecurrencePickerOpen: Bool = false
-    public var isFocused: Bool { self.isDateTimePickerOpen || self.isRecurrencePickerOpen }
     
     init() {
         self.frequencyMonthDate = Date().get(.month) - 1
@@ -334,6 +333,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
             return
         }
         Task {
+            // ToDo extract to function, clean up this date extraction
             let startDateComponents = self.newItemStartDate
             let startTimeComponents = self.newItemStartTime
             let endTimeComponents = self.newItemEndTime
@@ -363,8 +363,10 @@ class ModifyCalendarItemViewModel: ObservableObject {
                     mergedEndComponments?.second = endTimeComponents?.second
                 }
             }
+            
+            // Save For Existing Calendar Items(Events/Reminders)
             if self.editMode {
-                if self.isNotesInputOpen {
+                if self.isNotesInputOpen || self.calendarItem?.hasNotes ?? false {
                     self.calendarItem?.notes = self.notesInput
                 }
                 self.calendarItem?.calendar = self.selectedCalendar
@@ -377,6 +379,8 @@ class ModifyCalendarItemViewModel: ObservableObject {
                 } else if let reminder = self.calendarItem as? EKReminder {
                     self.saveNewDates(for: reminder, newStart: mergedStartComponments, newEnd: mergedEndComponments)
                 }
+                
+            // Create New Events or Reminders
             } else if let startComponents = mergedStartComponments,
                       let endComponents = mergedEndComponments,
                       let startDate = Calendar.current.date(from: startComponents),
@@ -490,15 +494,16 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     @MainActor func handleError(_ error: NSError) {
         switch error.code {
-        case 1, 6, 22, 23:
-            // 1   No Calendar Selected
-            // 6   Calendar is Read Only
-            // 22  Calendar is for Reminders Only
-            // 23  Calendar is for Events Only
-            self.displayToast("Invalid Calendar")
-        case 4:
-            // 4 Start date is after End date
-            self.displayToast("Invalid Dates")
+        case 1: // 1   No Calendar Selected
+            self.displayToast("Please Select A Calendar")
+        case 6: // 6   Calendar is Read Only
+            self.displayToast("Calendar is Read Only")
+        case 22: // 22  Calendar is for Reminders Only
+            self.displayToast("Please Select Events Calendar")
+        case 23: // 23  Calendar is for Events Only
+            self.displayToast("Please Select Reminders Calendar")
+        case 4: // 4 Start date is after End date
+            self.displayToast("Invalid Start/End Dates")
         default:
             self.displayToast("Error: \(error.code)")
         }

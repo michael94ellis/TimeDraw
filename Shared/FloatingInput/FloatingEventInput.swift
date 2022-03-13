@@ -41,7 +41,6 @@ struct FloatingEventInput: View {
         .contentShape(Rectangle())
     }
     
-    
     @ViewBuilder var selectCalendarButton: some View {
         if self.appSettings.showCalendarPickerButton {
             Menu(content: {
@@ -84,7 +83,7 @@ struct FloatingEventInput: View {
                     .padding(.bottom, 8)
                     .rotationEffect(.degrees(self.degreesToFlip))
                 }
-                if self.appSettings.showNotes {
+                if self.appSettings.showNotes || self.viewModel.calendarItem?.hasNotes ?? false {
                     HStack {
                         AddNotesInput()
                     }
@@ -107,18 +106,18 @@ struct FloatingEventInput: View {
                 .rotationEffect(.degrees(self.degreesToFlip))
             }.background(
                 Color.gray.opacity(0.01)
-                    .onTapGesture {
+                    .gesture(TapGesture().onEnded({
                         withAnimation {
                             self.viewModel.isAddEventTextFieldFocused = false
                         }
-                    })
+                    })))
         }
         .rotationEffect(.degrees(self.degreesToFlip))
-        .onTapGesture {
+        .gesture(TapGesture().onEnded({
             withAnimation {
                 self.viewModel.isAddEventTextFieldFocused = false
             }
-        }
+        }), including: .subviews)
     }
         
     let numberOfEmojiColumns: Int = 5

@@ -81,9 +81,6 @@ struct MainView: View {
             VStack {
                 Spacer()
                 FloatingEventInput(isBackgroundBlurred: self.$addEventViewModel.isAddEventTextFieldFocused)
-                    .onChange(of: self.addEventViewModel.isAddEventTextFieldFocused, perform: { isFocused in
-                        if isFocused { self.addEventViewModel.isAddEventTextFieldFocused = true }
-                    })
                     .environmentObject(self.addEventViewModel)
                     .padding(.bottom, 16)
             }

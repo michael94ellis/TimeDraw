@@ -280,6 +280,10 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.newItemEndTime = nil
         self.newItemStartDate = nil
         self.newItemEndDate = nil
+        if let calendar = self.selectedCalendar,
+            calendar.allowedEntityTypes != .reminder {
+            self.selectedCalendar = nil
+        }
     }
     
     private func clearNotesInput() {

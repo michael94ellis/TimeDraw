@@ -32,7 +32,7 @@ struct AddNotesInput: View {
                 self.header
                 Divider().padding(.horizontal)
                 HStack {
-                    MultilineTextField("Add Notes Here", text: self.$viewModel.notesInput, focus: self.$notesInputFocus)
+                    MultilineTextField("Tap To Add Notes", text: self.$viewModel.notesInput, focus: self.$notesInputFocus)
                         .frame(maxWidth: 600)
                         .background(RoundedRectangle(cornerRadius: 8)
                                         .fill(Color(uiColor: .systemGray5))

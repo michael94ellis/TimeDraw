@@ -54,7 +54,7 @@ struct FloatingEventInput: View {
                     }
                 }
             }) {
-                self.topButton(image: "calendar", color: Color(cgColor: self.viewModel.selectedCalendar?.cgColor ?? .init(gray: 256, alpha: 1)), action: { self.showCalendarPickerMenu.toggle() })
+                self.topButton(image: "calendar", color: Color(cgColor: self.viewModel.selectedCalendar?.cgColor ?? self.defaultCalendarColor), action: { self.showCalendarPickerMenu.toggle() })
             }
             .onTapGesture {
                 self.viewModel.isAddEventTextFieldFocused = true
@@ -70,12 +70,14 @@ struct FloatingEventInput: View {
                     AddEventDateTimePicker()
                 }
                 .rotationEffect(.degrees(self.degreesToFlip))
-                if self.appSettings.showRecurringItems {
+                .onTapGesture {}
+                if self.appSettings.showRecurringItems || self.viewModel.calendarItem?.hasRecurrenceRules ?? false {
                     HStack {
                         AddRecurrenceRule()
                     }
                     .padding(.bottom, 8)
                     .rotationEffect(.degrees(self.degreesToFlip))
+                    .onTapGesture {}
                 }
                 if self.appSettings.showNotes || self.viewModel.calendarItem?.hasNotes ?? false {
                     HStack {
@@ -83,6 +85,7 @@ struct FloatingEventInput: View {
                     }
                     .padding(.bottom, 8)
                     .rotationEffect(.degrees(self.degreesToFlip))
+                    .onTapGesture {}
                 }
                 HStack {
                     if self.viewModel.editMode {

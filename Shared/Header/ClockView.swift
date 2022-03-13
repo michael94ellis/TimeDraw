@@ -17,7 +17,7 @@ struct TimeDrawClock: View {
 
     @State var currentTime = Time(sec: 0, min: 0, hour: 0)
     @State var timer = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
-    var width: CGFloat = 100
+    var width: CGFloat = 120
     @ObservedObject var eventList: EventListViewModel = .shared
     
     func setCurrentTime()  {
@@ -27,42 +27,7 @@ struct TimeDrawClock: View {
         let hour = calender.component(.hour, from: Date())
         self.currentTime = Time(sec: sec, min: min, hour: hour)
     }
-    
-    @ViewBuilder var clockHands: some View {
-        // DARKGRAY
-        // Hours
-        RoundedRectangle(cornerRadius: 24)
-            .fill(Color.darkGray)
-            .frame(width: 6, height: self.width * 0.5)
-            .offset(y: -(self.width * 0.5) / 2)
-            .rotationEffect(.init(degrees: Double(currentTime.hour + currentTime.min / 60) * 30))
-        Circle()
-            .fill(Color.darkGray)
-            .frame(width: 16, height: 16)
-        // Minutes
-        RoundedRectangle(cornerRadius: 24)
-            .fill(Color.darkGray)
-            .frame(width: 4, height: self.width * 0.8)
-            .offset(y: -(self.width * 0.8) / 3)
-            .rotationEffect(.init(degrees: Double(currentTime.min) * 6))
-        // RED1
-        Circle()
-            .fill(Color.red1)
-            .frame(width: 10, height: 10)
-        // Seconds
-        RoundedRectangle(cornerRadius: 24)
-            .fill(Color.red1)
-            .frame(width: 2, height: self.width * 0.8)
-            .offset(y: -(self.width * 0.8) / 2)
-            .rotationEffect(.init(degrees: Double(currentTime.sec) * 6))
-        // Shows the extended hand on the other side of the circle
-        RoundedRectangle(cornerRadius: 24)
-            .fill(Color.red1)
-            .frame(width: 2, height: 10)
-            .offset(y: 10)
-            .rotationEffect(.init(degrees: Double(currentTime.sec) * 6))
-    }
-    
+        
     @ViewBuilder var timeCircles: some View {
         ForEach(self.eventList.events ,id: \.self) { event in
             if event.isAllDay {
@@ -84,28 +49,29 @@ struct TimeDrawClock: View {
             ZStack {
                 // Dial
                 Circle()
-                    .fill(Color(uiColor: .systemBackground))
+                    .strokeBorder(Color(uiColor: .systemGray3), lineWidth: 24)
+                    .frame(width: self.width * 2.2, height: self.width * 2.2)
                 // Clock Face Markings
                 ForEach(0..<60, id: \.self) { i in
                     if i % 5 == 0 {
                         // Clock Nums
                         let num = (i / 5) + 6
                         Text("\(num > 12 ? num - 12 : num)")
-                            .font(.interClock)
+                            .font(.interFine)
                             .rotationEffect(.degrees(Double(((num-12)) * -30) - 180))
                             .offset(y: self.width)
                             .rotationEffect(Angle(degrees: Double(i) * 6))
                     } else {
                         // Clock Tick Marks for Minutes
-                        Ellipse()
+                        Circle()
                             .fill(Color.primary)
-                            .frame(width: 1, height: 5)
+                            .frame(width: 3, height: 3)
                             .offset(y: self.width)
                             .rotationEffect(.init(degrees: Double(i) * 6))
                     }
                 }
                 // Moving Clock Parts
-                self.clockHands
+                ClockHands(currentTime: self.$currentTime, width: self.width)
                 // Event Lines
                 self.timeCircles
             }

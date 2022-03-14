@@ -10,15 +10,17 @@ import EventKit
 import AlertToast
 
 struct FloatingEventInput: View {
+    
     @ObservedObject var appSettings: AppSettings = .shared
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
+    
     @FocusState var isNewEventFocused: Bool
-    @State var isShowingEmojiPicker: Bool = false
     @Binding var isBackgroundBlurred: Bool
-    private let barHeight: CGFloat = 44
-    @State var emojiSelection: String = ""
     @State var showCalendarPickerMenu: Bool = false
+    
+    
     let defaultCalendarColor: CGColor = EventKitManager.shared.defaultReminderCalendar?.cgColor ?? .init(red: 55, green: 91, blue: 190, alpha: 1)
+    private let barHeight: CGFloat = 44
     
     @ViewBuilder func topButton(image: String, color: Color, action: @escaping () -> ()) -> some View {
         Button(action: {
@@ -64,71 +66,57 @@ struct FloatingEventInput: View {
         }
     }
     
-    let degreesToFlip: Double = 180
     @ViewBuilder var eventOptions: some View {
-        ScrollView {
-            VStack {
-                HStack {
-                    AddEventDateTimePicker()
-                }
-                .rotationEffect(.degrees(self.degreesToFlip))
-                .onTapGesture {}
-                if self.appSettings.showRecurringItems || self.viewModel.calendarItem?.hasRecurrenceRules ?? false {
+        GeometryReader { container in
+            ScrollView {
+                VStack {
                     HStack {
-                        AddRecurrenceRule()
-                    }
-                    .padding(.bottom, 8)
-                    .rotationEffect(.degrees(self.degreesToFlip))                }
-                if self.appSettings.showNotes || self.viewModel.calendarItem?.hasNotes ?? false {
-                    HStack {
-                        AddNotesInput()
-                    }
-                    .padding(.bottom, 8)
-                    .rotationEffect(.degrees(self.degreesToFlip))
-                    .onTapGesture {}
-                }
-                HStack {
-                    if self.viewModel.editMode {
-                        self.topButton(image: "xmark.square", color: .lightGray, action: { self.viewModel.reset() })
-                        self.selectCalendarButton
-                        Spacer()
-                    } else {
-                        self.selectCalendarButton
-                        Spacer()
-                    }
-                    self.topButton(image: "trash", color: .red1, action: { self.viewModel.delete() })
-                }
-                .frame(maxWidth: 600)
-                .padding(.bottom, 8)
-                .rotationEffect(.degrees(self.degreesToFlip))
-            }.background(
-                Color.gray.opacity(0.01)
-                    .gesture(TapGesture().onEnded({
-                        withAnimation {
-                            self.viewModel.isAddEventTextFieldFocused = false
+                        if self.viewModel.editMode {
+                            self.topButton(image: "xmark.square", color: .lightGray, action: { self.viewModel.reset() })
+                            self.selectCalendarButton
+                            Spacer()
+                        } else {
+                            self.selectCalendarButton
+                            Spacer()
                         }
-                    })))
-        }
-        .rotationEffect(.degrees(self.degreesToFlip))
-        .border(.red)
-        .gesture(TapGesture().onEnded({
-            withAnimation {
-                self.viewModel.isAddEventTextFieldFocused = false
+                        self.topButton(image: "trash", color: .red1, action: { self.viewModel.delete() })
+                    }
+                    .frame(maxWidth: 600)
+                    .padding(.bottom, 8)
+                    if self.appSettings.showNotes || self.viewModel.calendarItem?.hasNotes ?? false {
+                        HStack {
+                            AddNotesInput()
+                        }
+                        .padding(.bottom, 8)
+                        .onTapGesture {}
+                    }
+                    if self.appSettings.showRecurringItems || self.viewModel.calendarItem?.hasRecurrenceRules ?? false {
+                        HStack {
+                            AddRecurrenceRule()
+                        }
+                        .padding(.bottom, 8)
+                        .onTapGesture {}
+                    }
+                    HStack {
+                        AddEventDateTimePicker()
+                    }
+                    .onTapGesture {}
+                }.background(
+                    Color.gray.opacity(0.01)
+                        .gesture(TapGesture().onEnded({
+                            withAnimation {
+                                self.viewModel.isAddEventTextFieldFocused = false
+                            }
+                        })))
+                    .frame(minWidth: container.size.width, minHeight: container.size.height, alignment: .bottom)
+                    .contentShape(Rectangle())
             }
-        }))
-    }
-    
-    let numberOfEmojiColumns: Int = 5
-    let emojiButtonWidth: Int = 45
-    let emojiButtonHeight: Int = 40
-    
-    var emojiPopoverSize: CGSize {
-        let emojiListCount = self.viewModel.getRecentEmojis().count
-        let emojiPopoverWidth = emojiListCount >= self.numberOfEmojiColumns ?
-        self.emojiButtonWidth * self.numberOfEmojiColumns :
-        emojiListCount * self.emojiButtonWidth
-        let emojiPopoverHeight = (emojiListCount / self.numberOfEmojiColumns + emojiListCount % self.numberOfEmojiColumns) * self.emojiButtonHeight
-        return CGSize(width: emojiPopoverWidth, height: emojiPopoverHeight)
+            .gesture(TapGesture().onEnded({
+                withAnimation {
+                    self.viewModel.isAddEventTextFieldFocused = false
+                }
+            }))
+        }
     }
     
     var body: some View {
@@ -141,31 +129,7 @@ struct FloatingEventInput: View {
             }
             .padding(.bottom, 8)
             HStack {
-                PopoverButton(showPopover: self.$isShowingEmojiPicker,
-                              popoverSize: self.emojiPopoverSize,
-                              content: {
-                    Image("smile.face")
-                        .resizable()
-                        .frame(width: 25, height: 25)
-                        .gesture(TapGesture().onEnded({
-                            withAnimation {
-                                self.isShowingEmojiPicker.toggle()
-                            }
-                        }))
-                }, popoverContent: {
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: self.numberOfEmojiColumns)) {
-                        ForEach(self.viewModel.getRecentEmojis(), id: \.self) { emoji in
-                            Button(emoji, action: {
-                                self.viewModel.newItemTitle = "\(emoji) \(self.viewModel.newItemTitle)"
-                                self.isShowingEmojiPicker.toggle()
-                            })
-                                .frame(width: CGFloat(self.emojiButtonWidth), height: CGFloat(self.emojiButtonHeight))
-                        }
-                    }
-                    .padding(.horizontal)
-                })
-                    .padding(.leading, 12)
-                    .padding(.trailing, 5)
+                EmojiButton()
                 TextField("", text: self.viewModel.newItemTitleBinding)
                     .focused(self.$isNewEventFocused)
                     .onChange(of: self.viewModel.isAddEventTextFieldFocused) {
@@ -189,6 +153,8 @@ struct FloatingEventInput: View {
                     .placeholder(when: self.viewModel.newItemTitle.isEmpty) {
                         Text("New Event or Reminder").foregroundColor(.gray)
                     }
+                // Submit Button
+                // TODO Show something other than checkmark for failed submit
                 Button(action: {
                     // User submitted event by tapping plus
                     self.viewModel.submitEventOrReminder()

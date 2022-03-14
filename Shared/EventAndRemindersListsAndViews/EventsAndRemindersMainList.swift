@@ -11,7 +11,6 @@ import EventKit
 struct EventsAndRemindersMainList: View {
     
     @ObservedObject private var eventList: EventListViewModel = .shared
-    @EnvironmentObject var floatingModifyViewModel: ModifyCalendarItemViewModel
     
     var body: some View {
         List {

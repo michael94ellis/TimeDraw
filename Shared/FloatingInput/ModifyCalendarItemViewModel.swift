@@ -14,7 +14,6 @@ import SwiftUI
 class ModifyCalendarItemViewModel: ObservableObject {
     
     // Utility vars
-    let weekdayFormatter = DateFormatter(format: "E")
     var daysOfTheWeek = [String]()
     
     /// Used to determine if the event is being created or edited
@@ -67,7 +66,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.frequencyMonthDate = Date().get(.month) - 1
         let daysInThisWeek = Calendar.current.daysWithSameWeekOfYear(as: Date())
         self.editMode = false
-        self.daysOfTheWeek = daysInThisWeek.compactMap { self.weekdayFormatter.string(from: $0) }
+        self.daysOfTheWeek = daysInThisWeek.compactMap { DateFormatter.weekdayLetterFormatter.string(from: $0) }
         self.selectedCalendar = AppSettings.shared.currentSelectedCalendar.loadEKCalendar()
     }
     
@@ -482,18 +481,6 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @MainActor public func displayToast(_ message: String) {
         self.toastMessage = message
         self.displayToast = true
-    }
-    
-    // MARK: - Utility
-    
-    func getRecentEmojis() -> [String] {
-        guard let prefs = UserDefaults(suiteName: "com.apple.EmojiPreferences"),
-              let defaults = prefs.dictionary(forKey: "EMFDefaultsKey"),
-              let recents = defaults["EMFRecentsKey"] as? [String] else {
-                  // No Recent Emojis
-                  return ["No Recent Emojis"]
-              }
-        return recents
     }
     
     @MainActor func handleError(_ error: NSError) {

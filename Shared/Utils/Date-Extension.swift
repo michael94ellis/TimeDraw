@@ -17,11 +17,12 @@ extension DateFormatter {
         self.dateFormat = dateFormat
         self.calendar = calendar
     }
-    public static let monthFormatter = DateFormatter(dateFormat: "MMMM", calendar: Calendar.current)
-    public static let dayFormatter: DateFormatter = DateFormatter(dateFormat: "d", calendar: Calendar.current)
-    public static let weekDayFormatter: DateFormatter = DateFormatter(dateFormat: "EEE", calendar: Calendar.current)
-    public static let fullFormatter: DateFormatter = DateFormatter(dateFormat: "MMMM dd, yyyy", calendar: Calendar.current)
-    public static let timeFormatter: DateFormatter = DateFormatter(dateFormat: "M/d, hh:mm a", calendar: Calendar.current)
+    public static let monthFormatter: DateFormatter = .init(dateFormat: "MMMM", calendar: Calendar.current)
+    public static let dayFormatter: DateFormatter = .init(dateFormat: "d", calendar: Calendar.current)
+    public static let weekDayFormatter: DateFormatter = .init(dateFormat: "EEE", calendar: Calendar.current)
+    public static let fullFormatter: DateFormatter = .init(dateFormat: "MMMM dd, yyyy", calendar: Calendar.current)
+    public static let timeFormatter: DateFormatter = .init(dateFormat: "M/d, hh:mm a", calendar: Calendar.current)
+    public static let weekdayLetterFormatter: DateFormatter = .init(dateFormat: "E", calendar: Calendar.current)
 }
 extension Date {
     

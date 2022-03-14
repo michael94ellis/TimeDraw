@@ -60,37 +60,19 @@ struct AddRecurrenceRule: View {
         .padding(.top)
     }
     
-    var rulePickerBinding: Binding<String> {
-        Binding<String>(get: {
-            print(self.viewModel.selectedRule.description)
-            return self.viewModel.selectedRule.description
-        }, set: { newValue in
-            print("set - \(newValue)")
-            if newValue == EKRecurrenceFrequency.daily.description {
-                self.viewModel.selectedRule = .daily
-            } else if newValue == EKRecurrenceFrequency.weekly.description {
-                self.viewModel.selectedRule = .weekly
-            } else if newValue == EKRecurrenceFrequency.monthly.description {
-                self.viewModel.selectedRule = .monthly
-            } else if newValue == EKRecurrenceFrequency.yearly.description {
-                self.viewModel.selectedRule = .yearly
-            }
-        })
+    var rulePickerBinding: Binding<Int> {
+        Binding<Int>(get: { self.viewModel.selectedRule.rawValue }, set: { self.viewModel.selectedRule = EKRecurrenceFrequency(rawValue: $0) ?? .daily })
     }
     
     var rulePicker: some View {
-        HStack {
-            Picker("", selection: self.rulePickerBinding) {
-                ForEach(EKRecurrenceFrequency.allCases.compactMap({ $0.description }), id: \.self) { frequency in
-                    Text(frequency)
-                        .font(.title)
-                }
-            }
-            .contentShape(Rectangle())
-            .pickerStyle(.segmented)
-            .padding(.vertical, 4)
-        }
-        .padding(.horizontal)
+        SegmentedPicker(EKRecurrenceFrequency.allCases.compactMap({ $0.description }),
+                        selectedIndex: self.rulePickerBinding,
+                        content: { item in
+            Text(item)
+                .font(.interRegular)
+                .padding(.horizontal)
+                .padding(.vertical, 4)
+        })
     }
     
     func dayFrequencyTextField(_ label: String) -> some View {
@@ -119,7 +101,6 @@ struct AddRecurrenceRule: View {
                 Divider()
                     .padding(.horizontal)
                 self.rulePicker
-                    .border(.red)
                 switch self.viewModel.selectedRule {
                 case .daily:
                     HStack {
@@ -190,10 +171,7 @@ struct AddRecurrenceRule: View {
             }
             .background(RoundedRectangle(cornerRadius: 13)
                             .fill(Color(uiColor: .systemGray6))
-                            .shadow(radius: 4, x: 2, y: 4)
-                            .gesture(TapGesture().onEnded({
-                                print("A")
-                            })))
+                            .shadow(radius: 4, x: 2, y: 4))
         } else {
             self.unselectedButton
         }

@@ -125,6 +125,10 @@
 		2FB41CD527DEDB3F0067F250 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD327DEDB3E0067F250 /* AppSettings.swift */; };
 		2FB41CD727DEDBB70067F250 /* SettingsControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD627DEDBB70067F250 /* SettingsControls.swift */; };
 		2FB41CD827DEDBB70067F250 /* SettingsControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD627DEDBB70067F250 /* SettingsControls.swift */; };
+		2FB41CDA27DEE1850067F250 /* EmojiButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD927DEE1850067F250 /* EmojiButton.swift */; };
+		2FB41CDB27DEE1850067F250 /* EmojiButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD927DEE1850067F250 /* EmojiButton.swift */; };
+		2FB41CDD27DEE4DE0067F250 /* SegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CDC27DEE4DE0067F250 /* SegmentedPicker.swift */; };
+		2FB41CDE27DEE4DE0067F250 /* SegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CDC27DEE4DE0067F250 /* SegmentedPicker.swift */; };
 		2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
@@ -215,6 +219,8 @@
 		2FB41CCF27DE4A9D0067F250 /* ClockHands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockHands.swift; sourceTree = "<group>"; };
 		2FB41CD327DEDB3E0067F250 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		2FB41CD627DEDBB70067F250 /* SettingsControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControls.swift; sourceTree = "<group>"; };
+		2FB41CD927DEE1850067F250 /* EmojiButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiButton.swift; sourceTree = "<group>"; };
+		2FB41CDC27DEE4DE0067F250 /* SegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedPicker.swift; sourceTree = "<group>"; };
 		2FC6C7B42786434600D75568 /* MultiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTextField.swift; sourceTree = "<group>"; };
 		2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -260,9 +266,11 @@
 			children = (
 				2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */,
 				2F6505052787DA3C00AF90F7 /* FloatingEventInput.swift */,
+				2FB41CD927DEE1850067F250 /* EmojiButton.swift */,
 				2F81230B2797B59500458B1A /* AddEventDateTimePicker.swift */,
 				2FB41CB627DACB8E0067F250 /* AddNotesInput.swift */,
 				2F211133279A4F4E0041EE85 /* AddRecurrenceRule.swift */,
+				2FB41CDC27DEE4DE0067F250 /* SegmentedPicker.swift */,
 				2F24458427D824DF005BF37D /* MultiPicker.swift */,
 				2F24458127D7F0EB005BF37D /* MultiDateSelectCalendar.swift */,
 				2F8AB30C27A220E400654FEF /* DateAndTimePickers.swift */,
@@ -667,6 +675,7 @@
 				2F39B86C27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
 				2F42C5A32784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
 				2FB41CB427DA5E220067F250 /* EventListCell.swift in Sources */,
+				2FB41CDA27DEE1850067F250 /* EmojiButton.swift in Sources */,
 				2F8AB31027A229DA00654FEF /* Utils.swift in Sources */,
 				2FB41CCD27DD016F0067F250 /* FrameGetter.swift in Sources */,
 				2F65050027879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */,
@@ -674,6 +683,7 @@
 				2FB41CD027DE4A9D0067F250 /* ClockHands.swift in Sources */,
 				2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2FB41CB127DA5DBE0067F250 /* ReminderListCell.swift in Sources */,
+				2FB41CDD27DEE4DE0067F250 /* SegmentedPicker.swift in Sources */,
 				2FB41CCA27DCFA8A0067F250 /* CalendarSelection.swift in Sources */,
 				2F39B87027823CF700FE72C3 /* MainView.swift in Sources */,
 				2F24457F27D797C9005BF37D /* EventKit-Extension.swift in Sources */,
@@ -719,6 +729,7 @@
 				2F39B86D27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
 				2F42C5A42784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
 				2FB41CB527DA5E220067F250 /* EventListCell.swift in Sources */,
+				2FB41CDB27DEE1850067F250 /* EmojiButton.swift in Sources */,
 				2F8AB31127A229DA00654FEF /* Utils.swift in Sources */,
 				2FB41CCE27DD016F0067F250 /* FrameGetter.swift in Sources */,
 				2F65050127879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */,
@@ -726,6 +737,7 @@
 				2FB41CD127DE4A9D0067F250 /* ClockHands.swift in Sources */,
 				2F42C5A72784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2FB41CB227DA5DBE0067F250 /* ReminderListCell.swift in Sources */,
+				2FB41CDE27DEE4DE0067F250 /* SegmentedPicker.swift in Sources */,
 				2FB41CCB27DCFA8A0067F250 /* CalendarSelection.swift in Sources */,
 				2F39B87127823CF700FE72C3 /* MainView.swift in Sources */,
 				2F24458027D797C9005BF37D /* EventKit-Extension.swift in Sources */,

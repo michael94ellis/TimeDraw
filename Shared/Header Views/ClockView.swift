@@ -14,7 +14,8 @@ struct Time {
 }
 
 struct TimeDrawClock: View {
-
+    
+    @Binding var showClockView: Bool
     @State var currentTime = Time(sec: 0, min: 0, hour: 0)
     @State var timer = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
     var width: CGFloat = 120
@@ -26,6 +27,19 @@ struct TimeDrawClock: View {
         let min = calender.component(.minute, from: Date())
         let hour = calender.component(.hour, from: Date())
         self.currentTime = Time(sec: sec, min: min, hour: hour)
+    }
+    
+    func handleClockViewSwipe(for direction: SwipeDirection) {
+        if [.down, .up].contains(direction) {
+            withAnimation {
+                self.showClockView.toggle()
+            }
+        }
+        if [.left, .right].contains(direction) {
+            withAnimation {
+                self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: direction == .right ? 1 : -1, to: self.eventList.displayDate) ?? Date()
+            }
+        }
     }
         
     @ViewBuilder var timeCircles: some View {
@@ -78,6 +92,9 @@ struct TimeDrawClock: View {
             .frame(width: self.width, height: self.width)
         }
         .frame(width: self.width * 2.5, height: self.width * 2.5)
+        .gesture(DragGesture().onEnded({ value in
+            self.handleClockViewSwipe(for: value.detectDirection())
+        }))
         .onAppear(perform: {
             let calender = Calendar.current
             let sec = calender.component(.second, from: Date())

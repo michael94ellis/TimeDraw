@@ -60,18 +60,35 @@ struct AddRecurrenceRule: View {
         .padding(.top)
     }
     
+    var rulePickerBinding: Binding<String> {
+        Binding<String>(get: {
+            print(self.viewModel.selectedRule.description)
+            return self.viewModel.selectedRule.description
+        }, set: { newValue in
+            print("set - \(newValue)")
+            if newValue == EKRecurrenceFrequency.daily.description {
+                self.viewModel.selectedRule = .daily
+            } else if newValue == EKRecurrenceFrequency.weekly.description {
+                self.viewModel.selectedRule = .weekly
+            } else if newValue == EKRecurrenceFrequency.monthly.description {
+                self.viewModel.selectedRule = .monthly
+            } else if newValue == EKRecurrenceFrequency.yearly.description {
+                self.viewModel.selectedRule = .yearly
+            }
+        })
+    }
+    
     var rulePicker: some View {
         HStack {
-            Spacer()
-            Picker("", selection: self.$viewModel.selectedRule) {
-                ForEach([EKRecurrenceFrequency.daily, .weekly, .monthly, .yearly], id: \.self) { frequency in
-                    Text(frequency.description)
+            Picker("", selection: self.rulePickerBinding) {
+                ForEach(EKRecurrenceFrequency.allCases.compactMap({ $0.description }), id: \.self) { frequency in
+                    Text(frequency)
                         .font(.title)
                 }
             }
+            .contentShape(Rectangle())
             .pickerStyle(.segmented)
             .padding(.vertical, 4)
-            Spacer()
         }
         .padding(.horizontal)
     }
@@ -102,6 +119,7 @@ struct AddRecurrenceRule: View {
                 Divider()
                     .padding(.horizontal)
                 self.rulePicker
+                    .border(.red)
                 switch self.viewModel.selectedRule {
                 case .daily:
                     HStack {
@@ -172,7 +190,10 @@ struct AddRecurrenceRule: View {
             }
             .background(RoundedRectangle(cornerRadius: 13)
                             .fill(Color(uiColor: .systemGray6))
-                            .shadow(radius: 4, x: 2, y: 4))
+                            .shadow(radius: 4, x: 2, y: 4)
+                            .gesture(TapGesture().onEnded({
+                                print("A")
+                            })))
         } else {
             self.unselectedButton
         }

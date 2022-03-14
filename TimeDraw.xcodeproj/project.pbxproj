@@ -121,6 +121,10 @@
 		2FB41CCE27DD016F0067F250 /* FrameGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CCC27DD016F0067F250 /* FrameGetter.swift */; };
 		2FB41CD027DE4A9D0067F250 /* ClockHands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CCF27DE4A9D0067F250 /* ClockHands.swift */; };
 		2FB41CD127DE4A9D0067F250 /* ClockHands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CCF27DE4A9D0067F250 /* ClockHands.swift */; };
+		2FB41CD427DEDB3F0067F250 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD327DEDB3E0067F250 /* AppSettings.swift */; };
+		2FB41CD527DEDB3F0067F250 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD327DEDB3E0067F250 /* AppSettings.swift */; };
+		2FB41CD727DEDBB70067F250 /* SettingsControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD627DEDBB70067F250 /* SettingsControls.swift */; };
+		2FB41CD827DEDBB70067F250 /* SettingsControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD627DEDBB70067F250 /* SettingsControls.swift */; };
 		2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
@@ -209,6 +213,8 @@
 		2FB41CC927DCFA8A0067F250 /* CalendarSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CalendarSelection.swift; path = ../../../../CalendarSelection.swift; sourceTree = "<group>"; };
 		2FB41CCC27DD016F0067F250 /* FrameGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameGetter.swift; sourceTree = "<group>"; };
 		2FB41CCF27DE4A9D0067F250 /* ClockHands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockHands.swift; sourceTree = "<group>"; };
+		2FB41CD327DEDB3E0067F250 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		2FB41CD627DEDBB70067F250 /* SettingsControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControls.swift; sourceTree = "<group>"; };
 		2FC6C7B42786434600D75568 /* MultiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTextField.swift; sourceTree = "<group>"; };
 		2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -287,8 +293,9 @@
 			children = (
 				2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */,
 				2F39B84427823CF600FE72C3 /* MainView.swift */,
-				2FB41CD227DE890E0067F250 /* Header */,
-				2F8AB31227A25D9F00654FEF /* SettingsMenu */,
+				2FB41CD327DEDB3E0067F250 /* AppSettings.swift */,
+				2FB41CD227DE890E0067F250 /* Header Views */,
+				2F8AB31227A25D9F00654FEF /* Settings Menus */,
 				2F8AB305279EDFD600654FEF /* EventAndRemindersListsAndViews */,
 				2F2111322799EE370041EE85 /* FloatingInput */,
 				2F6504FE27879B8900AF90F7 /* DailyGoal */,
@@ -411,17 +418,18 @@
 			path = EventAndRemindersListsAndViews;
 			sourceTree = "<group>";
 		};
-		2F8AB31227A25D9F00654FEF /* SettingsMenu */ = {
+		2F8AB31227A25D9F00654FEF /* Settings Menus */ = {
 			isa = PBXGroup;
 			children = (
 				2F6505082787F87A00AF90F7 /* SettingsView.swift */,
+				2FB41CD627DEDBB70067F250 /* SettingsControls.swift */,
 				2FB41CC927DCFA8A0067F250 /* CalendarSelection.swift */,
 				2F42C5962784A87100F0BEB2 /* PopoverLink.swift */,
 			);
-			path = SettingsMenu;
+			path = "Settings Menus";
 			sourceTree = "<group>";
 		};
-		2FB41CD227DE890E0067F250 /* Header */ = {
+		2FB41CD227DE890E0067F250 /* Header Views */ = {
 			isa = PBXGroup;
 			children = (
 				2F6505022787A09900AF90F7 /* MainHeader.swift */,
@@ -429,7 +437,7 @@
 				2FB41CAD27D97D710067F250 /* ClockView.swift */,
 				2FB41CCF27DE4A9D0067F250 /* ClockHands.swift */,
 			);
-			path = Header;
+			path = "Header Views";
 			sourceTree = "<group>";
 		};
 		5F654E2C27D3722F00D6F53C /* iOS */ = {
@@ -649,6 +657,7 @@
 				2FB41CAE27D97D710067F250 /* ClockView.swift in Sources */,
 				2F6505092787F87A00AF90F7 /* SettingsView.swift in Sources */,
 				2F39B87227823CF700FE72C3 /* CoreDataManager.swift in Sources */,
+				2FB41CD427DEDB3F0067F250 /* AppSettings.swift in Sources */,
 				2F24458827D8BDD0005BF37D /* SwipeGesture.swift in Sources */,
 				2F2111302799B62D0041EE85 /* EventsAndRemindersMainList.swift in Sources */,
 				2F6505062787DA3C00AF90F7 /* FloatingEventInput.swift in Sources */,
@@ -670,6 +679,7 @@
 				2F24457F27D797C9005BF37D /* EventKit-Extension.swift in Sources */,
 				2F24458B27D8BE37005BF37D /* Calendar-Extension.swift in Sources */,
 				2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */,
+				2FB41CD727DEDBB70067F250 /* SettingsControls.swift in Sources */,
 				2F1F8FA427D3AAEF00648234 /* EventListViewModel.swift in Sources */,
 				2F42C5972784A87100F0BEB2 /* PopoverLink.swift in Sources */,
 				2F24458527D824DF005BF37D /* MultiPicker.swift in Sources */,
@@ -699,6 +709,7 @@
 				2FB41CAF27D97D710067F250 /* ClockView.swift in Sources */,
 				2F65050A2787F87A00AF90F7 /* SettingsView.swift in Sources */,
 				2F39B87327823CF700FE72C3 /* CoreDataManager.swift in Sources */,
+				2FB41CD527DEDB3F0067F250 /* AppSettings.swift in Sources */,
 				2F24458927D8BDD0005BF37D /* SwipeGesture.swift in Sources */,
 				2F2111312799B62D0041EE85 /* EventsAndRemindersMainList.swift in Sources */,
 				2F6505072787DA3C00AF90F7 /* FloatingEventInput.swift in Sources */,
@@ -720,6 +731,7 @@
 				2F24458027D797C9005BF37D /* EventKit-Extension.swift in Sources */,
 				2F24458C27D8BE37005BF37D /* Calendar-Extension.swift in Sources */,
 				2F6505042787A09900AF90F7 /* MainHeader.swift in Sources */,
+				2FB41CD827DEDBB70067F250 /* SettingsControls.swift in Sources */,
 				2F1F8FA527D3AAEF00648234 /* EventListViewModel.swift in Sources */,
 				2F42C5982784A87100F0BEB2 /* PopoverLink.swift in Sources */,
 				2F24458627D824DF005BF37D /* MultiPicker.swift in Sources */,

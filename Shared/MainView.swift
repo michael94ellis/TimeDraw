@@ -32,20 +32,7 @@ struct MainView: View {
                 Spacer()
                 if self.isTimeDrawClockEnabled {
                     if self.showClockView {
-                        TimeDrawClock()
-                            .gesture(DragGesture().onEnded({ value in
-                                let direction = value.detectDirection()
-                                if [.down, .up].contains(direction) {
-                                    withAnimation {
-                                        self.showClockView.toggle()
-                                    }
-                                }
-                                if [.left, .right].contains(direction) {
-                                    withAnimation {
-                                        self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: direction == .right ? 1 : -1, to: self.eventList.displayDate) ?? Date()
-                                    }
-                                }
-                            }))
+                        TimeDrawClock(showClockView: self.$showClockView)
                     }
                     Button(action: {
                         withAnimation {
@@ -71,11 +58,11 @@ struct MainView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .blur(radius: 1)
                     .contentShape(Rectangle())
-                    .onTapGesture {
+                    .gesture(TapGesture().onEnded({
                         withAnimation {
                             self.addEventViewModel.isAddEventTextFieldFocused = false
                         }
-                    }
+                    }))
                     .edgesIgnoringSafeArea(.all)
             }
             VStack {

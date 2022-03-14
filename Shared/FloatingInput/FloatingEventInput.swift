@@ -56,9 +56,11 @@ struct FloatingEventInput: View {
             }) {
                 self.topButton(image: "calendar", color: Color(cgColor: self.viewModel.selectedCalendar?.cgColor ?? self.defaultCalendarColor), action: { self.showCalendarPickerMenu.toggle() })
             }
-            .onTapGesture {
-                self.viewModel.isAddEventTextFieldFocused = true
-            }
+            .gesture(TapGesture().onEnded({
+                withAnimation {
+                    self.viewModel.isAddEventTextFieldFocused = true
+                }
+            }))
         }
     }
     
@@ -76,9 +78,7 @@ struct FloatingEventInput: View {
                         AddRecurrenceRule()
                     }
                     .padding(.bottom, 8)
-                    .rotationEffect(.degrees(self.degreesToFlip))
-                    .onTapGesture {}
-                }
+                    .rotationEffect(.degrees(self.degreesToFlip))                }
                 if self.appSettings.showNotes || self.viewModel.calendarItem?.hasNotes ?? false {
                     HStack {
                         AddNotesInput()
@@ -110,13 +110,14 @@ struct FloatingEventInput: View {
                     })))
         }
         .rotationEffect(.degrees(self.degreesToFlip))
+        .border(.red)
         .gesture(TapGesture().onEnded({
             withAnimation {
                 self.viewModel.isAddEventTextFieldFocused = false
             }
         }))
     }
-        
+    
     let numberOfEmojiColumns: Int = 5
     let emojiButtonWidth: Int = 45
     let emojiButtonHeight: Int = 40
@@ -146,9 +147,11 @@ struct FloatingEventInput: View {
                     Image("smile.face")
                         .resizable()
                         .frame(width: 25, height: 25)
-                        .onTapGesture {
-                            self.isShowingEmojiPicker.toggle()
-                        }
+                        .gesture(TapGesture().onEnded({
+                            withAnimation {
+                                self.isShowingEmojiPicker.toggle()
+                            }
+                        }))
                 }, popoverContent: {
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: self.numberOfEmojiColumns)) {
                         ForEach(self.viewModel.getRecentEmojis(), id: \.self) { emoji in
@@ -176,13 +179,13 @@ struct FloatingEventInput: View {
                         self.viewModel.submitEventOrReminder()
                         self.isNewEventFocused = false
                     }
-                    .onTapGesture {
+                    .gesture(TapGesture().onEnded({
                         // User tapped textfield - is attempting to add event
                         withAnimation {
                             self.isBackgroundBlurred = true
                             self.isNewEventFocused = true
                         }
-                    }
+                    }))
                     .placeholder(when: self.viewModel.newItemTitle.isEmpty) {
                         Text("New Event or Reminder").foregroundColor(.gray)
                     }

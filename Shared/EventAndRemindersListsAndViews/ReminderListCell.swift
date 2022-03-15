@@ -109,7 +109,7 @@ struct ReminderListCell: View {
                     .transition(.move(edge: .trailing))
                 }
             }
-            .frame(height: 60)
+            .frame(height: 55)
             .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
             .clipShape(RoundedRectangle(cornerRadius: 12))
         }

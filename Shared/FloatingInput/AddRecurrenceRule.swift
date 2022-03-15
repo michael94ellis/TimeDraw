@@ -71,7 +71,7 @@ struct AddRecurrenceRule: View {
                         content: { item in
             Text(item)
                 .font(.interRegular)
-                .padding(.horizontal)
+                .padding(.horizontal, 8)
                 .padding(.vertical, 4)
         })
     }
@@ -92,7 +92,8 @@ struct AddRecurrenceRule: View {
                 })
             Spacer()
         }
-        .frame(height: 33)
+        .frame(height: 40)
+        .padding(.bottom, 10)
     }
     
     var body: some View {
@@ -102,6 +103,7 @@ struct AddRecurrenceRule: View {
                 Divider()
                     .padding(.horizontal)
                 self.rulePicker
+                    .padding(.horizontal)
                 switch self.viewModel.selectedRule {
                 case .daily:
                     HStack {

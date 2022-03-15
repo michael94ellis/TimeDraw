@@ -28,6 +28,7 @@ public struct SegmentedPicker<T: Equatable, Content: View>: View {
         if item == selectedItem {
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.gray.opacity(0.4))
+                .padding(2)
                 .matchedGeometryEffect(id: "selectedSegmentHighlight", in: self.selectionAnimation)
                 .offset(x: self.dragPosition)
                 .gesture(DragGesture().onChanged({ dragChange in

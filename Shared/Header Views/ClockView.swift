@@ -80,7 +80,7 @@ struct TimeDrawClock: View {
                         // Clock Tick Marks for Minutes
                         Circle()
                             .fill(Color.primary)
-                            .frame(width: 3, height: 3)
+                            .frame(width: 2, height: 2)
                             .offset(y: self.width)
                             .rotationEffect(.init(degrees: Double(i) * 6))
                     }

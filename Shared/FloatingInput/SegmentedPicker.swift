@@ -13,6 +13,8 @@ public struct SegmentedPicker<T: Equatable, Content: View>: View {
     @Binding var selectedItem: T?
     private let items: [T]
     private let content: (T) -> Content
+    @State var dragPosition: CGFloat = .zero
+    private var itemPositions: [CGFloat] = []
 
     public init(_ items: [T],
                 selectedItem: Binding<T?>,
@@ -27,6 +29,14 @@ public struct SegmentedPicker<T: Equatable, Content: View>: View {
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color.gray.opacity(0.4))
                 .matchedGeometryEffect(id: "selectedSegmentHighlight", in: self.selectionAnimation)
+                .offset(x: self.dragPosition)
+                .gesture(DragGesture().onChanged({ dragChange in
+                    self.dragPosition = dragChange.translation.width
+                }).onEnded({ dragEnd in
+                    withAnimation(.linear) {
+                        self.dragPosition = .zero
+                    }
+                }))
 
         }
     }
@@ -36,6 +46,7 @@ public struct SegmentedPicker<T: Equatable, Content: View>: View {
             ForEach(self.items.indices, id: \.self) { index in
                 Button(action: {
                     withAnimation(.linear) {
+                        self.dragPosition = .zero
                         self.selectedItem = self.items[index]
                     }
                 },

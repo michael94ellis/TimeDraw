@@ -10,14 +10,14 @@ import EventKit
 
 struct EventsAndRemindersMainList: View {
     
-    @ObservedObject private var eventList: EventListViewModel = .shared
+    @EnvironmentObject var itemList: CalendarItemListViewModel
     
     var body: some View {
         List {
-            ForEach(self.eventList.events) { item in
+            ForEach(self.itemList.events) { item in
                 EventListCell(item: item)
             }
-            ForEach(self.eventList.reminders) { item in
+            ForEach(self.itemList.reminders) { item in
                 ReminderListCell(item: item)
             }
             Spacer(minLength: 120)
@@ -26,7 +26,7 @@ struct EventsAndRemindersMainList: View {
         .buttonStyle(.plain)
         .listStyle(.plain)
         .refreshable(action: {
-            self.eventList.updateData()
+            self.itemList.updateData()
         })
     }
 }

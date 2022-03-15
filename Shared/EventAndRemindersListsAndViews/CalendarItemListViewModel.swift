@@ -1,5 +1,5 @@
 //
-//  EventListViewModel.swift
+//  CalendarItemListViewModel.swift
 //  TimeDraw
 //
 //  Created by Michael Ellis on 3/5/22.
@@ -9,7 +9,7 @@ import SwiftUI
 import EventKit
 
 @MainActor
-class EventListViewModel: ObservableObject {
+class CalendarItemListViewModel: ObservableObject {
     
     @Published public var displayDate: Date = Date() {
         didSet {
@@ -21,7 +21,7 @@ class EventListViewModel: ObservableObject {
     @Published public var reminders: [EKReminder] = []
     
     // MARK: Static accessor
-    public static let shared = EventListViewModel()
+    public static let shared = CalendarItemListViewModel()
     // This prevents others from using the default '()' initializer for this class.
     private init() {
         self.updateData()

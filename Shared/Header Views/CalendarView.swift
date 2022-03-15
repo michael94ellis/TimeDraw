@@ -11,7 +11,7 @@ struct CalendarDateSelection: View {
     
     @Binding var showCompactCalendar: Bool
     @Binding private var selectedDate: Date
-    @ObservedObject private var eventList: EventListViewModel = .shared
+    @ObservedObject private var itemList: CalendarItemListViewModel = .shared
     
     init(date: Binding<Date>, showCompactCalendar: Binding<Bool>) {
         self._showCompactCalendar = showCompactCalendar
@@ -32,7 +32,7 @@ struct CalendarDateSelection: View {
                         }
                     }) {
                         let today = Calendar.current.isDateInToday(date)
-                        let display = Calendar.current.isDate(date, inSameDayAs: self.eventList.displayDate)
+                        let display = Calendar.current.isDate(date, inSameDayAs: self.itemList.displayDate)
                         Text("00")
                             .padding(10)
                             .foregroundColor(.clear)

@@ -17,10 +17,10 @@ class AppSettings: ObservableObject {
     @AppStorage("showCalendarPickerButton") var showCalendarPickerButton: Bool = true
     @AppStorage("userSelectedCalendars") var userSelectedCalendars: Data?
     @AppStorage("currentSelectedCalendar") var currentSelectedCalendar: Data?
+    /// 1, 2, 3, 5, 10, 12, 15, 20, 30 divisors of 60
+    @AppStorage("timePickerGranularity") var timePickerGranularity: Int = 15
     
-    // ---
     @AppStorage("showRecurringItems") var showRecurringItems: Bool = true
-//    @AppStorage("showLocation") var showLocation: Bool = false
     @AppStorage("showNotes") var showNotes: Bool = false
     static let shared = AppSettings()
     

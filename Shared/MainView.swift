@@ -16,10 +16,25 @@ struct MainView: View {
     @FocusState private var isDailyGoalFocused: Bool
     @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
     @AppStorage("isTimeDrawClockEnabled") var isTimeDrawClockEnabled: Bool = true
-    @ObservedObject private var eventList: EventListViewModel = .shared
     @State var swipeDirection: SwipeDirection = .left
+    @ObservedObject private var listViewModel: CalendarItemListViewModel = .shared
+    @StateObject private var itemViewModel: ModifyCalendarItemViewModel = ModifyCalendarItemViewModel()
     
-    @StateObject private var addEventViewModel: ModifyCalendarItemViewModel = ModifyCalendarItemViewModel()
+    @ViewBuilder var blurOverlay: some View {
+        if self.itemViewModel.isAddEventTextFieldFocused {
+            Color.black.opacity(0.6)
+                .blur(radius: 1)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .blur(radius: 1)
+                .contentShape(Rectangle())
+                .gesture(TapGesture().onEnded({
+                    withAnimation {
+                        self.itemViewModel.isAddEventTextFieldFocused = false
+                    }
+                }))
+                .edgesIgnoringSafeArea(.all)
+        }
+    }
     
     var body: some View {
         ZStack {
@@ -46,29 +61,18 @@ struct MainView: View {
                 // Clock View todo in v2
                 Divider()
                 EventsAndRemindersMainList()
-                    .environmentObject(self.addEventViewModel)
+                    .environmentObject(self.itemViewModel)
             }
             .transition(.opacity)
             .ignoresSafeArea(.keyboard)
             .edgesIgnoringSafeArea(.bottom)
             // Blurred Background
-            .if(self.addEventViewModel.isAddEventTextFieldFocused) { view in
-                view.overlay(Color.black.opacity(0.6)
-                                .blur(radius: 1))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .blur(radius: 1)
-                    .contentShape(Rectangle())
-                    .gesture(TapGesture().onEnded({
-                        withAnimation {
-                            self.addEventViewModel.isAddEventTextFieldFocused = false
-                        }
-                    }))
-                    .edgesIgnoringSafeArea(.all)
-            }
+            .overlay(self.blurOverlay)
             VStack {
                 Spacer()
-                FloatingEventInput(isBackgroundBlurred: self.$addEventViewModel.isAddEventTextFieldFocused)
-                    .environmentObject(self.addEventViewModel)
+                FloatingEventInput(isBackgroundBlurred: self.$itemViewModel.isAddEventTextFieldFocused)
+                    .environmentObject(self.itemViewModel)
+                    .environmentObject(self.listViewModel)
                     .padding(.bottom, 16)
             }
         }

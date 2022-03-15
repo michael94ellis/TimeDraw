@@ -12,45 +12,60 @@ struct SettingsControls:View {
     @ObservedObject var appSettings: AppSettings = .shared
         
     var body: some View {
-        VStack {
-            Toggle("Enable Daily Goal Text Area", isOn: self.appSettings.$isDailyGoalEnabled)
-                .padding(.horizontal)
-            Toggle("Enable Time Draw Clock", isOn: self.appSettings.$isTimeDrawClockEnabled)
-                .padding(.horizontal)
-            Toggle("Show Recurrence", isOn: self.appSettings.$showRecurringItems)
-                .padding(.horizontal)
-            Toggle("Show Notes", isOn: self.appSettings.$showNotes)
-                .padding(.horizontal)
-            Toggle("Show Calendar Picker", isOn: self.appSettings.$showCalendarPickerButton)
-                .padding(.horizontal)
-            Toggle("Show List Icons", isOn: self.appSettings.$showListIcons)
-                .padding(.horizontal)
-                .onChange(of: self.appSettings.showListIcons, perform: { newValue in
-                    EventListViewModel.shared.updateData()
-                })
-        }
-        // Calendar Selection Popup Screen
-        CalendarSelectionButton()
-        // Show and Hide Segmented Pickers
-        Text("Show:")
-        Picker("", selection: self.appSettings.$showCalendarItemType) {
-            ForEach(CalendarItemType.allCases ,id: \.self) { item in
-                Text(item.displayName)
+        VStack(spacing: 0) {
+            VStack {
+                Toggle("Enable Daily Goal Text Area", isOn: self.appSettings.$isDailyGoalEnabled)
+                    .padding(.horizontal)
+                Toggle("Enable Time Draw Clock", isOn: self.appSettings.$isTimeDrawClockEnabled)
+                    .padding(.horizontal)
+                Toggle("Show Recurrence", isOn: self.appSettings.$showRecurringItems)
+                    .padding(.horizontal)
+                Toggle("Show Notes", isOn: self.appSettings.$showNotes)
+                    .padding(.horizontal)
+                Toggle("Show Calendar Picker", isOn: self.appSettings.$showCalendarPickerButton)
+                    .padding(.horizontal)
+                Toggle("Show List Icons", isOn: self.appSettings.$showListIcons)
+                    .padding(.horizontal)
+                    .onChange(of: self.appSettings.showListIcons, perform: { newValue in
+                        CalendarItemListViewModel.shared.updateData()
+                    })
             }
-        }
-        .pickerStyle(.segmented)
-        .onChange(of: self.appSettings.showCalendarItemType, perform: { _ in
-            EventListViewModel.shared.updateData()
-        })
-        Picker("", selection: self.appSettings.$showItemRecurrenceType) {
-            ForEach(ItemRecurrenceType.allCases ,id: \.self) { item in
-                Text(item.displayName)
+            HStack {
+                Text("Minute Granularity:")
+                Picker("", selection: self.appSettings.$timePickerGranularity) {
+                    ForEach([1, 2, 3, 5, 10, 12, 15, 20, 30], id: \.self) { minuteValue in
+                        Text(String(minuteValue))
+                    }
+                }
+                .pickerStyle(.inline)
+                .frame(width: 100, height: 55)
+                .clipped()
             }
+            .frame(height: 60)
+            .border(.red)
+            // Calendar Selection Popup Screen
+            CalendarSelectionButton()
+            // Show and Hide Segmented Pickers
+            Text("Show:")
+            Picker("", selection: self.appSettings.$showCalendarItemType) {
+                ForEach(CalendarItemType.allCases ,id: \.self) { item in
+                    Text(item.displayName)
+                }
+            }
+            .pickerStyle(.segmented)
+            .onChange(of: self.appSettings.showCalendarItemType, perform: { _ in
+                CalendarItemListViewModel.shared.updateData()
+            })
+            Picker("", selection: self.appSettings.$showItemRecurrenceType) {
+                ForEach(ItemRecurrenceType.allCases ,id: \.self) { item in
+                    Text(item.displayName)
+                }
+            }
+            .pickerStyle(.segmented)
+            .padding(.top, 6)
+            .onChange(of: self.appSettings.showItemRecurrenceType, perform: { _ in
+                CalendarItemListViewModel.shared.updateData()
+            })
         }
-        .pickerStyle(.segmented)
-        .padding(.top, 6)
-        .onChange(of: self.appSettings.showItemRecurrenceType, perform: { _ in
-            EventListViewModel.shared.updateData()
-        })
     }
 }

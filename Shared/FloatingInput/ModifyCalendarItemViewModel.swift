@@ -13,22 +13,12 @@ import SwiftUI
 /// 
 class ModifyCalendarItemViewModel: ObservableObject {
     
-    // Utility vars
     var daysOfTheWeek = [String]()
     
-    /// Used to determine if the event is being created or edited
-    private(set) var editMode: Bool = false
-    /// Used to display the toast for when new things are mode
-    @Published var displayToast: Bool = false
-    @Published var toastMessage: String = ""
-    
-    // MARK: - New EKCalendarItem Data
-    
+    // MARK: - EKCalendarItem Data
     var calendarItem: EKCalendarItem?
     // New Event/Reminder Data
     @Published var newItemTitle: String = ""
-    /// Convenience binding to pass a published variable as
-    public var newItemTitleBinding: Binding<String> {  Binding<String>(get: { self.newItemTitle }, set: { self.newItemTitle = $0 }) }
     // For the "Add Time" feature
     @Published var newItemStartTime: DateComponents?
     @Published var newItemEndTime: DateComponents?
@@ -39,7 +29,6 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var selectedCalendar: EKCalendar?
     
     // MARK: - Recurrence Rule vars
-    
     @Published var endRecurrenceDate: DateComponents?
     @Published var endRecurrenceTime: DateComponents?
     private var recurrenceRule: EKRecurrenceRule?
@@ -55,6 +44,11 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var frequencyMonthDate: Int?
     
     // MARK: - Display State vars
+    /// Used to determine if the event is being created or edited
+    private(set) var editMode: Bool = false
+    /// Used to display the toast for when new things are mode
+    @Published var displayToast: Bool = false
+    @Published var toastMessage: String = ""
     
     @Published var isAddEventTextFieldFocused: Bool = false
     @Published var isDisplayingOptions: Bool = false
@@ -62,10 +56,12 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var isNotesInputOpen: Bool = false
     @Published var isRecurrencePickerOpen: Bool = false
     
+     // MARK: - Init/Open
+    
     init() {
         self.frequencyMonthDate = Date().get(.month) - 1
-        let daysInThisWeek = Calendar.current.daysWithSameWeekOfYear(as: Date())
         self.editMode = false
+        let daysInThisWeek = Calendar.current.daysWithSameWeekOfYear(as: Date())
         self.daysOfTheWeek = daysInThisWeek.compactMap { DateFormatter.weekdayLetterFormatter.string(from: $0) }
         self.selectedCalendar = AppSettings.shared.currentSelectedCalendar.loadEKCalendar()
     }
@@ -118,30 +114,6 @@ class ModifyCalendarItemViewModel: ObservableObject {
         }
     }
     
-    func addTimeToEvent() {
-        withAnimation {
-            self.isDateTimePickerOpen = true
-        }
-    }
-    
-    func removeTimeFromEvent() {
-        withAnimation {
-            self.clearTimeInput()
-        }
-    }
-    
-    func addNotesToEvent() {
-        withAnimation {
-            self.isNotesInputOpen = true
-        }
-    }
-    
-    func removeNotesFromEvent() {
-        withAnimation {
-            self.clearNotesInput()
-        }
-    }
-    
     // MARK: - Recurrence
     
     private func extractRecurrenceRules(for item: EKCalendarItem, start: Date) {
@@ -183,18 +155,6 @@ class ModifyCalendarItemViewModel: ObservableObject {
             default:
                 break
             }
-        }
-    }
-    
-    func openRecurrencePicker() {
-        withAnimation {
-            self.isRecurrencePickerOpen = true
-        }
-    }
-    
-    func removeRecurrenceFromEvent() {
-        withAnimation {
-            self.clearRecurrence()
         }
     }
     
@@ -270,7 +230,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.clearRecurrence()
             self.selectedCalendar = nil
         }
-        EventListViewModel.shared.updateData()
+        CalendarItemListViewModel.shared.updateData()
     }
     
     private func clearTimeInput() {
@@ -413,6 +373,24 @@ class ModifyCalendarItemViewModel: ObservableObject {
         }
     }
     
+    @MainActor private func createReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) async {
+        do {
+            let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
+            if let selectedCalendar = self.selectedCalendar {
+                newReminder.calendar = selectedCalendar
+            }
+            if self.isNotesInputOpen {
+                newReminder.notes = self.notesInput
+            }
+            self.saveAndDisplayToast(reminder: newReminder, "Reminder Created")
+        } catch let error as NSError {
+            print("Error: creating reminder: \(error)")
+            self.handleError(error)
+        }
+    }
+    
+    // MARK: - Save
+    
     /// If there is a Start and End date make an Event from the given info, or save an existing Event with any modified info
     @MainActor private func saveNewDates(for event: EKEvent, newStart startDate: Date, newEnd endDate: Date) {
         Task {
@@ -420,6 +398,16 @@ class ModifyCalendarItemViewModel: ObservableObject {
             event.startDate = startDate
             event.endDate = endDate
             self.saveAndDisplayToast(event: event, "Event Saved")
+        }
+    }
+    
+    /// If there is a Start and End date make an Reminder from the given info, or save an existing Reminder with any modified info
+    @MainActor private func saveNewDates(for reminder: EKReminder, newStart startComponents: DateComponents?, newEnd endComponents: DateComponents?) {
+        Task {
+            reminder.title = self.newItemTitle
+            reminder.startDateComponents = startComponents
+            reminder.dueDateComponents = endComponents
+            self.saveAndDisplayToast(reminder: reminder, "Reminder Saved")
         }
     }
     
@@ -437,31 +425,6 @@ class ModifyCalendarItemViewModel: ObservableObject {
         }
     }
     
-    @MainActor private func createReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) async {
-        do {
-            let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
-            if let selectedCalendar = self.selectedCalendar {
-                newReminder.calendar = selectedCalendar
-            }
-            if self.isNotesInputOpen {
-                newReminder.notes = self.notesInput
-            }
-            self.saveAndDisplayToast(reminder: newReminder, "Reminder Created")
-        } catch let error as NSError {
-            print("Error: creating reminder: \(error)")
-            self.handleError(error)
-        }
-    }
-    
-    /// If there is a Start and End date make an Reminder from the given info, or save an existing Reminder with any modified info
-    @MainActor private func saveNewDates(for reminder: EKReminder, newStart startComponents: DateComponents?, newEnd endComponents: DateComponents?) {
-        Task {
-            reminder.title = self.newItemTitle
-            reminder.startDateComponents = startComponents
-            reminder.dueDateComponents = endComponents
-            self.saveAndDisplayToast(reminder: reminder, "Reminder Saved")
-        }
-    }
     
     @MainActor public func saveAndDisplayToast(reminder: EKReminder, _ message: String) {
         // This is where recurrence is created/updated
@@ -497,6 +460,42 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.displayToast("Invalid Start/End Dates")
         default:
             self.displayToast("Error: \(error.code)")
+        }
+    }
+    
+    func addTimeToEvent() {
+        withAnimation {
+            self.isDateTimePickerOpen = true
+        }
+    }
+    
+    func removeTimeFromEvent() {
+        withAnimation {
+            self.clearTimeInput()
+        }
+    }
+    
+    func addNotesToEvent() {
+        withAnimation {
+            self.isNotesInputOpen = true
+        }
+    }
+    
+    func removeNotesFromEvent() {
+        withAnimation {
+            self.clearNotesInput()
+        }
+    }
+    
+    func openRecurrencePicker() {
+        withAnimation {
+            self.isRecurrencePickerOpen = true
+        }
+    }
+    
+    func removeRecurrenceFromEvent() {
+        withAnimation {
+            self.clearRecurrence()
         }
     }
 }

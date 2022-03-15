@@ -14,7 +14,7 @@ struct AddEventDateTimePicker: View {
     private let barHeight: CGFloat = 96
     
     func setSuggestedTime() {
-        let displayDate = EventListViewModel.shared.displayDate
+        let displayDate = CalendarItemListViewModel.shared.displayDate
         if self.viewModel.newItemStartTime == nil {
             self.viewModel.newItemStartTime = displayDate.get(.hour, .minute, .second)
         }

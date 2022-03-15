@@ -21,15 +21,6 @@ struct DateTimePickerInputView: UIViewRepresentable {
         self.mode = mode
     }
     
-    func updateUIView(_ uiView: DateTimePickerTextField, context: Context) {
-        if let unwrappedDate = date {
-            uiView.text = "\(formatter.string(from: unwrappedDate))"
-            if let datePicker = uiView.inputView as? UIDatePicker {
-                datePicker.date = unwrappedDate
-            }
-        }
-    }
-    
     func makeUIView(context: Context) -> DateTimePickerTextField {
         let pickerField = DateTimePickerTextField(placeholderText: self.placeholder, date: $date, frame: .zero, mode: self.mode)
         pickerField.placeholder = "\(placeholder)"
@@ -40,4 +31,12 @@ struct DateTimePickerInputView: UIViewRepresentable {
         return pickerField
     }
     
+    func updateUIView(_ uiView: DateTimePickerTextField, context: Context) {
+        if let unwrappedDate = date {
+            uiView.text = "\(formatter.string(from: unwrappedDate))"
+            if let datePicker = uiView.inputView as? UIDatePicker {
+                datePicker.date = unwrappedDate
+            }
+        }
+    }
 }

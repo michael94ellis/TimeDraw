@@ -11,8 +11,8 @@ import EventKit
 struct EventListCell: View {
     
     var item: EKEvent
-    @ObservedObject private var eventList: EventListViewModel = .shared
-    @EnvironmentObject var floatingModifyViewModel: ModifyCalendarItemViewModel
+    @EnvironmentObject var itemList: CalendarItemListViewModel
+    @EnvironmentObject var modifyItemViewModel: ModifyCalendarItemViewModel
     @State var showDelete: Bool = false
     
     private let timeOnly = DateFormatter()
@@ -56,8 +56,8 @@ struct EventListCell: View {
                 .padding(.horizontal)
                 if self.showDelete {
                     Button(action: {
-                        self.eventList.performAsyncDelete(for: self.item)
-                        self.floatingModifyViewModel.displayToast("Event Deleted")
+                        self.itemList.performAsyncDelete(for: self.item)
+                        self.modifyItemViewModel.displayToast("Event Deleted")
                     }) {
                         VStack {
                             Spacer()
@@ -84,8 +84,8 @@ struct EventListCell: View {
                     self.showDelete = false
                 } else if direction == .right {
                     if value.translation.width < -150 {
-                        self.eventList.performAsyncDelete(for: self.item)
-                        self.floatingModifyViewModel.displayToast("Event Deleted")
+                        self.itemList.performAsyncDelete(for: self.item)
+                        self.modifyItemViewModel.displayToast("Event Deleted")
                     } else {
                         self.showDelete = true
                     }
@@ -94,7 +94,7 @@ struct EventListCell: View {
         }).exclusively(before:TapGesture().onEnded({
             withAnimation {
                 self.showDelete = false
-                self.floatingModifyViewModel.open(event: item)
+                self.modifyItemViewModel.open(event: item)
             }
         })))
     }

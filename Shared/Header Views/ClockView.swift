@@ -19,7 +19,7 @@ struct TimeDrawClock: View {
     @State var currentTime = Time(sec: 0, min: 0, hour: 0)
     @State var timer = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
     var width: CGFloat = 120
-    @ObservedObject var eventList: EventListViewModel = .shared
+    @ObservedObject var eventList: CalendarItemListViewModel = .shared
     
     func setCurrentTime()  {
         let calender = Calendar.current

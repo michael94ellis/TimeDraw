@@ -14,7 +14,7 @@ struct MainHeader: View {
     @State private var showCalendarSelectionPopover = false
     /// True means only show 1 week
     @AppStorage("compactHeader") private var showCompactCalendar = true
-    @ObservedObject private var eventList: EventListViewModel = .shared
+    @EnvironmentObject var itemList: CalendarItemListViewModel
     @State var swipeDirection: SwipeDirection = .left
     
     func transitionDirection(direction: SwipeDirection) -> AnyTransition {
@@ -37,10 +37,10 @@ struct MainHeader: View {
     
     func weekDayHeader(for date: Date) -> some View {
         Button(action: {
-            self.eventList.displayDate = date
+            self.itemList.displayDate = date
         }) {
             let today = Calendar.current.isDateInToday(date)
-            let display = Calendar.current.isDate(date, inSameDayAs: self.eventList.displayDate)
+            let display = Calendar.current.isDate(date, inSameDayAs: self.itemList.displayDate)
             VStack {
                 Text(self.weekdayFormatter.string(from: date))
                     .font(today || display ? .interSemiBold : .interLight)
@@ -53,7 +53,7 @@ struct MainHeader: View {
             .frame(width: 45)
             .padding(.vertical, 8)
             .padding(.horizontal, 1)
-            .if(Calendar.current.isDate(date, inSameDayAs: self.eventList.displayDate)) { view in
+            .if(Calendar.current.isDate(date, inSameDayAs: self.itemList.displayDate)) { view in
                 view.background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.2)))
             }
         }
@@ -66,9 +66,9 @@ struct MainHeader: View {
         let amount: Int = self.showCompactCalendar ? 7 : 1
         switch value {
         case .left:
-            self.eventList.displayDate = Calendar.current.date(byAdding: type, value: -amount, to: self.eventList.displayDate) ?? Date()
+            self.itemList.displayDate = Calendar.current.date(byAdding: type, value: -amount, to: self.itemList.displayDate) ?? Date()
         case .right:
-            self.eventList.displayDate = Calendar.current.date(byAdding: type, value: amount, to: self.eventList.displayDate) ?? Date()
+            self.itemList.displayDate = Calendar.current.date(byAdding: type, value: amount, to: self.itemList.displayDate) ?? Date()
         default:
             self.showCompactCalendar.toggle()
         }
@@ -77,7 +77,7 @@ struct MainHeader: View {
     func toggleMonthButton(forward: Bool) -> some View {
         Button(action: {
             withAnimation {
-                self.eventList.displayDate = Calendar.current.date(byAdding: .month, value: forward ? 1 : -1, to: self.eventList.displayDate) ?? Date()
+                self.itemList.displayDate = Calendar.current.date(byAdding: .month, value: forward ? 1 : -1, to: self.itemList.displayDate) ?? Date()
             }
         }) {
             Image(systemName: forward ? "chevron.right" : "chevron.left")
@@ -92,7 +92,7 @@ struct MainHeader: View {
                     self.showCompactCalendar.toggle()
                 }
             }) {
-                Text(self.monthYearFormatter.string(from: self.eventList.displayDate))
+                Text(self.monthYearFormatter.string(from: self.itemList.displayDate))
                     .font(.interExtraBoldTitle)
                     .fontWeight(.semibold)
                     .foregroundColor(Color.red1)
@@ -125,14 +125,14 @@ struct MainHeader: View {
             if self.showCompactCalendar {
                 self.headerNav
                 HStack {
-                    ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.eventList.displayDate), id: \.self) { date in
+                    ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.itemList.displayDate), id: \.self) { date in
                         self.weekDayHeader(for: date)
                     }
                     .transition(self.transitionDirection(direction: self.swipeDirection))
                 }
             } else {
                 self.headerNav
-                CalendarDateSelection(date: self.$eventList.displayDate, showCompactCalendar: self.$showCompactCalendar)
+                CalendarDateSelection(date: self.$itemList.displayDate, showCompactCalendar: self.$showCompactCalendar)
                     .transition(self.switchTransition(direction: self.swipeDirection))
                     .padding(.top, 8)
                     .padding(.horizontal, 25)

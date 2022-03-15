@@ -12,20 +12,20 @@ import EventKit
 struct ReminderListCell: View {
     
     var item: EKReminder
-    @ObservedObject private var eventList: EventListViewModel = .shared
-    @EnvironmentObject var floatingModifyViewModel: ModifyCalendarItemViewModel
+    @EnvironmentObject var itemList: CalendarItemListViewModel
+    @EnvironmentObject var modifyItemViewModel: ModifyCalendarItemViewModel
     @State var showComplete: Bool = false
     @State var showDelete: Bool = false
     
     func performComplete() {
-        self.eventList.performAsyncCompleteReminder(for: self.item)
-        self.floatingModifyViewModel.saveAndDisplayToast(reminder: self.item, "Completed")
-        self.floatingModifyViewModel.displayToast("Reminder Completed")
+        self.itemList.performAsyncCompleteReminder(for: self.item)
+        self.modifyItemViewModel.saveAndDisplayToast(reminder: self.item, "Completed")
+        self.modifyItemViewModel.displayToast("Reminder Completed")
     }
     
     func performDelete() {
-        self.eventList.performAsyncDelete(for: self.item)
-        self.floatingModifyViewModel.displayToast("Event Deleted")
+        self.itemList.performAsyncDelete(for: self.item)
+        self.modifyItemViewModel.displayToast("Event Deleted")
     }
     
     var body: some View {
@@ -94,8 +94,8 @@ struct ReminderListCell: View {
                 .padding(.horizontal)
                 if self.showDelete {
                     Button(action: {
-                        self.eventList.performAsyncDelete(for: self.item)
-                        self.floatingModifyViewModel.displayToast("Event Deleted")
+                        self.itemList.performAsyncDelete(for: self.item)
+                        self.modifyItemViewModel.displayToast("Event Deleted")
                     }) {
                         VStack {
                             Spacer()
@@ -142,7 +142,7 @@ struct ReminderListCell: View {
             withAnimation {
                 self.showDelete = false
                 self.showComplete = false
-                self.floatingModifyViewModel.open(reminder: item)
+                self.modifyItemViewModel.open(reminder: item)
             }
         })))
     }

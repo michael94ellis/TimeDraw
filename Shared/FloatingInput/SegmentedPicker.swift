@@ -10,14 +10,15 @@ import SwiftUI
 public struct SegmentedPicker<T: Equatable, Content: View>: View {
     
     @Namespace private var selectionAnimation
-    @State var selectedItem: T?
+    @Binding var selectedItem: T?
     private let items: [T]
     private let content: (T) -> Content
 
     public init(_ items: [T],
-                selectedIndex: Binding<Int>,
+                selectedItem: Binding<T?>,
                 @ViewBuilder content: @escaping (T) -> Content) {
         self.items = items
+        self._selectedItem = selectedItem
         self.content = content
     }
     

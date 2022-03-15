@@ -28,19 +28,18 @@ struct FloatingEventInput: View {
                 action()
             }
         }) {
-            Group { // Meaningless Container}
+//            Group { // Meaningless Container
                 Image(systemName: image)
                     .resizable()
                     .frame(width: 30, height: 32)
                     .foregroundColor(color)
-            }
-            .frame(width: 55, height: 55)
         }
+        .frame(width: 55, height: 55)
         .background(RoundedRectangle(cornerRadius: 13)
                         .fill(Color(uiColor: .systemGray6))
                         .shadow(radius: 4, x: 2, y: 4))
-        .buttonStyle(.plain)
         .contentShape(Rectangle())
+        .buttonStyle(.plain)
     }
     
     @ViewBuilder var selectCalendarButton: some View {
@@ -119,6 +118,53 @@ struct FloatingEventInput: View {
         }
     }
     
+    var floatingTextBar: some View {
+        HStack {
+            EmojiButton()
+            TextField("", text: self.$viewModel.newItemTitle)
+                .focused(self.$isNewEventFocused)
+                .onChange(of: self.viewModel.isAddEventTextFieldFocused) {
+                    // Handle changes of the textfield focus from the view model's perspective
+                    self.viewModel.isAddEventTextFieldFocused = $0
+                    self.isNewEventFocused = $0
+                }
+                .submitLabel(.done)
+                .onSubmit {
+                    // User tapped Keyboard Done button
+//                        self.viewModel.submitEventOrReminder()
+                    self.isNewEventFocused = false
+                }
+                .gesture(TapGesture().onEnded({
+                    // User tapped textfield - is attempting to add event
+                    withAnimation {
+                        self.isBackgroundBlurred = true
+                        self.isNewEventFocused = true
+                    }
+                }))
+                .placeholder(when: self.viewModel.newItemTitle.isEmpty) {
+                    Text("New Event or Reminder").foregroundColor(.gray)
+                }
+            // Submit Button
+            // TODO Show something other than checkmark for failed submit
+            Button(action: {
+                // User submitted event by tapping plus
+                self.viewModel.submitEventOrReminder()
+                self.isNewEventFocused = false
+            }) {
+                Image(systemName: self.viewModel.displayToast ? "checkmark.circle" : self.viewModel.editMode ? "circle" : "plus")
+                    .frame(width: self.barHeight, height: self.barHeight)
+                    .foregroundColor(Color(uiColor: .label))
+                    .frame(width: 60, height: 55)
+                    .background(.clear)
+            }
+        }
+        .frame(height: self.barHeight)
+        .frame(maxWidth: 600)
+        .background(RoundedRectangle(cornerRadius: 13)
+                        .fill(Color(uiColor: .systemGray6))
+                        .shadow(radius: 4, x: 2, y: 2))
+    }
+    
     var body: some View {
         VStack {
             Spacer()
@@ -128,50 +174,7 @@ struct FloatingEventInput: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .padding(.bottom, 8)
-            HStack {
-                EmojiButton()
-                TextField("", text: self.viewModel.newItemTitleBinding)
-                    .focused(self.$isNewEventFocused)
-                    .onChange(of: self.viewModel.isAddEventTextFieldFocused) {
-                        // Handle changes of the textfield focus from the view model's perspective
-                        self.viewModel.isAddEventTextFieldFocused = $0
-                        self.isNewEventFocused = $0
-                    }
-                    .submitLabel(.done)
-                    .onSubmit {
-                        // User tapped Keyboard Done button
-                        self.viewModel.submitEventOrReminder()
-                        self.isNewEventFocused = false
-                    }
-                    .gesture(TapGesture().onEnded({
-                        // User tapped textfield - is attempting to add event
-                        withAnimation {
-                            self.isBackgroundBlurred = true
-                            self.isNewEventFocused = true
-                        }
-                    }))
-                    .placeholder(when: self.viewModel.newItemTitle.isEmpty) {
-                        Text("New Event or Reminder").foregroundColor(.gray)
-                    }
-                // Submit Button
-                // TODO Show something other than checkmark for failed submit
-                Button(action: {
-                    // User submitted event by tapping plus
-                    self.viewModel.submitEventOrReminder()
-                    self.isNewEventFocused = false
-                }) {
-                    Image(systemName: self.viewModel.displayToast ? "checkmark.circle" : self.viewModel.editMode ? "circle" : "plus")
-                        .frame(width: self.barHeight, height: self.barHeight)
-                        .foregroundColor(Color(uiColor: .label))
-                        .frame(width: 60, height: 55)
-                        .background(.clear)
-                }
-            }
-            .frame(height: self.barHeight)
-            .frame(maxWidth: 600)
-            .background(RoundedRectangle(cornerRadius: 13)
-                            .fill(Color(uiColor: .systemGray6))
-                            .shadow(radius: 4, x: 2, y: 2))
+            self.floatingTextBar
         }
         .padding(14)
         .toast(isPresenting: Binding<Bool>(get: { self.viewModel.displayToast }, set: { self.viewModel.displayToast = $0 }), duration: 2, tapToDismiss: true, alert: {

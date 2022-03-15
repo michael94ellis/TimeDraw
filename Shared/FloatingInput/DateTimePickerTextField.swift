@@ -21,6 +21,7 @@ final class DateTimePickerTextField: UITextField {
         datePicker.date = date.wrappedValue ?? Date()
         datePicker.addTarget(self, action: #selector(datePickerDidSelect(_:)), for: .valueChanged)
         datePicker.datePickerMode = mode
+        datePicker.minuteInterval = AppSettings.shared.timePickerGranularity
         datePicker.preferredDatePickerStyle = .wheels
         let toolBar = UIToolbar()
         toolBar.barTintColor = .systemGray4

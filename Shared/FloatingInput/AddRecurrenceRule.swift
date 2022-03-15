@@ -60,13 +60,14 @@ struct AddRecurrenceRule: View {
         .padding(.top)
     }
     
-    var rulePickerBinding: Binding<Int> {
-        Binding<Int>(get: { self.viewModel.selectedRule.rawValue }, set: { self.viewModel.selectedRule = EKRecurrenceFrequency(rawValue: $0) ?? .daily })
+    var rulePickerBinding: Binding<String?> {
+        Binding<String?>(get: { self.viewModel.selectedRule.description }, set: { newRule in
+            self.viewModel.selectedRule = EKRecurrenceFrequency.allCases.first(where: { $0.description == newRule }) ?? .daily })
     }
     
     var rulePicker: some View {
         SegmentedPicker(EKRecurrenceFrequency.allCases.compactMap({ $0.description }),
-                        selectedIndex: self.rulePickerBinding,
+                        selectedItem: self.rulePickerBinding,
                         content: { item in
             Text(item)
                 .font(.interRegular)

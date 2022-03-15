@@ -20,6 +20,7 @@ struct SettingsView: View {
     let vineetURL = "https://www.vineetk.com/"
     let michaelURL = "https://www.michaelrobertellis.com/"
     let byaruhofURL = "https://github.com/byaruhaf"
+    let contactURL = "https://www.michaelrobertellis.com/contact"
     
     func link(for url: String, title: String) -> some View {
         Link(destination: URL(string: url)!) {
@@ -39,7 +40,7 @@ struct SettingsView: View {
         self.link(for: self.vineetURL, title: "Design: Vineet Kapil")
         self.link(for: self.michaelURL, title: "iOS: Michael Robert Ellis")
         self.link(for: self.byaruhofURL, title: "Additional Help: Franklin Byaruhof")
-        Button(action: { }, label: {
+        Link(destination: URL(string: self.contactURL)!) {
             Spacer()
             Image("smile.face")
                 .resizable()
@@ -47,11 +48,10 @@ struct SettingsView: View {
             Text("Send Feedback!")
                 .frame(height: 48)
             Spacer()
-        }).buttonStyle(.plain)
-            .frame(height: 48)
-            .background(RoundedRectangle(cornerRadius: 34)
-                            .fill(Color(uiColor: .systemGray6)))
-            .padding(.horizontal, 20)
+        }
+        .background(RoundedRectangle(cornerRadius: 34)
+                        .fill(Color(uiColor: .systemGray6)))
+        .padding(.horizontal, 20)
         Spacer()
         Spacer()
         Text("Version:\(Bundle.main.releaseVersionNumber) (\(Bundle.main.buildVersionNumber))")

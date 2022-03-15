@@ -11,7 +11,7 @@ import AlertToast
 
 struct FloatingEventInput: View {
     
-    @ObservedObject var appSettings: AppSettings = .shared
+    @EnvironmentObject var appSettings: AppSettings
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
     
     @FocusState var isNewEventFocused: Bool
@@ -28,18 +28,22 @@ struct FloatingEventInput: View {
                 action()
             }
         }) {
-//            Group { // Meaningless Container
-                Image(systemName: image)
-                    .resizable()
-                    .frame(width: 30, height: 32)
-                    .foregroundColor(color)
+            RoundedRectangle(cornerRadius: 13)
+                            .fill(Color(uiColor: .systemGray6))
+                            .shadow(radius: 4, x: 2, y: 4)
+                            .overlay(Image(systemName: image)
+                                        .resizable()
+                                        .frame(width: 30, height: 32)
+                                        .foregroundColor(color))
+                            .frame(width: 55, height: 55)
         }
-        .frame(width: 55, height: 55)
-        .background(RoundedRectangle(cornerRadius: 13)
-                        .fill(Color(uiColor: .systemGray6))
-                        .shadow(radius: 4, x: 2, y: 4))
         .contentShape(Rectangle())
         .buttonStyle(.plain)
+        .onTapGesture {
+            withAnimation {
+                action()
+            }
+        }
     }
     
     @ViewBuilder var selectCalendarButton: some View {

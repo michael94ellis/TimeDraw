@@ -11,7 +11,7 @@ struct CalendarDateSelection: View {
     
     @Binding var showCompactCalendar: Bool
     @Binding private var selectedDate: Date
-    @ObservedObject private var itemList: CalendarItemListViewModel = .shared
+    @EnvironmentObject var itemList: CalendarItemListViewModel
     
     init(date: Binding<Date>, showCompactCalendar: Binding<Bool>) {
         self._showCompactCalendar = showCompactCalendar

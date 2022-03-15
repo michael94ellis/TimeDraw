@@ -9,10 +9,10 @@ import SwiftUI
 
 struct SettingsControls:View {
     
-    @ObservedObject var appSettings: AppSettings = .shared
+    @EnvironmentObject var appSettings: AppSettings
         
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: 8) {
             VStack {
                 Toggle("Enable Daily Goal Text Area", isOn: self.appSettings.$isDailyGoalEnabled)
                     .padding(.horizontal)
@@ -42,7 +42,6 @@ struct SettingsControls:View {
                 .clipped()
             }
             .frame(height: 60)
-            .border(.red)
             // Calendar Selection Popup Screen
             CalendarSelectionButton()
             // Show and Hide Segmented Pickers

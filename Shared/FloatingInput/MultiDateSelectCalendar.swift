@@ -12,7 +12,7 @@ struct CalendarMultiDateSelection: View {
     
     private var viewDate: Date = Date()
     @Binding private var selectedDates: [Int]
-    @ObservedObject private var eventList: CalendarItemListViewModel = .shared
+    @EnvironmentObject var itemList: CalendarItemListViewModel
     
     init(selectedDates: Binding<[Int]>) {
         self._selectedDates = selectedDates

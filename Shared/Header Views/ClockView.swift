@@ -19,7 +19,8 @@ struct TimeDrawClock: View {
     @State var currentTime = Time(sec: 0, min: 0, hour: 0)
     @State var timer = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
     var width: CGFloat = 120
-    @ObservedObject var eventList: CalendarItemListViewModel = .shared
+    @EnvironmentObject var itemList: CalendarItemListViewModel
+    @EnvironmentObject var modifyItemViewModel: ModifyCalendarItemViewModel
     
     func setCurrentTime()  {
         let calender = Calendar.current
@@ -37,13 +38,13 @@ struct TimeDrawClock: View {
         }
         if [.left, .right].contains(direction) {
             withAnimation {
-                self.eventList.displayDate = Calendar.current.date(byAdding: .day, value: direction == .right ? 1 : -1, to: self.eventList.displayDate) ?? Date()
+                self.itemList.displayDate = Calendar.current.date(byAdding: .day, value: direction == .right ? 1 : -1, to: self.itemList.displayDate) ?? Date()
             }
         }
     }
         
     @ViewBuilder var timeCircles: some View {
-        ForEach(self.eventList.events ,id: \.self) { event in
+        ForEach(self.itemList.events ,id: \.self) { event in
             if event.isAllDay {
                 PartialCircleBorder(start: 0, end: 360, radius: self.width * 1.1, width: 2)
                     .foregroundColor(Color(cgColor: event.calendar.cgColor))
@@ -52,7 +53,7 @@ struct TimeDrawClock: View {
                     .foregroundColor(Color(cgColor: event.calendar.cgColor))
             }
         }
-        ForEach(self.eventList.reminders ,id: \.self) { reminder in
+        ForEach(self.itemList.reminders ,id: \.self) { reminder in
             PartialCircleBorder(startComponents: reminder.startDateComponents, endComponents: reminder.dueDateComponents, radius: self.width / 2, width: 16)
                 .foregroundColor(Color(reminder.calendar.cgColor))
         }

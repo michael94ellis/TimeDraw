@@ -14,9 +14,8 @@ struct MainView: View {
     private let date = Date()
     @State var showClockView: Bool = true
     @FocusState private var isDailyGoalFocused: Bool
-    @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
-    @AppStorage("isTimeDrawClockEnabled") var isTimeDrawClockEnabled: Bool = true
     @State var swipeDirection: SwipeDirection = .left
+    @ObservedObject private var appSettings: AppSettings = .shared
     @ObservedObject private var listViewModel: CalendarItemListViewModel = .shared
     @StateObject private var itemViewModel: ModifyCalendarItemViewModel = ModifyCalendarItemViewModel()
     
@@ -41,11 +40,11 @@ struct MainView: View {
             // Primary Display
             VStack {
                 MainHeader()
-                if self.isDailyGoalEnabled {
+                if self.appSettings.isDailyGoalEnabled {
                     DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
                 }
                 Spacer()
-                if self.isTimeDrawClockEnabled {
+                if self.appSettings.isTimeDrawClockEnabled {
                     if self.showClockView {
                         TimeDrawClock(showClockView: self.$showClockView)
                     }
@@ -71,10 +70,11 @@ struct MainView: View {
             VStack {
                 Spacer()
                 FloatingEventInput(isBackgroundBlurred: self.$itemViewModel.isAddEventTextFieldFocused)
-                    .environmentObject(self.itemViewModel)
-                    .environmentObject(self.listViewModel)
                     .padding(.bottom, 16)
             }
         }
+        .environmentObject(self.itemViewModel)
+        .environmentObject(self.listViewModel)
+        .environmentObject(self.appSettings)
     }
 }

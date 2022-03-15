@@ -38,7 +38,7 @@ struct SettingsView: View {
     @ViewBuilder var settingsFooter: some View {
         self.link(for: self.vineetURL, title: "Design: Vineet Kapil")
         self.link(for: self.michaelURL, title: "iOS: Michael Robert Ellis")
-        self.link(for: self.byaruhofURL, title: "iOS: Franklin Byaruhof")
+        self.link(for: self.byaruhofURL, title: "Additional Help: Franklin Byaruhof")
         Button(action: { }, label: {
             Spacer()
             Image("smile.face")

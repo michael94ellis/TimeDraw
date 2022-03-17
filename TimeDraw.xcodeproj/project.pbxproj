@@ -129,6 +129,10 @@
 		2FB41CDB27DEE1850067F250 /* EmojiButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD927DEE1850067F250 /* EmojiButton.swift */; };
 		2FB41CDD27DEE4DE0067F250 /* SegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CDC27DEE4DE0067F250 /* SegmentedPicker.swift */; };
 		2FB41CDE27DEE4DE0067F250 /* SegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CDC27DEE4DE0067F250 /* SegmentedPicker.swift */; };
+		2FB60E4927E21571004DA305 /* ClockEventLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB60E4827E21571004DA305 /* ClockEventLine.swift */; };
+		2FB60E4A27E21571004DA305 /* ClockEventLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB60E4827E21571004DA305 /* ClockEventLine.swift */; };
+		2FB60E4C27E21690004DA305 /* ClockFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB60E4B27E21690004DA305 /* ClockFace.swift */; };
+		2FB60E4D27E21690004DA305 /* ClockFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB60E4B27E21690004DA305 /* ClockFace.swift */; };
 		2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
@@ -221,6 +225,8 @@
 		2FB41CD627DEDBB70067F250 /* SettingsControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControls.swift; sourceTree = "<group>"; };
 		2FB41CD927DEE1850067F250 /* EmojiButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiButton.swift; sourceTree = "<group>"; };
 		2FB41CDC27DEE4DE0067F250 /* SegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedPicker.swift; sourceTree = "<group>"; };
+		2FB60E4827E21571004DA305 /* ClockEventLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockEventLine.swift; sourceTree = "<group>"; };
+		2FB60E4B27E21690004DA305 /* ClockFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockFace.swift; sourceTree = "<group>"; };
 		2FC6C7B42786434600D75568 /* MultiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTextField.swift; sourceTree = "<group>"; };
 		2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -443,6 +449,8 @@
 				2F6505022787A09900AF90F7 /* MainHeader.swift */,
 				2F2343FB27D454BC0064B635 /* CalendarView.swift */,
 				2FB41CAD27D97D710067F250 /* ClockView.swift */,
+				2FB60E4B27E21690004DA305 /* ClockFace.swift */,
+				2FB60E4827E21571004DA305 /* ClockEventLine.swift */,
 				2FB41CCF27DE4A9D0067F250 /* ClockHands.swift */,
 			);
 			path = "Header Views";
@@ -650,6 +658,7 @@
 				2FB41CB727DACB8E0067F250 /* AddNotesInput.swift in Sources */,
 				2F8AB30D27A220E400654FEF /* DateAndTimePickers.swift in Sources */,
 				2F81230C2797B59500458B1A /* AddEventDateTimePicker.swift in Sources */,
+				2FB60E4C27E21690004DA305 /* ClockFace.swift in Sources */,
 				2F39B86E27823CF700FE72C3 /* TimeDrawApp.swift in Sources */,
 				2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */,
 				2F542010279B4AE90046696B /* ModifyCalendarItemViewModel.swift in Sources */,
@@ -668,6 +677,7 @@
 				2FB41CD427DEDB3F0067F250 /* AppSettings.swift in Sources */,
 				2F24458827D8BDD0005BF37D /* SwipeGesture.swift in Sources */,
 				2F2111302799B62D0041EE85 /* EventsAndRemindersMainList.swift in Sources */,
+				2FB60E4927E21571004DA305 /* ClockEventLine.swift in Sources */,
 				2F6505062787DA3C00AF90F7 /* FloatingEventInput.swift in Sources */,
 				2F42C59D2784E3DE00F0BEB2 /* EventKitManager.swift in Sources */,
 				2F2343FC27D454BC0064B635 /* CalendarView.swift in Sources */,
@@ -704,6 +714,7 @@
 				2FB41CB827DACB8E0067F250 /* AddNotesInput.swift in Sources */,
 				2F8AB30E27A220E400654FEF /* DateAndTimePickers.swift in Sources */,
 				2F81230D2797B59500458B1A /* AddEventDateTimePicker.swift in Sources */,
+				2FB60E4D27E21690004DA305 /* ClockFace.swift in Sources */,
 				2F39B86F27823CF700FE72C3 /* TimeDrawApp.swift in Sources */,
 				2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */,
 				2F542011279B4AE90046696B /* ModifyCalendarItemViewModel.swift in Sources */,
@@ -722,6 +733,7 @@
 				2FB41CD527DEDB3F0067F250 /* AppSettings.swift in Sources */,
 				2F24458927D8BDD0005BF37D /* SwipeGesture.swift in Sources */,
 				2F2111312799B62D0041EE85 /* EventsAndRemindersMainList.swift in Sources */,
+				2FB60E4A27E21571004DA305 /* ClockEventLine.swift in Sources */,
 				2F6505072787DA3C00AF90F7 /* FloatingEventInput.swift in Sources */,
 				2F42C59E2784E3DE00F0BEB2 /* EventKitManager.swift in Sources */,
 				2F2343FD27D454BC0064B635 /* CalendarView.swift in Sources */,

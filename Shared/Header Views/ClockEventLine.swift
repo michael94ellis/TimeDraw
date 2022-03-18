@@ -103,18 +103,24 @@ struct ClockEventLine: Shape {
         case .both:
             // morning
             path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: amRadius, startAngle: .degrees(self.startDegrees), endAngle: .degrees(-110), clockwise: false)
-            // noon crossover
-            let control1 = CGPoint(x: rect.maxX * 0.6, y: rect.maxY * 0.05)
-            let control2 = CGPoint(x: rect.maxX * 0.4, y: 0 - rect.maxY * 0.03)
-            path.addCurve(to: self.getPoint(radius: pmRadius, in: rect, for: (360-80).radians()), control1: control1, control2: control2)
+            // noon crossover vars
+            let noonDegrees: Double = 270
+            let afternoonCrossoverDegrees: Double = 360-80
+            let control1: CGPoint = CGPoint(x: rect.maxX * 0.6, y: rect.maxY * 0.05)
+            let control2: CGPoint = CGPoint(x: rect.maxX * 0.4, y: 0 - rect.maxY * 0.03)
             // evening
-            print(self.endDegrees)
-            print(max(360-80, self.endDegrees))
-            print(Angle.degrees(-80))
-            print(Angle.degrees(self.endDegrees))
-//            if self.endDegrees != 360-80 {
-                path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: pmRadius, startAngle: .degrees(360-80), endAngle: .degrees(self.endDegrees), clockwise: false)
-//            }
+//            print(self.endDegrees)
+//            print(max(afternoonCrossoverDegrees, self.endDegrees))
+            if self.endDegrees > afternoonCrossoverDegrees {
+                // Add curve and keep going
+                path.addCurve(to: self.getPoint(radius: pmRadius, in: rect, for: (afternoonCrossoverDegrees).radians()), control1: control1, control2: control2)
+                path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: pmRadius, startAngle: .degrees(afternoonCrossoverDegrees), endAngle: .degrees(self.endDegrees), clockwise: false)
+            } else if self.endDegrees == noonDegrees {
+                let noonPoint = self.getPoint(radius: self.radius, in: rect, for: (noonDegrees).radians())
+                path.addCurve(to: noonPoint, control1: control1, control2: noonPoint)
+            } else { // Time is shortly after noon
+                path.addCurve(to: self.getPoint(radius: pmRadius, in: rect, for: (self.endDegrees).radians()), control1: control1, control2: control2)
+            }
         }
         let lineDashes: [CGFloat] = (self.start == nil && self.startComponents == nil) ? [10, 5] : []
         return path.strokedPath(.init(lineWidth: self.width, lineCap: .square, lineJoin: .miter, dash: lineDashes))

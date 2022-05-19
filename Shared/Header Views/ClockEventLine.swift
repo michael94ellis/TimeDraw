@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ClockEventLine: Shape {
-    
+    /// This signifies if the Event happens in the AM, PM ,or both
     enum EventType {
         case morning
         case evening
@@ -58,8 +58,9 @@ struct ClockEventLine: Shape {
         self.endDegrees = self.getAngle(with: endComponents)
     }
     
+    /// Used to determine if this EventLine will be in AM, PM, or both
     func getType() -> EventType {
-        if startComponents?.hour ?? 13 <= 12 || start?.get(.hour) ?? 13 <= 12 {
+        if startComponents?.hour ?? 13 < 12 || start?.get(.hour) ?? 13 < 12 {
             if endComponents?.hour ?? 0 >= 12 || end?.get(.hour) ?? 0 >= 12 {
                 return .both
             } else {

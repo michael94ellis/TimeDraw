@@ -22,6 +22,7 @@ class AppSettings: ObservableObject {
     
     @AppStorage("showRecurringItems") var showRecurringItems: Bool = true
     @AppStorage("showNotes") var showNotes: Bool = false
+    @AppStorage("noteLineLimit") var noteLineLimit: Int = 3
     static let shared = AppSettings()
     
     private init() { }

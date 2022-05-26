@@ -42,7 +42,7 @@ struct AddNotesInput: View {
                 Divider().padding(.horizontal)
                 if !self.notesCollapsed {
                     HStack {
-                        MultilineTextField("Tap To Add Notes", text: self.$viewModel.notesInput, focus: self.$notesInputFocus)
+                        MultilineTextField("Tap To Add Notes", text: self.$viewModel.notesInput, focus: self.$notesInputFocus, lineLimit: AppSettings.shared.$noteLineLimit)
                             .frame(maxWidth: 600)
                             .background(RoundedRectangle(cornerRadius: 8)
                                             .fill(Color(uiColor: .systemGray5))

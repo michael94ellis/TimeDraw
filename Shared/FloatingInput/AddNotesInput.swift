@@ -12,11 +12,20 @@ struct AddNotesInput: View {
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
     @FocusState var notesInputFocus: Bool
     private let barHeight: CGFloat = 96
+    /// If notes are added to this event through the `viewModel` this will control the collapse state of the notes text area
+    @State var notesCollapsed: Bool = false
     
     var header: some View {
         HStack {
-            Text("Notes")
-                .padding(.horizontal)
+            Button(action: {
+                withAnimation {
+                    self.notesCollapsed.toggle()
+                }
+            }) {
+                Image(systemName: self.notesCollapsed ? "chevron.down" : "chevron.up")
+                Text("Notes")
+            }
+            .padding(.horizontal)
             Spacer()
             Button(action: { self.viewModel.removeNotesFromEvent() }) {
                 Text("Remove").foregroundColor(.red1)
@@ -31,14 +40,16 @@ struct AddNotesInput: View {
             VStack {
                 self.header
                 Divider().padding(.horizontal)
-                HStack {
-                    MultilineTextField("Tap To Add Notes", text: self.$viewModel.notesInput, focus: self.$notesInputFocus)
-                        .frame(maxWidth: 600)
-                        .background(RoundedRectangle(cornerRadius: 8)
-                                        .fill(Color(uiColor: .systemGray5))
-                                        .shadow(radius: 4, x: 2, y: 4))
-                        .padding(.horizontal)
-                        .padding(.bottom)
+                if !self.notesCollapsed {
+                    HStack {
+                        MultilineTextField("Tap To Add Notes", text: self.$viewModel.notesInput, focus: self.$notesInputFocus)
+                            .frame(maxWidth: 600)
+                            .background(RoundedRectangle(cornerRadius: 8)
+                                            .fill(Color(uiColor: .systemGray5))
+                                            .shadow(radius: 4, x: 2, y: 4))
+                            .padding(.horizontal)
+                            .padding(.bottom)
+                    }
                 }
             }
             .frame(maxWidth: 600)

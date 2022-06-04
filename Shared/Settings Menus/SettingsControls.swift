@@ -20,8 +20,6 @@ struct SettingsControls:View {
                     .padding(.horizontal)
                 Toggle("Show Recurrence", isOn: self.appSettings.$showRecurringItems)
                     .padding(.horizontal)
-                Toggle("Show Notes", isOn: self.appSettings.$showNotes)
-                    .padding(.horizontal)
                 Toggle("Show Calendar Picker", isOn: self.appSettings.$showCalendarPickerButton)
                     .padding(.horizontal)
                 Toggle("Show List Icons", isOn: self.appSettings.$showListIcons)
@@ -29,19 +27,31 @@ struct SettingsControls:View {
                     .onChange(of: self.appSettings.showListIcons, perform: { newValue in
                         CalendarItemListViewModel.shared.updateData()
                     })
+                Toggle("Show Notes", isOn: self.appSettings.$showNotes)
+                    .padding(.horizontal)
             }
-            HStack {
-                Text("Minute Granularity:")
-                Picker("", selection: self.appSettings.$timePickerGranularity) {
-                    ForEach([1, 2, 3, 5, 10, 12, 15, 20, 30], id: \.self) { minuteValue in
-                        Text(String(minuteValue))
+            VStack {
+                HStack {
+                    Text("Note Line Limit:")
+                    Picker("", selection: self.appSettings.$noteLineLimit) {
+                        ForEach([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30], id: \.self) { amount in
+                            Text(String(amount))
+                        }
                     }
+                    .frame(width: 100, height: 55)
+                    .clipped()
                 }
-                .pickerStyle(.inline)
-                .frame(width: 100, height: 55)
-                .clipped()
+                HStack {
+                    Text("Time Selection Interval:")
+                    Picker("", selection: self.appSettings.$timePickerGranularity) {
+                        ForEach([1, 2, 3, 5, 10, 12, 15, 20, 30], id: \.self) { minuteValue in
+                            Text(String(minuteValue))
+                        }
+                    }
+                    .frame(width: 100, height: 55)
+                    .clipped()
+                }
             }
-            .frame(height: 60)
             // Calendar Selection Popup Screen
             CalendarSelectionButton()
             // Show and Hide Segmented Pickers

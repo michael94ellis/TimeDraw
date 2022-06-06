@@ -447,6 +447,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     }
     
     @MainActor func handleError(_ error: NSError) {
+        print(error.description)
         switch error.code {
         case 1: // 1   No Calendar Selected
             self.displayToast("Please Select A Calendar")
@@ -455,6 +456,8 @@ class ModifyCalendarItemViewModel: ObservableObject {
         case 22: // 22  Calendar is for Reminders Only
             self.displayToast("Please Select Events Calendar")
         case 23: // 23  Calendar is for Events Only
+            self.displayToast("Please Select Reminders Calendar")
+        case 24: // 24  --- why?
             self.displayToast("Please Select Reminders Calendar")
         case 4: // 4 Start date is after End date
             self.displayToast("Invalid Start/End Dates")

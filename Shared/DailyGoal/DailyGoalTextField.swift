@@ -6,16 +6,17 @@
 //
 
 import SwiftUI
+import EventKit
 
 struct DailyGoalTextField: View {
     
     @AppStorage("DailyGoal") private var dailyGoal: String = "What is your goal today?"
     var isDailyGoalFocused: FocusState<Bool>.Binding
     // Placeholder line limit - this feature looks ugly with > 3 lines
-    let goalLineLimit = Binding(get: { 3 }, set: { _ in })
+    @State var goalLineLimit = 3
     
     var body: some View {
-        MultilineTextField("What is your goal today?", text: self.$dailyGoal, focus: self.isDailyGoalFocused, lineLimit: self.goalLineLimit)
+        MultilineTextField("What is your goal today?", text: self.$dailyGoal, focus: self.isDailyGoalFocused, lineLimit: self.$goalLineLimit)
             .font(.callout)
             .foregroundColor(Color.gray1)
             .multilineTextAlignment(.center)

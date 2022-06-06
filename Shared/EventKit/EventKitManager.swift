@@ -39,6 +39,7 @@ public final class EventKitManager {
     public func requestEventStoreAuthorization() async throws -> EKAuthorizationStatus {
         let granted = try await requestEventAccess()
         if granted {
+            self.eventStore = EKEventStore()
             return EKEventStore.authorizationStatus(for: .event)
         }
         else {

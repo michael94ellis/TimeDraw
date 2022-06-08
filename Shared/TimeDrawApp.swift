@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Firebase
+//import Firebase
 
 @main
 struct TimeDrawApp: App {
@@ -14,7 +14,7 @@ struct TimeDrawApp: App {
     let persistenceController = CoreDataManager.shared
     
     init() {
-        FirebaseApp.configure()
+//        FirebaseApp.configure()
         EventKitManager.configureWithAppName("TimeDraw")
         UIFont.overrideInitialize()
         if AppSettings.shared.userSelectedCalendars == nil || AppSettings.shared.userSelectedCalendars.loadCalendarIds().isEmpty {

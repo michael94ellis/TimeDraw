@@ -52,13 +52,6 @@ class CalendarItemListViewModel: ObservableObject {
         }
     }
     
-    /// For EKCalendarItmes
-    func performAsyncDelete(for item: EKCalendarItem) {
-        Task {
-            self.delete(item)
-        }
-    }
-    
     func performAsyncCompleteReminder(for reminder: EKReminder) {
         Task {
             reminder.isCompleted = true
@@ -93,6 +86,15 @@ class CalendarItemListViewModel: ObservableObject {
         })
     }
     
+    #if !os(watchOS)
+    
+    /// For EKCalendarItmes
+    func performAsyncDelete(for item: EKCalendarItem) {
+        Task {
+            self.delete(item)
+        }
+    }
+    
     @MainActor func delete(_ item: EKCalendarItem) {
         if let reminder = item as? EKReminder {
             self.reminders.removeAll(where: { $0 == reminder })
@@ -112,4 +114,5 @@ class CalendarItemListViewModel: ObservableObject {
             self.updateData()
         }
     }
+    #endif
 }

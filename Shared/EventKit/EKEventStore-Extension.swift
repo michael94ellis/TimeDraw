@@ -45,7 +45,8 @@ extension EKEventAvailability {
 }
 
 extension EKEventStore {
-
+    
+    #if !os(watchOS)
     // MARK: - Create
     
     /// Create an event
@@ -172,6 +173,7 @@ extension EKEventStore {
             return newCalendar
         }
     }
+    #endif
     
     /// Fetch an EKEvent instance with given identifier
     /// - Parameter identifier: event identifier
@@ -191,20 +193,5 @@ extension EKEventStore {
     func getIncompleteReminders(completion: @escaping ([EKReminder]?) -> Void) {
         let reminderPredicate: NSPredicate = self.predicateForIncompleteReminders(withDueDateStarting: nil, ending: nil, calendars: nil)
         self.fetchReminders(matching: reminderPredicate, completion: completion)
-    }
-    
-    // Unused - Future Feature
-    func removeExpiredReminders() {
-        let pastPredicate = self.predicateForIncompleteReminders(withDueDateStarting: nil, ending: Date(), calendars:[])
-        self.fetchReminders(matching: pastPredicate) { foundReminders in
-            guard let remindersToDelete = foundReminders,
-                  !remindersToDelete.isEmpty else {
-                      return
-                  }
-            for reminder in remindersToDelete {
-                try? self.remove(reminder, commit: false)
-            }
-            try? self.commit()
-        }
     }
 }

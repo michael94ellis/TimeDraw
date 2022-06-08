@@ -265,6 +265,8 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.frequencyMonthDate = Date().get(.month) - 1
     }
     
+    #if !os(watchOS)
+    
     @MainActor func delete() {
         if let reminder = self.calendarItem as? EKReminder {
             do {
@@ -410,7 +412,6 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.saveAndDisplayToast(reminder: reminder, "Reminder Saved")
         }
     }
-    
     @MainActor private func saveAndDisplayToast(event: EKEvent, _ message: String) {
         // This is where recurrence is created/updated
         // You can edit an existing event's recurrence earlier, but this point works for Create & Edit
@@ -439,6 +440,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.handleError(error)
         }
     }
+    #endif
     
     /// Update the Toast notification to alert the user
     @MainActor public func displayToast(_ message: String) {

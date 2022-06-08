@@ -86,6 +86,10 @@ class CalendarItemListViewModel: ObservableObject {
         })
     }
     
+    
+    // MARK: - Non Watch Functions
+    // Watch OS does not support these actions
+    // https://developer.apple.com/forums/thread/42293
     #if !os(watchOS)
     
     /// For EKCalendarItmes

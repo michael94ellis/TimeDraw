@@ -56,7 +56,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var isNotesInputOpen: Bool = false
     @Published var isRecurrencePickerOpen: Bool = false
     
-     // MARK: - Init/Open
+    // MARK: - Init/Open
     
     init() {
         self.frequencyMonthDate = Date().get(.month) - 1
@@ -240,7 +240,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.newItemStartDate = nil
         self.newItemEndDate = nil
         if let calendar = self.selectedCalendar,
-            calendar.allowedEntityTypes != .reminder {
+           calendar.allowedEntityTypes != .reminder {
             self.selectedCalendar = nil
         }
     }
@@ -250,7 +250,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.notesInput = ""
     }
     
-    private func clearRecurrence() {        
+    private func clearRecurrence() {
         self.isRecurrencePickerOpen = false
         self.isRecurrenceUsingOccurences = false
         self.recurrenceRule = nil
@@ -263,6 +263,68 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.frequencyWeekdayValues = []
         self.dayFrequencyText = ""
         self.frequencyMonthDate = Date().get(.month) - 1
+    }
+    
+    /// Update the Toast notification to alert the user
+    @MainActor public func displayToast(_ message: String) {
+        self.toastMessage = message
+        self.displayToast = true
+    }
+    
+    @MainActor func handleError(_ error: NSError) {
+        print(error.description)
+        switch error.code {
+        case 1: // 1   No Calendar Selected
+            self.displayToast("Please Select A Calendar")
+        case 6: // 6   Calendar is Read Only
+            self.displayToast("Calendar is Read Only")
+        case 22: // 22  Calendar is for Reminders Only
+            self.displayToast("Please Select Events Calendar")
+        case 23: // 23  Calendar is for Events Only
+            self.displayToast("Please Select Reminders Calendar")
+        case 24: // 24  --- why?
+            self.displayToast("Please Select Reminders Calendar")
+        case 4: // 4 Start date is after End date
+            self.displayToast("Invalid Start/End Dates")
+        default:
+            self.displayToast("Error: \(error.code)")
+        }
+    }
+    
+    func addTimeToEvent() {
+        withAnimation {
+            self.isDateTimePickerOpen = true
+        }
+    }
+    
+    func removeTimeFromEvent() {
+        withAnimation {
+            self.clearTimeInput()
+        }
+    }
+    
+    func addNotesToEvent() {
+        withAnimation {
+            self.isNotesInputOpen = true
+        }
+    }
+    
+    func removeNotesFromEvent() {
+        withAnimation {
+            self.clearNotesInput()
+        }
+    }
+    
+    func openRecurrencePicker() {
+        withAnimation {
+            self.isRecurrencePickerOpen = true
+        }
+    }
+    
+    func removeRecurrenceFromEvent() {
+        withAnimation {
+            self.clearRecurrence()
+        }
     }
     
     #if !os(watchOS)
@@ -345,7 +407,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
                     self.saveNewDates(for: reminder, newStart: mergedStartComponments, newEnd: mergedEndComponments)
                 }
                 
-            // Create New Events or Reminders
+                // Create New Events or Reminders
             } else if let startComponents = mergedStartComponments,
                       let endComponents = mergedEndComponments,
                       let startDate = Calendar.current.date(from: startComponents),
@@ -441,66 +503,4 @@ class ModifyCalendarItemViewModel: ObservableObject {
         }
     }
     #endif
-    
-    /// Update the Toast notification to alert the user
-    @MainActor public func displayToast(_ message: String) {
-        self.toastMessage = message
-        self.displayToast = true
-    }
-    
-    @MainActor func handleError(_ error: NSError) {
-        print(error.description)
-        switch error.code {
-        case 1: // 1   No Calendar Selected
-            self.displayToast("Please Select A Calendar")
-        case 6: // 6   Calendar is Read Only
-            self.displayToast("Calendar is Read Only")
-        case 22: // 22  Calendar is for Reminders Only
-            self.displayToast("Please Select Events Calendar")
-        case 23: // 23  Calendar is for Events Only
-            self.displayToast("Please Select Reminders Calendar")
-        case 24: // 24  --- why?
-            self.displayToast("Please Select Reminders Calendar")
-        case 4: // 4 Start date is after End date
-            self.displayToast("Invalid Start/End Dates")
-        default:
-            self.displayToast("Error: \(error.code)")
-        }
-    }
-    
-    func addTimeToEvent() {
-        withAnimation {
-            self.isDateTimePickerOpen = true
-        }
-    }
-    
-    func removeTimeFromEvent() {
-        withAnimation {
-            self.clearTimeInput()
-        }
-    }
-    
-    func addNotesToEvent() {
-        withAnimation {
-            self.isNotesInputOpen = true
-        }
-    }
-    
-    func removeNotesFromEvent() {
-        withAnimation {
-            self.clearNotesInput()
-        }
-    }
-    
-    func openRecurrencePicker() {
-        withAnimation {
-            self.isRecurrencePickerOpen = true
-        }
-    }
-    
-    func removeRecurrenceFromEvent() {
-        withAnimation {
-            self.clearRecurrence()
-        }
-    }
 }

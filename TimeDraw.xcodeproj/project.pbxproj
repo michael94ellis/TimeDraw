@@ -67,6 +67,8 @@
 		2F646BAD2850283D00D7445D /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050E2791370C00AF90F7 /* Inter-ExtraLight.ttf */; };
 		2F646BAE2850283D00D7445D /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505102791370C00AF90F7 /* Inter-Light.ttf */; };
 		2F646BAF2850283D00D7445D /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050D2791370C00AF90F7 /* Inter-Medium.ttf */; };
+		2F646BB1285038CF00D7445D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2F646BB0285038CF00D7445D /* README.md */; };
+		2F646BB2285038CF00D7445D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2F646BB0285038CF00D7445D /* README.md */; };
 		2F65050027879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */; };
 		2F65050127879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */; };
 		2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505022787A09900AF90F7 /* MainHeader.swift */; };
@@ -146,7 +148,6 @@
 		2FD4077E284FBB6F0022FC49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FD4077D284FBB6F0022FC49 /* Assets.xcassets */; };
 		2FD40784284FBB700022FC49 /* WatchFace WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2FD40783284FBB700022FC49 /* WatchFace WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2FD40789284FBB700022FC49 /* TimeDrawWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */; };
-		2FD4078B284FBB700022FC49 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4078A284FBB700022FC49 /* ContentView.swift */; };
 		2FD4078D284FBB700022FC49 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4078C284FBB700022FC49 /* NotificationController.swift */; };
 		2FD4078F284FBB700022FC49 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4078E284FBB700022FC49 /* NotificationView.swift */; };
 		2FD40791284FBB700022FC49 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD40790284FBB700022FC49 /* ComplicationController.swift */; };
@@ -281,6 +282,7 @@
 		2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKEventStore-Extension.swift"; sourceTree = "<group>"; };
 		2F42C5A52784E6FC00F0BEB2 /* EventError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventError.swift; sourceTree = "<group>"; };
 		2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyCalendarItemViewModel.swift; sourceTree = "<group>"; };
+		2F646BB0285038CF00D7445D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBarButtonItem.swift; sourceTree = "<group>"; };
 		2F6505022787A09900AF90F7 /* MainHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeader.swift; sourceTree = "<group>"; };
 		2F6505052787DA3C00AF90F7 /* FloatingEventInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingEventInput.swift; sourceTree = "<group>"; };
@@ -324,7 +326,6 @@
 		2FD4077D284FBB6F0022FC49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2FD40783284FBB700022FC49 /* WatchFace WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WatchFace WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawWatchApp.swift; sourceTree = "<group>"; };
-		2FD4078A284FBB700022FC49 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2FD4078C284FBB700022FC49 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		2FD4078E284FBB700022FC49 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		2FD40790284FBB700022FC49 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
@@ -417,6 +418,7 @@
 		2F39B83B27823CF600FE72C3 = {
 			isa = PBXGroup;
 			children = (
+				2F646BB0285038CF00D7445D /* README.md */,
 				2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */,
 				2FB41CA527D975A50067F250 /* GoogleService-Info.plist */,
 				2F39B84027823CF600FE72C3 /* Shared */,
@@ -603,7 +605,6 @@
 			isa = PBXGroup;
 			children = (
 				2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */,
-				2FD4078A284FBB700022FC49 /* ContentView.swift */,
 				2FD4078C284FBB700022FC49 /* NotificationController.swift */,
 				2FD4078E284FBB700022FC49 /* NotificationView.swift */,
 				2FD40790284FBB700022FC49 /* ComplicationController.swift */,
@@ -883,6 +884,7 @@
 				2F65051A2791370D00AF90F7 /* Inter-ExtraLight.ttf in Resources */,
 				2F6505242791370D00AF90F7 /* Inter-Bold.ttf in Resources */,
 				2FB41CA627D975A50067F250 /* GoogleService-Info.plist in Resources */,
+				2F646BB1285038CF00D7445D /* README.md in Resources */,
 				2F6505202791370D00AF90F7 /* Inter-ExtraBold.ttf in Resources */,
 				2F65051E2791370D00AF90F7 /* Inter-Light.ttf in Resources */,
 				2F6505142791370D00AF90F7 /* Inter-SemiBold.ttf in Resources */,
@@ -902,6 +904,7 @@
 				2F65051B2791370D00AF90F7 /* Inter-ExtraLight.ttf in Resources */,
 				2F6505252791370D00AF90F7 /* Inter-Bold.ttf in Resources */,
 				2FB41CA727D975A50067F250 /* GoogleService-Info.plist in Resources */,
+				2F646BB2285038CF00D7445D /* README.md in Resources */,
 				2F6505212791370D00AF90F7 /* Inter-ExtraBold.ttf in Resources */,
 				2F65051F2791370D00AF90F7 /* Inter-Light.ttf in Resources */,
 				2F6505152791370D00AF90F7 /* Inter-SemiBold.ttf in Resources */,
@@ -1115,7 +1118,6 @@
 				2FD407C7284FBC760022FC49 /* Utils.swift in Sources */,
 				2FD407CA284FBC7A0022FC49 /* EventKit-Extension.swift in Sources */,
 				2FD407CF284FBC860022FC49 /* Calendar-Extension.swift in Sources */,
-				2FD4078B284FBB700022FC49 /* ContentView.swift in Sources */,
 				2FD407C9284FBC7A0022FC49 /* Date-Extension.swift in Sources */,
 				2FD407D8284FBDFB0022FC49 /* EventKitManager.swift in Sources */,
 				2FD40791284FBB700022FC49 /* ComplicationController.swift in Sources */,

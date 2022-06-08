@@ -19,7 +19,7 @@ struct SettingsView: View {
     @Binding var showSettingsPopover: Bool
     let vineetURL = "https://www.vineetk.com/"
     let michaelURL = "https://www.michaelrobertellis.com/"
-    let byaruhofURL = "https://github.com/byaruhaf"
+    let ayushURL = "https://github.com/ac-dev01"
     let contactURL = "https://www.michaelrobertellis.com/contact"
     
     func link(for url: String, title: String) -> some View {
@@ -39,7 +39,7 @@ struct SettingsView: View {
     @ViewBuilder var settingsFooter: some View {
         self.link(for: self.vineetURL, title: "Design: Vineet Kapil")
         self.link(for: self.michaelURL, title: "iOS: Michael Robert Ellis")
-        self.link(for: self.byaruhofURL, title: "Additional Help: Franklin Byaruhof")
+        self.link(for: self.ayushURL, title: "iOS: Ayush Chaurasia")
         Link(destination: URL(string: self.contactURL)!) {
             Spacer()
             Image("smile.face")

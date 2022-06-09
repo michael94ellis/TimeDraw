@@ -45,7 +45,31 @@ extension EKEventAvailability {
 }
 
 extension EKEventStore {
-
+    
+    /// Fetch an EKEvent instance with given identifier
+    /// - Parameter identifier: event identifier
+    /// - Returns: an EKEvent instance with given identifier
+    func fetchEvent(identifier: String) -> EKEvent? {
+        self.event(withIdentifier: identifier)
+    }
+    
+    /// Fetch an EKEvent instance with given identifier
+    /// - Parameter identifier: event identifier
+    /// - Returns: an EKEvent instance with given identifier
+    func fetchReminder(identifier: String) -> EKReminder? {
+        self.calendarItem(withIdentifier: identifier) as? EKReminder
+    }
+    /// Fetch an EKEvent instance with given identifier
+    /// - Returns: All EKReminders that are incomplete
+    func getIncompleteReminders(completion: @escaping ([EKReminder]?) -> Void) {
+        let reminderPredicate: NSPredicate = self.predicateForIncompleteReminders(withDueDateStarting: nil, ending: nil, calendars: nil)
+        self.fetchReminders(matching: reminderPredicate, completion: completion)
+    }
+    
+    // MARK: - Non Watch Functions
+    // Watch OS does not support these actions
+    // https://developer.apple.com/forums/thread/42293
+    #if !os(watchOS)
     // MARK: - Create
     
     /// Create an event
@@ -172,39 +196,5 @@ extension EKEventStore {
             return newCalendar
         }
     }
-    
-    /// Fetch an EKEvent instance with given identifier
-    /// - Parameter identifier: event identifier
-    /// - Returns: an EKEvent instance with given identifier
-    func fetchEvent(identifier: String) -> EKEvent? {
-        self.event(withIdentifier: identifier)
-    }
-    
-    /// Fetch an EKEvent instance with given identifier
-    /// - Parameter identifier: event identifier
-    /// - Returns: an EKEvent instance with given identifier
-    func fetchReminder(identifier: String) -> EKReminder? {
-        self.calendarItem(withIdentifier: identifier) as? EKReminder
-    }
-    /// Fetch an EKEvent instance with given identifier
-    /// - Returns: All EKReminders that are incomplete
-    func getIncompleteReminders(completion: @escaping ([EKReminder]?) -> Void) {
-        let reminderPredicate: NSPredicate = self.predicateForIncompleteReminders(withDueDateStarting: nil, ending: nil, calendars: nil)
-        self.fetchReminders(matching: reminderPredicate, completion: completion)
-    }
-    
-    // Unused - Future Feature
-    func removeExpiredReminders() {
-        let pastPredicate = self.predicateForIncompleteReminders(withDueDateStarting: nil, ending: Date(), calendars:[])
-        self.fetchReminders(matching: pastPredicate) { foundReminders in
-            guard let remindersToDelete = foundReminders,
-                  !remindersToDelete.isEmpty else {
-                      return
-                  }
-            for reminder in remindersToDelete {
-                try? self.remove(reminder, commit: false)
-            }
-            try? self.commit()
-        }
-    }
+    #endif
 }

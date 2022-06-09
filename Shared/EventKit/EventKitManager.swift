@@ -15,15 +15,6 @@ public final class EventKitManager {
     /// Event store: An object that accesses the user’s calendar and reminder events and supports the scheduling of new events.
     public private(set) var eventStore = EKEventStore()
 
-    /// Returns calendar object from event kit
-    public var defaultEventCalendar: EKCalendar? {
-        self.eventStore.calendarForEvents()
-    }
-    /// Returns calendar object from event kit
-    public var defaultReminderCalendar: EKCalendar? {
-        self.eventStore.calendarForReminders()
-    }
-
     public static func configureWithAppName(_ appName: String) {
         self.appName = appName
     }
@@ -33,89 +24,20 @@ public final class EventKitManager {
 
     private init() {} // This prevents others from using the default '()' initializer for this class.
     
-    // MARK: - Flow
-    /// Request event store authorization for Events
-    /// - Returns: EKAuthorizationStatus enum
-    public func requestEventStoreAuthorization() async throws -> EKAuthorizationStatus {
-        let granted = try await requestEventAccess()
-        if granted {
-            self.eventStore = EKEventStore()
-            return EKEventStore.authorizationStatus(for: .event)
-        }
-        else {
-            throw EventError.unableToAccessCalendar
-        }
+    // MARK: - Non Watch Vars
+    #if !os(watchOS)
+    /// Returns calendar object from event kit
+    public var defaultEventCalendar: EKCalendar? {
+        self.eventStore.calendarForEvents()
     }
-    /// Request event store authorization for Reminders
-    /// - Returns: EKAuthorizationStatus enum
-    public func requestReminderStoreAuthorization() async throws -> EKAuthorizationStatus {
-        let granted = try await requestReminderAccess()
-        if granted {
-            return EKEventStore.authorizationStatus(for: .event)
-        }
-        else {
-            throw EventError.unableToAccessCalendar
-        }
+    /// Returns calendar object from event kit
+    public var defaultReminderCalendar: EKCalendar? {
+        self.eventStore.calendarForReminders()
     }
+    #endif
     
-    // MARK: - CRUD
-    /// Create an event
-    /// - Parameters:
-    ///   - title: title of the event
-    ///   - startDate: event's start date
-    ///   - endDate: event's end date
-    ///   - span: event's span
-    ///   - isAllDay: is all day event
-    /// - Returns: created event
-    public func createEvent(
-        _ title: String,
-        startDate: Date,
-        endDate: Date?,
-        span: EKSpan = .thisEvent,
-        isAllDay: Bool = false
-    ) async throws -> EKEvent {
-        let calendar = try await accessEventsCalendar()
-        let createdEvent = try self.eventStore.createEvent(title: title, startDate: startDate, endDate: endDate, calendar: calendar, span: span, isAllDay: isAllDay)
-        return createdEvent
-    }
+    // MARK: - Fetch
     
-    /// Create a Reminder
-    /// - Parameters:
-    ///   - title: title of the reminder
-    /// - Returns: created reminder
-    public func createReminder(
-        _ title: String,
-        startDate: DateComponents?,
-        dueDate: DateComponents?
-    ) async throws -> EKReminder {
-        self.eventStore.calendars(for: .reminder)
-        let calendar = try await accessRemindersCalendar()
-        let newReminder = try self.eventStore.createReminder(title: title, startDate: startDate, dueDate: dueDate, calendar: calendar)
-        return newReminder
-    }
-    
-    /// Delete an event
-    /// - Parameters:
-    ///   - identifier: event identifier
-    ///   - span: event span
-    public func deleteEvent(
-        identifier: String,
-        span: EKSpan = .thisEvent
-    ) async throws {
-        try await accessEventsCalendar()
-        try self.eventStore.deleteEvent(identifier: identifier, span: span)
-    }
-    
-    /// Delete a reminder
-    /// - Parameters:
-    ///   - identifier: event identifier
-    public func deleteReminder(
-        identifier: String
-    ) async throws {
-        try await accessEventsCalendar()
-        try self.eventStore.deleteReminder(identifier: identifier)
-    }
-
     /// Fetch events for a specific day
     /// - Parameters:
     ///   - date: day to fetch events from
@@ -201,7 +123,102 @@ public final class EventKitManager {
         let predicate = self.eventStore.predicateForReminders(in: calendars)
         self.eventStore.fetchReminders(matching: predicate, completion: completion)
     }
-
+    
+    // MARK: - Flow
+    /// Request event store authorization for Events
+    /// - Returns: EKAuthorizationStatus enum
+    public func requestEventStoreAuthorization() async throws -> EKAuthorizationStatus {
+        let granted = try await requestEventAccess()
+        if granted {
+            self.eventStore = EKEventStore()
+            return EKEventStore.authorizationStatus(for: .event)
+        }
+        else {
+            throw EventError.unableToAccessCalendar
+        }
+    }
+    /// Request event store authorization for Reminders
+    /// - Returns: EKAuthorizationStatus enum
+    public func requestReminderStoreAuthorization() async throws -> EKAuthorizationStatus {
+        let granted = try await requestReminderAccess()
+        if granted {
+            return EKEventStore.authorizationStatus(for: .event)
+        }
+        else {
+            throw EventError.unableToAccessCalendar
+        }
+    }
+    
+    private func requestEventAccess() async throws -> Bool {
+        try await eventStore.requestAccess(to: .event)
+    }
+    
+    private func requestReminderAccess() async throws -> Bool {
+        try await eventStore.requestAccess(to: .reminder)
+    }
+    
+    // MARK: - Non Watch Functions
+    // Watch OS does not support these actions
+    // https://developer.apple.com/forums/thread/42293
+    #if !os(watchOS)
+    // MARK: - CRUD
+    /// Create an event
+    /// - Parameters:
+    ///   - title: title of the event
+    ///   - startDate: event's start date
+    ///   - endDate: event's end date
+    ///   - span: event's span
+    ///   - isAllDay: is all day event
+    /// - Returns: created event
+    public func createEvent(
+        _ title: String,
+        startDate: Date,
+        endDate: Date?,
+        span: EKSpan = .thisEvent,
+        isAllDay: Bool = false
+    ) async throws -> EKEvent {
+        let calendar = try await accessEventsCalendar()
+        let createdEvent = try self.eventStore.createEvent(title: title, startDate: startDate, endDate: endDate, calendar: calendar, span: span, isAllDay: isAllDay)
+        return createdEvent
+    }
+    
+    /// Create a Reminder
+    /// - Parameters:
+    ///   - title: title of the reminder
+    /// - Returns: created reminder
+    public func createReminder(
+        _ title: String,
+        startDate: DateComponents?,
+        dueDate: DateComponents?
+    ) async throws -> EKReminder {
+        self.eventStore.calendars(for: .reminder)
+        let calendar = try await accessRemindersCalendar()
+        let newReminder = try self.eventStore.createReminder(title: title, startDate: startDate, dueDate: dueDate, calendar: calendar)
+        return newReminder
+    }
+    
+    /// Delete an event
+    /// - Parameters:
+    ///   - identifier: event identifier
+    ///   - span: event span
+    public func deleteEvent(
+        identifier: String,
+        span: EKSpan = .thisEvent
+    ) async throws {
+        try await accessEventsCalendar()
+        try self.eventStore.deleteEvent(identifier: identifier, span: span)
+    }
+    
+    /// Delete a reminder
+    /// - Parameters:
+    ///   - identifier: event identifier
+    public func deleteReminder(
+        identifier: String
+    ) async throws {
+        try await accessEventsCalendar()
+        try self.eventStore.deleteReminder(identifier: identifier)
+    }
+    
     // MARK: Access Calendars
     
     /// Request access to Events calendar
@@ -236,12 +253,6 @@ public final class EventKitManager {
 
         return calendar
     }
-    
-    private func requestEventAccess() async throws -> Bool {
-        try await eventStore.requestAccess(to: .event)
-    }
-    
-    private func requestReminderAccess() async throws -> Bool {
-        try await eventStore.requestAccess(to: .reminder)
-    }
+
+    #endif
 }

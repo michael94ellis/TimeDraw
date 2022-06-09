@@ -14,7 +14,9 @@ struct ClockFace: View {
     var body: some View {
         // Dial Background Border
         Circle()
+        #if !os(watchOS)
             .strokeBorder(Color(uiColor: .systemGray3), lineWidth: 24)
+        #endif
             .frame(width: self.width * 2.2, height: self.width * 2.2)
         // Clock Face Markings
         ForEach(0..<60, id: \.self) { i in

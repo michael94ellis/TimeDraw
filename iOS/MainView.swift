@@ -11,11 +11,13 @@ import EventKit
 
 struct MainView: View {
     
-    private let date = Date()
+    /// Simple state toggle for displaying the main Clock Control
     @State var showClockView: Bool = true
+    /// The secondary textfield that can be edited
     @FocusState private var isDailyGoalFocused: Bool
-    @State var swipeDirection: SwipeDirection = .left
+    
     @ObservedObject private var appSettings: AppSettings = .shared
+    
     @ObservedObject private var listViewModel: CalendarItemListViewModel = .shared
     @StateObject private var itemViewModel: ModifyCalendarItemViewModel = ModifyCalendarItemViewModel()
     
@@ -37,30 +39,30 @@ struct MainView: View {
     
     var body: some View {
         ZStack {
-            // Primary Display
-            VStack {
-                MainHeader()
-                if self.appSettings.isDailyGoalEnabled {
-                    DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
-                }
-                Spacer()
-                if self.appSettings.isTimeDrawClockEnabled {
-                    if self.showClockView {
-                        TimeDrawClock(showClockView: self.$showClockView)
+            ScrollView {
+                VStack {
+                    MainHeader()
+                    if self.appSettings.isDailyGoalEnabled {
+                        DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
                     }
-                    Button(action: {
-                        withAnimation {
-                            self.showClockView.toggle()
+                    Spacer()
+                    if self.appSettings.isTimeDrawClockEnabled {
+                        if self.showClockView {
+                            TimeDrawClock(showClockView: self.$showClockView)
                         }
-                    }) {
-                        Image(systemName: self.showClockView ? "chevron.up" : "chevron.down")
+                        Button(action: {
+                            withAnimation {
+                                self.showClockView.toggle()
+                            }
+                        }) {
+                            Image(systemName: self.showClockView ? "chevron.down" : "chevron.up")
+                        }
+                        .frame(height: 35)
                     }
-                    .frame(height: 35)
+                    Divider()
+                    EventsAndRemindersMainList()
+                        .environmentObject(self.itemViewModel)
                 }
-                // Clock View todo in v2
-                Divider()
-                EventsAndRemindersMainList()
-                    .environmentObject(self.itemViewModel)
             }
             .transition(.opacity)
             .ignoresSafeArea(.keyboard)

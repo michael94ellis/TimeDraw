@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/firebase/firebase-ios-sdk",
         "state": {
           "branch": null,
-          "revision": "2eb177effe7baf1f13ad0c5f4eb8c71a98429fb5",
-          "version": "9.1.0"
+          "revision": "cbaa7ce7063d5ab22414962ec63366ccbba26034",
+          "version": "9.4.1"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/google/GoogleAppMeasurement.git",
         "state": {
           "branch": null,
-          "revision": "192cce3e0486aecfdb61102a9c694c78dc89dc48",
-          "version": "9.1.0"
+          "revision": "f54f60d0164d887e1174fa51ab2efe48a8e9d178",
+          "version": "9.3.0"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/google/GoogleDataTransport.git",
         "state": {
           "branch": null,
-          "revision": "b905c49326b72211531ed9d7baa02d724828a8dc",
-          "version": "9.1.4"
+          "revision": "5056b15c5acbb90cd214fe4d6138bdf5a740e5a8",
+          "version": "9.2.0"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/google/promises.git",
         "state": {
           "branch": null,
-          "revision": "46c1e6b5ac09d8f82c991061c659f67e573d425d",
-          "version": "2.1.0"
+          "revision": "3e4e743631e86c8c70dbc6efdc7beaa6e90fd3bb",
+          "version": "2.1.1"
         }
       },
       {

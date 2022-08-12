@@ -39,30 +39,30 @@ struct MainView: View {
     
     var body: some View {
         ZStack {
-            ScrollView {
-                VStack {
-                    MainHeader()
-                    if self.appSettings.isDailyGoalEnabled {
-                        DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
-                    }
-                    Spacer()
-                    if self.appSettings.isTimeDrawClockEnabled {
-                        if self.showClockView {
-                            TimeDrawClock(showClockView: self.$showClockView)
-                        }
-                        Button(action: {
-                            withAnimation {
-                                self.showClockView.toggle()
-                            }
-                        }) {
-                            Image(systemName: self.showClockView ? "chevron.down" : "chevron.up")
-                        }
-                        .frame(height: 35)
-                    }
-                    Divider()
-                    EventsAndRemindersMainList()
-                        .environmentObject(self.itemViewModel)
+            VStack {
+                MainHeader()
+                if self.appSettings.isDailyGoalEnabled {
+                    DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
+                        .clipped()
                 }
+                Spacer()
+                if self.appSettings.isTimeDrawClockEnabled {
+                    if self.showClockView {
+                        TimeDrawClock(showClockView: self.$showClockView)
+                    }
+                    Button(action: {
+                        withAnimation {
+                            self.showClockView.toggle()
+                        }
+                    }) {
+                        Image(systemName: self.showClockView ? "chevron.down" : "chevron.up")
+                    }
+                    .frame(width: 40, height: 35)
+                    .contentShape(Rectangle())
+                }
+                Divider()
+                EventsAndRemindersMainList()
+                    .environmentObject(self.itemViewModel)
             }
             .transition(.opacity)
             .ignoresSafeArea(.keyboard)

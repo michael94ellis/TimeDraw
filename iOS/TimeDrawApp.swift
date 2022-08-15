@@ -11,8 +11,6 @@ import Firebase
 @main
 struct TimeDrawApp: App {
     
-    let persistenceController = CoreDataManager.shared
-    
     init() {
         FirebaseApp.configure()
         EventKitManager.configureWithAppName("TimeDraw")
@@ -27,7 +25,6 @@ struct TimeDrawApp: App {
         WindowGroup {
             MainView()
                 .font(.interRegular)
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }

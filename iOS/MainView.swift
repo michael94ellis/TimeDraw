@@ -11,6 +11,7 @@ import EventKit
 
 struct MainView: View {
     
+    @AppStorage("first_open") var isFirstAppOpen = true
     /// Simple state toggle for displaying the main Clock Control
     @State var showClockView: Bool = true
     /// The secondary textfield that can be edited
@@ -78,5 +79,15 @@ struct MainView: View {
         .environmentObject(self.itemViewModel)
         .environmentObject(self.listViewModel)
         .environmentObject(self.appSettings)
+        .sheet(isPresented: self.$isFirstAppOpen, onDismiss: {
+            self.isFirstAppOpen = false
+        }, content: {
+            Text("Welcome")
+            Image(systemName: "calendar")
+            Text("This is some intro text")
+            Text(" 1. Lorem Ipsum")
+            Text(" 2. Dolor Amet")
+            Button("Done", action: { self.isFirstAppOpen = false })
+        })
     }
 }

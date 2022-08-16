@@ -16,6 +16,8 @@ struct ClockFace: View {
         Circle()
         #if !os(watchOS)
             .strokeBorder(Color(uiColor: .systemGray3), lineWidth: 24)
+        #elseif os(watchOS)
+            .strokeBorder(Color(uiColor: .gray), lineWidth: 20)
         #endif
             .frame(width: self.width * 2.2, height: self.width * 2.2)
         // Clock Face Markings

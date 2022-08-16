@@ -1594,7 +1594,9 @@
 				INFOPLIST_FILE = "WatchFace WatchKit Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "WatchFace WatchKit Extension";
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = WatchFace_WatchKit_Extension.ComplicationController;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1625,7 +1627,9 @@
 				INFOPLIST_FILE = "WatchFace WatchKit Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "WatchFace WatchKit Extension";
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = WatchFace_WatchKit_Extension.ComplicationController;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

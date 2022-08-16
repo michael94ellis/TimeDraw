@@ -17,6 +17,7 @@ struct TimeDrawWatchApp: App {
     
     init() {
         EventKitManager.configureWithAppName("TimeDraw")
+        listViewModel.updateData()
         UIFont.overrideInitialize()
         if AppSettings.shared.userSelectedCalendars == nil || AppSettings.shared.userSelectedCalendars.loadCalendarIds().isEmpty {
             let allCalendars = AppSettings.shared.fetchAllCalendars()
@@ -26,11 +27,21 @@ struct TimeDrawWatchApp: App {
     
     @SceneBuilder var body: some Scene {
         WindowGroup {
-            NavigationView {
-                TimeDrawClock(showClockView: self.$showClockView)
+            VStack {
+                Text("YOYOY")
+                ForEach(self.listViewModel.events) { item in
+                    Text(item.description)
+                    Text("YOY33OY")
+                }
+                ForEach(self.listViewModel.reminders) { item in
+                    Text(item.description)
+                    Text("YOYO44Y")
+                }
+                Text("YOYOY")
             }
-            .environmentObject(self.itemViewModel)
-            .environmentObject(self.listViewModel)
+//            TimeDrawClock(showClockView: self.$showClockView, width: 50)
+//                .environmentObject(self.itemViewModel)
+//                .environmentObject(self.listViewModel)
         }
 
         WKNotificationScene(controller: NotificationController.self, category: "myCategory")

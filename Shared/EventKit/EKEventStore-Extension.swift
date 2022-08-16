@@ -23,25 +23,25 @@ extension EKRecurrenceFrequency: CaseIterable, CustomStringConvertible {
 extension EKEvent: Identifiable { }
 extension EKReminder: Identifiable { }
 extension EKReminderPriority {
-//    static let none = 0
-//    static let high = 1
-//    static let mediumHigh = 3
-//    static let medium = 5
-//    static let mediumLow = 7
-//    static let low = 9
+    //    static let none = 0
+    //    static let high = 1
+    //    static let mediumHigh = 3
+    //    static let medium = 5
+    //    static let mediumLow = 7
+    //    static let low = 9
 }
 extension EKEventStatus {
-//    static let none = 0
-//    static let confirmed = 1
-//    static let tentative = 2
-//    static let cancelled = 3
+    //    static let none = 0
+    //    static let confirmed = 1
+    //    static let tentative = 2
+    //    static let cancelled = 3
 }
 extension EKEventAvailability {
-//    static let notSupported = -1
-//    static let busy = 0
-//    static let free = 1
-//    static let tentative = 2
-//    static let unavailable = 3
+    //    static let notSupported = -1
+    //    static let busy = 0
+    //    static let free = 1
+    //    static let tentative = 2
+    //    static let unavailable = 3
 }
 
 extension EKEventStore {
@@ -69,7 +69,7 @@ extension EKEventStore {
     // MARK: - Non Watch Functions
     // Watch OS does not support these actions
     // https://developer.apple.com/forums/thread/42293
-    #if !os(watchOS)
+#if !os(watchOS)
     // MARK: - Create
     
     /// Create an event
@@ -150,7 +150,8 @@ extension EKEventStore {
         }
         try? self.remove(reminder, commit: true)
     }
-
+#endif
+    
     // MARK: - Fetch
     /// Event Calendar for current AppName
     /// - Returns: App calendar for EKEvents
@@ -160,9 +161,9 @@ extension EKEventStore {
             print("App name is nil, please config with `Shift.configureWithAppName` in AppDelegate")
             return nil
         }
-
+        
         let calendars = self.calendars(for: .event)
-
+        
         if let appCalendar = calendars.first(where: { $0.title == appName }) {
             return appCalendar
         } else {
@@ -170,7 +171,9 @@ extension EKEventStore {
             newCalendar.title = appName
             newCalendar.source = defaultCalendarForNewEvents?.source
             newCalendar.cgColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
+#if !os(watchOS)
             try? saveCalendar(newCalendar, commit: true)
+#endif
             return newCalendar
         }
     }
@@ -182,9 +185,9 @@ extension EKEventStore {
             print("App name is nil, please config with `Shift.configureWithAppName` in AppDelegate")
             return nil
         }
-
+        
         let calendars = self.calendars(for: .reminder)
-
+        
         if let appCalendar = calendars.first(where: { $0.title == appName }) {
             return appCalendar
         } else {
@@ -192,9 +195,10 @@ extension EKEventStore {
             newCalendar.title = appName
             newCalendar.source = self.defaultCalendarForNewEvents?.source
             newCalendar.cgColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
-            try? self.saveCalendar(newCalendar, commit: true)
+#if !os(watchOS)
+            try? saveCalendar(newCalendar, commit: true)
+#endif
             return newCalendar
         }
     }
-    #endif
 }

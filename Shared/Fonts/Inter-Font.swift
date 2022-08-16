@@ -39,9 +39,6 @@ extension UIFontDescriptor.AttributeName {
 extension UIFont {
     
     @objc class func mySystemFont(ofSize size: CGFloat) -> UIFont {
-        print(AppFontName.regular)
-        print(size)
-        print(UIFont(name: AppFontName.regular, size: size))
         return UIFont(name: AppFontName.regular, size: size)!
     }
     

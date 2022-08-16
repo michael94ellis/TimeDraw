@@ -49,7 +49,7 @@ struct MainView: View {
                 Spacer()
                 if self.appSettings.isTimeDrawClockEnabled {
                     if self.showClockView {
-                        TimeDrawClock(showClockView: self.$showClockView)
+                        TimeDrawClock(showClockView: self.$showClockView, width: 120)
                     }
                     Button(action: {
                         withAnimation {

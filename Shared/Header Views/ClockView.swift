@@ -19,7 +19,7 @@ struct TimeDrawClock: View {
     @Binding var showClockView: Bool
     @State var currentTime = Time(sec: 0, min: 0, hour: 0)
     @State var timer = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
-    var width: CGFloat = 120
+    var width: CGFloat
     @EnvironmentObject var itemList: CalendarItemListViewModel
     @EnvironmentObject var modifyItemViewModel: ModifyCalendarItemViewModel
     
@@ -91,6 +91,7 @@ struct TimeDrawClock: View {
             let hour = calender.component(.hour, from: Date())
             withAnimation(Animation.linear(duration: 0.01)) {
                 self.currentTime = Time(sec: sec, min: min, hour: hour)
+                self.itemList.updateData()
             }
         })
         .onReceive(self.timer) { _ in

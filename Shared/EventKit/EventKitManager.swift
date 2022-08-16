@@ -24,8 +24,6 @@ public final class EventKitManager {
 
     private init() {} // This prevents others from using the default '()' initializer for this class.
     
-    // MARK: - Non Watch Vars
-    #if !os(watchOS)
     /// Returns calendar object from event kit
     public var defaultEventCalendar: EKCalendar? {
         self.eventStore.calendarForEvents()
@@ -34,7 +32,6 @@ public final class EventKitManager {
     public var defaultReminderCalendar: EKCalendar? {
         self.eventStore.calendarForReminders()
     }
-    #endif
     
     // MARK: - Fetch
     
@@ -83,6 +80,7 @@ public final class EventKitManager {
         let predicate = self.eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: calendars)
         let events = self.eventStore
             .events(matching: predicate)
+
         return events
     }
     
@@ -150,7 +148,8 @@ public final class EventKitManager {
     }
     
     private func requestEventAccess() async throws -> Bool {
-        try await eventStore.requestAccess(to: .event)
+        let res = try await eventStore.requestAccess(to: .event)
+        return res
     }
     
     private func requestReminderAccess() async throws -> Bool {
@@ -218,6 +217,7 @@ public final class EventKitManager {
         try await accessEventsCalendar()
         try self.eventStore.deleteReminder(identifier: identifier)
     }
+    #endif
     
     // MARK: Access Calendars
     
@@ -253,6 +253,4 @@ public final class EventKitManager {
 
         return calendar
     }
-
-    #endif
 }

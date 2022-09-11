@@ -75,8 +75,8 @@
 		2F65050127879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */; };
 		2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505022787A09900AF90F7 /* MainHeader.swift */; };
 		2F6505042787A09900AF90F7 /* MainHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505022787A09900AF90F7 /* MainHeader.swift */; };
-		2F6505062787DA3C00AF90F7 /* FloatingEventInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505052787DA3C00AF90F7 /* FloatingEventInput.swift */; };
-		2F6505072787DA3C00AF90F7 /* FloatingEventInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505052787DA3C00AF90F7 /* FloatingEventInput.swift */; };
+		2F6505062787DA3C00AF90F7 /* EventInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505052787DA3C00AF90F7 /* EventInput.swift */; };
+		2F6505072787DA3C00AF90F7 /* EventInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505052787DA3C00AF90F7 /* EventInput.swift */; };
 		2F6505092787F87A00AF90F7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505082787F87A00AF90F7 /* SettingsView.swift */; };
 		2F65050A2787F87A00AF90F7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505082787F87A00AF90F7 /* SettingsView.swift */; };
 		2F6505142791370D00AF90F7 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050B2791370C00AF90F7 /* Inter-SemiBold.ttf */; };
@@ -287,7 +287,7 @@
 		2F646BB0285038CF00D7445D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBarButtonItem.swift; sourceTree = "<group>"; };
 		2F6505022787A09900AF90F7 /* MainHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeader.swift; sourceTree = "<group>"; };
-		2F6505052787DA3C00AF90F7 /* FloatingEventInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingEventInput.swift; sourceTree = "<group>"; };
+		2F6505052787DA3C00AF90F7 /* EventInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventInput.swift; sourceTree = "<group>"; };
 		2F6505082787F87A00AF90F7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2F65050B2791370C00AF90F7 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
 		2F65050C2791370C00AF90F7 /* Inter-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Thin.ttf"; sourceTree = "<group>"; };
@@ -517,10 +517,10 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		2F646BB3285178A900D7445D /* FloatingInput */ = {
+		2F646BB3285178A900D7445D /* EventInput */ = {
 			isa = PBXGroup;
 			children = (
-				2F6505052787DA3C00AF90F7 /* FloatingEventInput.swift */,
+				2F6505052787DA3C00AF90F7 /* EventInput.swift */,
 				2FB41CD927DEE1850067F250 /* EmojiButton.swift */,
 				2F81230B2797B59500458B1A /* AddEventDateTimePicker.swift */,
 				2FB41CB627DACB8E0067F250 /* AddNotesInput.swift */,
@@ -534,7 +534,7 @@
 				2F8AB30927A1026500654FEF /* PickerField.swift */,
 				2F8AB30627A1025100654FEF /* UIPickerTextField.swift */,
 			);
-			path = FloatingInput;
+			path = EventInput;
 			sourceTree = "<group>";
 		};
 		2F6504FE27879B8900AF90F7 /* DailyGoal */ = {
@@ -662,7 +662,7 @@
 				2F2343FB27D454BC0064B635 /* CalendarView.swift */,
 				2F42C5AD2784E74000F0BEB2 /* Model */,
 				2F8AB305279EDFD600654FEF /* EventAndRemindersViews */,
-				2F646BB3285178A900D7445D /* FloatingInput */,
+				2F646BB3285178A900D7445D /* EventInput */,
 				2F8AB31227A25D9F00654FEF /* Settings Menus */,
 				2F6504FE27879B8900AF90F7 /* DailyGoal */,
 			);
@@ -1015,7 +1015,7 @@
 				2F24458827D8BDD0005BF37D /* SwipeGesture.swift in Sources */,
 				2F2111302799B62D0041EE85 /* EventsAndRemindersMainList.swift in Sources */,
 				2FB60E4927E21571004DA305 /* ClockEventLine.swift in Sources */,
-				2F6505062787DA3C00AF90F7 /* FloatingEventInput.swift in Sources */,
+				2F6505062787DA3C00AF90F7 /* EventInput.swift in Sources */,
 				2F42C59D2784E3DE00F0BEB2 /* EventKitManager.swift in Sources */,
 				2F2343FC27D454BC0064B635 /* CalendarView.swift in Sources */,
 				2F211134279A4F4E0041EE85 /* AddRecurrenceRule.swift in Sources */,
@@ -1071,7 +1071,7 @@
 				2F24458927D8BDD0005BF37D /* SwipeGesture.swift in Sources */,
 				2F2111312799B62D0041EE85 /* EventsAndRemindersMainList.swift in Sources */,
 				2FB60E4A27E21571004DA305 /* ClockEventLine.swift in Sources */,
-				2F6505072787DA3C00AF90F7 /* FloatingEventInput.swift in Sources */,
+				2F6505072787DA3C00AF90F7 /* EventInput.swift in Sources */,
 				2F42C59E2784E3DE00F0BEB2 /* EventKitManager.swift in Sources */,
 				2F2343FD27D454BC0064B635 /* CalendarView.swift in Sources */,
 				2F211135279A4F4E0041EE85 /* AddRecurrenceRule.swift in Sources */,

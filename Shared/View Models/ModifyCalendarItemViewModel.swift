@@ -9,7 +9,7 @@ import Foundation
 import EventKit
 import SwiftUI
 
-/// Used for creating an EKCalendarItem Event/Reminder with the Floating Input Views
+/// Used for creating an EKCalendarItem Event/Reminder with the Input Views
 /// 
 class ModifyCalendarItemViewModel: ObservableObject {
     

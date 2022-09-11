@@ -38,42 +38,52 @@ struct MainView: View {
         }
     }
     
-    var body: some View {
-        ZStack {
-            VStack {
-                MainHeader()
-                if self.appSettings.isDailyGoalEnabled {
-                    DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
-                        .clipped()
-                }
-                Spacer()
-                if self.appSettings.isTimeDrawClockEnabled {
-                    if self.showClockView {
-                        TimeDrawClock(showClockView: self.$showClockView, width: 120)
-                    }
-                    Button(action: {
-                        withAnimation {
-                            self.showClockView.toggle()
-                        }
-                    }) {
-                        Image(systemName: self.showClockView ? "chevron.down" : "chevron.up")
-                    }
-                    .frame(width: 40, height: 35)
-                    .contentShape(Rectangle())
-                }
-                Divider()
-                EventsAndRemindersMainList()
-                    .environmentObject(self.itemViewModel)
+    @ViewBuilder var mainContentView: some View {
+        VStack {
+            MainHeader()
+            if self.appSettings.isDailyGoalEnabled {
+                DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
+                    .clipped()
             }
-            .transition(.opacity)
-            .ignoresSafeArea(.keyboard)
-            .edgesIgnoringSafeArea(.bottom)
-            // Blurred Background
-            .overlay(self.blurOverlay)
-            VStack {
-                Spacer()
-                FloatingEventInput(isBackgroundBlurred: self.$itemViewModel.isAddEventTextFieldFocused)
-                    .padding(.bottom, 16)
+            Spacer()
+            if self.appSettings.isTimeDrawClockEnabled {
+                if self.showClockView {
+                    TimeDrawClock(showClockView: self.$showClockView, width: 120)
+                }
+                Button(action: {
+                    withAnimation {
+                        self.showClockView.toggle()
+                    }
+                }) {
+                    Image(systemName: self.showClockView ? "chevron.down" : "chevron.up")
+                }
+                .frame(width: 40, height: 35)
+                .contentShape(Rectangle())
+            }
+            Divider()
+            EventsAndRemindersMainList()
+                .environmentObject(self.itemViewModel)
+        }
+        .transition(.opacity)
+        .ignoresSafeArea(.keyboard)
+        .edgesIgnoringSafeArea(.bottom)
+        .overlay(self.blurOverlay)
+        VStack {
+            EventInput(isBackgroundBlurred: self.$itemViewModel.isAddEventTextFieldFocused)
+                .padding(.bottom, 16)
+        }
+    }
+    
+    var body: some View {
+        Group {
+            if self.itemViewModel.isAddEventTextFieldFocused {
+                ZStack {
+                    mainContentView
+                }
+            } else {
+                VStack {
+                    mainContentView
+                }
             }
         }
         .environmentObject(self.itemViewModel)

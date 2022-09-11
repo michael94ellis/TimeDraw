@@ -13,7 +13,6 @@ import EventKit
 struct TimeDrawApp: App {
     
     init() {
-        EKError.calendarReadOnly
         FirebaseApp.configure()
         EventKitManager.configureWithAppName("TimeDraw")
         UIFont.overrideInitialize()

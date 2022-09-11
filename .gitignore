@@ -2,5 +2,9 @@
 .DS_Store
 *.xcuserstate
 fastlane/report.xml
-.DS_Store
 *.xcuserstate
+*.xcbkptlist
+GoogleService-Info.plist
+TimeDraw.app.dSYM.zip
+TimeDraw.ipa
+TimeDraw.xcodeproj/project.xcworkspace/xcuserdata/*

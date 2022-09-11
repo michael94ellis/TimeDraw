@@ -276,6 +276,8 @@ class ModifyCalendarItemViewModel: ObservableObject {
         switch error.code {
         case 1: // 1   No Calendar Selected
             self.displayToast("Please Select A Calendar")
+        case 4: // 4 Start date is after End date
+            self.displayToast("Invalid Start/End Dates")
         case 6: // 6   Calendar is Read Only
             self.displayToast("Calendar is Read Only")
         case 22: // 22  Calendar is for Reminders Only
@@ -284,8 +286,79 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.displayToast("Please Select Reminders Calendar")
         case 24: // 24  --- why?
             self.displayToast("Please Select Reminders Calendar")
-        case 4: // 4 Start date is after End date
-            self.displayToast("Invalid Start/End Dates")
+        case eventNotMutable = 0
+
+        case noCalendar = 1
+
+        case noStartDate = 2
+
+        case noEndDate = 3
+
+        case datesInverted = 4
+
+        case internalFailure = 5
+
+        case calendarReadOnly = 6
+
+        case durationGreaterThanRecurrence = 7
+
+        case alarmGreaterThanRecurrence = 8
+
+        case startDateTooFarInFuture = 9
+
+        case startDateCollidesWithOtherOccurrence = 10
+
+        case objectBelongsToDifferentStore = 11
+
+        case invitesCannotBeMoved = 12
+
+        case invalidSpan = 13
+
+        case calendarHasNoSource = 14
+
+        case calendarSourceCannotBeModified = 15
+
+        case calendarIsImmutable = 16
+
+        case sourceDoesNotAllowCalendarAddDelete = 17
+
+        case recurringReminderRequiresDueDate = 18
+
+        case structuredLocationsNotSupported = 19
+
+        case reminderLocationsNotSupported = 20
+
+        case alarmProximityNotSupported = 21
+
+        case calendarDoesNotAllowEvents = 22
+
+        case calendarDoesNotAllowReminders = 23
+
+        case sourceDoesNotAllowReminders = 24
+
+        case sourceDoesNotAllowEvents = 25
+
+        case priorityIsInvalid = 26
+
+        case invalidEntityType = 27
+
+        case procedureAlarmsNotMutable = 28
+
+        case eventStoreNotAuthorized = 29
+
+        case osNotSupported = 30
+
+        case invalidInviteReplyCalendar = 31
+
+        case notificationsCollectionFlagNotSet = 32
+
+        case sourceMismatch = 33
+
+        case notificationCollectionMismatch = 34
+
+        case notificationSavedWithoutCollection = 35
+
+        case reminderAlarmContainsEmailOrUrl = 36
         default:
             self.displayToast("Error: \(error.code)")
         }
@@ -474,6 +547,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.saveAndDisplayToast(reminder: reminder, "Reminder Saved")
         }
     }
+    
     @MainActor private func saveAndDisplayToast(event: EKEvent, _ message: String) {
         // This is where recurrence is created/updated
         // You can edit an existing event's recurrence earlier, but this point works for Create & Edit
@@ -487,7 +561,6 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.handleError(error)
         }
     }
-    
     
     @MainActor public func saveAndDisplayToast(reminder: EKReminder, _ message: String) {
         // This is where recurrence is created/updated

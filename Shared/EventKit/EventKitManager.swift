@@ -67,20 +67,16 @@ public final class EventKitManager {
     /// Returns: events
     @discardableResult
     public func fetchEvents(startDate: Date, endDate: Date, calendars filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
-        let authorization = try await requestEventStoreAuthorization()
+        let authorization = try await determineEventStoreAuthorization()
         guard authorization == .authorized else {
-            throw EventError.eventAuthorizationStatus(nil)
+            throw EventError.eventAuthorizationStatus(authorization)
         }
-
         let calendars = self.eventStore.calendars(for: .event).filter { calendar in
             if filterCalendarIDs.isEmpty { return true }
             return filterCalendarIDs.contains(calendar.calendarIdentifier)
         }
-
         let predicate = self.eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: calendars)
-        let events = self.eventStore
-            .events(matching: predicate)
-
+        let events = self.eventStore.events(matching: predicate)
         return events
     }
     
@@ -90,9 +86,9 @@ public final class EventKitManager {
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
     public func fetchReminders(calendars filterCalendarIDs: [String] = [], completion: @escaping (([EKReminder]?) -> ())) async throws {
-        let authorization = try await requestReminderStoreAuthorization()
+        let authorization = try await determineReminderStoreAuthorization()
         guard authorization == .authorized else {
-            throw EventError.eventAuthorizationStatus(nil)
+            throw EventError.eventAuthorizationStatus(authorization)
         }
         let calendars = self.eventStore.calendars(for: .reminder).filter { calendar in
             if filterCalendarIDs.isEmpty { return true }
@@ -110,9 +106,9 @@ public final class EventKitManager {
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
     public func fetchReminders(start: Date, end: Date, calendars filterCalendarIDs: [String] = [], completion: @escaping (([EKReminder]?) -> ())) async throws {
-        let authorization = try await requestReminderStoreAuthorization()
+        let authorization = try await determineReminderStoreAuthorization()
         guard authorization == .authorized else {
-            throw EventError.eventAuthorizationStatus(nil)
+            throw EventError.eventAuthorizationStatus(authorization)
         }
         let calendars = self.eventStore.calendars(for: .reminder).filter { calendar in
             if filterCalendarIDs.isEmpty { return true }
@@ -122,33 +118,52 @@ public final class EventKitManager {
         self.eventStore.fetchReminders(matching: predicate, completion: completion)
     }
     
-    // MARK: - Flow
     /// Request event store authorization for Events
     /// - Returns: EKAuthorizationStatus enum
-    public func requestEventStoreAuthorization() async throws -> EKAuthorizationStatus {
-        if try await requestEventAccess() {
-            self.eventStore = EKEventStore()
-            return EKEventStore.authorizationStatus(for: .event)
-        } else {
+    public func determineEventStoreAuthorization() async throws -> EKAuthorizationStatus {
+        let currentAuthStatus = EKEventStore.authorizationStatus(for: .event)
+        if currentAuthStatus == .notDetermined || currentAuthStatus == .denied {
+            if try await requestEventAccess() {
+                self.eventStore = EKEventStore()
+                return EKEventStore.authorizationStatus(for: .event)
+            } else {
+                throw EventError.unableToAccessCalendar
+            }
+        } else if currentAuthStatus == .restricted {
             throw EventError.unableToAccessCalendar
+        } else {
+            return currentAuthStatus
         }
     }
+    
     /// Request event store authorization for Reminders
     /// - Returns: EKAuthorizationStatus enum
-    public func requestReminderStoreAuthorization() async throws -> EKAuthorizationStatus {
-        if try await requestReminderAccess() {
-            return EKEventStore.authorizationStatus(for: .event)
-        } else {
+    public func determineReminderStoreAuthorization() async throws -> EKAuthorizationStatus {
+        let currentAuthStatus = EKEventStore.authorizationStatus(for: .reminder)
+        if currentAuthStatus == .notDetermined || currentAuthStatus == .denied {
+            if try await requestReminderAccess() {
+                self.eventStore = EKEventStore()
+                return EKEventStore.authorizationStatus(for: .reminder)
+            } else {
+                throw EventError.unableToAccessCalendar
+            }
+        } else if currentAuthStatus == .restricted {
             throw EventError.unableToAccessCalendar
+        } else {
+            return currentAuthStatus
         }
     }
     
     private func requestEventAccess() async throws -> Bool {
-        try await eventStore.requestAccess(to: .event)
+        let accessGranted = try await eventStore.requestAccess(to: .event)
+        eventStore = EKEventStore()
+        return accessGranted
     }
     
     private func requestReminderAccess() async throws -> Bool {
-        try await eventStore.requestAccess(to: .reminder)
+        let accessGranted = try await eventStore.requestAccess(to: .reminder)
+        eventStore = EKEventStore()
+        return accessGranted
     }
     
     // MARK: - Non Watch Functions
@@ -220,32 +235,26 @@ public final class EventKitManager {
     /// - Returns: calendar object
     @discardableResult
     private func accessEventsCalendar() async throws -> EKCalendar {
-        let authorization = try await requestEventStoreAuthorization()
-
+        let authorization = try await determineEventStoreAuthorization()
         guard authorization == .authorized else {
-            throw EventError.eventAuthorizationStatus(nil)
+            throw EventError.eventAuthorizationStatus(authorization)
         }
-
         guard let calendar = eventStore.calendarForEvents() else {
             throw EventError.unableToAccessCalendar
         }
-
         return calendar
     }
     /// Request access to Reminders calendar
     /// - Returns: calendar object
     @discardableResult
     private func accessRemindersCalendar() async throws -> EKCalendar {
-        let authorization = try await requestReminderStoreAuthorization()
-
+        let authorization = try await determineReminderStoreAuthorization()
         guard authorization == .authorized else {
-            throw EventError.eventAuthorizationStatus(nil)
+            throw EventError.eventAuthorizationStatus(authorization)
         }
-
         guard let calendar = eventStore.calendarForReminders() else {
             throw EventError.unableToAccessCalendar
         }
-
         return calendar
     }
 }

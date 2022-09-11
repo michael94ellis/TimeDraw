@@ -84,6 +84,7 @@ struct ClockEventLine: Shape {
             return 0.0
         }
     }
+    
     /// Returns a point on a circle in the bearing for the given degrees
     func getPoint(radius: CGFloat, in rect: CGRect, for bearing: CGFloat) -> CGPoint {
         let x = rect.midX + radius * cos(bearing)
@@ -102,24 +103,28 @@ struct ClockEventLine: Shape {
         case.evening:
             path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: pmRadius, startAngle: .degrees(self.startDegrees), endAngle: .degrees(self.endDegrees), clockwise: false)
         case .both:
-            // morning
-            path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: amRadius, startAngle: .degrees(self.startDegrees), endAngle: .degrees(-110), clockwise: false)
             // noon crossover vars
             let noonDegrees: Double = 270
-            let afternoonCrossoverDegrees: Double = 360-80
+            let afternoonCrossoverDegrees: Double = 280
             let control1: CGPoint = CGPoint(x: rect.maxX * 0.6, y: rect.maxY * 0.05)
             let control2: CGPoint = CGPoint(x: rect.maxX * 0.4, y: 0 - rect.maxY * 0.03)
-            // evening
-//            print(self.endDegrees)
-//            print(max(afternoonCrossoverDegrees, self.endDegrees))
+            let arcEndDegree: Double = max(self.startDegrees, 250)
             if self.endDegrees > afternoonCrossoverDegrees {
+                // morning
+                path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: amRadius, startAngle: .degrees(self.startDegrees), endAngle: .degrees(arcEndDegree), clockwise: false)
                 // Add curve and keep going
                 path.addCurve(to: self.getPoint(radius: pmRadius, in: rect, for: (afternoonCrossoverDegrees).radians()), control1: control1, control2: control2)
+                // evening
                 path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: pmRadius, startAngle: .degrees(afternoonCrossoverDegrees), endAngle: .degrees(self.endDegrees), clockwise: false)
             } else if self.endDegrees == noonDegrees {
+                // morning
+                path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: amRadius, startAngle: .degrees(self.startDegrees), endAngle: .degrees(arcEndDegree), clockwise: false)
+                // evening
                 let noonPoint = self.getPoint(radius: self.radius, in: rect, for: (noonDegrees).radians())
                 path.addCurve(to: noonPoint, control1: control1, control2: noonPoint)
-            } else { // Time is shortly after noon
+            } else {
+                // morning
+                path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: amRadius, startAngle: .degrees(self.startDegrees), endAngle: .degrees(arcEndDegree), clockwise: false)
                 path.addCurve(to: self.getPoint(radius: pmRadius, in: rect, for: (self.endDegrees).radians()), control1: control1, control2: control2)
             }
         }

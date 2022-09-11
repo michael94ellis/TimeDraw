@@ -1,5 +1,5 @@
 //
-//  FloatingEventInput.swift
+//  EventInput.swift
 //  TimeDraw
 //
 //  Created by Michael Ellis on 1/6/22.
@@ -9,7 +9,7 @@ import SwiftUI
 import EventKit
 import AlertToast
 
-struct FloatingEventInput: View {
+struct EventInput: View {
     
     @EnvironmentObject var appSettings: AppSettings
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
@@ -29,13 +29,13 @@ struct FloatingEventInput: View {
             }
         }) {
             RoundedRectangle(cornerRadius: 13)
-                            .fill(Color(uiColor: .systemGray6))
-                            .shadow(radius: 4, x: 2, y: 4)
-                            .overlay(Image(systemName: image)
-                                        .resizable()
-                                        .frame(width: 30, height: 32)
-                                        .foregroundColor(color))
-                            .frame(width: 55, height: 55)
+                .fill(Color(uiColor: .systemGray6))
+                .shadow(radius: 4, x: 2, y: 4)
+                .overlay(Image(systemName: image)
+                            .resizable()
+                            .frame(width: 30, height: 32)
+                            .foregroundColor(color))
+                .frame(width: 55, height: 55)
         }
         .contentShape(Rectangle())
         .buttonStyle(.plain)
@@ -70,59 +70,55 @@ struct FloatingEventInput: View {
     }
     
     @ViewBuilder var eventOptions: some View {
-        GeometryReader { container in
-            ScrollView {
-                VStack {
-                    HStack {
-                        if self.viewModel.editMode {
-                            self.topButton(image: "xmark.square", color: .lightGray, action: { self.viewModel.reset() })
-                            self.selectCalendarButton
-                            Spacer()
-                        } else {
-                            self.selectCalendarButton
-                            Spacer()
-                        }
-                        self.topButton(image: "trash", color: .red1, action: { self.viewModel.delete() })
-                    }
-                    .frame(maxWidth: 600)
-                    .padding(.bottom, 8)
-                    if self.appSettings.showNotes || self.viewModel.calendarItem?.hasNotes ?? false {
-                        HStack {
-                            AddNotesInput()
-                        }
-                        .padding(.bottom, 8)
-                        .onTapGesture {}
-                    }
-                    if self.appSettings.showRecurringItems || self.viewModel.calendarItem?.hasRecurrenceRules ?? false {
-                        HStack {
-                            AddRecurrenceRule()
-                        }
-                        .padding(.bottom, 8)
-                        .onTapGesture {}
-                    }
-                    HStack {
-                        AddEventDateTimePicker()
-                    }
-                    .onTapGesture {}
-                }.background(
-                    Color.gray.opacity(0.01)
-                        .gesture(TapGesture().onEnded({
-                            withAnimation {
-                                self.viewModel.isAddEventTextFieldFocused = false
-                            }
-                        })))
-                    .frame(minWidth: container.size.width, minHeight: container.size.height, alignment: .bottom)
-                    .contentShape(Rectangle())
-            }
-            .gesture(TapGesture().onEnded({
-                withAnimation {
-                    self.viewModel.isAddEventTextFieldFocused = false
+        VStack {
+            HStack {
+                if self.viewModel.editMode {
+                    self.topButton(image: "xmark.square", color: .lightGray, action: { self.viewModel.reset() })
+                    self.selectCalendarButton
+                    Spacer()
+                } else {
+                    self.selectCalendarButton
+                    Spacer()
                 }
-            }))
+                self.topButton(image: "trash", color: .red1, action: { self.viewModel.delete() })
+            }
+            .frame(maxWidth: 600)
+            .padding(.bottom, 8)
+            if self.appSettings.showNotes || self.viewModel.calendarItem?.hasNotes ?? false {
+                HStack {
+                    AddNotesInput()
+                }
+                .padding(.bottom, 8)
+                .onTapGesture {}
+            }
+            if self.appSettings.showRecurringItems || self.viewModel.calendarItem?.hasRecurrenceRules ?? false {
+                HStack {
+                    AddRecurrenceRule()
+                }
+                .padding(.bottom, 8)
+                .onTapGesture {}
+            }
+            HStack {
+                AddEventDateTimePicker()
+            }
+            .onTapGesture {}
         }
+        .background(
+            Color.gray.opacity(0.01)
+                .gesture(TapGesture().onEnded({
+                    withAnimation {
+                        self.viewModel.isAddEventTextFieldFocused = false
+                    }
+                })))
+        .contentShape(Rectangle())
+        .gesture(TapGesture().onEnded({
+            withAnimation {
+                self.viewModel.isAddEventTextFieldFocused = false
+            }
+        }))
     }
     
-    var floatingTextBar: some View {
+    var textBar: some View {
         HStack {
             EmojiButton()
             TextField("", text: self.$viewModel.newItemTitle)
@@ -135,7 +131,6 @@ struct FloatingEventInput: View {
                 .submitLabel(.done)
                 .onSubmit {
                     // User tapped Keyboard Done button
-//                        self.viewModel.submitEventOrReminder()
                     self.isNewEventFocused = false
                 }
                 .gesture(TapGesture().onEnded({
@@ -149,7 +144,6 @@ struct FloatingEventInput: View {
                     Text("New Event or Reminder").foregroundColor(.gray)
                 }
             // Submit Button
-            // TODO Show something other than checkmark for failed submit
             Button(action: {
                 // User submitted event by tapping plus
                 self.viewModel.submitEventOrReminder()
@@ -171,17 +165,16 @@ struct FloatingEventInput: View {
     
     var body: some View {
         VStack {
-            Spacer()
-            HStack(alignment: .bottom) {
+            if self.viewModel.isAddEventTextFieldFocused {
                 self.eventOptions
                     .opacity(self.isBackgroundBlurred ? 1 : 0)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                    .padding(.bottom, 8)
             }
-            .padding(.bottom, 8)
-            self.floatingTextBar
+            self.textBar
         }
         .padding(14)
-        .toast(isPresenting: Binding<Bool>(get: { self.viewModel.displayToast }, set: { self.viewModel.displayToast = $0 }), duration: 2, tapToDismiss: true, alert: {
+        .toast(isPresenting: self.$viewModel.displayToast, duration: 2, tapToDismiss: true, alert: {
             AlertToast(displayMode: .alert, type: .regular, title: self.viewModel.toastMessage)
         }, completion: {
             //Completion block after dismiss

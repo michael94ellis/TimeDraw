@@ -46,7 +46,9 @@ struct TimeDrawClock: View {
         
     @ViewBuilder var timeCircles: some View {
         ForEach(self.itemList.events ,id: \.self) { event in
-            if event.isAllDay {
+            if event.calendar == nil {
+                EmptyView()
+            } else if event.isAllDay {
                 ClockEventLine(start: 0, end: 360, radius: self.width * 1.1, width: 2)
                     .foregroundColor(Color(cgColor: event.calendar.cgColor))
                     .gesture(TapGesture().onEnded({ value in

@@ -7,11 +7,13 @@
 
 import SwiftUI
 import Firebase
+import EventKit
 
 @main
 struct TimeDrawApp: App {
     
     init() {
+        EKError.calendarReadOnly
         FirebaseApp.configure()
         EventKitManager.configureWithAppName("TimeDraw")
         UIFont.overrideInitialize()

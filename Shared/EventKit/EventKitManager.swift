@@ -126,30 +126,25 @@ public final class EventKitManager {
     /// Request event store authorization for Events
     /// - Returns: EKAuthorizationStatus enum
     public func requestEventStoreAuthorization() async throws -> EKAuthorizationStatus {
-        let granted = try await requestEventAccess()
-        if granted {
+        if try await requestEventAccess() {
             self.eventStore = EKEventStore()
             return EKEventStore.authorizationStatus(for: .event)
-        }
-        else {
+        } else {
             throw EventError.unableToAccessCalendar
         }
     }
     /// Request event store authorization for Reminders
     /// - Returns: EKAuthorizationStatus enum
     public func requestReminderStoreAuthorization() async throws -> EKAuthorizationStatus {
-        let granted = try await requestReminderAccess()
-        if granted {
+        if try await requestReminderAccess() {
             return EKEventStore.authorizationStatus(for: .event)
-        }
-        else {
+        } else {
             throw EventError.unableToAccessCalendar
         }
     }
     
     private func requestEventAccess() async throws -> Bool {
-        let res = try await eventStore.requestAccess(to: .event)
-        return res
+        try await eventStore.requestAccess(to: .event)
     }
     
     private func requestReminderAccess() async throws -> Bool {

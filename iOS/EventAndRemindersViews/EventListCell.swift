@@ -30,8 +30,10 @@ struct EventListCell: View {
                         Image(systemName: "calendar")
                             .foregroundColor(Color(uiColor: .darkGray))
                     }
-                    Circle().fill(Color(cgColor: item.calendar.cgColor))
-                        .frame(width: 12, height: 12)
+                    if item.calendar != nil {
+                        Circle().fill(Color(cgColor: item.calendar.cgColor))
+                            .frame(width: 12, height: 12)
+                    }
                     Text(item.title.isEmpty ? "Untitled Event": item.title)
                         .lineLimit(2)
                         .foregroundColor(Color(uiColor: .darkGray))

@@ -30,6 +30,9 @@
 		2F24458C27D8BE37005BF37D /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458A27D8BE37005BF37D /* Calendar-Extension.swift */; };
 		2F26FE5E28CE56E900A9A0AE /* OnboardingExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F26FE5D28CE56E900A9A0AE /* OnboardingExperience.swift */; };
 		2F26FE5F28CE56E900A9A0AE /* OnboardingExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F26FE5D28CE56E900A9A0AE /* OnboardingExperience.swift */; };
+		2F26FE6128CE7F4C00A9A0AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B84627823CF600FE72C3 /* Assets.xcassets */; };
+		2F26FE6228CE7F4E00A9A0AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B84627823CF600FE72C3 /* Assets.xcassets */; };
+		2F26FE6328CE7F4F00A9A0AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B84627823CF600FE72C3 /* Assets.xcassets */; };
 		2F39B85D27823CF600FE72C3 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85C27823CF600FE72C3 /* Tests_iOS.swift */; };
 		2F39B85F27823CF700FE72C3 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85E27823CF700FE72C3 /* Tests_iOSLaunchTests.swift */; };
 		2F39B86927823CF700FE72C3 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B86827823CF700FE72C3 /* Tests_macOS.swift */; };
@@ -149,7 +152,6 @@
 		2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
 		2FC6C7B92786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
-		2FD4077E284FBB6F0022FC49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FD4077D284FBB6F0022FC49 /* Assets.xcassets */; };
 		2FD40784284FBB700022FC49 /* WatchFace WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2FD40783284FBB700022FC49 /* WatchFace WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2FD40789284FBB700022FC49 /* TimeDrawWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */; };
 		2FD4078D284FBB700022FC49 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4078C284FBB700022FC49 /* NotificationController.swift */; };
@@ -328,7 +330,6 @@
 		2FC6C7B42786434600D75568 /* MultiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTextField.swift; sourceTree = "<group>"; };
 		2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalTextField.swift; sourceTree = "<group>"; };
 		2FD4077B284FBB6F0022FC49 /* WatchFace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchFace.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		2FD4077D284FBB6F0022FC49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2FD40783284FBB700022FC49 /* WatchFace WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WatchFace WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawWatchApp.swift; sourceTree = "<group>"; };
 		2FD4078C284FBB700022FC49 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
@@ -429,8 +430,7 @@
 				2F39B85227823CF600FE72C3 /* macOS */,
 				2F39B85B27823CF600FE72C3 /* Tests iOS */,
 				2F39B86727823CF700FE72C3 /* Tests macOS */,
-				2FD4077C284FBB6F0022FC49 /* WatchFace */,
-				2FD40787284FBB700022FC49 /* WatchFace WatchKit Extension */,
+				2FD40787284FBB700022FC49 /* WatchFace */,
 				2FD407A0284FBB700022FC49 /* WatchFaceTests */,
 				2FD407AA284FBB700022FC49 /* WatchFaceUITests */,
 				2F39B84C27823CF600FE72C3 /* Products */,
@@ -607,15 +607,7 @@
 			path = "Header Views";
 			sourceTree = "<group>";
 		};
-		2FD4077C284FBB6F0022FC49 /* WatchFace */ = {
-			isa = PBXGroup;
-			children = (
-				2FD4077D284FBB6F0022FC49 /* Assets.xcassets */,
-			);
-			path = WatchFace;
-			sourceTree = "<group>";
-		};
-		2FD40787284FBB700022FC49 /* WatchFace WatchKit Extension */ = {
+		2FD40787284FBB700022FC49 /* WatchFace */ = {
 			isa = PBXGroup;
 			children = (
 				2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */,
@@ -627,7 +619,7 @@
 				2FD40798284FBB700022FC49 /* PushNotificationPayload.apns */,
 				2FD40794284FBB700022FC49 /* Preview Content */,
 			);
-			path = "WatchFace WatchKit Extension";
+			path = WatchFace;
 			sourceTree = "<group>";
 		};
 		2FD40794284FBB700022FC49 /* Preview Content */ = {
@@ -961,7 +953,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FD4077E284FBB6F0022FC49 /* Assets.xcassets in Resources */,
+				2F26FE6128CE7F4C00A9A0AE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -979,6 +971,7 @@
 				2F646BAE2850283D00D7445D /* Inter-Light.ttf in Resources */,
 				2F646BAF2850283D00D7445D /* Inter-Medium.ttf in Resources */,
 				2FD40796284FBB700022FC49 /* Preview Assets.xcassets in Resources */,
+				2F26FE6228CE7F4E00A9A0AE /* Assets.xcassets in Resources */,
 				2FD40793284FBB700022FC49 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -987,6 +980,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F26FE6328CE7F4F00A9A0AE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1335,7 +1329,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "iOS/TimeDraw (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1356,7 +1350,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.5.0;
+				MARKETING_VERSION = 0.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw;
 				PRODUCT_NAME = TimeDraw;
 				SDKROOT = iphoneos;
@@ -1374,7 +1368,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "iOS/TimeDraw (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1395,7 +1389,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.5.0;
+				MARKETING_VERSION = 0.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw;
 				PRODUCT_NAME = TimeDraw;
 				SDKROOT = iphoneos;
@@ -1416,7 +1410,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1427,7 +1421,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 0.5.0;
+				MARKETING_VERSION = 0.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw;
 				PRODUCT_NAME = TimeDraw;
 				SDKROOT = macosx;
@@ -1445,7 +1439,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1456,7 +1450,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 0.5.0;
+				MARKETING_VERSION = 0.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw;
 				PRODUCT_NAME = TimeDraw;
 				SDKROOT = macosx;
@@ -1470,7 +1464,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
@@ -1490,7 +1484,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
@@ -1511,7 +1505,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
@@ -1530,7 +1524,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
@@ -1550,17 +1544,19 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = WatchFace_WatchKit_Extension;
 				INFOPLIST_KEY_CFBundleDisplayName = WatchFace;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.michaelrobertellis.TimeDraw;
-				MARKETING_VERSION = 0.5.0;
+				MARKETING_VERSION = 0.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1576,17 +1572,19 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = WatchFace_WatchKit_Extension;
 				INFOPLIST_KEY_CFBundleDisplayName = WatchFace;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.michaelrobertellis.TimeDraw;
-				MARKETING_VERSION = 0.5.0;
+				MARKETING_VERSION = 0.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1602,8 +1600,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_ASSET_PATHS = "\"WatchFace WatchKit Extension/Preview Content\"";
+				CURRENT_PROJECT_VERSION = 9;
+				DEVELOPMENT_ASSET_PATHS = "\"WatchFace/Preview Content\"";
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1635,8 +1633,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_ASSET_PATHS = "\"WatchFace WatchKit Extension/Preview Content\"";
+				CURRENT_PROJECT_VERSION = 9;
+				DEVELOPMENT_ASSET_PATHS = "\"WatchFace/Preview Content\"";
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1670,7 +1668,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -1691,7 +1689,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -1711,7 +1709,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -1730,7 +1728,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;

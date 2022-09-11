@@ -74,7 +74,7 @@ struct MainView: View {
         }
     }
     
-    var body: some View {
+    @ViewBuilder var mainContentContainer: some View {
         Group {
             if self.itemViewModel.isAddEventTextFieldFocused {
                 ZStack {
@@ -86,18 +86,21 @@ struct MainView: View {
                 }
             }
         }
+    }
+    
+    var body: some View {
+        Group {
+            if isFirstAppOpen {
+                ZStack {
+                    mainContentContainer
+                    OnboardingExperience(isFirstAppOpen: self.$isFirstAppOpen)
+                }
+            } else {
+                mainContentContainer
+            }
+        }
         .environmentObject(self.itemViewModel)
         .environmentObject(self.listViewModel)
         .environmentObject(self.appSettings)
-        .sheet(isPresented: self.$isFirstAppOpen, onDismiss: {
-            self.isFirstAppOpen = false
-        }, content: {
-            Text("Welcome")
-            Image(systemName: "calendar")
-            Text("This is some intro text")
-            Text(" 1. Lorem Ipsum")
-            Text(" 2. Dolor Amet")
-            Button("Done", action: { self.isFirstAppOpen = false })
-        })
     }
 }

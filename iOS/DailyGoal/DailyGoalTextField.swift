@@ -30,3 +30,19 @@ struct DailyGoalTextField: View {
             .fixedSize(horizontal: false, vertical: true)
     }
 }
+
+
+struct OnboardingDailyGoalTextField: View {
+    var body: some View {
+        Text("What is your goal today?")
+            .font(.callout)
+            .foregroundColor(Color.gray1)
+            .multilineTextAlignment(.center)
+            .frame(maxHeight: 70)
+            .clipped()
+            .background(RoundedRectangle(cornerRadius: 4).stroke(Color.clear))
+            .padding(.horizontal, 30)
+            .padding(.vertical, 8)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+}

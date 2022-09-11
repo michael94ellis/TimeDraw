@@ -27,21 +27,9 @@ struct TimeDrawWatchApp: App {
     
     @SceneBuilder var body: some Scene {
         WindowGroup {
-            VStack {
-                Text("YOYOY")
-                ForEach(self.listViewModel.events) { item in
-                    Text(item.description)
-                    Text("YOY33OY")
-                }
-                ForEach(self.listViewModel.reminders) { item in
-                    Text(item.description)
-                    Text("YOYO44Y")
-                }
-                Text("YOYOY")
-            }
-//            TimeDrawClock(showClockView: self.$showClockView, width: 50)
-//                .environmentObject(self.itemViewModel)
-//                .environmentObject(self.listViewModel)
+            TimeDrawClock(showClockView: self.$showClockView, width: 70)
+                .environmentObject(self.itemViewModel)
+                .environmentObject(self.listViewModel)
         }
 
         WKNotificationScene(controller: NotificationController.self, category: "myCategory")

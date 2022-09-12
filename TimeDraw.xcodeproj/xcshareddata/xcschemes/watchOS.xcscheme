@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2FD4077A284FBB6F0022FC49"
-               BuildableName = "WatchFace.app"
-               BlueprintName = "WatchFace"
+               BuildableName = "WatchFace App.app"
+               BlueprintName = "WatchFace App"
                ReferencedContainer = "container:TimeDraw.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -81,8 +81,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2FD4077A284FBB6F0022FC49"
-            BuildableName = "WatchFace.app"
-            BlueprintName = "WatchFace"
+            BuildableName = "WatchFace App.app"
+            BlueprintName = "WatchFace App"
             ReferencedContainer = "container:TimeDraw.xcodeproj">
          </BuildableReference>
       </RemoteRunnable>
@@ -100,8 +100,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2FD4077A284FBB6F0022FC49"
-            BuildableName = "WatchFace.app"
-            BlueprintName = "WatchFace"
+            BuildableName = "WatchFace App.app"
+            BlueprintName = "WatchFace App"
             ReferencedContainer = "container:TimeDraw.xcodeproj">
          </BuildableReference>
       </RemoteRunnable>
@@ -109,8 +109,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2FD4077A284FBB6F0022FC49"
-            BuildableName = "WatchFace.app"
-            BlueprintName = "WatchFace"
+            BuildableName = "WatchFace App.app"
+            BlueprintName = "WatchFace App"
             ReferencedContainer = "container:TimeDraw.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

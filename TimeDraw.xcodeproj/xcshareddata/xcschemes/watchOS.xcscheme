@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2FD4077A284FBB6F0022FC49"
                BuildableName = "WatchFace.app"
-               BlueprintName = "WatchFace"
+               BlueprintName = "WatchFace App"
                ReferencedContainer = "container:TimeDraw.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -74,18 +74,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <RemoteRunnable
-         runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.Carousel"
-         RemotePath = "/WatchFace">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2FD4077A284FBB6F0022FC49"
             BuildableName = "WatchFace.app"
-            BlueprintName = "WatchFace"
+            BlueprintName = "WatchFace App"
             ReferencedContainer = "container:TimeDraw.xcodeproj">
          </BuildableReference>
-      </RemoteRunnable>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -93,27 +91,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <RemoteRunnable
-         runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.Carousel"
-         RemotePath = "/WatchFace">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2FD4077A284FBB6F0022FC49"
             BuildableName = "WatchFace.app"
-            BlueprintName = "WatchFace"
+            BlueprintName = "WatchFace App"
             ReferencedContainer = "container:TimeDraw.xcodeproj">
          </BuildableReference>
-      </RemoteRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2FD4077A284FBB6F0022FC49"
-            BuildableName = "WatchFace.app"
-            BlueprintName = "WatchFace"
-            ReferencedContainer = "container:TimeDraw.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

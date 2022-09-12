@@ -156,13 +156,11 @@ public final class EventKitManager {
     
     private func requestEventAccess() async throws -> Bool {
         let accessGranted = try await eventStore.requestAccess(to: .event)
-        eventStore = EKEventStore()
         return accessGranted
     }
     
     private func requestReminderAccess() async throws -> Bool {
         let accessGranted = try await eventStore.requestAccess(to: .reminder)
-        eventStore = EKEventStore()
         return accessGranted
     }
     

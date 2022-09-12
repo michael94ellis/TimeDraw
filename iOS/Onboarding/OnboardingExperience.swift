@@ -72,7 +72,6 @@ struct OnboardingExperience: View {
                 }
                 Spacer()
             }
-            .padding(12)
             .overlay(.black.opacity(0.72))
             .overlay(content: {
                 VStack {
@@ -90,6 +89,7 @@ struct OnboardingExperience: View {
                         .font(.interFine)
                     Spacer()
                 }
+                .padding(18)
             })
             .onTapGesture {
                 currentPageIndex += 1
@@ -124,7 +124,6 @@ struct OnboardingExperience: View {
                 }
                 Spacer()
             }
-            .padding(12)
             .overlay(.black.opacity(0.72))
             .overlay(content: {
                 VStack {
@@ -144,6 +143,7 @@ struct OnboardingExperience: View {
                         .font(.interFine)
                     Spacer()
                 }
+                .padding(18)
             })
             .onTapGesture {
                 currentPageIndex += 1

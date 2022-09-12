@@ -91,10 +91,7 @@ struct MainView: View {
     var body: some View {
         Group {
             if isFirstAppOpen {
-                ZStack {
-                    mainContentContainer
-                    OnboardingExperience(isFirstAppOpen: self.$isFirstAppOpen)
-                }
+                OnboardingExperience(isFirstAppOpen: self.$isFirstAppOpen)
             } else {
                 mainContentContainer
             }

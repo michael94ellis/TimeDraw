@@ -172,6 +172,7 @@ struct AddRecurrenceRule: View {
                 .padding(.horizontal)
                 .padding(.bottom)
             }
+            .frame(maxWidth: 600)
             .background(RoundedRectangle(cornerRadius: 13)
                             .fill(Color(uiColor: .systemGray6))
                             .shadow(radius: 4, x: 2, y: 4))

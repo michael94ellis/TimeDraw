@@ -83,13 +83,11 @@ struct EventInput: View {
                 }
                 .frame(maxWidth: 600)
                 .padding(.bottom, 8)
-                if self.appSettings.showNotes || self.viewModel.calendarItem?.hasNotes ?? false {
-                    HStack {
-                        AddNotesInput()
-                    }
-                    .padding(.bottom, 8)
-                    .onTapGesture {}
+                HStack {
+                    AddNotesInput()
                 }
+                .padding(.bottom, 8)
+                .onTapGesture {}
                 if self.appSettings.showRecurringItems || self.viewModel.calendarItem?.hasRecurrenceRules ?? false {
                     HStack {
                         AddRecurrenceRule()

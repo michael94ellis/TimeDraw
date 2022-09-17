@@ -21,7 +21,6 @@ class AppSettings: ObservableObject {
     @AppStorage("timePickerGranularity") var timePickerGranularity: Int = 15
     
     @AppStorage("showRecurringItems") var showRecurringItems: Bool = true
-    @AppStorage("showNotes") var showNotes: Bool = false
     @AppStorage("noteLineLimit") var noteLineLimit: Int = 3
     static let shared = AppSettings()
     

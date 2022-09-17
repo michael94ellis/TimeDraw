@@ -87,20 +87,23 @@ struct EventInput: View {
                     AddNotesInput()
                 }
                 .padding(.bottom, 8)
-                .onTapGesture {}
+                .onTapGesture {} // Prevents dismissing event input options when container is tapped
                 if self.appSettings.showRecurringItems || self.viewModel.calendarItem?.hasRecurrenceRules ?? false {
                     HStack {
                         AddRecurrenceRule()
                     }
                     .padding(.bottom, 8)
-                    .onTapGesture {}
+                    .onTapGesture {} // Prevents dismissing event input options when container is tapped
                 }
                 HStack {
                     AddEventDateTimePicker()
                 }
-                .onTapGesture {}
+                .onTapGesture {} // Prevents dismissing event input options when container is tapped
+                Spacer(minLength: 48)
             }.rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center)
-        }.rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center)
+        }
+        .frame(maxHeight: .infinity)
+        .rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center)
         .background(
             Color.gray.opacity(0.01)
                 .gesture(TapGesture().onEnded({
@@ -160,13 +163,16 @@ struct EventInput: View {
     }
     
     var body: some View {
-        VStack {
+        ZStack {
             if self.viewModel.isAddEventTextFieldFocused {
                 self.eventOptions
                     .frame(maxWidth: .infinity, alignment: .bottom)
                     .padding(.bottom, 8)
             }
-            self.textBar
+            VStack {
+                Spacer()
+                self.textBar
+            }
         }
         .padding(14)
         .toast(isPresenting: self.$viewModel.displayToast, duration: 2, tapToDismiss: true, alert: {

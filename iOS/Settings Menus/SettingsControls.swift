@@ -14,41 +14,17 @@ struct SettingsControls:View {
     var body: some View {
         VStack(spacing: 8) {
             VStack {
-                Toggle("Enable Daily Goal Text Area", isOn: self.appSettings.$isDailyGoalEnabled)
-                    .padding(.horizontal)
-                Toggle("Enable Time Draw Clock", isOn: self.appSettings.$isTimeDrawClockEnabled)
-                    .padding(.horizontal)
-                Toggle("Show Recurrence", isOn: self.appSettings.$showRecurringItems)
-                    .padding(.horizontal)
-                Toggle("Show Calendar Picker", isOn: self.appSettings.$showCalendarPickerButton)
-                    .padding(.horizontal)
-                Toggle("Show List Icons", isOn: self.appSettings.$showListIcons)
-                    .padding(.horizontal)
-                    .onChange(of: self.appSettings.showListIcons, perform: { newValue in
-                        CalendarItemListViewModel.shared.updateData()
-                    })
-                Toggle("Show Notes", isOn: self.appSettings.$showNotes)
-                    .padding(.horizontal)
-            }
-            VStack {
+                Toggle("Daily Goal Note Space", isOn: self.appSettings.$isDailyGoalEnabled)
+                Toggle("Analog Clock", isOn: self.appSettings.$isTimeDrawClockEnabled)
                 HStack {
-                    Text("Note Line Limit:")
-                    Picker("", selection: self.appSettings.$noteLineLimit) {
-                        ForEach([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30], id: \.self) { amount in
-                            Text(String(amount))
-                        }
-                    }
-                    .frame(width: 100, height: 55)
-                    .clipped()
-                }
-                HStack {
-                    Text("Time Selection Interval:")
+                    Text("Time Selection Interval")
+                    Spacer()
                     Picker("", selection: self.appSettings.$timePickerGranularity) {
                         ForEach([1, 2, 3, 5, 10, 12, 15, 20, 30], id: \.self) { minuteValue in
-                            Text(String(minuteValue))
+                            Text("  \(String(minuteValue))m")
                         }
                     }
-                    .frame(width: 100, height: 55)
+                    .frame(width: 55, height: 55)
                     .clipped()
                 }
             }

@@ -24,7 +24,7 @@ struct TimeDrawApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainView()
+            MainViewContainer()
                 .font(.interRegular)
         }
     }

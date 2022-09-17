@@ -65,25 +65,26 @@ struct CalendarSelection: View {
     }
     
     var body: some View {
-        HStack {
-            Spacer()
-            Button("Done") {
-                self.showingCalendarSelection.toggle()
+        NavigationView {
+            VStack {
+                List {
+                    Section("Events") {
+                        self.selectionList(of: EventKitManager.shared.eventStore.calendars(for: .event), from: self.selectedIds)
+                    }
+                    Section("Reminders") {
+                        self.selectionList(of: EventKitManager.shared.eventStore.calendars(for: .reminder), from: self.selectedIds)
+                    }
+                }
             }
-            .foregroundColor(.blue1)
-            .padding(.trailing)
-        }
-        .padding(.top)
-        Text("Selected Calendars")
-            .font(Font.interTitle)
-            .padding(.top)
-        List {
-            Section("Events") {
-                self.selectionList(of: EventKitManager.shared.eventStore.calendars(for: .event), from: self.selectedIds)
-            }
-            Section("Reminders") {
-                self.selectionList(of: EventKitManager.shared.eventStore.calendars(for: .reminder), from: self.selectedIds)
-            }
+            .padding(.horizontal)
+            .padding(.top, 22)
+            .navigationTitle("Select Calendars")
+            .toolbar(content:  {
+                HStack {
+                    Spacer()
+                    Button("Done", action: { self.showingCalendarSelection.toggle() })
+                }
+            })
         }
     }
 }

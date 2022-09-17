@@ -45,8 +45,7 @@ struct PopoverButton<Content: View, PopoverContent: View>: View {
             
             if showPopover {
                 viewController.showPopover()
-            }
-            else {
+            } else {
                 viewController.hidePopover()
             }
         }

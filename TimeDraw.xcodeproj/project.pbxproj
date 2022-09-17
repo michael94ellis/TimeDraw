@@ -41,8 +41,8 @@
 		2F39B86D27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84127823CF600FE72C3 /* TimeDraw.xcdatamodeld */; };
 		2F39B86E27823CF700FE72C3 /* TimeDrawApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */; };
 		2F39B86F27823CF700FE72C3 /* TimeDrawApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */; };
-		2F39B87027823CF700FE72C3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84427823CF600FE72C3 /* MainView.swift */; };
-		2F39B87127823CF700FE72C3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84427823CF600FE72C3 /* MainView.swift */; };
+		2F39B87027823CF700FE72C3 /* MainViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84427823CF600FE72C3 /* MainViewContainer.swift */; };
+		2F39B87127823CF700FE72C3 /* MainViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84427823CF600FE72C3 /* MainViewContainer.swift */; };
 		2F39B87227823CF700FE72C3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84527823CF600FE72C3 /* CoreDataManager.swift */; };
 		2F39B87327823CF700FE72C3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84527823CF600FE72C3 /* CoreDataManager.swift */; };
 		2F39B87427823CF700FE72C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B84627823CF600FE72C3 /* Assets.xcassets */; };
@@ -64,6 +64,8 @@
 		2F542010279B4AE90046696B /* ModifyCalendarItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */; };
 		2F542011279B4AE90046696B /* ModifyCalendarItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */; };
 		2F5427E528CF825D00F08952 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F5427DF28CF825C00F08952 /* Assets.xcassets */; };
+		2F5427E928D60FB900F08952 /* UIDevice-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5427E828D60FB900F08952 /* UIDevice-Extension.swift */; };
+		2F5427EA28D60FB900F08952 /* UIDevice-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5427E828D60FB900F08952 /* UIDevice-Extension.swift */; };
 		2F646BA72850283D00D7445D /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505122791370D00AF90F7 /* Inter-Black.ttf */; };
 		2F646BA82850283D00D7445D /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505132791370D00AF90F7 /* Inter-Bold.ttf */; };
 		2F646BA92850283D00D7445D /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505112791370C00AF90F7 /* Inter-ExtraBold.ttf */; };
@@ -269,7 +271,7 @@
 		2F26FE5D28CE56E900A9A0AE /* OnboardingExperience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingExperience.swift; sourceTree = "<group>"; };
 		2F39B84227823CF600FE72C3 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawApp.swift; sourceTree = "<group>"; };
-		2F39B84427823CF600FE72C3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		2F39B84427823CF600FE72C3 /* MainViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewContainer.swift; sourceTree = "<group>"; };
 		2F39B84527823CF600FE72C3 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		2F39B84627823CF600FE72C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F39B84B27823CF600FE72C3 /* TimeDraw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeDraw.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -291,6 +293,7 @@
 		2F42C5A52784E6FC00F0BEB2 /* EventError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventError.swift; sourceTree = "<group>"; };
 		2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyCalendarItemViewModel.swift; sourceTree = "<group>"; };
 		2F5427DF28CF825C00F08952 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2F5427E828D60FB900F08952 /* UIDevice-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice-Extension.swift"; sourceTree = "<group>"; };
 		2F646BB0285038CF00D7445D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBarButtonItem.swift; sourceTree = "<group>"; };
 		2F6505022787A09900AF90F7 /* MainHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeader.swift; sourceTree = "<group>"; };
@@ -671,8 +674,9 @@
 				2F6505272791373800AF90F7 /* TimeDraw--iOS--Info.plist */,
 				2F39B88427823DEC00FE72C3 /* TimeDraw (iOS).entitlements */,
 				2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */,
-				2F39B84427823CF600FE72C3 /* MainView.swift */,
+				2F39B84427823CF600FE72C3 /* MainViewContainer.swift */,
 				2F6505022787A09900AF90F7 /* MainHeader.swift */,
+				2F5427E828D60FB900F08952 /* UIDevice-Extension.swift */,
 				2F26FE6028CE56F500A9A0AE /* Onboarding */,
 				2F2343FB27D454BC0064B635 /* CalendarView.swift */,
 				2F42C5AD2784E74000F0BEB2 /* Model */,
@@ -1040,6 +1044,7 @@
 				2F39B86C27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
 				2F42C5A32784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
 				2FB41CB427DA5E220067F250 /* EventListCell.swift in Sources */,
+				2F5427E928D60FB900F08952 /* UIDevice-Extension.swift in Sources */,
 				2FB41CDA27DEE1850067F250 /* EmojiButton.swift in Sources */,
 				2F8AB31027A229DA00654FEF /* Utils.swift in Sources */,
 				2F26FE5E28CE56E900A9A0AE /* OnboardingExperience.swift in Sources */,
@@ -1051,7 +1056,7 @@
 				2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2FB41CB127DA5DBE0067F250 /* ReminderListCell.swift in Sources */,
 				2FB41CDD27DEE4DE0067F250 /* SegmentedPicker.swift in Sources */,
-				2F39B87027823CF700FE72C3 /* MainView.swift in Sources */,
+				2F39B87027823CF700FE72C3 /* MainViewContainer.swift in Sources */,
 				2F24457F27D797C9005BF37D /* EventKit-Extension.swift in Sources */,
 				2F24458B27D8BE37005BF37D /* Calendar-Extension.swift in Sources */,
 				2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */,
@@ -1097,6 +1102,7 @@
 				2F39B86D27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
 				2F42C5A42784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
 				2FB41CB527DA5E220067F250 /* EventListCell.swift in Sources */,
+				2F5427EA28D60FB900F08952 /* UIDevice-Extension.swift in Sources */,
 				2FB41CDB27DEE1850067F250 /* EmojiButton.swift in Sources */,
 				2F8AB31127A229DA00654FEF /* Utils.swift in Sources */,
 				2F26FE5F28CE56E900A9A0AE /* OnboardingExperience.swift in Sources */,
@@ -1108,7 +1114,7 @@
 				2F42C5A72784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2FB41CB227DA5DBE0067F250 /* ReminderListCell.swift in Sources */,
 				2FB41CDE27DEE4DE0067F250 /* SegmentedPicker.swift in Sources */,
-				2F39B87127823CF700FE72C3 /* MainView.swift in Sources */,
+				2F39B87127823CF700FE72C3 /* MainViewContainer.swift in Sources */,
 				2F24458027D797C9005BF37D /* EventKit-Extension.swift in Sources */,
 				2F24458C27D8BE37005BF37D /* Calendar-Extension.swift in Sources */,
 				2F6505042787A09900AF90F7 /* MainHeader.swift in Sources */,
@@ -1341,7 +1347,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "iOS/TimeDraw (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1380,7 +1386,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "iOS/TimeDraw (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1422,7 +1428,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1451,7 +1457,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1558,7 +1564,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = WatchFace_WatchKit_Extension;
@@ -1586,7 +1592,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				IBSC_MODULE = WatchFace_WatchKit_Extension;
@@ -1612,7 +1618,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"WatchFace Watch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_PREVIEWS = YES;
@@ -1645,7 +1651,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"WatchFace Watch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_PREVIEWS = YES;

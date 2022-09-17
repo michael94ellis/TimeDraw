@@ -241,7 +241,7 @@ struct OnboardingExperience: View {
             .onTapGesture {
                 isFirstAppOpen = false
             }
-            EventInput(isBackgroundBlurred: Binding<Bool>(get: { true }, set: { _ in }))
+            EventInput()
                 .allowsHitTesting(false)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

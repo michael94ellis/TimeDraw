@@ -115,6 +115,7 @@ struct MainHeader: View {
                 }
                 .transition(self.transitionDirection(direction: self.swipeDirection))
             }
+            .padding(.horizontal, 18)
         }
         .transition(self.switchTransition(direction: self.swipeDirection))
         .gesture(DragGesture()

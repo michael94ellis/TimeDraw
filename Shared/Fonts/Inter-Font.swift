@@ -24,6 +24,8 @@ extension Font {
     static let interFine = Font.custom("Inter-Light", size: 16, relativeTo: .callout)
     static let interExtraBoldTitle = Font.custom("Inter-ExtraBold", size: 22, relativeTo: .title3)
     static let interTitle = Font.custom("Inter-Regular", size: 28, relativeTo: .title)
+    static let interTitle2 = Font.custom("Inter-Regular", size: 24, relativeTo: .title)
+    static let interBoldTitle2 = Font.custom("Inter-Bold", size: 24, relativeTo: .title)
 }
 
 struct AppFontName {

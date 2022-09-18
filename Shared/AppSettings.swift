@@ -12,7 +12,7 @@ class AppSettings: ObservableObject {
     @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
     @AppStorage("isTimeDrawClockEnabled") var isTimeDrawClockEnabled: Bool = true
     @AppStorage("showItemRecurrenceType") var showItemRecurrenceType: ItemRecurrenceType = .all
-    @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .scheduled
+    @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .all
     @AppStorage("showListIcons") var showListIcons: Bool = true
     @AppStorage("showCalendarPickerButton") var showCalendarPickerButton: Bool = true
     @AppStorage("userSelectedCalendars") var userSelectedCalendars: Data?

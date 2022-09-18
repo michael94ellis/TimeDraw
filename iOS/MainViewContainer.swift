@@ -70,19 +70,19 @@ struct MainViewContainer: View {
     @ViewBuilder var mainContentContainer: some View {
         ZStack {
             mainContentView
-                .overlay(self.blurOverlay)
                 .ignoresSafeArea()
+                .overlay(self.blurOverlay)
             VStack {
                 Spacer()
                 EventInput()
-                    .padding(.bottom, 18)
+                    .padding(.bottom, UIDevice.current.bottomNotchHeight * 1.15)
             }
-            .padding(.bottom, 18)
+            .padding(.bottom, UIDevice.current.bottomNotchHeight)
         }
     }
     
     var body: some View {
-        Group {
+        VStack {
             if isFirstAppOpen {
                 OnboardingExperience(isFirstAppOpen: self.$isFirstAppOpen)
             } else {

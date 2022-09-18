@@ -17,8 +17,6 @@ struct MainHeader: View {
     @EnvironmentObject var itemList: CalendarItemListViewModel
     @State var swipeDirection: SwipeDirection = .left
     
-    let mainHeaderTopPadding: CGFloat = UIDevice.current.hasNotch ? 40 : 18
-    
     func transitionDirection(direction: SwipeDirection) -> AnyTransition {
         let slideIn: Edge = direction == .right ? .trailing : .leading
         return .asymmetric(insertion: .move(edge: slideIn), removal: .opacity)
@@ -101,21 +99,19 @@ struct MainHeader: View {
                 SettingsView(display: $showSettingsPopover)
             })
         }
-        .padding(.top, mainHeaderTopPadding)
-        .padding(.horizontal, 20)
-        .padding(.vertical, 10)
+        .padding(.top, UIDevice.current.topNotchHeight)
+        .padding(.horizontal)
     }
     
     var body: some View {
         VStack(spacing: 0) {
             self.headerNav
-            HStack {
+            HStack(spacing: 4) {
                 ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.itemList.displayDate), id: \.self) { date in
                     self.weekDayHeader(for: date)
                 }
                 .transition(self.transitionDirection(direction: self.swipeDirection))
             }
-            .padding(.horizontal, 18)
         }
         .transition(self.switchTransition(direction: self.swipeDirection))
         .gesture(DragGesture()

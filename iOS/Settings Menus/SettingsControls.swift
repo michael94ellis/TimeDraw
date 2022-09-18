@@ -10,9 +10,18 @@ import SwiftUI
 struct SettingsControls:View {
     
     @EnvironmentObject var appSettings: AppSettings
+    
+    func sectionLabel(title sectionName: String) -> some View {
+        HStack {
+            Text(sectionName)
+                .font(.title2)
+            Spacer()
+        }
+    }
         
     var body: some View {
         VStack(spacing: 8) {
+            sectionLabel(title: "Customize")
             VStack {
                 Toggle("Daily Goal Note Space", isOn: self.appSettings.$isDailyGoalEnabled)
                 Toggle("Analog Clock", isOn: self.appSettings.$isTimeDrawClockEnabled)
@@ -30,8 +39,7 @@ struct SettingsControls:View {
             }
             // Calendar Selection Popup Screen
             CalendarSelectionButton()
-            // Show and Hide Segmented Pickers
-            Text("Show:")
+            sectionLabel(title: "Show")
             Picker("", selection: self.appSettings.$showCalendarItemType) {
                 ForEach(CalendarItemType.allCases ,id: \.self) { item in
                     Text(item.displayName)

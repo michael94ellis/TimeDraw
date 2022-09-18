@@ -11,7 +11,6 @@ import SwiftUI
 struct MainHeader: View {
     
     @State private var showSettingsPopover = false
-    @State private var showCalendarSelectionPopover = false
     // FIXME: Add a full month calendar feature somewhere
     /// True means only show 1 week
 //    @AppStorage("compactHeader") private var showCompactCalendar = true
@@ -87,20 +86,22 @@ struct MainHeader: View {
                 .font(.interExtraBoldTitle)
                 .fontWeight(.semibold)
                 .foregroundColor(Color.red1)
-                .padding(.top, mainHeaderTopPadding)
             Spacer()
-            Menu(content: {
-                Button("Settings", action: { self.showSettingsPopover.toggle() })
-                Button("Select Calendars", action: { self.showCalendarSelectionPopover.toggle() })
-            }, label: { Image(systemName: "ellipsis")
-                .frame(width: 40, height: 30) })
-                .sheet(isPresented: self.$showSettingsPopover, content: {
-                    SettingsView(display: $showSettingsPopover)
-                })
-                .sheet(isPresented: self.$showCalendarSelectionPopover) {
-                    CalendarSelection(showingCalendarSelection: self.$showCalendarSelectionPopover)
-                }
+            Button(action: { self.showSettingsPopover.toggle() }) {
+                Image(systemName: "ellipsis")
+                    .frame(width: 40, height: 30)
+            }
+            .buttonStyle(.plain)
+            .frame(width: 55, height: 55)
+            .onTapGesture {
+                self.showSettingsPopover.toggle()
+            }
+            .contentShape(Rectangle())
+            .sheet(isPresented: self.$showSettingsPopover, content: {
+                SettingsView(display: $showSettingsPopover)
+            })
         }
+        .padding(.top, mainHeaderTopPadding)
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
     }

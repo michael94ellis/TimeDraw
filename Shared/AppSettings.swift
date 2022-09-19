@@ -12,7 +12,7 @@ class AppSettings: ObservableObject {
     @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
     @AppStorage("isTimeDrawClockEnabled") var isTimeDrawClockEnabled: Bool = true
     @AppStorage("showItemRecurrenceType") var showItemRecurrenceType: ItemRecurrenceType = .all
-    @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .scheduled
+    @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .all
     @AppStorage("showListIcons") var showListIcons: Bool = true
     @AppStorage("showCalendarPickerButton") var showCalendarPickerButton: Bool = true
     @AppStorage("userSelectedCalendars") var userSelectedCalendars: Data?
@@ -21,7 +21,6 @@ class AppSettings: ObservableObject {
     @AppStorage("timePickerGranularity") var timePickerGranularity: Int = 15
     
     @AppStorage("showRecurringItems") var showRecurringItems: Bool = true
-    @AppStorage("showNotes") var showNotes: Bool = false
     @AppStorage("noteLineLimit") var noteLineLimit: Int = 3
     static let shared = AppSettings()
     
@@ -39,27 +38,27 @@ class AppSettings: ObservableObject {
 }
 enum CalendarItemType: Int, CaseIterable {
     case scheduled = 0
-    case unscheduled = 1
-    case all = 2
+    case all = 1
+    case unscheduled = 2
     
     var displayName: String {
         switch(self) {
         case .scheduled: return "Scheduled"
         case .unscheduled: return "Unscheduled"
-        case .all: return "All"
+        case .all: return "&"
         }
     }
 }
 enum ItemRecurrenceType: Int, CaseIterable {
     case recurring = 0
-    case nonRecurring = 1
-    case all = 2
+    case all = 1
+    case nonRecurring = 2
     
     var displayName: String {
         switch(self) {
         case .recurring: return "Recurring"
         case .nonRecurring: return "Non Recurring"
-        case .all: return "All"
+        case .all: return "&"
         }
     }
 }

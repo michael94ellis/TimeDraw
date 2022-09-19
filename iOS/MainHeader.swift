@@ -11,9 +11,9 @@ import SwiftUI
 struct MainHeader: View {
     
     @State private var showSettingsPopover = false
-    @State private var showCalendarSelectionPopover = false
+    // FIXME: Add a full month calendar feature somewhere
     /// True means only show 1 week
-    @AppStorage("compactHeader") private var showCompactCalendar = true
+//    @AppStorage("compactHeader") private var showCompactCalendar = true
     @EnvironmentObject var itemList: CalendarItemListViewModel
     @State var swipeDirection: SwipeDirection = .left
     
@@ -23,8 +23,7 @@ struct MainHeader: View {
     }
     
     func switchTransition(direction: SwipeDirection) -> AnyTransition {
-        let slideOut: Edge = self.showCompactCalendar ? .top : .top
-        return .asymmetric(insertion: .move(edge: slideOut), removal: .move(edge: .top))
+        return .asymmetric(insertion: .move(edge: .top), removal: .move(edge: .top))
     }
     
     private let weekdayFormatter = DateFormatter()
@@ -62,80 +61,56 @@ struct MainHeader: View {
     
     func handleGesture(value: SwipeDirection) {
         self.swipeDirection = value
-        let type: Calendar.Component = self.showCompactCalendar ? .day : .month
-        let amount: Int = self.showCompactCalendar ? 7 : 1
+        let type: Calendar.Component = .day
+        let amount = 7
         switch value {
         case .left:
             self.itemList.displayDate = Calendar.current.date(byAdding: type, value: -amount, to: self.itemList.displayDate) ?? Date()
         case .right:
             self.itemList.displayDate = Calendar.current.date(byAdding: type, value: amount, to: self.itemList.displayDate) ?? Date()
         default:
-            self.showCompactCalendar.toggle()
+            break
         }
     }
     
-    func toggleMonthButton(forward: Bool) -> some View {
-        Button(action: {
-            withAnimation {
-                self.itemList.displayDate = Calendar.current.date(byAdding: .month, value: forward ? 1 : -1, to: self.itemList.displayDate) ?? Date()
-            }
-        }) {
-            Image(systemName: forward ? "chevron.right" : "chevron.left")
-                .foregroundColor(Color.red1)
-        }
+    enum SettingsScreen {
+        case main
+        case calendars
     }
     
     var headerNav: some View {
         HStack {
-            Button(action: {
-                withAnimation {
-                    self.showCompactCalendar.toggle()
-                }
-            }) {
-                Text(self.monthYearFormatter.string(from: self.itemList.displayDate))
-                    .font(.interExtraBoldTitle)
-                    .fontWeight(.semibold)
-                    .foregroundColor(Color.red1)
-            }
-            if !self.showCompactCalendar {
-                self.toggleMonthButton(forward: false)
-                    .padding(.leading)
-                self.toggleMonthButton(forward: true)
-                    .padding(.horizontal)
-            }
+            Text(self.monthYearFormatter.string(from: self.itemList.displayDate))
+                .font(.interExtraBoldTitle)
+                .fontWeight(.semibold)
+                .foregroundColor(Color.red1)
             Spacer()
-            Menu(content: {
-                Button("Settings", action: { self.showSettingsPopover.toggle() })
-                Button("Select Calendars", action: { self.showCalendarSelectionPopover.toggle() })
-            }, label: { Image(systemName: "ellipsis")
-                .frame(width: 40, height: 30) })
-                .fullScreenCover(isPresented: self.$showSettingsPopover, content: {
-                    SettingsView(display: $showSettingsPopover)
-                })
-                .sheet(isPresented: self.$showCalendarSelectionPopover) {
-                    CalendarSelection(showingCalendarSelection: self.$showCalendarSelectionPopover)
-                }
+            Button(action: { self.showSettingsPopover.toggle() }) {
+                Image(systemName: "ellipsis")
+                    .frame(width: 40, height: 30)
+            }
+            .buttonStyle(.plain)
+            .frame(width: 55, height: 55)
+            .onTapGesture {
+                self.showSettingsPopover.toggle()
+            }
+            .contentShape(Rectangle())
+            .sheet(isPresented: self.$showSettingsPopover, content: {
+                SettingsView(display: $showSettingsPopover)
+            })
         }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 10)
+        .padding(.top, UIDevice.current.topNotchHeight)
+        .padding(.horizontal)
     }
     
     var body: some View {
         VStack(spacing: 0) {
-            if self.showCompactCalendar {
-                self.headerNav
-                HStack {
-                    ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.itemList.displayDate), id: \.self) { date in
-                        self.weekDayHeader(for: date)
-                    }
-                    .transition(self.transitionDirection(direction: self.swipeDirection))
+            self.headerNav
+            HStack(spacing: 4) {
+                ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.itemList.displayDate), id: \.self) { date in
+                    self.weekDayHeader(for: date)
                 }
-            } else {
-                self.headerNav
-                CalendarDateSelection(date: self.$itemList.displayDate, showCompactCalendar: self.$showCompactCalendar)
-                    .transition(self.switchTransition(direction: self.swipeDirection))
-                    .padding(.top, 8)
-                    .padding(.horizontal, 25)
+                .transition(self.transitionDirection(direction: self.swipeDirection))
             }
         }
         .transition(self.switchTransition(direction: self.swipeDirection))

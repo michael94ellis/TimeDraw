@@ -13,9 +13,7 @@ struct EventInput: View {
     
     @EnvironmentObject var appSettings: AppSettings
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
-    
-    @FocusState var isNewEventFocused: Bool
-    @Binding var isBackgroundBlurred: Bool
+    @FocusState var isFocused: Bool
     @State var showCalendarPickerMenu: Bool = false
     
     
@@ -70,39 +68,41 @@ struct EventInput: View {
     }
     
     @ViewBuilder var eventOptions: some View {
-        VStack {
-            HStack {
-                if self.viewModel.editMode {
-                    self.topButton(image: "xmark.square", color: .lightGray, action: { self.viewModel.reset() })
-                    self.selectCalendarButton
-                    Spacer()
-                } else {
-                    self.selectCalendarButton
-                    Spacer()
+        ScrollView {
+            VStack {
+                HStack {
+                    if self.viewModel.editMode {
+                        self.topButton(image: "xmark.square", color: .lightGray, action: { self.viewModel.reset() })
+                        self.selectCalendarButton
+                        Spacer()
+                    } else {
+                        self.selectCalendarButton
+                        Spacer()
+                    }
+                    self.topButton(image: "trash", color: .red1, action: { self.viewModel.delete() })
                 }
-                self.topButton(image: "trash", color: .red1, action: { self.viewModel.delete() })
-            }
-            .frame(maxWidth: 600)
-            .padding(.bottom, 8)
-            if self.appSettings.showNotes || self.viewModel.calendarItem?.hasNotes ?? false {
+                .frame(maxWidth: 600)
+                .padding(.bottom, 8)
                 HStack {
                     AddNotesInput()
                 }
                 .padding(.bottom, 8)
-                .onTapGesture {}
-            }
-            if self.appSettings.showRecurringItems || self.viewModel.calendarItem?.hasRecurrenceRules ?? false {
-                HStack {
-                    AddRecurrenceRule()
+                .onTapGesture {} // Prevents dismissing event input options when container is tapped
+                if self.appSettings.showRecurringItems || self.viewModel.calendarItem?.hasRecurrenceRules ?? false {
+                    HStack {
+                        AddRecurrenceRule()
+                    }
+                    .padding(.bottom, 8)
+                    .onTapGesture {} // Prevents dismissing event input options when container is tapped
                 }
-                .padding(.bottom, 8)
-                .onTapGesture {}
-            }
-            HStack {
-                AddEventDateTimePicker()
-            }
-            .onTapGesture {}
+                HStack {
+                    AddEventDateTimePicker()
+                }
+                .onTapGesture {} // Prevents dismissing event input options when container is tapped
+                Spacer(minLength: 48)
+            }.rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center)
         }
+        .rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center)
         .background(
             Color.gray.opacity(0.01)
                 .gesture(TapGesture().onEnded({
@@ -122,22 +122,20 @@ struct EventInput: View {
         HStack {
             EmojiButton()
             TextField("", text: self.$viewModel.newItemTitle)
-                .focused(self.$isNewEventFocused)
+                .focused(self.$isFocused)
                 .onChange(of: self.viewModel.isAddEventTextFieldFocused) {
                     // Handle changes of the textfield focus from the view model's perspective
-                    self.viewModel.isAddEventTextFieldFocused = $0
-                    self.isNewEventFocused = $0
+                    self.isFocused = $0
                 }
                 .submitLabel(.done)
                 .onSubmit {
                     // User tapped Keyboard Done button
-                    self.isNewEventFocused = false
+                    self.isFocused = false
                 }
                 .gesture(TapGesture().onEnded({
                     // User tapped textfield - is attempting to add event
                     withAnimation {
-                        self.isBackgroundBlurred = true
-                        self.isNewEventFocused = true
+                        self.viewModel.isAddEventTextFieldFocused = true
                     }
                 }))
                 .placeholder(when: self.viewModel.newItemTitle.isEmpty) {
@@ -147,7 +145,7 @@ struct EventInput: View {
             Button(action: {
                 // User submitted event by tapping plus
                 self.viewModel.submitEventOrReminder()
-                self.isNewEventFocused = false
+                self.isFocused = false
             }) {
                 Image(systemName: self.viewModel.displayToast ? "checkmark.circle" : self.viewModel.editMode ? "circle" : "plus")
                     .frame(width: self.barHeight, height: self.barHeight)
@@ -164,14 +162,16 @@ struct EventInput: View {
     }
     
     var body: some View {
-        VStack {
+        ZStack {
             if self.viewModel.isAddEventTextFieldFocused {
                 self.eventOptions
-                    .opacity(self.isBackgroundBlurred ? 1 : 0)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                    .frame(maxWidth: .infinity, alignment: .bottom)
                     .padding(.bottom, 8)
             }
-            self.textBar
+            VStack {
+                Spacer()
+                self.textBar
+            }
         }
         .padding(14)
         .toast(isPresenting: self.$viewModel.displayToast, duration: 2, tapToDismiss: true, alert: {

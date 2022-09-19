@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 import EventKit
 
-struct MainView: View {
+struct MainViewContainer: View {
     
     @AppStorage("first_open") var isFirstAppOpen = true
     /// Simple state toggle for displaying the main Clock Control
@@ -65,31 +65,24 @@ struct MainView: View {
                 .environmentObject(self.itemViewModel)
         }
         .transition(.opacity)
-        .ignoresSafeArea(.keyboard)
-        .edgesIgnoringSafeArea(.bottom)
-        .overlay(self.blurOverlay)
-        VStack {
-            EventInput(isBackgroundBlurred: self.$itemViewModel.isAddEventTextFieldFocused)
-                .padding(.bottom, 16)
-        }
     }
     
     @ViewBuilder var mainContentContainer: some View {
-        Group {
-            if self.itemViewModel.isAddEventTextFieldFocused {
-                ZStack {
-                    mainContentView
-                }
-            } else {
-                VStack {
-                    mainContentView
-                }
+        ZStack {
+            mainContentView
+                .ignoresSafeArea()
+                .overlay(self.blurOverlay)
+            VStack {
+                Spacer()
+                EventInput()
+                    .padding(.bottom, UIDevice.current.bottomNotchHeight * 1.15)
             }
+            .padding(.bottom, UIDevice.current.bottomNotchHeight)
         }
     }
     
     var body: some View {
-        Group {
+        VStack {
             if isFirstAppOpen {
                 OnboardingExperience(isFirstAppOpen: self.$isFirstAppOpen)
             } else {

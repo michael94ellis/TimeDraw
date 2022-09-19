@@ -12,255 +12,114 @@ struct OnboardingExperience: View {
     @Binding var isFirstAppOpen: Bool
     @State var currentPageIndex = 0
     
-    @ViewBuilder var welcomeView: some View {
-        HStack {
+    @ViewBuilder static func overlayText(_ text: String) -> some View {
+        VStack {
             Spacer()
-            VStack {
+            HStack {
                 Spacer()
-                Spacer()
-                Text("Hey There 👋")
-                Text("Welcome to TimeDraw!")
-                Spacer()
-                Text("Tap anywhere")
-                    .font(.interFine)
+                Text(text)
+                    .foregroundColor(.white)
                 Spacer()
             }
             Spacer()
-        }
-        .background(.background)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onTapGesture {
-            currentPageIndex += 1
-        }
-    }
-    
-    @ViewBuilder var introView: some View {
-        HStack {
-            Spacer()
-            VStack {
-                Spacer()
-                Spacer()
-                Text("Here's a quick intro to the app")
-                Spacer()
-                Text("Tap anywhere")
-                    .font(.interFine)
-                Spacer()
-            }
             Spacer()
         }
-        .background(.background)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onTapGesture {
-            currentPageIndex += 1
-        }
+        .padding(18)
     }
     
-    @ViewBuilder var miniCalendarView: some View {
+    @ViewBuilder static func overlayScreenIndex(_ index: Int) -> some View {
         VStack {
-            MainHeader()
-                .allowsHitTesting(false)
-            HStack {
-                Spacer()
-                VStack {
-                    VStack {
-                        OnboardingDailyGoalTextField()
-                        TimeDrawClock(showClockView: Binding<Bool>(get: { true }, set: { _ in }), width: 120)
-                    }
-                    .allowsHitTesting(false)
-                    .blur(radius: 3)
-                    Spacer()
-                }
-                Spacer()
-            }
-            .padding(12)
-            .overlay(.black.opacity(0.72))
-            .overlay(content: {
-                VStack {
-                    Spacer()
-                    Spacer()
-                    Text("Here's a simple mini calendar to quickly see and navigate through the week")
-                        .foregroundColor(.white)
-                    Spacer()
-                    Spacer()
-                    Text("1/4")
-                        .foregroundColor(.white)
-                        .font(.interFine)
-                    Text("Tap anywhere")
-                        .foregroundColor(.white)
-                        .font(.interFine)
-                    Spacer()
-                }
-            })
-            .onTapGesture {
-                currentPageIndex += 1
-            }
+            Spacer()
+            Text("\(index)/4")
+                .foregroundColor(.white)
+                .font(.interFine)
+            Text("Tap anywhere")
+                .foregroundColor(.white)
+                .font(.interFine)
+            Spacer()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(18)
     }
     
-    @ViewBuilder var dailyGoalWritingSpace: some View {
-        VStack {
-            HStack {
-                Spacer()
-                VStack {
-                    VStack {
-                        MainHeader()
-                            .blur(radius: 3)
-                            .allowsHitTesting(false)
-                    }
-                }
-                Spacer()
-            }
-            .overlay(.black.opacity(0.72))
-            OnboardingDailyGoalTextField()
-                .allowsHitTesting(false)
-            HStack {
-                Spacer()
-                VStack {
-                    TimeDrawClock(showClockView: Binding<Bool>(get: { true }, set: { _ in }), width: 120)
-                        .blur(radius: 3)
-                        .allowsHitTesting(false)
-                    Spacer()
-                }
-                Spacer()
-            }
-            .padding(12)
-            .overlay(.black.opacity(0.72))
-            .overlay(content: {
-                VStack {
-                    Spacer()
-                    Spacer()
-                    VStack(alignment: .leading) {
-                        Text("A space to write something about your day that doesn't fit as an Event or Reminder\n\nYou can hide this in settings")
-                            .foregroundColor(.white)
-                    }
-                    Spacer()
-                    Spacer()
-                    Text("2/4")
-                        .foregroundColor(.white)
-                        .font(.interFine)
-                    Text("Tap anywhere")
-                        .foregroundColor(.white)
-                        .font(.interFine)
-                    Spacer()
-                }
-            })
-            .onTapGesture {
-                currentPageIndex += 1
-            }
+    func incrementOnboardingPage() {
+        currentPageIndex += 1
+        if currentPageIndex >= 6 {
+            isFirstAppOpen = false
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-    
-    @ViewBuilder var analogClockFace: some View {
-        VStack {
-            HStack {
-                Spacer()
-                VStack {
-                    VStack {
-                        MainHeader()
-                        OnboardingDailyGoalTextField()
-                    }
-                }
-                Spacer()
-            }
-            .allowsHitTesting(false)
-            .blur(radius: 3)
-            .overlay(.black.opacity(0.72))
-            .contentShape(Rectangle())
-            .onTapGesture {
-                currentPageIndex += 1
-            }
-            TimeDrawClock(showClockView: Binding<Bool>(get: { true }, set: { _ in }), width: 120)
-                .allowsHitTesting(false)
-            HStack {
-                Spacer()
-                VStack {
-                    Spacer()
-                    Text("The Analog Clock - visualize your events and reminders from calendars linked to your device's Apple Account\n\nYou can hide this in settings")
-                        .foregroundColor(.white)
-                        .frame(alignment: .leading)
-                    Spacer()
-                    Text("3/4")
-                        .foregroundColor(.white)
-                        .font(.interFine)
-                    Text("Tap anywhere")
-                        .foregroundColor(.white)
-                        .font(.interFine)
-                    Spacer()
-                }
-                Spacer()
-            }
-            .padding(18)
-            .background(.black.opacity(0.72))
-            .onTapGesture {
-                currentPageIndex += 1
-            }
-        }
-    }
-    
-    @ViewBuilder var howToCreateEvents: some View {
-        VStack {
-            HStack {
-                Spacer()
-                VStack {
-                    VStack {
-                        MainHeader()
-                        OnboardingDailyGoalTextField()
-                        TimeDrawClock(showClockView: Binding<Bool>(get: { true }, set: { _ in }), width: 120)
-                    }
-                    .allowsHitTesting(false)
-                    .blur(radius: 8)
-                    Spacer()
-                }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    currentPageIndex += 1
-                }
-                Spacer()
-            }
-            .padding(12)
-            .overlay(.black.opacity(0.72))
-            .overlay(content: {
-                VStack {
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    Text("You can create events and reminders from TimeDraw as well")
-                        .foregroundColor(.white)
-                    Spacer()
-                    Text("4/4")
-                        .foregroundColor(.white)
-                        .font(.interFine)
-                    Text("Tap anywhere")
-                        .foregroundColor(.white)
-                        .font(.interFine)
-                    Spacer()
-                }
-            })
-            .onTapGesture {
-                isFirstAppOpen = false
-            }
-            EventInput(isBackgroundBlurred: Binding<Bool>(get: { true }, set: { _ in }))
-                .allowsHitTesting(false)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     var body: some View {
         VStack {
             switch currentPageIndex {
-            case 0: welcomeView
-            case 1: introView
-            case 2: miniCalendarView
-            case 3: dailyGoalWritingSpace
-            case 4: analogClockFace
-            case 5: howToCreateEvents
+            case 0:
+                IntroView(content: {
+                    Text("Hey There 👋")
+                    Text("Welcome to TimeDraw!")
+                    Spacer()
+                    Text("Tap anywhere")
+                        .font(.interFine)
+                })
+                .onTapGesture { incrementOnboardingPage() }
+            case 1:
+                IntroView(content: {
+                    Text("Here's a quick intro to the app")
+                    Text("")
+                    Spacer()
+                    Text("Tap anywhere")
+                        .font(.interFine)
+                })
+                .onTapGesture { incrementOnboardingPage() }
+            case 2:
+                DemoScreen(
+                    aboveContent: EmptyView(),
+                    content: MainHeader(),
+                    belowContent:
+                        VStack {
+                            OnboardingDailyGoalTextField()
+                            TimeDrawClock(showClockView: Binding<Bool>(get: { true }, set: { _ in }), width: 120)
+                            EventInput()
+                        },
+                    isFirstAppOpen: $isFirstAppOpen,
+                    currentPageIndex: $currentPageIndex)
+            case 3:
+                DemoScreen(
+                    aboveContent: MainHeader(),
+                    content: OnboardingDailyGoalTextField(),
+                    belowContent:
+                        VStack {
+                            TimeDrawClock(showClockView: Binding<Bool>(get: { true }, set: { _ in }), width: 120)
+                            EventInput()
+                        },
+                    isFirstAppOpen: $isFirstAppOpen,
+                    currentPageIndex: $currentPageIndex)
+            case 4:
+                DemoScreen(
+                    aboveContent:
+                        VStack {
+                            MainHeader()
+                            OnboardingDailyGoalTextField()
+                        },
+                    content:  TimeDrawClock(showClockView: Binding<Bool>(get: { true }, set: { _ in }), width: 120),
+                    belowContent:
+                        VStack {
+                            EventInput()
+                        },
+                    isFirstAppOpen: $isFirstAppOpen,
+                    currentPageIndex: $currentPageIndex)
+            case 5:
+                DemoScreen(
+                    aboveContent:
+                        VStack {
+                            MainHeader()
+                            OnboardingDailyGoalTextField()
+                            TimeDrawClock(showClockView: Binding<Bool>(get: { true }, set: { _ in }), width: 120)
+                        },
+                    content: EventInput(),
+                    belowContent: EmptyView(),
+                    isFirstAppOpen: $isFirstAppOpen,
+                    currentPageIndex: $currentPageIndex)
             default:
                 EmptyView()
-                    .onAppear(perform: {
-                        isFirstAppOpen = false
-                    })
             }
         }
         .contentShape(Rectangle())

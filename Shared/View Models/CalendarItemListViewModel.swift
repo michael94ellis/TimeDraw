@@ -29,12 +29,20 @@ class CalendarItemListViewModel: ObservableObject {
     
     func fetchEvents() {
         Task {
-            try await self.fetchEventsForDisplayDate(filterCalendarIDs: AppSettings.shared.userSelectedCalendars.loadCalendarIds())
+            do {
+                try await self.fetchEventsForDisplayDate(filterCalendarIDs: AppSettings.shared.userSelectedCalendars.loadCalendarIds())
+            } catch {
+                print(error)
+            }
         }
     }
     func fetchReminders() {
         Task {
-            try await self.fetchRemindersForDisplayDate(filterCalendarIDs: AppSettings.shared.userSelectedCalendars.loadCalendarIds())
+            do {
+                try await self.fetchRemindersForDisplayDate(filterCalendarIDs: AppSettings.shared.userSelectedCalendars.loadCalendarIds())
+            } catch {
+                print(error)
+            }
         }
     }
     
@@ -63,24 +71,25 @@ class CalendarItemListViewModel: ObservableObject {
     /// Fetch events for today
     /// - Parameter filterCalendarIDs: filterable Calendar IDs
     /// Returns: events for today
-    public func fetchEventsForDisplayDate(filterCalendarIDs: [String] = []) async throws {
+    private func fetchEventsForDisplayDate(filterCalendarIDs: [String] = []) async throws {
         var eventsResult = try await EventKitManager.shared.fetchEvents(startDate: self.displayDate.startOfDay, endDate: self.displayDate.endOfDay, calendars: filterCalendarIDs)
         if !AppSettings.shared.showRecurringItems {
             eventsResult.removeAll(where: { $0.hasRecurrenceRules })
         }
-        self.events = eventsResult
+        DispatchQueue.main.async {
+            self.events = eventsResult
+        }
     }
     
     // MARK: Fetch Reminders
     /// Fetch events for today
     /// - Parameter filterCalendarIDs: filterable Calendar IDs
     /// Returns: events for today
-    public func fetchRemindersForDisplayDate(filterCalendarIDs: [String] = []) async throws {
+    private func fetchRemindersForDisplayDate(filterCalendarIDs: [String] = []) async throws {
         try await EventKitManager.shared.fetchReminders(calendars: filterCalendarIDs, completion: { reminders in
             if !AppSettings.shared.showRecurringItems {
                 self.reminders.removeAll(where: { $0.hasRecurrenceRules })
             }
-            // MainActor didnt work for callback
             DispatchQueue.main.async {
                 self.reminders = reminders?.filter({ !$0.isCompleted }) ?? []
             }

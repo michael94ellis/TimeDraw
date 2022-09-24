@@ -121,47 +121,45 @@ public final class EventKitManager {
     /// Request event store authorization for Events
     /// - Returns: EKAuthorizationStatus enum
     public func determineEventStoreAuthorization() async throws -> EKAuthorizationStatus {
-        let currentAuthStatus = EKEventStore.authorizationStatus(for: .event)
-        if currentAuthStatus == .notDetermined || currentAuthStatus == .denied {
-            if try await requestEventAccess() {
-                self.eventStore = EKEventStore()
-                return EKEventStore.authorizationStatus(for: .event)
-            } else {
-                throw EventError.unableToAccessCalendar
+        let eventAuthStatus = EKEventStore.authorizationStatus(for: .event)
+        switch eventAuthStatus {
+        case .notDetermined, .denied:
+            guard try await requestEventAccess() else {
+                throw EventError.accessDenied
             }
-        } else if currentAuthStatus == .restricted {
-            throw EventError.unableToAccessCalendar
-        } else {
-            return currentAuthStatus
+            self.eventStore = EKEventStore()
+            return EKEventStore.authorizationStatus(for: .event)
+        case .restricted:
+            throw EventError.accessDenied
+        default:
+            return eventAuthStatus
         }
     }
     
     /// Request event store authorization for Reminders
     /// - Returns: EKAuthorizationStatus enum
     public func determineReminderStoreAuthorization() async throws -> EKAuthorizationStatus {
-        let currentAuthStatus = EKEventStore.authorizationStatus(for: .reminder)
-        if currentAuthStatus == .notDetermined || currentAuthStatus == .denied {
-            if try await requestReminderAccess() {
-                self.eventStore = EKEventStore()
-                return EKEventStore.authorizationStatus(for: .reminder)
-            } else {
-                throw EventError.unableToAccessCalendar
+        let reminderAuthStatus = EKEventStore.authorizationStatus(for: .reminder)
+        switch reminderAuthStatus {
+        case .notDetermined, .denied:
+            guard try await requestReminderAccess() else {
+                throw EventError.accessDenied
             }
-        } else if currentAuthStatus == .restricted {
-            throw EventError.unableToAccessCalendar
-        } else {
-            return currentAuthStatus
+            self.eventStore = EKEventStore()
+            return EKEventStore.authorizationStatus(for: .reminder)
+        case .restricted:
+            throw EventError.accessDenied
+        default:
+            return reminderAuthStatus
         }
     }
     
     private func requestEventAccess() async throws -> Bool {
-        let accessGranted = try await eventStore.requestAccess(to: .event)
-        return accessGranted
+        try await eventStore.requestAccess(to: .event)
     }
     
     private func requestReminderAccess() async throws -> Bool {
-        let accessGranted = try await eventStore.requestAccess(to: .reminder)
-        return accessGranted
+        try await eventStore.requestAccess(to: .reminder)
     }
     
     // MARK: - Non Watch Functions
@@ -238,7 +236,7 @@ public final class EventKitManager {
             throw EventError.eventAuthorizationStatus(authorization)
         }
         guard let calendar = eventStore.calendarForEvents() else {
-            throw EventError.unableToAccessCalendar
+            throw EventError.accessDenied
         }
         return calendar
     }
@@ -251,7 +249,7 @@ public final class EventKitManager {
             throw EventError.eventAuthorizationStatus(authorization)
         }
         guard let calendar = eventStore.calendarForReminders() else {
-            throw EventError.unableToAccessCalendar
+            throw EventError.accessDenied
         }
         return calendar
     }

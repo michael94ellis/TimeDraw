@@ -162,7 +162,7 @@ struct EventInput: View {
     }
     
     var body: some View {
-        ZStack {
+        VStack {
             if self.viewModel.isAddEventTextFieldFocused {
                 self.eventOptions
                     .frame(maxWidth: .infinity, alignment: .bottom)

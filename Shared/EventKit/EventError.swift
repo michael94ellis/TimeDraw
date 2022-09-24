@@ -11,14 +11,14 @@ import SwiftUI
 /// EventError definition
 public enum EventError: Error, LocalizedError {
     case mapFromError(Error)
-    case unableToAccessCalendar
+    case accessDenied
     case eventAuthorizationStatus(EKAuthorizationStatus)
     case invalidEvent
     
     var localizedDescription: String {
         switch self {
         case .invalidEvent: return "Invalid event"
-        case .unableToAccessCalendar: return "Unable to access calendar"
+        case .accessDenied: return "Unable to access calendar"
         case let .mapFromError(error): return error.localizedDescription
         case let .eventAuthorizationStatus(status): return "Permission not granted, auth status: \(status)"
         }

@@ -29,14 +29,6 @@ struct TimeDrawClock: View {
         let hour = calender.component(.hour, from: Date())
         self.currentTime = Time(sec: sec, min: min, hour: hour)
     }
-    
-    func handleClockViewSwipe(for direction: SwipeDirection) {
-        if [.left, .right].contains(direction) {
-            withAnimation {
-                self.itemList.displayDate = Calendar.current.date(byAdding: .day, value: direction == .right ? 1 : -1, to: self.itemList.displayDate) ?? Date()
-            }
-        }
-    }
         
     @ViewBuilder var timeCircles: some View {
         ForEach(self.itemList.events ,id: \.self) { event in
@@ -58,7 +50,9 @@ struct TimeDrawClock: View {
         }
         ForEach(self.itemList.reminders ,id: \.self) { reminder in
             ClockEventLine(startComponents: reminder.startDateComponents, endComponents: reminder.dueDateComponents, radius: self.width, width: 4)
-                .foregroundColor(Color(reminder.calendar.cgColor))
+                .if((reminder.calendar != nil && reminder.calendar.cgColor != nil), transform: {
+                    $0.foregroundColor(Color(reminder.calendar.cgColor))
+                })
                 .gesture(TapGesture().onEnded({ value in
                     self.modifyItemViewModel.open(reminder: reminder)
                 }))
@@ -77,9 +71,6 @@ struct TimeDrawClock: View {
             .frame(width: self.width, height: self.width)
         }
         .frame(width: self.width * 2.5, height: self.width * 2.5)
-        .gesture(DragGesture().onEnded({ value in
-            self.handleClockViewSwipe(for: value.detectDirection())
-        }))
         .onAppear(perform: {
             let calender = Calendar.current
             let sec = calender.component(.second, from: Date())

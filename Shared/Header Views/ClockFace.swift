@@ -22,7 +22,7 @@ struct ClockFace: View {
         #if !os(watchOS)
             .strokeBorder(Color(uiColor: .systemGray3), lineWidth: 24)
         #elseif os(watchOS)
-            .strokeBorder(Color(uiColor: .gray), lineWidth: 20)
+            .strokeBorder(Color(uiColor: .gray), lineWidth: 22)
         #endif
             .frame(width: self.width * 2.2, height: self.width * 2.2)
         // Clock Face Markings
@@ -32,7 +32,7 @@ struct ClockFace: View {
             Text("\(num > 12 ? num - 12 : num)")
                 .font(.interFine)
                 .rotationEffect(.degrees(Double(((num-12)) * -30) - 180))
-                .offset(y: self.width)
+                .offset(y: self.width * 0.95)
                 .rotationEffect(Angle(degrees: Double(i) * 6))
         }
         ForEach(ClockFace.quarterHours, id: \.self) { i in
@@ -40,7 +40,7 @@ struct ClockFace: View {
             Circle()
                 .fill(Color.primary)
                 .frame(width: 2, height: 2)
-                .offset(y: self.width)
+                .offset(y: self.width * 0.95)
                 .rotationEffect(.init(degrees: Double(i) * 6))
         }
     }

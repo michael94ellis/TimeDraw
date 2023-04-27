@@ -31,9 +31,9 @@ struct EventInput: View {
                 .fill(Color(uiColor: .systemGray6))
                 .shadow(radius: 4, x: 2, y: 4)
                 .overlay(Image(systemName: image)
-                            .resizable()
-                            .frame(width: 30, height: 32)
-                            .foregroundColor(color))
+                    .resizable()
+                    .frame(width: 30, height: 32)
+                    .foregroundColor(color))
                 .frame(width: 55, height: 55)
         }
         .contentShape(Rectangle())
@@ -69,57 +69,38 @@ struct EventInput: View {
     }
     
     @ViewBuilder var eventOptions: some View {
-        ScrollView {
-            VStack {
-                HStack {
-                    if self.viewModel.editMode {
-                        self.topButton(image: "xmark.square", color: .lightGray, action: { self.viewModel.reset() })
-                        self.selectCalendarButton
-                        Spacer()
-                    } else {
-                        self.selectCalendarButton
-                        Spacer()
-                    }
-                    self.topButton(image: "trash", color: .red1, action: { self.viewModel.delete() })
+        VStack {
+            HStack {
+                if self.viewModel.editMode {
+                    self.topButton(image: "xmark.square", color: .lightGray, action: { self.viewModel.reset() })
+                    self.selectCalendarButton
+                    Spacer()
+                } else {
+                    self.selectCalendarButton
+                    Spacer()
                 }
-                .frame(maxWidth: 600)
-                .padding(.bottom, 8)
-                HStack {
-                    AddNotesInput()
-                }
-                .padding(.bottom, 8)
-                .onTapGesture {} // Prevents dismissing event input options when container is tapped
-                if self.appSettings.showRecurringItems || self.viewModel.calendarItem?.hasRecurrenceRules ?? false {
-                    HStack {
-                        AddRecurrenceRule()
-                    }
-                    .padding(.bottom, 8)
-                    .onTapGesture {} // Prevents dismissing event input options when container is tapped
-                }
-                HStack {
-                    AddEventDateTimePicker()
-                }
-                .onTapGesture {} // Prevents dismissing event input options when container is tapped
-                Spacer(minLength: 48)
-                
-                textFieldInput
-                    .matchedGeometryEffect(id: "textInput", in: animation)
-            }.rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center)
-        }
-        .rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center)
-        .background(
-            Color.gray.opacity(0.01)
-                .gesture(TapGesture().onEnded({
-                    withAnimation {
-                        viewModel.isAddEventTextFieldFocused = false
-                    }
-                })))
-        .contentShape(Rectangle())
-        .gesture(TapGesture().onEnded({
-            withAnimation {
-                viewModel.isAddEventTextFieldFocused = false
+                self.topButton(image: "trash", color: .red1, action: { self.viewModel.delete() })
             }
-        }))
+            HStack {
+                AddNotesInput()
+            }
+            .onTapGesture {} // Prevents dismissing event input options when container is tapped
+            if self.appSettings.showRecurringItems || self.viewModel.calendarItem?.hasRecurrenceRules ?? false {
+                HStack {
+                    AddRecurrenceRule()
+                }
+                .onTapGesture {} // Prevents dismissing event input options when container is tapped
+            }
+            HStack {
+                AddEventDateTimePicker()
+            }
+            .onTapGesture {} // Prevents dismissing event input options when container is tapped
+            Spacer(minLength: 8)
+            textFieldInput
+                .matchedGeometryEffect(id: "textInput", in: animation)
+            Spacer(minLength: 8)
+        }
+        .frame(maxWidth: 600)
     }
     
     var textFieldInput: some View {
@@ -164,8 +145,8 @@ struct EventInput: View {
         .frame(height: barHeight)
         .frame(maxWidth: 600)
         .background(RoundedRectangle(cornerRadius: 13)
-                        .fill(Color(uiColor: .systemGray6))
-                        .shadow(radius: 4, x: 2, y: 2))
+            .fill(Color(uiColor: .systemGray6))
+            .shadow(radius: 4, x: 2, y: 2))
     }
     
     var openEventInputButton: some View {
@@ -186,33 +167,40 @@ struct EventInput: View {
                 .truncationMode(.tail)
             // Submit Button
             Spacer()
-            Button(action: {
-                // User submitted event by tapping plus
-                viewModel.submitEventOrReminder()
-                isFocused = false
-            }) {
-                Image(systemName: viewModel.displayToast ? "checkmark.circle" : viewModel.editMode ? "circle" : "plus")
-                    .frame(width: barHeight, height: barHeight)
-                    .foregroundColor(Color(uiColor: .label))
-                    .frame(width: 60, height: 55)
-                    .background(.clear)
-            }
+            Image(systemName: viewModel.displayToast ? "checkmark.circle" : viewModel.editMode ? "circle" : "plus")
+                .frame(width: barHeight, height: barHeight)
+                .foregroundColor(Color(uiColor: .label))
+                .frame(width: 60, height: 55)
+                .background(.clear)
         }
         .frame(height: barHeight)
         .frame(maxWidth: 600)
         .background(RoundedRectangle(cornerRadius: 13)
-                        .fill(Color(uiColor: .systemGray6))
-                        .shadow(radius: 4, x: 2, y: 2))
+            .fill(Color(uiColor: .systemGray6))
+            .shadow(radius: 4, x: 2, y: 2))
     }
     
     var body: some View {
         if self.viewModel.isAddEventTextFieldFocused {
-            VStack {
+            ScrollView {
                 eventOptions
-                    .frame(maxWidth: .infinity, alignment: .bottom)
-                    .padding(.bottom, 8)
+                    .rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center)
             }
-            .padding(14)
+            .rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center)
+            .background(
+                Color.gray.opacity(0.01)
+                    .gesture(TapGesture().onEnded({
+                        withAnimation {
+                            viewModel.isAddEventTextFieldFocused = false
+                        }
+                    })))
+            .padding(.horizontal, 14)
+            .contentShape(Rectangle())
+            .gesture(TapGesture().onEnded({
+                withAnimation {
+                    viewModel.isAddEventTextFieldFocused = false
+                }
+            }))
             .toast(isPresenting: self.$viewModel.displayToast, duration: 2, tapToDismiss: true, alert: {
                 AlertToast(displayMode: .alert, type: .regular, title: viewModel.toastMessage)
             }, completion: {

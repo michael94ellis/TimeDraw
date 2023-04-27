@@ -12,6 +12,7 @@ import EventKit
 struct MainViewContainer: View {
     
     @AppStorage("first_open") var isFirstAppOpen = true
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
     
     /// The secondary textfield that can be edited
     @FocusState private var isDailyGoalFocused: Bool
@@ -38,18 +39,14 @@ struct MainViewContainer: View {
     }
     
     @ViewBuilder var mainContent: some View {
-        VStack {
+        VStack(spacing: 0) {
             MainHeader()
+                .overlay(Divider(), alignment: .bottom)
             if self.appSettings.isDailyGoalEnabled {
                 DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
                     .clipped()
             }
-            Spacer()
-            if self.appSettings.isTimeDrawClockEnabled {
-                TimeDrawClock(width: 120)
-            }
-            Divider()
-            EventsAndRemindersMainList()
+            MainScrollableContent()
                 .environmentObject(self.itemViewModel)
         }
     }
@@ -58,14 +55,12 @@ struct MainViewContainer: View {
         ZStack {
             mainContent
                 .transition(.opacity)
-                .ignoresSafeArea()
                 .overlay(self.blurOverlay)
             VStack {
                 Spacer()
                 EventInput()
-                    .padding(.bottom, UIDevice.current.bottomNotchHeight * 1.15)
             }
-            .padding(.bottom, UIDevice.current.bottomNotchHeight)
+            .padding(.bottom, safeAreaInsets.bottom)
         }
     }
     

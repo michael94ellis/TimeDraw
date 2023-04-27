@@ -99,7 +99,6 @@ struct MainHeader: View {
                 SettingsView(display: $showSettingsPopover)
             })
         }
-        .padding(.top, UIDevice.current.topNotchHeight)
         .padding(.horizontal)
     }
     
@@ -112,6 +111,7 @@ struct MainHeader: View {
                 }
                 .transition(self.transitionDirection(direction: self.swipeDirection))
             }
+            .padding(.bottom, 6)
         }
         .transition(self.switchTransition(direction: self.swipeDirection))
         .gesture(DragGesture()

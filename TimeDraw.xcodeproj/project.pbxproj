@@ -157,7 +157,6 @@
 		2FC6C7B62786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
 		2FC6C7B92786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
-		2FD40784284FBB700022FC49 /* WatchFace Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2FD40783284FBB700022FC49 /* WatchFace Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2FD40789284FBB700022FC49 /* TimeDrawWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */; };
 		2FD4078D284FBB700022FC49 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4078C284FBB700022FC49 /* NotificationController.swift */; };
 		2FD4078F284FBB700022FC49 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4078E284FBB700022FC49 /* NotificationView.swift */; };
@@ -203,20 +202,6 @@
 			remoteGlobalIDString = 2F39B85027823CF600FE72C3;
 			remoteInfo = "TimeDraw (macOS)";
 		};
-		2FD40785284FBB700022FC49 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2F39B83C27823CF600FE72C3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2FD40782284FBB700022FC49;
-			remoteInfo = "WatchFace WatchKit Extension";
-		};
-		2FD4079E284FBB700022FC49 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2F39B83C27823CF600FE72C3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2FD40782284FBB700022FC49;
-			remoteInfo = "WatchFace WatchKit Extension";
-		};
 		2FD407A8284FBB700022FC49 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2F39B83C27823CF600FE72C3 /* Project object */;
@@ -243,17 +228,6 @@
 				2FD407B1284FBB700022FC49 /* WatchFace App.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2FD407B5284FBB700022FC49 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				2FD40784284FBB700022FC49 /* WatchFace Watch Extension.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -292,6 +266,7 @@
 		2F42C59C2784E3DE00F0BEB2 /* EventKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventKitManager.swift; sourceTree = "<group>"; };
 		2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKEventStore-Extension.swift"; sourceTree = "<group>"; };
 		2F42C5A52784E6FC00F0BEB2 /* EventError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventError.swift; sourceTree = "<group>"; };
+		2F52377829F99E5200BAD1EC /* WatchFace-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "WatchFace-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyCalendarItemViewModel.swift; sourceTree = "<group>"; };
 		2F5427DF28CF825C00F08952 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F5427E828D60FB900F08952 /* UIDevice-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice-Extension.swift"; sourceTree = "<group>"; };
@@ -337,7 +312,6 @@
 		2FC6C7B42786434600D75568 /* MultiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTextField.swift; sourceTree = "<group>"; };
 		2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalTextField.swift; sourceTree = "<group>"; };
 		2FD4077B284FBB6F0022FC49 /* WatchFace App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchFace App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2FD40783284FBB700022FC49 /* WatchFace Watch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WatchFace Watch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawWatchApp.swift; sourceTree = "<group>"; };
 		2FD4078C284FBB700022FC49 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		2FD4078E284FBB700022FC49 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
@@ -470,7 +444,6 @@
 				2F39B85827823CF600FE72C3 /* Tests iOS.xctest */,
 				2F39B86427823CF700FE72C3 /* Tests macOS.xctest */,
 				2FD4077B284FBB6F0022FC49 /* WatchFace App.app */,
-				2FD40783284FBB700022FC49 /* WatchFace Watch Extension.appex */,
 				2FD4079D284FBB700022FC49 /* WatchFaceTests.xctest */,
 				2FD407A7284FBB700022FC49 /* WatchFaceUITests.xctest */,
 			);
@@ -540,6 +513,7 @@
 		2F5427DA28CF825C00F08952 /* WatchFace App */ = {
 			isa = PBXGroup;
 			children = (
+				2F52377829F99E5200BAD1EC /* WatchFace-App-Info.plist */,
 				2F5427DF28CF825C00F08952 /* Assets.xcassets */,
 			);
 			path = "WatchFace App";
@@ -776,36 +750,17 @@
 			buildConfigurationList = 2FD407BD284FBB700022FC49 /* Build configuration list for PBXNativeTarget "WatchFace App" */;
 			buildPhases = (
 				2FD40779284FBB6F0022FC49 /* Resources */,
-				2FD407B5284FBB700022FC49 /* Embed App Extensions */,
+				2FD4077F284FBB700022FC49 /* Sources */,
+				2FD40780284FBB700022FC49 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				2FD40786284FBB700022FC49 /* PBXTargetDependency */,
 			);
 			name = "WatchFace App";
 			productName = WatchFace;
 			productReference = 2FD4077B284FBB6F0022FC49 /* WatchFace App.app */;
-			productType = "com.apple.product-type.application.watchapp2";
-		};
-		2FD40782284FBB700022FC49 /* WatchFace Watch Extension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2FD407BC284FBB700022FC49 /* Build configuration list for PBXNativeTarget "WatchFace Watch Extension" */;
-			buildPhases = (
-				2FD4077F284FBB700022FC49 /* Sources */,
-				2FD40780284FBB700022FC49 /* Frameworks */,
-				2FD40781284FBB700022FC49 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "WatchFace Watch Extension";
-			packageProductDependencies = (
-			);
-			productName = "WatchFace WatchKit Extension";
-			productReference = 2FD40783284FBB700022FC49 /* WatchFace Watch Extension.appex */;
-			productType = "com.apple.product-type.watchkit2-extension";
+			productType = "com.apple.product-type.application";
 		};
 		2FD4079C284FBB700022FC49 /* WatchFaceTests */ = {
 			isa = PBXNativeTarget;
@@ -818,7 +773,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				2FD4079F284FBB700022FC49 /* PBXTargetDependency */,
 			);
 			name = WatchFaceTests;
 			productName = WatchFaceTests;
@@ -851,7 +805,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					2F39B84A27823CF600FE72C3 = {
 						CreatedOnToolsVersion = 13.2;
@@ -868,9 +822,6 @@
 						TestTargetID = 2F39B85027823CF600FE72C3;
 					};
 					2FD4077A284FBB6F0022FC49 = {
-						CreatedOnToolsVersion = 13.2;
-					};
-					2FD40782284FBB700022FC49 = {
 						CreatedOnToolsVersion = 13.2;
 					};
 					2FD4079C284FBB700022FC49 = {
@@ -905,7 +856,6 @@
 				2F39B85727823CF600FE72C3 /* Tests iOS */,
 				2F39B86327823CF700FE72C3 /* Tests macOS */,
 				2FD4077A284FBB6F0022FC49 /* WatchFace App */,
-				2FD40782284FBB700022FC49 /* WatchFace Watch Extension */,
 				2FD4079C284FBB700022FC49 /* WatchFaceTests */,
 				2FD407A6284FBB700022FC49 /* WatchFaceUITests */,
 			);
@@ -971,27 +921,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F26FE6128CE7F4C00A9A0AE /* Assets.xcassets in Resources */,
-				2F5427E528CF825D00F08952 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2FD40781284FBB700022FC49 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2F646BA72850283D00D7445D /* Inter-Black.ttf in Resources */,
-				2F646BA82850283D00D7445D /* Inter-Bold.ttf in Resources */,
-				2F646BA92850283D00D7445D /* Inter-ExtraBold.ttf in Resources */,
-				2F646BAA2850283D00D7445D /* Inter-Regular.ttf in Resources */,
-				2F646BAB2850283D00D7445D /* Inter-SemiBold.ttf in Resources */,
-				2F646BAC2850283D00D7445D /* Inter-Thin.ttf in Resources */,
-				2F646BAD2850283D00D7445D /* Inter-ExtraLight.ttf in Resources */,
 				2F646BAE2850283D00D7445D /* Inter-Light.ttf in Resources */,
-				2F646BAF2850283D00D7445D /* Inter-Medium.ttf in Resources */,
-				2FD40796284FBB700022FC49 /* Preview Assets.xcassets in Resources */,
-				2F26FE6228CE7F4E00A9A0AE /* Assets.xcassets in Resources */,
+				2F646BA92850283D00D7445D /* Inter-ExtraBold.ttf in Resources */,
+				2F26FE6128CE7F4C00A9A0AE /* Assets.xcassets in Resources */,
+				2F646BA72850283D00D7445D /* Inter-Black.ttf in Resources */,
 				2FD40793284FBB700022FC49 /* Assets.xcassets in Resources */,
+				2FD40796284FBB700022FC49 /* Preview Assets.xcassets in Resources */,
+				2F646BA82850283D00D7445D /* Inter-Bold.ttf in Resources */,
+				2F26FE6228CE7F4E00A9A0AE /* Assets.xcassets in Resources */,
+				2F646BAC2850283D00D7445D /* Inter-Thin.ttf in Resources */,
+				2F646BAA2850283D00D7445D /* Inter-Regular.ttf in Resources */,
+				2F5427E528CF825D00F08952 /* Assets.xcassets in Resources */,
+				2F646BAD2850283D00D7445D /* Inter-ExtraLight.ttf in Resources */,
+				2F646BAF2850283D00D7445D /* Inter-Medium.ttf in Resources */,
+				2F646BAB2850283D00D7445D /* Inter-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1208,16 +1151,6 @@
 			target = 2F39B85027823CF600FE72C3 /* TimeDraw (macOS) */;
 			targetProxy = 2F39B86527823CF700FE72C3 /* PBXContainerItemProxy */;
 		};
-		2FD40786284FBB700022FC49 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2FD40782284FBB700022FC49 /* WatchFace Watch Extension */;
-			targetProxy = 2FD40785284FBB700022FC49 /* PBXContainerItemProxy */;
-		};
-		2FD4079F284FBB700022FC49 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2FD40782284FBB700022FC49 /* WatchFace Watch Extension */;
-			targetProxy = 2FD4079E284FBB700022FC49 /* PBXContainerItemProxy */;
-		};
 		2FD407A9284FBB700022FC49 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2FD4077A284FBB6F0022FC49 /* WatchFace App */;
@@ -1265,6 +1198,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1325,6 +1259,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1433,6 +1368,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 12;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1462,6 +1398,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 12;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -1486,7 +1423,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
@@ -1506,7 +1443,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
@@ -1527,7 +1464,8 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
@@ -1546,7 +1484,8 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
@@ -1565,16 +1504,25 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
-				IBSC_MODULE = WatchFace_WatchKit_Extension;
+				INFOPLIST_FILE = "WatchFace-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = WatchFace;
+				INFOPLIST_KEY_CLKComplicationPrincipalClass = WatchFace_WatchKit_Extension.ComplicationController;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.michaelrobertellis.TimeDraw;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 0.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1593,87 +1541,29 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
-				IBSC_MODULE = WatchFace_WatchKit_Extension;
+				INFOPLIST_FILE = "WatchFace-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = WatchFace;
+				INFOPLIST_KEY_CLKComplicationPrincipalClass = WatchFace_WatchKit_Extension.ComplicationController;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.michaelrobertellis.TimeDraw;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 0.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 8.3;
-			};
-			name = Release;
-		};
-		2FD407B6284FBB700022FC49 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
-				DEVELOPMENT_ASSET_PATHS = "\"WatchFace Watch Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = KLQC884752;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "WatchFace Watch Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "WatchFace Extension";
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = WatchFace_WatchKit_Extension.ComplicationController;
-				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 0.4.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 8.3;
-			};
-			name = Debug;
-		};
-		2FD407B7284FBB700022FC49 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
-				DEVELOPMENT_ASSET_PATHS = "\"WatchFace Watch Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = KLQC884752;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "WatchFace Watch Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "WatchFace Extension";
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = WatchFace_WatchKit_Extension.ComplicationController;
-				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 0.4.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1690,7 +1580,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -1711,7 +1601,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -1731,7 +1621,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -1750,7 +1640,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -1810,15 +1700,6 @@
 			buildConfigurations = (
 				2F39B88227823CF700FE72C3 /* Debug */,
 				2F39B88327823CF700FE72C3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2FD407BC284FBB700022FC49 /* Build configuration list for PBXNativeTarget "WatchFace Watch Extension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2FD407B6284FBB700022FC49 /* Debug */,
-				2FD407B7284FBB700022FC49 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

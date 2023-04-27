@@ -16,7 +16,6 @@ struct Time {
 
 struct TimeDrawClock: View {
     
-    @Binding var showClockView: Bool
     @State var currentTime = Time(sec: 0, min: 0, hour: 0)
     @State var timer = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
     var width: CGFloat
@@ -32,11 +31,6 @@ struct TimeDrawClock: View {
     }
     
     func handleClockViewSwipe(for direction: SwipeDirection) {
-        if [.down, .up].contains(direction) {
-            withAnimation {
-                self.showClockView.toggle()
-            }
-        }
         if [.left, .right].contains(direction) {
             withAnimation {
                 self.itemList.displayDate = Calendar.current.date(byAdding: .day, value: direction == .right ? 1 : -1, to: self.itemList.displayDate) ?? Date()

@@ -11,11 +11,12 @@ import AlertToast
 
 struct EventInput: View {
     
+    @Namespace private var animation
+    
     @EnvironmentObject var appSettings: AppSettings
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
     @FocusState var isFocused: Bool
     @State var showCalendarPickerMenu: Bool = false
-    
     
     let defaultCalendarColor: CGColor = EventKitManager.shared.defaultReminderCalendar?.cgColor ?? .init(red: 55, green: 91, blue: 190, alpha: 1)
     private let barHeight: CGFloat = 44
@@ -100,6 +101,9 @@ struct EventInput: View {
                 }
                 .onTapGesture {} // Prevents dismissing event input options when container is tapped
                 Spacer(minLength: 48)
+                
+                textFieldInput
+                    .matchedGeometryEffect(id: "textInput", in: animation)
             }.rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center)
         }
         .rotationEffect(Angle(degrees: 180)).scaleEffect(x: -1.0, y: 1.0, anchor: .center)
@@ -107,54 +111,94 @@ struct EventInput: View {
             Color.gray.opacity(0.01)
                 .gesture(TapGesture().onEnded({
                     withAnimation {
-                        self.viewModel.isAddEventTextFieldFocused = false
+                        viewModel.isAddEventTextFieldFocused = false
                     }
                 })))
         .contentShape(Rectangle())
         .gesture(TapGesture().onEnded({
             withAnimation {
-                self.viewModel.isAddEventTextFieldFocused = false
+                viewModel.isAddEventTextFieldFocused = false
             }
         }))
     }
     
-    var textBar: some View {
+    var textFieldInput: some View {
         HStack {
-            EmojiButton()
-            TextField("", text: self.$viewModel.newItemTitle)
-                .focused(self.$isFocused)
-                .onChange(of: self.viewModel.isAddEventTextFieldFocused) {
+            if appSettings.showEmojiButton {
+                EmojiButton()
+            }
+            TextField("", text: $viewModel.newItemTitle)
+                .focused($isFocused)
+                .onChange(of: viewModel.isAddEventTextFieldFocused) {
                     // Handle changes of the textfield focus from the view model's perspective
-                    self.isFocused = $0
+                    isFocused = $0
                 }
                 .submitLabel(.done)
                 .onSubmit {
                     // User tapped Keyboard Done button
-                    self.isFocused = false
+                    isFocused = false
                 }
                 .gesture(TapGesture().onEnded({
                     // User tapped textfield - is attempting to add event
                     withAnimation {
-                        self.viewModel.isAddEventTextFieldFocused = true
+                        viewModel.isAddEventTextFieldFocused = true
                     }
                 }))
-                .placeholder(when: self.viewModel.newItemTitle.isEmpty) {
+                .placeholder(when: viewModel.newItemTitle.isEmpty) {
                     Text("New Event or Reminder").foregroundColor(.gray)
                 }
+                .onAppear(perform: { isFocused = true })
             // Submit Button
             Button(action: {
                 // User submitted event by tapping plus
-                self.viewModel.submitEventOrReminder()
-                self.isFocused = false
+                viewModel.submitEventOrReminder()
+                isFocused = false
             }) {
-                Image(systemName: self.viewModel.displayToast ? "checkmark.circle" : self.viewModel.editMode ? "circle" : "plus")
-                    .frame(width: self.barHeight, height: self.barHeight)
+                Image(systemName: viewModel.displayToast ? "checkmark.circle" : viewModel.editMode ? "circle" : "plus")
+                    .frame(width: barHeight, height: barHeight)
                     .foregroundColor(Color(uiColor: .label))
                     .frame(width: 60, height: 55)
                     .background(.clear)
             }
         }
-        .frame(height: self.barHeight)
+        .frame(height: barHeight)
+        .frame(maxWidth: 600)
+        .background(RoundedRectangle(cornerRadius: 13)
+                        .fill(Color(uiColor: .systemGray6))
+                        .shadow(radius: 4, x: 2, y: 2))
+    }
+    
+    var openEventInputButton: some View {
+        HStack {
+            if appSettings.showEmojiButton {
+                EmojiButton().disabled(true)
+            }
+            Text(viewModel.newItemTitle.isEmpty ? "New Event or Reminder" : viewModel.newItemTitle)
+                .lineLimit(1)
+                .foregroundColor(.gray)
+                .gesture(TapGesture().onEnded({
+                    // User tapped textfield - is attempting to add event
+                    withAnimation {
+                        viewModel.isAddEventTextFieldFocused = true
+                    }
+                }))
+                .padding(.leading)
+                .truncationMode(.tail)
+            // Submit Button
+            Spacer()
+            Button(action: {
+                // User submitted event by tapping plus
+                viewModel.submitEventOrReminder()
+                isFocused = false
+            }) {
+                Image(systemName: viewModel.displayToast ? "checkmark.circle" : viewModel.editMode ? "circle" : "plus")
+                    .frame(width: barHeight, height: barHeight)
+                    .foregroundColor(Color(uiColor: .label))
+                    .frame(width: 60, height: 55)
+                    .background(.clear)
+            }
+        }
+        .frame(height: barHeight)
         .frame(maxWidth: 600)
         .background(RoundedRectangle(cornerRadius: 13)
                         .fill(Color(uiColor: .systemGray6))
@@ -162,24 +206,37 @@ struct EventInput: View {
     }
     
     var body: some View {
-        ZStack {
-            if self.viewModel.isAddEventTextFieldFocused {
-                self.eventOptions
+        if self.viewModel.isAddEventTextFieldFocused {
+            VStack {
+                eventOptions
                     .frame(maxWidth: .infinity, alignment: .bottom)
                     .padding(.bottom, 8)
             }
+            .padding(14)
+            .toast(isPresenting: self.$viewModel.displayToast, duration: 2, tapToDismiss: true, alert: {
+                AlertToast(displayMode: .alert, type: .regular, title: viewModel.toastMessage)
+            }, completion: {
+                //Completion block after dismiss
+                viewModel.displayToast = false
+            })
+        } else {
             VStack {
-                Spacer()
-                self.textBar
+                Button(action: {
+                    isFocused = true
+                    viewModel.isAddEventTextFieldFocused = true
+                }) {
+                    openEventInputButton
+                }
+                .matchedGeometryEffect(id: "textInput", in: animation)
             }
+            .padding(14)
+            .toast(isPresenting: self.$viewModel.displayToast, duration: 2, tapToDismiss: true, alert: {
+                AlertToast(displayMode: .alert, type: .regular, title: self.viewModel.toastMessage)
+            }, completion: {
+                //Completion block after dismiss
+                self.viewModel.displayToast = false
+            })
         }
-        .padding(14)
-        .toast(isPresenting: self.$viewModel.displayToast, duration: 2, tapToDismiss: true, alert: {
-            AlertToast(displayMode: .alert, type: .regular, title: self.viewModel.toastMessage)
-        }, completion: {
-            //Completion block after dismiss
-            self.viewModel.displayToast = false
-        })
     }
 }
 

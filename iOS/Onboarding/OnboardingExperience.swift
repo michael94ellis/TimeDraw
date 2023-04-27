@@ -76,7 +76,7 @@ struct OnboardingExperience: View {
                     belowContent:
                         VStack {
                             OnboardingDailyGoalTextField()
-                            TimeDrawClock(showClockView: Binding<Bool>(get: { true }, set: { _ in }), width: 120)
+                            TimeDrawClock(width: 120)
                             EventInput()
                         },
                     isFirstAppOpen: $isFirstAppOpen,
@@ -87,7 +87,7 @@ struct OnboardingExperience: View {
                     content: OnboardingDailyGoalTextField(),
                     belowContent:
                         VStack {
-                            TimeDrawClock(showClockView: Binding<Bool>(get: { true }, set: { _ in }), width: 120)
+                            TimeDrawClock(width: 120)
                             EventInput()
                         },
                     isFirstAppOpen: $isFirstAppOpen,
@@ -99,7 +99,8 @@ struct OnboardingExperience: View {
                             MainHeader()
                             OnboardingDailyGoalTextField()
                         },
-                    content:  TimeDrawClock(showClockView: Binding<Bool>(get: { true }, set: { _ in }), width: 120),
+                    content:
+                        TimeDrawClock(width: 120),
                     belowContent:
                         VStack {
                             EventInput()
@@ -112,7 +113,7 @@ struct OnboardingExperience: View {
                         VStack {
                             MainHeader()
                             OnboardingDailyGoalTextField()
-                            TimeDrawClock(showClockView: Binding<Bool>(get: { true }, set: { _ in }), width: 120)
+                            TimeDrawClock(width: 120)
                         },
                     content: EventInput(),
                     belowContent: EmptyView(),

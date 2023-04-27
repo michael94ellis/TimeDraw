@@ -9,7 +9,9 @@ import SwiftUI
 import EventKit
 
 class AppSettings: ObservableObject {
-    @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = true
+    @AppStorage("showEmojiButton") var showEmojiButton: Bool = true
+
+    @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = false
     @AppStorage("isTimeDrawClockEnabled") var isTimeDrawClockEnabled: Bool = true
     @AppStorage("showItemRecurrenceType") var showItemRecurrenceType: ItemRecurrenceType = .all
     @AppStorage("showCalendarItemType") var showCalendarItemType: CalendarItemType = .all

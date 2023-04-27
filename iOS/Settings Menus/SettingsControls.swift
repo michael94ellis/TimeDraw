@@ -24,6 +24,7 @@ struct SettingsControls:View {
             sectionLabel(title: "Customize")
             VStack {
                 Toggle("Daily Goal Note Space", isOn: self.appSettings.$isDailyGoalEnabled)
+                Toggle("Emoji Button", isOn: self.appSettings.$showEmojiButton)
                 Toggle("Analog Clock", isOn: self.appSettings.$isTimeDrawClockEnabled)
                 HStack {
                     Text("Time Selection Interval")

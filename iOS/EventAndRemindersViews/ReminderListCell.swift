@@ -82,9 +82,8 @@ struct ReminderListCell: View {
                                 .foregroundColor(Color(uiColor: .darkGray))
                         }
                         if let dueDate = item.dueDateComponents,
-                           let dueHour = dueDate.hour, let dueMinute = dueDate.minute,
-                           let dueTime = "\(dueHour):\(dueMinute < 10 ? "0" : "")\(dueMinute) \(dueHour > 11 ? "PM" : "AM")" {
-                            Text(" - \(dueTime)")
+                           let dueHour = dueDate.hour, let dueMinute = dueDate.minute {
+                            Text(" - \(dueHour):\(dueMinute < 10 ? "0" : "")\(dueMinute) \(dueHour > 11 ? "PM" : "AM")")
                                 .font(.callout)
                                 .foregroundColor(Color(uiColor: .darkGray))
                         }

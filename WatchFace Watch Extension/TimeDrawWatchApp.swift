@@ -9,9 +9,7 @@ import SwiftUI
 
 @main
 struct TimeDrawWatchApp: App {
-    
-    @State var showClockView: Bool = true
-    
+        
     @ObservedObject private var listViewModel: CalendarItemListViewModel = .shared
     @StateObject private var itemViewModel: ModifyCalendarItemViewModel = ModifyCalendarItemViewModel()
     
@@ -27,7 +25,7 @@ struct TimeDrawWatchApp: App {
     
     @SceneBuilder var body: some Scene {
         WindowGroup {
-            TimeDrawClock(showClockView: self.$showClockView, width: 70)
+            TimeDrawClock(width: 70)
                 .environmentObject(self.itemViewModel)
                 .environmentObject(self.listViewModel)
         }

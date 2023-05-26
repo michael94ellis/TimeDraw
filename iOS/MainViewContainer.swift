@@ -11,7 +11,6 @@ import EventKit
 
 struct MainViewContainer: View {
     
-    @AppStorage("first_open") var isFirstAppOpen = true
     @Environment(\.safeAreaInsets) private var safeAreaInsets
     
     /// The secondary textfield that can be edited
@@ -66,8 +65,8 @@ struct MainViewContainer: View {
     
     var body: some View {
         VStack {
-            if isFirstAppOpen {
-                OnboardingExperience(isFirstAppOpen: self.$isFirstAppOpen)
+            if appSettings.isFirstAppOpen {
+                OnboardingExperience(isFirstAppOpen: self.appSettings.$isFirstAppOpen)
             } else {
                 mainContentContainer
             }

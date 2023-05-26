@@ -9,6 +9,8 @@ import SwiftUI
 import EventKit
 
 class AppSettings: ObservableObject {
+    
+    @AppStorage("first_open") var isFirstAppOpen = true
     @AppStorage("showEmojiButton") var showEmojiButton: Bool = true
 
     @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = false

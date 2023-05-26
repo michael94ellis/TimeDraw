@@ -20,7 +20,6 @@ struct SettingsView: View {
     @Binding var showSettingsPopover: Bool
     let vineetURL = "https://www.vineetk.com/"
     let michaelURL = "https://www.michaelrobertellis.com/"
-    let ayushURL = "https://github.com/ac-dev01"
     let contactURL = "https://www.michaelrobertellis.com/contact"
     let windowScene = UIApplication.shared.windows.first?.windowScene
     
@@ -38,6 +37,10 @@ struct SettingsView: View {
     }
     
     @ViewBuilder var settingsFooter: some View {
+        
+        Button("Show Onboarding Info") {
+            appSettings.isFirstAppOpen = true
+        }
         Button("Share Feedback!") {
             guard let windowScene = windowScene else {
                 return
@@ -50,7 +53,6 @@ struct SettingsView: View {
         Text("Team")
         self.link(for: self.vineetURL, title: "Design: Vineet Kapil")
         self.link(for: self.michaelURL, title: "iOS: Michael Robert Ellis")
-        self.link(for: self.ayushURL, title: "iOS: Ayush Chaurasia")
         Spacer()
         Text("Version \(Bundle.main.releaseVersionNumber) (\(Bundle.main.buildVersionNumber))")
             .font(.interFine)

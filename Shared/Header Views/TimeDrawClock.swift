@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Foundation
 
 struct Time {
     var sec: Int
@@ -61,21 +60,22 @@ struct TimeDrawClock: View {
     
     var body: some View {
         VStack {
-            ZStack {
-                // Event Lines
-                self.timeCircles
-                ClockFace(width: self.width)
-                // Moving Clock Parts
-                ClockHands(currentTime: self.$currentTime, width: self.width)
+                ZStack {
+                    // Event Lines
+                    self.timeCircles
+                    ClockFace(width: width)
+                    // Moving Clock Parts
+                    ClockHands(currentTime: self.$currentTime,
+                               width: width)
             }
-            .frame(width: self.width, height: self.width)
         }
-        .frame(width: self.width * 2.5, height: self.width * 2.5)
+        .frame(width: self.width, height: self.width)
         .onAppear(perform: {
             let calender = Calendar.current
-            let sec = calender.component(.second, from: Date())
-            let min = calender.component(.minute, from: Date())
-            let hour = calender.component(.hour, from: Date())
+            let currentDateTime = Date()
+            let sec = calender.component(.second, from: currentDateTime)
+            let min = calender.component(.minute, from: currentDateTime)
+            let hour = calender.component(.hour, from: currentDateTime)
             withAnimation(Animation.linear(duration: 0.01)) {
                 self.currentTime = Time(sec: sec, min: min, hour: hour)
                 self.itemList.updateData()
@@ -86,5 +86,23 @@ struct TimeDrawClock: View {
                 self.setCurrentTime()
             }
         }
+    }
+}
+
+struct TimeDrawClock_preview: PreviewProvider {
+    
+    @ObservedObject private static var listViewModel: CalendarItemListViewModel = .shared
+    @StateObject private static var itemViewModel: ModifyCalendarItemViewModel = ModifyCalendarItemViewModel()
+    
+    static var previews: some View {
+        HStack {
+            Spacer()
+            GeometryReader { geo in
+                TimeDrawClock(width: geo.size.width)
+            }
+            Spacer()
+        }
+        .environmentObject(Self.itemViewModel)
+        .environmentObject(Self.listViewModel)
     }
 }

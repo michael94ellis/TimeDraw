@@ -20,7 +20,9 @@ struct MainScrollableContent: View {
             if self.appSettings.isTimeDrawClockEnabled {
                 HStack {
                     Spacer()
-                    TimeDrawClock(width: 120)
+                    GeometryReader { geo in
+                        TimeDrawClock(width: geo.size.width)
+                    }
                     Spacer()
                 }
             }

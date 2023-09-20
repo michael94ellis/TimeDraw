@@ -41,7 +41,7 @@ struct TimeDrawClock: View {
                         self.modifyItemViewModel.open(event: event)
                     }))
             } else {
-                ClockEventLine(start: event.startDate, end: event.endDate, radius: self.width / 2, width: 12)
+                ClockEventLine(start: event.startDate, end: event.endDate, radius: self.width / 2, width: self.width / 24)
                     .foregroundColor(Color(cgColor: event.calendar.cgColor))
                     .gesture(TapGesture().onEnded({ value in
                         self.modifyItemViewModel.open(event: event)
@@ -66,7 +66,7 @@ struct TimeDrawClock: View {
                 ZStack {
                     // Event Lines
                     self.timeCircles
-                    ClockFace(width: width)
+                    ClockFace(width: width, clockFaceOutlineWidth: width / 12)
                     // Moving Clock Parts
                     ClockHands(currentTime: self.$currentTime,
                                width: width)

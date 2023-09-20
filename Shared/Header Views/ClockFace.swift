@@ -10,7 +10,7 @@ import SwiftUI
 struct ClockFace: View {
     
     let width: CGFloat
-    let clockFaceOutlineWidth: CGFloat = 22
+    let clockFaceOutlineWidth: CGFloat
     static let hours = (0..<60).filter({ $0 % 5 == 0 })
     static let quarterHours: [Double] = {
         var calculatedQuarterHourDegrees: [Double] = []
@@ -54,7 +54,7 @@ struct ClockFace_preview: PreviewProvider {
     static var previews: some View {
         Group {
             GeometryReader { geo in
-                ClockFace(width: geo.size.width)
+                ClockFace(width: geo.size.width, clockFaceOutlineWidth: geo.size.width / 10)
             }
         }
     }

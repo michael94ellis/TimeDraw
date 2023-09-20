@@ -21,10 +21,14 @@ struct MainScrollableContent: View {
         GeometryReader { geo in
             List {
                 if self.appSettings.isTimeDrawClockEnabled {
-                    TimeDrawClock(width: geo.size.width - clockHorizPadding)
-                        .listRowSeparator(.hidden)
-                        .padding(.vertical, clockVertPadding)
-                        .padding(.horizontal, clockHorizPadding)
+                    HStack {
+                        Spacer()
+                        TimeDrawClock(width: min(geo.size.width - clockHorizPadding, 600))
+                            .listRowSeparator(.hidden)
+                            .padding(.vertical, clockVertPadding)
+                            .padding(.horizontal, clockHorizPadding)
+                        Spacer()
+                    }
                 }
                 ForEach(self.itemList.events) { item in
                     EventListCell(item: item)

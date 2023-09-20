@@ -93,7 +93,7 @@ struct ClockEventLine: Shape {
         /// Only for all day events
         var lineDashes: [CGFloat] = [10, 5]
         var path = Path()
-        let amRadius = self.radius * 0.82
+        let amRadius = self.radius * 0.8
         let pmRadius = self.radius * 1.04
         switch self.getType() {
         case .morning:

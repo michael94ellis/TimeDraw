@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import EventKit
 
 struct Time {
     var sec: Int
@@ -40,7 +41,7 @@ struct TimeDrawClock: View {
                         self.modifyItemViewModel.open(event: event)
                     }))
             } else {
-                ClockEventLine(start: event.startDate, end: event.endDate, radius: self.width, width: 12)
+                ClockEventLine(start: event.startDate, end: event.endDate, radius: self.width / 2, width: 12)
                     .foregroundColor(Color(cgColor: event.calendar.cgColor))
                     .gesture(TapGesture().onEnded({ value in
                         self.modifyItemViewModel.open(event: event)
@@ -48,13 +49,15 @@ struct TimeDrawClock: View {
             }
         }
         ForEach(self.itemList.reminders ,id: \.self) { reminder in
-            ClockEventLine(startComponents: reminder.startDateComponents, endComponents: reminder.dueDateComponents, radius: self.width, width: 4)
-                .if((reminder.calendar != nil && reminder.calendar.cgColor != nil), transform: {
-                    $0.foregroundColor(Color(reminder.calendar.cgColor))
-                })
-                .gesture(TapGesture().onEnded({ value in
-                    self.modifyItemViewModel.open(reminder: reminder)
-                }))
+            if let startDateComponents = reminder.startDateComponents, let dueDateComponents = reminder.dueDateComponents {
+                ClockEventLine(startComponents: startDateComponents, endComponents: dueDateComponents, radius: self.width, width: 4)
+                    .if((reminder.calendar != nil && reminder.calendar.cgColor != nil), transform: {
+                        $0.foregroundColor(Color(reminder.calendar.cgColor))
+                    })
+                        .gesture(TapGesture().onEnded({ value in
+                            self.modifyItemViewModel.open(reminder: reminder)
+                        }))
+            }
         }
     }
     

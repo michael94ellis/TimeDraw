@@ -24,10 +24,8 @@
 		2F26FE6328CE7F4F00A9A0AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B84627823CF600FE72C3 /* Assets.xcassets */; };
 		2F39B85D27823CF600FE72C3 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85C27823CF600FE72C3 /* Tests_iOS.swift */; };
 		2F39B85F27823CF700FE72C3 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85E27823CF700FE72C3 /* Tests_iOSLaunchTests.swift */; };
-		2F39B86C27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84127823CF600FE72C3 /* TimeDraw.xcdatamodeld */; };
 		2F39B86E27823CF700FE72C3 /* TimeDrawApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */; };
 		2F39B87027823CF700FE72C3 /* MainViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84427823CF600FE72C3 /* MainViewContainer.swift */; };
-		2F39B87227823CF700FE72C3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B84527823CF600FE72C3 /* CoreDataManager.swift */; };
 		2F39B87427823CF700FE72C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B84627823CF600FE72C3 /* Assets.xcassets */; };
 		2F39B88627823E1400FE72C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */; };
 		2F39B889278241B500FE72C3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B888278241B500FE72C3 /* Colors.swift */; };
@@ -162,10 +160,8 @@
 		2F24458727D8BDD0005BF37D /* SwipeGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeGesture.swift; sourceTree = "<group>"; };
 		2F24458A27D8BE37005BF37D /* Calendar-Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Calendar-Extension.swift"; sourceTree = "<group>"; };
 		2F26FE5D28CE56E900A9A0AE /* OnboardingExperience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingExperience.swift; sourceTree = "<group>"; };
-		2F39B84227823CF600FE72C3 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawApp.swift; sourceTree = "<group>"; };
 		2F39B84427823CF600FE72C3 /* MainViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewContainer.swift; sourceTree = "<group>"; };
-		2F39B84527823CF600FE72C3 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		2F39B84627823CF600FE72C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F39B84B27823CF600FE72C3 /* TimeDraw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeDraw.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F39B85827823CF600FE72C3 /* Tests iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -370,15 +366,6 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		2F42C5AD2784E74000F0BEB2 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				2F39B84127823CF600FE72C3 /* TimeDraw.xcdatamodeld */,
-				2F39B84527823CF600FE72C3 /* CoreDataManager.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		2F5427DA28CF825C00F08952 /* WatchFace App */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,7 +502,6 @@
 				2F21112F2799B62D0041EE85 /* MainScrollableContent.swift */,
 				2F26FE6028CE56F500A9A0AE /* Onboarding */,
 				2F2343FB27D454BC0064B635 /* CalendarView.swift */,
-				2F42C5AD2784E74000F0BEB2 /* Model */,
 				2F8AB305279EDFD600654FEF /* EventAndRemindersViews */,
 				2F646BB3285178A900D7445D /* EventInput */,
 				2F8AB31227A25D9F00654FEF /* Settings Menus */,
@@ -738,7 +724,6 @@
 				2FB41CAE27D97D710067F250 /* TimeDrawClock.swift in Sources */,
 				2F5427EC28D753D700F08952 /* IntroView.swift in Sources */,
 				2F6505092787F87A00AF90F7 /* SettingsView.swift in Sources */,
-				2F39B87227823CF700FE72C3 /* CoreDataManager.swift in Sources */,
 				2FB41CD427DEDB3F0067F250 /* AppSettings.swift in Sources */,
 				2F24458827D8BDD0005BF37D /* SwipeGesture.swift in Sources */,
 				2F2111302799B62D0041EE85 /* MainScrollableContent.swift in Sources */,
@@ -747,7 +732,6 @@
 				2F42C59D2784E3DE00F0BEB2 /* EventKitManager.swift in Sources */,
 				2F2343FC27D454BC0064B635 /* CalendarView.swift in Sources */,
 				2F211134279A4F4E0041EE85 /* AddRecurrenceRule.swift in Sources */,
-				2F39B86C27823CF700FE72C3 /* TimeDraw.xcdatamodeld in Sources */,
 				2F42C5A32784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
 				2FB41CB427DA5E220067F250 /* EventListCell.swift in Sources */,
 				2F5427E928D60FB900F08952 /* UIDevice-Extension.swift in Sources */,
@@ -1273,19 +1257,6 @@
 			productName = FirebaseCrashlytics;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		2F39B84127823CF600FE72C3 /* TimeDraw.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				2F39B84227823CF600FE72C3 /* Shared.xcdatamodel */,
-			);
-			currentVersion = 2F39B84227823CF600FE72C3 /* Shared.xcdatamodel */;
-			path = TimeDraw.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 2F39B83C27823CF600FE72C3 /* Project object */;
 }

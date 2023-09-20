@@ -17,8 +17,6 @@ struct ClockEventLine: Shape {
     
     // Minute is 0.5 Degrees
     // Hour is 30 Degrees
-    let start: Date?
-    let end: Date?
     let startComponents: DateComponents?
     let endComponents: DateComponents?
     let radius: CGFloat
@@ -31,27 +29,22 @@ struct ClockEventLine: Shape {
         self.endDegrees = end
         self.radius = radius
         self.width = width
-        self.start = nil
-        self.end = nil
         self.startComponents = nil
         self.endComponents = nil
     }
     
     init(start: Date, end: Date, radius: Double, width: Double) {
-        self.start = start
-        self.end = end
-        self.startComponents = nil
-        self.endComponents = nil
+        self.startComponents = Calendar.current.dateComponents([.hour, .minute], from: start)
+        self.endComponents = Calendar.current.dateComponents([.hour, .minute], from: end)
         self.radius = radius
         self.width = width
         self.startDegrees = self.getAngle(for: start)
         self.endDegrees = self.getAngle(for: end)
     }
-    init(startComponents: DateComponents?, endComponents: DateComponents?, radius: Double, width: Double) {
-        self.startComponents = startComponents ?? DateComponents()
-        self.endComponents = endComponents ?? DateComponents()
-        self.start = nil
-        self.end = nil
+    
+    init(startComponents: DateComponents, endComponents: DateComponents, radius: Double, width: Double) {
+        self.startComponents = startComponents
+        self.endComponents = endComponents
         self.radius = radius
         self.width = width
         self.startDegrees = self.getAngle(with: startComponents)
@@ -59,9 +52,12 @@ struct ClockEventLine: Shape {
     }
     
     /// Used to determine if this EventLine will be in AM, PM, or both
-    func getType() -> EventType {
-        if startComponents?.hour ?? 13 < 12 || start?.get(.hour) ?? 13 < 12 {
-            if endComponents?.hour ?? 0 >= 12 || end?.get(.hour) ?? 0 >= 12 {
+    func getType() -> EventType? {
+        guard let start = startComponents?.hour, let end = endComponents?.hour else {
+            return nil
+        }
+        if start < 12 {
+            if end >= 12 {
                 return .both
             } else {
                 return .morning
@@ -94,41 +90,26 @@ struct ClockEventLine: Shape {
     
     func path(in rect: CGRect) -> Path {
         let center = CGPoint(x: rect.midX, y: rect.midY)
+        /// Only for all day events
+        var lineDashes: [CGFloat] = [10, 5]
         var path = Path()
-        let amRadius = self.radius * 0.85
-        let pmRadius = self.radius * 1.15
+        let amRadius = self.radius * 0.82
+        let pmRadius = self.radius * 1.04
         switch self.getType() {
         case .morning:
             path.addArc(center: center, radius: amRadius, startAngle: .degrees(self.startDegrees), endAngle: .degrees(self.endDegrees), clockwise: false)
         case.evening:
             path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: pmRadius, startAngle: .degrees(self.startDegrees), endAngle: .degrees(self.endDegrees), clockwise: false)
         case .both:
-            // noon crossover vars
-            let noonDegrees: Double = 270
-            let afternoonCrossoverDegrees: Double = 280
-            let control1: CGPoint = CGPoint(x: rect.maxX * 0.6, y: rect.maxY * 0.05)
-            let control2: CGPoint = CGPoint(x: rect.maxX * 0.4, y: 0 - rect.maxY * 0.03)
-            let arcEndDegree: Double = max(self.startDegrees, 250)
-            if self.endDegrees > afternoonCrossoverDegrees {
-                // morning
-                path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: amRadius, startAngle: .degrees(self.startDegrees), endAngle: .degrees(arcEndDegree), clockwise: false)
-                // Add curve and keep going
-                path.addCurve(to: self.getPoint(radius: pmRadius, in: rect, for: (afternoonCrossoverDegrees).radians()), control1: control1, control2: control2)
-                // evening
-                path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: pmRadius, startAngle: .degrees(afternoonCrossoverDegrees), endAngle: .degrees(self.endDegrees), clockwise: false)
-            } else if self.endDegrees == noonDegrees {
-                // morning
-                path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: amRadius, startAngle: .degrees(self.startDegrees), endAngle: .degrees(arcEndDegree), clockwise: false)
-                // evening
-                let noonPoint = self.getPoint(radius: self.radius, in: rect, for: (noonDegrees).radians())
-                path.addCurve(to: noonPoint, control1: control1, control2: noonPoint)
-            } else {
-                // morning
-                path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: amRadius, startAngle: .degrees(self.startDegrees), endAngle: .degrees(arcEndDegree), clockwise: false)
-                path.addCurve(to: self.getPoint(radius: pmRadius, in: rect, for: (self.endDegrees).radians()), control1: control1, control2: control2)
-            }
+            // noon crossover
+            let afternoonCrossoverDegrees: Double = 270
+            // morning
+            path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: amRadius, startAngle: .degrees(self.startDegrees), endAngle: .degrees(afternoonCrossoverDegrees), clockwise: false)
+            // evening
+            path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: pmRadius, startAngle: .degrees(afternoonCrossoverDegrees), endAngle: .degrees(self.endDegrees), clockwise: false)
+        default:
+            lineDashes = [0, 0]
         }
-        let lineDashes: [CGFloat] = (self.start == nil && self.startComponents == nil) ? [10, 5] : []
         return path.strokedPath(.init(lineWidth: self.width, lineCap: .square, lineJoin: .miter, dash: lineDashes))
     }
 }

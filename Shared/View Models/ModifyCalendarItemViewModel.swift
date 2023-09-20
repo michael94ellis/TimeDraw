@@ -398,9 +398,9 @@ class ModifyCalendarItemViewModel: ObservableObject {
                       let endDate = Calendar.current.date(from: endComponents) {
                 await self.createEvent(start: startDate, end: endDate)
             } else {
-                let start = mergedStartComponments != nil ? mergedStartComponments : nil
-                let end = mergedEndComponments != nil ? mergedEndComponments : nil
-                await self.createReminder(start: start, end: end)
+                let startDate = mergedStartComponments != nil ? mergedStartComponments : nil
+                let endDate = mergedEndComponments != nil ? mergedEndComponments : nil
+                await self.createReminder(start: startDate, end: endDate)
             }
         }
     }

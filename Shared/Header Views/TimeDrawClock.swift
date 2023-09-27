@@ -79,9 +79,8 @@ struct TimeDrawClock: View {
             let sec = calender.component(.second, from: currentDateTime)
             let min = calender.component(.minute, from: currentDateTime)
             let hour = calender.component(.hour, from: currentDateTime)
-            withAnimation(Animation.linear(duration: 0.01)) {
+            withAnimation(Animation.linear(duration: 0.75)) {
                 self.currentTime = Time(sec: sec, min: min, hour: hour)
-                self.itemList.updateData()
             }
         })
         .onReceive(self.timer) { _ in

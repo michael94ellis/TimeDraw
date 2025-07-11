@@ -34,9 +34,8 @@ struct SettingsControls:View {
                             Text("  \(String(minuteValue))m")
                         }
                     }
-                    .frame(width: 55, height: 55)
-                    .clipped()
                 }
+                .padding(.vertical, 8)
             }
             // Calendar Selection Popup Screen
             CalendarSelectionButton()

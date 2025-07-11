@@ -113,9 +113,3 @@ struct ClockEventLine: Shape {
         return path.strokedPath(.init(lineWidth: self.width, lineCap: .square, lineJoin: .miter, dash: lineDashes))
     }
 }
-
-extension Double {
-    func radians() -> Double {
-        return self * .pi / 180
-    }
-}

@@ -8,12 +8,6 @@
 import SwiftUI
 import EventKit
 
-struct Time {
-    var sec: Int
-    var min: Int
-    var hour: Int
-}
-
 struct TimeDrawClock: View {
     
     @State var currentTime = Time(sec: 0, min: 0, hour: 0)
@@ -23,11 +17,14 @@ struct TimeDrawClock: View {
     @EnvironmentObject var modifyItemViewModel: ModifyCalendarItemViewModel
     
     func setCurrentTime()  {
-        let calender = Calendar.current
-        let sec = calender.component(.second, from: Date())
-        let min = calender.component(.minute, from: Date())
-        let hour = calender.component(.hour, from: Date())
-        self.currentTime = Time(sec: sec, min: min, hour: hour)
+        let timeZone = TimeZone.autoupdatingCurrent
+        let components = Calendar.current.dateComponents(in: timeZone, from: .now)
+
+        guard let hour = components.hour,
+              let minute = components.minute,
+              let second = components.second else { return }
+
+        self.currentTime = Time(sec: second, min: minute, hour: hour)
     }
         
     @ViewBuilder var timeCircles: some View {

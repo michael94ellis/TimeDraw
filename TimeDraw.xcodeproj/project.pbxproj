@@ -115,6 +115,11 @@
 		2FD407D6284FBD670022FC49 /* EKEventStore-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */; };
 		2FD407D7284FBDD70022FC49 /* CalendarItemListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1F8FA327D3AAEF00648234 /* CalendarItemListViewModel.swift */; };
 		2FD407D8284FBDFB0022FC49 /* EventKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59C2784E3DE00F0BEB2 /* EventKitManager.swift */; };
+		2FD6BE432E2177C900AA7C5A /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE422E2177C900AA7C5A /* Time.swift */; };
+		2FD6BE442E2177C900AA7C5A /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE422E2177C900AA7C5A /* Time.swift */; };
+		2FD6BE452E2177C900AA7C5A /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE422E2177C900AA7C5A /* Time.swift */; };
+		2FD6BE482E2177ED00AA7C5A /* Double-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */; };
+		2FD6BE492E2177ED00AA7C5A /* Double-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -232,6 +237,8 @@
 		2FD40798284FBB700022FC49 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		2FD4079D284FBB700022FC49 /* WatchFaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatchFaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FD407A1284FBB700022FC49 /* WatchFaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchFaceTests.swift; sourceTree = "<group>"; };
+		2FD6BE422E2177C900AA7C5A /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double-Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -309,7 +316,8 @@
 			isa = PBXGroup;
 			children = (
 				2FB41CD327DEDB3E0067F250 /* AppSettings.swift */,
-				2FB41CD227DE890E0067F250 /* Header Views */,
+				2FD6BE462E2177CC00AA7C5A /* Models */,
+				2FB41CD227DE890E0067F250 /* Views */,
 				2F2111322799EE370041EE85 /* View Models */,
 				2F42C5A82784E70C00F0BEB2 /* EventKit */,
 				2F42C5A92784E71500F0BEB2 /* Utils */,
@@ -357,6 +365,7 @@
 				2F24458727D8BDD0005BF37D /* SwipeGesture.swift */,
 				2F39B888278241B500FE72C3 /* Colors.swift */,
 				2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */,
+				2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */,
 				2F24457E27D797C9005BF37D /* EventKit-Extension.swift */,
 				2F42C59327848DF700F0BEB2 /* Date-Extension.swift */,
 				2F5427E828D60FB900F08952 /* UIDevice-Extension.swift */,
@@ -442,7 +451,7 @@
 			path = "Settings Menus";
 			sourceTree = "<group>";
 		};
-		2FB41CD227DE890E0067F250 /* Header Views */ = {
+		2FB41CD227DE890E0067F250 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				2FB41CAD27D97D710067F250 /* TimeDrawClock.swift */,
@@ -450,7 +459,7 @@
 				2FB60E4827E21571004DA305 /* ClockEventLine.swift */,
 				2FB41CCF27DE4A9D0067F250 /* ClockHands.swift */,
 			);
-			path = "Header Views";
+			path = Views;
 			sourceTree = "<group>";
 		};
 		2FD40787284FBB700022FC49 /* WatchFace Watch Extension */ = {
@@ -489,6 +498,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2FD6BE462E2177CC00AA7C5A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2FD6BE422E2177C900AA7C5A /* Time.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		5F654E2C27D3722F00D6F53C /* iOS */ = {
@@ -736,6 +753,7 @@
 				2FB41CB427DA5E220067F250 /* EventListCell.swift in Sources */,
 				2F5427E928D60FB900F08952 /* UIDevice-Extension.swift in Sources */,
 				2FB41CDA27DEE1850067F250 /* EmojiButton.swift in Sources */,
+				2FD6BE452E2177C900AA7C5A /* Time.swift in Sources */,
 				2F8AB31027A229DA00654FEF /* Utils.swift in Sources */,
 				2F26FE5E28CE56E900A9A0AE /* OnboardingExperience.swift in Sources */,
 				2FB60E5527E48DFE004DA305 /* CalendarSelection.swift in Sources */,
@@ -753,6 +771,7 @@
 				2FB41CD727DEDBB70067F250 /* SettingsControls.swift in Sources */,
 				2F1F8FA427D3AAEF00648234 /* CalendarItemListViewModel.swift in Sources */,
 				2F42C5972784A87100F0BEB2 /* PopoverLink.swift in Sources */,
+				2FD6BE482E2177ED00AA7C5A /* Double-Extension.swift in Sources */,
 				2F24458527D824DF005BF37D /* MultiPicker.swift in Sources */,
 				2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */,
 			);
@@ -784,6 +803,7 @@
 				2FD407CF284FBC860022FC49 /* Calendar-Extension.swift in Sources */,
 				2FD407C9284FBC7A0022FC49 /* Date-Extension.swift in Sources */,
 				2FD407D8284FBDFB0022FC49 /* EventKitManager.swift in Sources */,
+				2FD6BE492E2177ED00AA7C5A /* Double-Extension.swift in Sources */,
 				2FD40791284FBB700022FC49 /* ComplicationController.swift in Sources */,
 				2FD407C0284FBC050022FC49 /* ClockEventLine.swift in Sources */,
 				2FD407D5284FBD5B0022FC49 /* ModifyCalendarItemViewModel.swift in Sources */,
@@ -792,6 +812,7 @@
 				2FD407CC284FBC7A0022FC49 /* View-Extension.swift in Sources */,
 				2FD407C2284FBC050022FC49 /* ClockFace.swift in Sources */,
 				2FD40789284FBB700022FC49 /* TimeDrawWatchApp.swift in Sources */,
+				2FD6BE432E2177C900AA7C5A /* Time.swift in Sources */,
 				2FD4078F284FBB700022FC49 /* NotificationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -800,6 +821,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FD6BE442E2177C900AA7C5A /* Time.swift in Sources */,
 				2FD407A2284FBB700022FC49 /* WatchFaceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

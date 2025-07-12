@@ -31,8 +31,21 @@ public final class EventKitManager {
         self.eventStore.calendarForReminders()
     }
     
-    private func availabilityCheck() async throws {
+    private func eventsAvailabilityCheck() async throws {
         let authorization = try await determineEventStoreAuthorization()
+        if #available(macOS 10.15, iOS 17.0, tvOS 13.0, watchOS 7.0, *) {
+            guard authorization == .fullAccess else {
+                throw EventError.eventAuthorizationStatus(authorization)
+            }
+        } else {
+            guard authorization == .authorized else {
+                throw EventError.eventAuthorizationStatus(authorization)
+            }
+        }
+    }
+    
+    private func remindersAvailabilityCheck() async throws {
+        let authorization = try await determineReminderStoreAuthorization()
         if #available(macOS 10.15, iOS 17.0, tvOS 13.0, watchOS 7.0, *) {
             guard authorization == .fullAccess else {
                 throw EventError.eventAuthorizationStatus(authorization)
@@ -78,7 +91,7 @@ public final class EventKitManager {
     /// Returns: events
     @discardableResult
     public func fetchEvents(startDate: Date, endDate: Date, calendars filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
-        try await availabilityCheck()
+        try await eventsAvailabilityCheck()
         let calendars = self.eventStore.calendars(for: .event).filter { calendar in
             if filterCalendarIDs.isEmpty { return true }
             return filterCalendarIDs.contains(calendar.calendarIdentifier)
@@ -94,9 +107,13 @@ public final class EventKitManager {
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
     public func fetchReminders(calendars filterCalendarIDs: [String] = [], completion: @escaping (([EKReminder]?) -> ())) async throws {
-        try await availabilityCheck()
+        try await remindersAvailabilityCheck()
         let calendars = self.eventStore.calendars(for: .reminder).filter { calendar in
-            if filterCalendarIDs.isEmpty { return true }
+            if filterCalendarIDs.isEmpty {
+                print("NO")
+                return true
+            }
+            print("yes")
             return filterCalendarIDs.contains(calendar.calendarIdentifier)
         }
         let predicate = self.eventStore.predicateForReminders(in: calendars)
@@ -111,7 +128,7 @@ public final class EventKitManager {
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
     public func fetchReminders(start: Date, end: Date, calendars filterCalendarIDs: [String] = [], completion: @escaping (([EKReminder]?) -> ())) async throws {
-        try await availabilityCheck()
+        try await remindersAvailabilityCheck()
         let calendars = self.eventStore.calendars(for: .reminder).filter { calendar in
             if filterCalendarIDs.isEmpty { return true }
             return filterCalendarIDs.contains(calendar.calendarIdentifier)
@@ -241,7 +258,7 @@ public final class EventKitManager {
     /// - Returns: calendar object
     @discardableResult
     private func accessEventsCalendar() async throws -> EKCalendar {
-        try await availabilityCheck()
+        try await eventsAvailabilityCheck()
         guard let calendar = eventStore.calendarForEvents() else {
             throw EventError.unableToAccessCalendar
         }
@@ -251,7 +268,7 @@ public final class EventKitManager {
     /// - Returns: calendar object
     @discardableResult
     private func accessRemindersCalendar() async throws -> EKCalendar {
-        try await availabilityCheck()
+        try await remindersAvailabilityCheck()
         guard let calendar = eventStore.calendarForReminders() else {
             throw EventError.unableToAccessCalendar
         }

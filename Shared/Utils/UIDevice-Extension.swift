@@ -12,10 +12,22 @@ extension UIDevice {
         let bottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
         return bottom > 0
     }
+    
     var topNotchHeight: CGFloat {
-        return UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0
+        let window = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow }
+
+        return window?.safeAreaInsets.top ?? 0
     }
+
     var bottomNotchHeight: CGFloat {
-        return UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0
+        let window = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow }
+
+        return window?.safeAreaInsets.bottom ?? 0
     }
 }

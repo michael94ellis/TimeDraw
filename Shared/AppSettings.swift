@@ -30,39 +30,10 @@ class AppSettings: ObservableObject {
     
     private init() { }
     
-    var allCalendars: [EKCalendar] = []
-    
     @discardableResult
     func fetchAllCalendars() -> [EKCalendar] {
         var calendars = EventKitManager.shared.eventStore.calendars(for: .event)
         calendars.append(contentsOf: EventKitManager.shared.eventStore.calendars(for: .reminder))
-        self.allCalendars = calendars
-        return self.allCalendars
-    }
-}
-enum CalendarItemType: Int, CaseIterable {
-    case scheduled = 0
-    case all = 1
-    case unscheduled = 2
-    
-    var displayName: String {
-        switch(self) {
-        case .scheduled: return "Scheduled"
-        case .unscheduled: return "Unscheduled"
-        case .all: return "&"
-        }
-    }
-}
-enum ItemRecurrenceType: Int, CaseIterable {
-    case recurring = 0
-    case all = 1
-    case nonRecurring = 2
-    
-    var displayName: String {
-        switch(self) {
-        case .recurring: return "Recurring"
-        case .nonRecurring: return "Non Recurring"
-        case .all: return "&"
-        }
+        return calendars
     }
 }

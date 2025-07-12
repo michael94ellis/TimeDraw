@@ -114,6 +114,14 @@
 		2FD6BE452E2177C900AA7C5A /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE422E2177C900AA7C5A /* Time.swift */; };
 		2FD6BE482E2177ED00AA7C5A /* Double-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */; };
 		2FD6BE492E2177ED00AA7C5A /* Double-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */; };
+		2FDFFFCE2E22C77200B9D266 /* CalendarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFCD2E22C77200B9D266 /* CalendarItemType.swift */; };
+		2FDFFFCF2E22C77200B9D266 /* CalendarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFCD2E22C77200B9D266 /* CalendarItemType.swift */; };
+		2FDFFFD02E22C77200B9D266 /* CalendarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFCD2E22C77200B9D266 /* CalendarItemType.swift */; };
+		2FDFFFD22E22C77B00B9D266 /* ItemRecurrenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFD12E22C77B00B9D266 /* ItemRecurrenceType.swift */; };
+		2FDFFFD32E22C77B00B9D266 /* ItemRecurrenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFD12E22C77B00B9D266 /* ItemRecurrenceType.swift */; };
+		2FDFFFD42E22C77B00B9D266 /* ItemRecurrenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFD12E22C77B00B9D266 /* ItemRecurrenceType.swift */; };
+		2FDFFFD62E22C82A00B9D266 /* PopoverWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFD52E22C82A00B9D266 /* PopoverWrapper.swift */; };
+		2FDFFFD82E22C83F00B9D266 /* UIPopoverWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFD72E22C83F00B9D266 /* UIPopoverWrapperViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -230,6 +238,10 @@
 		2FD407A1284FBB700022FC49 /* WatchFaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchFaceTests.swift; sourceTree = "<group>"; };
 		2FD6BE422E2177C900AA7C5A /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double-Extension.swift"; sourceTree = "<group>"; };
+		2FDFFFCD2E22C77200B9D266 /* CalendarItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarItemType.swift; sourceTree = "<group>"; };
+		2FDFFFD12E22C77B00B9D266 /* ItemRecurrenceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRecurrenceType.swift; sourceTree = "<group>"; };
+		2FDFFFD52E22C82A00B9D266 /* PopoverWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverWrapper.swift; sourceTree = "<group>"; };
+		2FDFFFD72E22C83F00B9D266 /* UIPopoverWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPopoverWrapperViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -429,7 +441,7 @@
 		2F8AB31227A25D9F00654FEF /* Settings Menus */ = {
 			isa = PBXGroup;
 			children = (
-				2F8AB302279D140E00654FEF /* PopoverButton.swift */,
+				2FDFFFD92E22C84400B9D266 /* Popover */,
 				2F6505082787F87A00AF90F7 /* SettingsView.swift */,
 				2FB41CD627DEDBB70067F250 /* SettingsControls.swift */,
 				2FB60E5427E48DFE004DA305 /* CalendarSelection.swift */,
@@ -490,8 +502,20 @@
 			isa = PBXGroup;
 			children = (
 				2FD6BE422E2177C900AA7C5A /* Time.swift */,
+				2FDFFFCD2E22C77200B9D266 /* CalendarItemType.swift */,
+				2FDFFFD12E22C77B00B9D266 /* ItemRecurrenceType.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		2FDFFFD92E22C84400B9D266 /* Popover */ = {
+			isa = PBXGroup;
+			children = (
+				2F8AB302279D140E00654FEF /* PopoverButton.swift */,
+				2FDFFFD72E22C83F00B9D266 /* UIPopoverWrapperViewController.swift */,
+				2FDFFFD52E22C82A00B9D266 /* PopoverWrapper.swift */,
+			);
+			path = Popover;
 			sourceTree = "<group>";
 		};
 		5F654E2C27D3722F00D6F53C /* iOS */ = {
@@ -708,6 +732,8 @@
 				2FB60E4C27E21690004DA305 /* ClockFace.swift in Sources */,
 				2F39B86E27823CF700FE72C3 /* TimeDrawApp.swift in Sources */,
 				2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */,
+				2FDFFFD42E22C77B00B9D266 /* ItemRecurrenceType.swift in Sources */,
+				2FDFFFD62E22C82A00B9D266 /* PopoverWrapper.swift in Sources */,
 				2F542010279B4AE90046696B /* ModifyCalendarItemViewModel.swift in Sources */,
 				2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */,
 				2F8AB303279D140E00654FEF /* PopoverButton.swift in Sources */,
@@ -716,6 +742,7 @@
 				2F24458227D7F0EB005BF37D /* MultiDateSelectCalendar.swift in Sources */,
 				2F8AB2FD279BB4F000654FEF /* DateTimePickerTextField.swift in Sources */,
 				2F39B889278241B500FE72C3 /* Colors.swift in Sources */,
+				2FDFFFD82E22C83F00B9D266 /* UIPopoverWrapperViewController.swift in Sources */,
 				2F8AB30727A1025100654FEF /* UIPickerTextField.swift in Sources */,
 				2F6505292791384500AF90F7 /* Inter-Font.swift in Sources */,
 				2F5427EF28D7787300F08952 /* DemoScreen.swift in Sources */,
@@ -754,6 +781,7 @@
 				2FD6BE482E2177ED00AA7C5A /* Double-Extension.swift in Sources */,
 				2F24458527D824DF005BF37D /* MultiPicker.swift in Sources */,
 				2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */,
+				2FDFFFCF2E22C77200B9D266 /* CalendarItemType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -770,6 +798,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FDFFFCE2E22C77200B9D266 /* CalendarItemType.swift in Sources */,
 				2FD407D4284FBCF70022FC49 /* AppSettings.swift in Sources */,
 				2FD4078D284FBB700022FC49 /* NotificationController.swift in Sources */,
 				2FD407C5284FBC600022FC49 /* Colors.swift in Sources */,
@@ -779,6 +808,7 @@
 				2FD407D7284FBDD70022FC49 /* CalendarItemListViewModel.swift in Sources */,
 				2FD407C6284FBC6C0022FC49 /* SwipeGesture.swift in Sources */,
 				2FD407C7284FBC760022FC49 /* Utils.swift in Sources */,
+				2FDFFFD22E22C77B00B9D266 /* ItemRecurrenceType.swift in Sources */,
 				2FD407CA284FBC7A0022FC49 /* EventKit-Extension.swift in Sources */,
 				2FD407CF284FBC860022FC49 /* Calendar-Extension.swift in Sources */,
 				2FD407C9284FBC7A0022FC49 /* Date-Extension.swift in Sources */,
@@ -802,6 +832,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FD6BE442E2177C900AA7C5A /* Time.swift in Sources */,
+				2FDFFFD02E22C77200B9D266 /* CalendarItemType.swift in Sources */,
+				2FDFFFD32E22C77B00B9D266 /* ItemRecurrenceType.swift in Sources */,
 				2FD407A2284FBB700022FC49 /* WatchFaceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

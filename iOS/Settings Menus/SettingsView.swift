@@ -21,7 +21,6 @@ struct SettingsView: View {
     let vineetURL = "https://www.vineetk.com/"
     let michaelURL = "https://www.michaelrobertellis.com/"
     let contactURL = "https://www.michaelrobertellis.com/contact"
-    let windowScene = UIApplication.shared.windows.first?.windowScene
     
     func link(for url: String, title: String) -> some View {
         Link(destination: URL(string: url)!) {
@@ -42,10 +41,11 @@ struct SettingsView: View {
             appSettings.isFirstAppOpen = true
         }
         Button("Share Feedback!") {
-            guard let windowScene = windowScene else {
+            guard let window = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+                assertionFailure()
                 return
             }
-            SKStoreReviewController.requestReview(in: windowScene)
+            SKStoreReviewController.requestReview(in: window)
         }
         Image("Clock")
             .resizable()

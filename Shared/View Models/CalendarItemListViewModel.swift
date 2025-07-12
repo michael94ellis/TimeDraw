@@ -24,7 +24,9 @@ class CalendarItemListViewModel: ObservableObject {
     public static let shared = CalendarItemListViewModel()
     // This prevents others from using the default '()' initializer for this class.
     private init() {
-        self.updateData()
+        if !AppSettings.shared.isFirstAppOpen {
+            self.updateData()
+        }
     }
     
     func fetchEvents() {

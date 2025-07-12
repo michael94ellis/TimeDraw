@@ -13,6 +13,7 @@ struct DemoScreen<Content: View, Above: View, Below: View>: View {
     var content: Content
     var belowContent: Below?
     
+    @EnvironmentObject private var calendarItemListViewModel: CalendarItemListViewModel
     @Binding var isFirstAppOpen: Bool
     @Binding var currentPageIndex: Int
     
@@ -20,6 +21,7 @@ struct DemoScreen<Content: View, Above: View, Below: View>: View {
         currentPageIndex += 1
         if currentPageIndex >= 6 {
             isFirstAppOpen = false
+            calendarItemListViewModel.updateData()
         }
     }
     

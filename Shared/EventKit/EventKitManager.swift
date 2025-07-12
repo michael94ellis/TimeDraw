@@ -31,6 +31,19 @@ public final class EventKitManager {
         self.eventStore.calendarForReminders()
     }
     
+    private func availabilityCheck() async throws {
+        let authorization = try await determineEventStoreAuthorization()
+        if #available(macOS 10.15, iOS 17.0, tvOS 13.0, watchOS 7.0, *) {
+            guard authorization == .fullAccess else {
+                throw EventError.eventAuthorizationStatus(authorization)
+            }
+        } else {
+            guard authorization == .authorized else {
+                throw EventError.eventAuthorizationStatus(authorization)
+            }
+        }
+    }
+    
     // MARK: - Fetch
     
     /// Fetch events for a specific day
@@ -65,10 +78,7 @@ public final class EventKitManager {
     /// Returns: events
     @discardableResult
     public func fetchEvents(startDate: Date, endDate: Date, calendars filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
-        let authorization = try await determineEventStoreAuthorization()
-        guard authorization == .authorized else {
-            throw EventError.eventAuthorizationStatus(authorization)
-        }
+        try await availabilityCheck()
         let calendars = self.eventStore.calendars(for: .event).filter { calendar in
             if filterCalendarIDs.isEmpty { return true }
             return filterCalendarIDs.contains(calendar.calendarIdentifier)
@@ -84,10 +94,7 @@ public final class EventKitManager {
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
     public func fetchReminders(calendars filterCalendarIDs: [String] = [], completion: @escaping (([EKReminder]?) -> ())) async throws {
-        let authorization = try await determineReminderStoreAuthorization()
-        guard authorization == .authorized else {
-            throw EventError.eventAuthorizationStatus(authorization)
-        }
+        try await availabilityCheck()
         let calendars = self.eventStore.calendars(for: .reminder).filter { calendar in
             if filterCalendarIDs.isEmpty { return true }
             return filterCalendarIDs.contains(calendar.calendarIdentifier)
@@ -104,10 +111,7 @@ public final class EventKitManager {
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
     public func fetchReminders(start: Date, end: Date, calendars filterCalendarIDs: [String] = [], completion: @escaping (([EKReminder]?) -> ())) async throws {
-        let authorization = try await determineReminderStoreAuthorization()
-        guard authorization == .authorized else {
-            throw EventError.eventAuthorizationStatus(authorization)
-        }
+        try await availabilityCheck()
         let calendars = self.eventStore.calendars(for: .reminder).filter { calendar in
             if filterCalendarIDs.isEmpty { return true }
             return filterCalendarIDs.contains(calendar.calendarIdentifier)
@@ -153,13 +157,19 @@ public final class EventKitManager {
     }
     
     private func requestEventAccess() async throws -> Bool {
-        let accessGranted = try await eventStore.requestAccess(to: .event)
-        return accessGranted
+        if #available(iOS 17.0, *) {
+            try await eventStore.requestFullAccessToEvents()
+        } else {
+            try await eventStore.requestAccess(to: .event)
+        }
     }
     
     private func requestReminderAccess() async throws -> Bool {
-        let accessGranted = try await eventStore.requestAccess(to: .reminder)
-        return accessGranted
+        if #available(iOS 17.0, *) {
+            try await eventStore.requestFullAccessToReminders()
+        } else {
+            try await eventStore.requestAccess(to: .reminder)
+        }
     }
     
     // MARK: - Non Watch Functions
@@ -231,10 +241,7 @@ public final class EventKitManager {
     /// - Returns: calendar object
     @discardableResult
     private func accessEventsCalendar() async throws -> EKCalendar {
-        let authorization = try await determineEventStoreAuthorization()
-        guard authorization == .authorized else {
-            throw EventError.eventAuthorizationStatus(authorization)
-        }
+        try await availabilityCheck()
         guard let calendar = eventStore.calendarForEvents() else {
             throw EventError.unableToAccessCalendar
         }
@@ -244,10 +251,7 @@ public final class EventKitManager {
     /// - Returns: calendar object
     @discardableResult
     private func accessRemindersCalendar() async throws -> EKCalendar {
-        let authorization = try await determineReminderStoreAuthorization()
-        guard authorization == .authorized else {
-            throw EventError.eventAuthorizationStatus(authorization)
-        }
+        try await availabilityCheck()
         guard let calendar = eventStore.calendarForReminders() else {
             throw EventError.unableToAccessCalendar
         }

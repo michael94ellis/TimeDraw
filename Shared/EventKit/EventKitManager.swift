@@ -10,19 +10,17 @@ import EventKit
 
 public final class EventKitManager {
     
-    public static var appName: String?
+    public var appName: String = "TimeDraw"
 
     /// Event store: An object that accesses the user’s calendar and reminder events and supports the scheduling of new events.
     public private(set) var eventStore = EKEventStore()
 
-    public static func configureWithAppName(_ appName: String) {
+    public func configureWithAppName(_ appName: String) {
         self.appName = appName
     }
     
-    // MARK: Static accessor
     public static let shared = EventKitManager()
-
-    private init() {} // This prevents others from using the default '()' initializer for this class.
+    private init() { }
     
     /// Returns calendar object from event kit
     public var defaultEventCalendar: EKCalendar? {

@@ -20,7 +20,6 @@
 		2F24458B27D8BE37005BF37D /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458A27D8BE37005BF37D /* Calendar-Extension.swift */; };
 		2F26FE5E28CE56E900A9A0AE /* OnboardingExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F26FE5D28CE56E900A9A0AE /* OnboardingExperience.swift */; };
 		2F26FE6128CE7F4C00A9A0AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B84627823CF600FE72C3 /* Assets.xcassets */; };
-		2F26FE6228CE7F4E00A9A0AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B84627823CF600FE72C3 /* Assets.xcassets */; };
 		2F26FE6328CE7F4F00A9A0AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B84627823CF600FE72C3 /* Assets.xcassets */; };
 		2F39B85D27823CF600FE72C3 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85C27823CF600FE72C3 /* Tests_iOS.swift */; };
 		2F39B85F27823CF700FE72C3 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B85E27823CF700FE72C3 /* Tests_iOSLaunchTests.swift */; };
@@ -30,13 +29,11 @@
 		2F39B88627823E1400FE72C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */; };
 		2F39B889278241B500FE72C3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B888278241B500FE72C3 /* Colors.swift */; };
 		2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59327848DF700F0BEB2 /* Date-Extension.swift */; };
-		2F42C5972784A87100F0BEB2 /* PopoverLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5962784A87100F0BEB2 /* PopoverLink.swift */; };
 		2F42C59D2784E3DE00F0BEB2 /* EventKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59C2784E3DE00F0BEB2 /* EventKitManager.swift */; };
 		2F42C5A32784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */; };
 		2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A52784E6FC00F0BEB2 /* EventError.swift */; };
 		2F52377A29FA0F3600BAD1EC /* SafeAreaInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F52377929FA0F3600BAD1EC /* SafeAreaInsets.swift */; };
 		2F542010279B4AE90046696B /* ModifyCalendarItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */; };
-		2F5427E528CF825D00F08952 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F5427DF28CF825C00F08952 /* Assets.xcassets */; };
 		2F5427E928D60FB900F08952 /* UIDevice-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5427E828D60FB900F08952 /* UIDevice-Extension.swift */; };
 		2F5427EC28D753D700F08952 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5427EB28D753D600F08952 /* IntroView.swift */; };
 		2F5427EF28D7787300F08952 /* DemoScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5427EE28D7787300F08952 /* DemoScreen.swift */; };
@@ -50,8 +47,6 @@
 		2F646BAE2850283D00D7445D /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505102791370C00AF90F7 /* Inter-Light.ttf */; };
 		2F646BAF2850283D00D7445D /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050D2791370C00AF90F7 /* Inter-Medium.ttf */; };
 		2F646BB1285038CF00D7445D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2F646BB0285038CF00D7445D /* README.md */; };
-		2F646BB828517B0100D7445D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2F646BB728517B0100D7445D /* FirebaseAnalytics */; };
-		2F646BBA28517B0100D7445D /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2F646BB928517B0100D7445D /* FirebaseCrashlytics */; };
 		2F65050027879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */; };
 		2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505022787A09900AF90F7 /* MainHeader.swift */; };
 		2F6505062787DA3C00AF90F7 /* EventInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505052787DA3C00AF90F7 /* EventInput.swift */; };
@@ -74,7 +69,6 @@
 		2F8AB30A27A1026500654FEF /* PickerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB30927A1026500654FEF /* PickerField.swift */; };
 		2F8AB30D27A220E400654FEF /* DateAndTimePickers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB30C27A220E400654FEF /* DateAndTimePickers.swift */; };
 		2F8AB31027A229DA00654FEF /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB30F27A229DA00654FEF /* Utils.swift */; };
-		2FB41CA627D975A50067F250 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FB41CA527D975A50067F250 /* GoogleService-Info.plist */; };
 		2FB41CAE27D97D710067F250 /* TimeDrawClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CAD27D97D710067F250 /* TimeDrawClock.swift */; };
 		2FB41CB127DA5DBE0067F250 /* ReminderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CB027DA5DBE0067F250 /* ReminderListCell.swift */; };
 		2FB41CB427DA5E220067F250 /* EventListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CB327DA5E220067F250 /* EventListCell.swift */; };
@@ -176,14 +170,12 @@
 		2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2F39B888278241B500FE72C3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		2F42C59327848DF700F0BEB2 /* Date-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date-Extension.swift"; sourceTree = "<group>"; };
-		2F42C5962784A87100F0BEB2 /* PopoverLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverLink.swift; sourceTree = "<group>"; };
 		2F42C59C2784E3DE00F0BEB2 /* EventKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventKitManager.swift; sourceTree = "<group>"; };
 		2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKEventStore-Extension.swift"; sourceTree = "<group>"; };
 		2F42C5A52784E6FC00F0BEB2 /* EventError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventError.swift; sourceTree = "<group>"; };
 		2F52377829F99E5200BAD1EC /* WatchFace-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "WatchFace-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		2F52377929FA0F3600BAD1EC /* SafeAreaInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaInsets.swift; sourceTree = "<group>"; };
 		2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyCalendarItemViewModel.swift; sourceTree = "<group>"; };
-		2F5427DF28CF825C00F08952 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F5427E828D60FB900F08952 /* UIDevice-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice-Extension.swift"; sourceTree = "<group>"; };
 		2F5427EB28D753D600F08952 /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
 		2F5427EE28D7787300F08952 /* DemoScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoScreen.swift; sourceTree = "<group>"; };
@@ -211,7 +203,6 @@
 		2F8AB30927A1026500654FEF /* PickerField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerField.swift; sourceTree = "<group>"; };
 		2F8AB30C27A220E400654FEF /* DateAndTimePickers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndTimePickers.swift; sourceTree = "<group>"; };
 		2F8AB30F27A229DA00654FEF /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		2FB41CA527D975A50067F250 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2FB41CAD27D97D710067F250 /* TimeDrawClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawClock.swift; sourceTree = "<group>"; };
 		2FB41CB027DA5DBE0067F250 /* ReminderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListCell.swift; sourceTree = "<group>"; };
 		2FB41CB327DA5E220067F250 /* EventListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListCell.swift; sourceTree = "<group>"; };
@@ -246,8 +237,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F646BBA28517B0100D7445D /* FirebaseCrashlytics in Frameworks */,
-				2F646BB828517B0100D7445D /* FirebaseAnalytics in Frameworks */,
 				2F1F8FA827D3D11000648234 /* AlertToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,7 +289,6 @@
 			children = (
 				2F646BB0285038CF00D7445D /* README.md */,
 				2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */,
-				2FB41CA527D975A50067F250 /* GoogleService-Info.plist */,
 				2F39B84027823CF600FE72C3 /* Shared */,
 				5F654E2C27D3722F00D6F53C /* iOS */,
 				2F39B85B27823CF600FE72C3 /* Tests iOS */,
@@ -379,7 +367,6 @@
 			isa = PBXGroup;
 			children = (
 				2F52377829F99E5200BAD1EC /* WatchFace-App-Info.plist */,
-				2F5427DF28CF825C00F08952 /* Assets.xcassets */,
 			);
 			path = "WatchFace App";
 			sourceTree = SOURCE_ROOT;
@@ -446,7 +433,6 @@
 				2F6505082787F87A00AF90F7 /* SettingsView.swift */,
 				2FB41CD627DEDBB70067F250 /* SettingsControls.swift */,
 				2FB60E5427E48DFE004DA305 /* CalendarSelection.swift */,
-				2F42C5962784A87100F0BEB2 /* PopoverLink.swift */,
 			);
 			path = "Settings Menus";
 			sourceTree = "<group>";
@@ -547,8 +533,6 @@
 			name = "TimeDraw (iOS)";
 			packageProductDependencies = (
 				2F1F8FA727D3D11000648234 /* AlertToast */,
-				2F646BB728517B0100D7445D /* FirebaseAnalytics */,
-				2F646BB928517B0100D7445D /* FirebaseCrashlytics */,
 			);
 			productName = "TimeDraw (iOS)";
 			productReference = 2F39B84B27823CF600FE72C3 /* TimeDraw.app */;
@@ -614,7 +598,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					2F39B84A27823CF600FE72C3 = {
 						CreatedOnToolsVersion = 13.2;
@@ -643,7 +627,7 @@
 			mainGroup = 2F39B83B27823CF600FE72C3;
 			packageReferences = (
 				2F1F8FA627D3D11000648234 /* XCRemoteSwiftPackageReference "AlertToast" */,
-				2F646BB628517B0100D7445D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				2FDFFFCC2E2298F800B9D266 /* XCRemoteSwiftPackageReference "ToastWindow" */,
 			);
 			productRefGroup = 2F39B84C27823CF600FE72C3 /* Products */;
 			projectDirPath = "";
@@ -665,7 +649,6 @@
 				2F6505162791370D00AF90F7 /* Inter-Thin.ttf in Resources */,
 				2F65051A2791370D00AF90F7 /* Inter-ExtraLight.ttf in Resources */,
 				2F6505242791370D00AF90F7 /* Inter-Bold.ttf in Resources */,
-				2FB41CA627D975A50067F250 /* GoogleService-Info.plist in Resources */,
 				2F646BB1285038CF00D7445D /* README.md in Resources */,
 				2F6505202791370D00AF90F7 /* Inter-ExtraBold.ttf in Resources */,
 				2F65051E2791370D00AF90F7 /* Inter-Light.ttf in Resources */,
@@ -696,10 +679,8 @@
 				2FD40793284FBB700022FC49 /* Assets.xcassets in Resources */,
 				2FD40796284FBB700022FC49 /* Preview Assets.xcassets in Resources */,
 				2F646BA82850283D00D7445D /* Inter-Bold.ttf in Resources */,
-				2F26FE6228CE7F4E00A9A0AE /* Assets.xcassets in Resources */,
 				2F646BAC2850283D00D7445D /* Inter-Thin.ttf in Resources */,
 				2F646BAA2850283D00D7445D /* Inter-Regular.ttf in Resources */,
-				2F5427E528CF825D00F08952 /* Assets.xcassets in Resources */,
 				2F646BAD2850283D00D7445D /* Inter-ExtraLight.ttf in Resources */,
 				2F646BAF2850283D00D7445D /* Inter-Medium.ttf in Resources */,
 				2F646BAB2850283D00D7445D /* Inter-SemiBold.ttf in Resources */,
@@ -770,7 +751,6 @@
 				2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */,
 				2FB41CD727DEDBB70067F250 /* SettingsControls.swift in Sources */,
 				2F1F8FA427D3AAEF00648234 /* CalendarItemListViewModel.swift in Sources */,
-				2F42C5972784A87100F0BEB2 /* PopoverLink.swift in Sources */,
 				2FD6BE482E2177ED00AA7C5A /* Double-Extension.swift in Sources */,
 				2F24458527D824DF005BF37D /* MultiPicker.swift in Sources */,
 				2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */,
@@ -846,6 +826,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -878,8 +859,10 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -894,7 +877,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -907,6 +890,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -939,8 +923,10 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = KLQC884752;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -949,7 +935,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -964,12 +950,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "iOS/TimeDraw (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
-				DEVELOPMENT_TEAM = KLQC884752;
+				CURRENT_PROJECT_VERSION = 20;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS/TimeDraw--iOS--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Time Draw";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
@@ -979,7 +965,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1002,12 +988,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "iOS/TimeDraw (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
-				DEVELOPMENT_TEAM = KLQC884752;
+				CURRENT_PROJECT_VERSION = 20;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS/TimeDraw--iOS--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Time Draw";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
@@ -1017,7 +1003,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1037,10 +1023,8 @@
 		2F39B87F27823CF700FE72C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 13;
-				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MARKETING_VERSION = 1.0;
@@ -1057,10 +1041,8 @@
 		2F39B88027823CF700FE72C3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 13;
-				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MARKETING_VERSION = 1.0;
@@ -1078,14 +1060,12 @@
 		2FD407B3284FBB700022FC49 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
-				DEVELOPMENT_TEAM = KLQC884752;
+				CURRENT_PROJECT_VERSION = 20;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WatchFace-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = WatchFace;
@@ -1108,21 +1088,19 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 8.3;
+				WATCHOS_DEPLOYMENT_TARGET = 10.6;
 			};
 			name = Debug;
 		};
 		2FD407B4284FBB700022FC49 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
-				DEVELOPMENT_TEAM = KLQC884752;
+				CURRENT_PROJECT_VERSION = 20;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WatchFace-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = WatchFace;
@@ -1146,18 +1124,16 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 8.3;
+				WATCHOS_DEPLOYMENT_TARGET = 10.6;
 			};
 			name = Release;
 		};
 		2FD407B8284FBB700022FC49 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 13;
-				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw.WatchFaceTests;
@@ -1174,11 +1150,9 @@
 		2FD407B9284FBB700022FC49 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 13;
-				DEVELOPMENT_TEAM = KLQC884752;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw.WatchFaceTests;
@@ -1252,12 +1226,12 @@
 				minimumVersion = 1.3.7;
 			};
 		};
-		2F646BB628517B0100D7445D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		2FDFFFCC2E2298F800B9D266 /* XCRemoteSwiftPackageReference "ToastWindow" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			repositoryURL = "https://github.com/michael94ellis/ToastWindow";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 9.0.0;
+				minimumVersion = 1.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1267,16 +1241,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2F1F8FA627D3D11000648234 /* XCRemoteSwiftPackageReference "AlertToast" */;
 			productName = AlertToast;
-		};
-		2F646BB728517B0100D7445D /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2F646BB628517B0100D7445D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		2F646BB928517B0100D7445D /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2F646BB628517B0100D7445D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

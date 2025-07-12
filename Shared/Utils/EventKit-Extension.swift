@@ -7,7 +7,7 @@
 
 import EventKit
 
-extension EKWeekday: CaseIterable, CustomStringConvertible {
+extension EKWeekday: @retroactive CustomStringConvertible {
     public static var allCases: [EKWeekday] {
         return [.sunday, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
     }
@@ -68,7 +68,10 @@ extension Optional where Wrapped == Data {
     func loadCalendarIds() -> [String] {
         do {
             guard let data = self,
-                  let array = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
+                  let array = try NSKeyedUnarchiver.unarchivedObject(
+                      ofClasses: [NSArray.self, NSString.self],
+                      from: data
+                  ) as? [String] else {
                 return []
             }
             return array
@@ -78,13 +81,15 @@ extension Optional where Wrapped == Data {
     }
     func loadEKCalendar() -> EKCalendar? {
         do {
-            guard let data = self,
-                  let calendar = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? EKCalendar else {
+            guard let data = self else {
                 return nil
             }
+            let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
+            unarchiver.requiresSecureCoding = false
+            let calendar = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as? EKCalendar
             return calendar
         } catch {
-            fatalError("loadWStringArray - Can't encode data: \(error)")
+            fatalError("loadEKCalendar - Can't decode data: \(error)")
         }
     }
 }

@@ -14,7 +14,6 @@ struct TimeDrawWatchApp: App {
     @StateObject private var itemViewModel: ModifyCalendarItemViewModel = ModifyCalendarItemViewModel()
     
     init() {
-        EventKitManager.configureWithAppName("TimeDraw")
         listViewModel.updateData()
         UIFont.overrideInitialize()
         if AppSettings.shared.userSelectedCalendars == nil || AppSettings.shared.userSelectedCalendars.loadCalendarIds().isEmpty {

@@ -6,15 +6,12 @@
 //
 
 import SwiftUI
-import Firebase
 import EventKit
 
 @main
 struct TimeDrawApp: App {
     
     init() {
-        FirebaseApp.configure()
-        EventKitManager.configureWithAppName("TimeDraw")
         UIFont.overrideInitialize()
         if AppSettings.shared.userSelectedCalendars == nil || AppSettings.shared.userSelectedCalendars.loadCalendarIds().isEmpty {
             let allCalendars = AppSettings.shared.fetchAllCalendars()

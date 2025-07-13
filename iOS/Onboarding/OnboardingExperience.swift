@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OnboardingExperience: View {
     
-    @Binding var isFirstAppOpen: Bool
+    @AppStorage(AppStorageKey.firstOpen) var isFirstAppOpen: Bool = true
     @State var currentPageIndex = 0
     
     @ViewBuilder static func overlayText(_ text: String) -> some View {
@@ -79,7 +79,6 @@ struct OnboardingExperience: View {
                             TimeDrawClock(width: 120)
                             EventInput()
                         },
-                    isFirstAppOpen: $isFirstAppOpen,
                     currentPageIndex: $currentPageIndex)
             case 3:
                 DemoScreen(
@@ -90,7 +89,6 @@ struct OnboardingExperience: View {
                             TimeDrawClock(width: 120)
                             EventInput()
                         },
-                    isFirstAppOpen: $isFirstAppOpen,
                     currentPageIndex: $currentPageIndex)
             case 4:
                 DemoScreen(
@@ -105,7 +103,6 @@ struct OnboardingExperience: View {
                         VStack {
                             EventInput()
                         },
-                    isFirstAppOpen: $isFirstAppOpen,
                     currentPageIndex: $currentPageIndex)
             case 5:
                 DemoScreen(
@@ -117,7 +114,6 @@ struct OnboardingExperience: View {
                         },
                     content: EventInput(),
                     belowContent: EmptyView(),
-                    isFirstAppOpen: $isFirstAppOpen,
                     currentPageIndex: $currentPageIndex)
             default:
                 EmptyView()

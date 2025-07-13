@@ -14,7 +14,7 @@ struct DemoScreen<Content: View, Above: View, Below: View>: View {
     var belowContent: Below?
     
     @EnvironmentObject private var calendarItemListViewModel: CalendarItemListViewModel
-    @Binding var isFirstAppOpen: Bool
+    @AppStorage(AppStorageKey.firstOpen) var isFirstAppOpen: Bool = true
     @Binding var currentPageIndex: Int
     
     func incrementOnboardingPage() {

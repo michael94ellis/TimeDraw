@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Intended to be inside of a ZStack
 struct ClockHands: View {
     
     @Binding var currentTime: Time

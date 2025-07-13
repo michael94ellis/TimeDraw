@@ -55,6 +55,7 @@ struct MainViewContainer: View {
             VStack {
                 Spacer()
                 EventInput()
+                    .environmentObject(appSettings)
             }
             .padding(.bottom, safeAreaInsets.bottom)
         }
@@ -63,7 +64,7 @@ struct MainViewContainer: View {
     var body: some View {
         VStack {
             if appSettings.isFirstAppOpen {
-                OnboardingExperience(isFirstAppOpen: self.appSettings.$isFirstAppOpen)
+                OnboardingExperience()
             } else {
                 mainContentContainer
             }

@@ -88,22 +88,28 @@ struct TimeDrawClock: View {
 }
 
 #Preview {
-    struct TimeDrawClock_preview: View {
-        
-        @ObservedObject private static var listViewModel: CalendarItemListViewModel = .init()
-        @StateObject private static var itemViewModel: ModifyCalendarItemViewModel = .init()
-        
+    struct TimeDrawClock_Previews: View {
         var body: some View {
-            HStack {
-                Spacer()
-                GeometryReader { geo in
-                    TimeDrawClock(width: geo.size.width)
-                }
-                Spacer()
-            }
-            .environmentObject(Self.itemViewModel)
-            .environmentObject(Self.listViewModel)
+            let viewModel = CalendarItemListViewModel()
+            viewModel.events = [
+                EKEvent.mock(startHour: 8,
+                             endHour: 10,
+                             color: .red),
+                EKEvent.mock(startHour: 11,
+                             endHour: 13,
+                             color: .blue),
+                EKEvent.mock(startHour: 17,
+                             endHour: 24,
+                             color: .orange)
+            ]
+
+            let modifyViewModel = ModifyCalendarItemViewModel()
+
+            return TimeDrawClock(width: 100)
+                .environmentObject(viewModel)
+                .environmentObject(modifyViewModel)
         }
     }
-    return TimeDrawClock_preview()
+
+    return TimeDrawClock_Previews()
 }

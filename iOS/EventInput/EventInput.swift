@@ -124,6 +124,7 @@ struct EventInput: View {
                     Text("New Event or Reminder").foregroundColor(.gray)
                 }
                 .onAppear(perform: { isFocused = true })
+                .padding(.leading, 24)
             // Submit Button
             Button(action: {
                 // User submitted event by tapping plus

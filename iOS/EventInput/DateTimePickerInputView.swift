@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DateTimePickerInputView: UIViewRepresentable {
     
+    @EnvironmentObject private var appSettings: AppSettings
     @Binding var date: Date?
     let placeholder: String
     let formatter = DateFormatter()
@@ -22,8 +23,7 @@ struct DateTimePickerInputView: UIViewRepresentable {
     }
     
     func makeUIView(context: Context) -> DateTimePickerTextField {
-        let pickerField = DateTimePickerTextField(placeholderText: self.placeholder, date: $date, frame: .zero, mode: self.mode)
-        pickerField.placeholder = "\(placeholder)"
+        let pickerField = DateTimePickerTextField(placeholderText: self.placeholder, date: $date, frame: .zero, mode: self.mode, minuteInterval: appSettings.timePickerGranularity)
         pickerField.textAlignment = .center
         if let date = date {
             pickerField.text = "\(formatter.string(from: date))"

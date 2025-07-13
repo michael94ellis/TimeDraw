@@ -16,7 +16,7 @@ struct DailyGoalTextField: View {
     @State var goalLineLimit = 3
     
     var body: some View {
-        MultilineTextField("What is your goal today?", text: self.$dailyGoal, focus: self.isDailyGoalFocused, lineLimit: self.$goalLineLimit)
+        MultilineTextField("What is your goal today?", text: self.$dailyGoal, focus: self.isDailyGoalFocused)
             .font(.callout)
             .foregroundColor(Color.gray1)
             .multilineTextAlignment(.center)

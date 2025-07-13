@@ -12,14 +12,11 @@ import EventKit
 struct MainViewContainer: View {
     
     @Environment(\.safeAreaInsets) private var safeAreaInsets
+    @EnvironmentObject private var appSettings: AppSettings
+    @EnvironmentObject private var itemViewModel: ModifyCalendarItemViewModel
     
     /// The secondary textfield that can be edited
     @FocusState private var isDailyGoalFocused: Bool
-    
-    @ObservedObject private var appSettings: AppSettings = .shared
-    
-    @ObservedObject private var listViewModel: CalendarItemListViewModel = .shared
-    @StateObject private var itemViewModel: ModifyCalendarItemViewModel = ModifyCalendarItemViewModel()
     
     @ViewBuilder var blurOverlay: some View {
         if self.itemViewModel.isAddEventTextFieldFocused {
@@ -71,8 +68,5 @@ struct MainViewContainer: View {
                 mainContentContainer
             }
         }
-        .environmentObject(self.itemViewModel)
-        .environmentObject(self.listViewModel)
-        .environmentObject(self.appSettings)
     }
 }

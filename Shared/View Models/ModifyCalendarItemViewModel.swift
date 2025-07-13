@@ -56,14 +56,14 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var isNotesInputOpen: Bool = false
     @Published var isRecurrencePickerOpen: Bool = false
     
-    // MARK: - Init/Open
+    @AppStorage(AppStorageKey.currentSelectedCalendar) private var currentSelectedCalendar: Data?
     
     init() {
         self.frequencyMonthDate = Date().get(.month) - 1
         self.editMode = false
         let daysInThisWeek = Calendar.current.daysWithSameWeekOfYear(as: Date())
         self.daysOfTheWeek = daysInThisWeek.compactMap { DateFormatter.weekdayLetterFormatter.string(from: $0) }
-        self.selectedCalendar = AppSettings.shared.currentSelectedCalendar.loadEKCalendar()
+        self.selectedCalendar = currentSelectedCalendar.loadEKCalendar()
     }
     
     @MainActor func open(event: EKEvent) {
@@ -230,7 +230,6 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.clearRecurrence()
             self.selectedCalendar = nil
         }
-        CalendarItemListViewModel.shared.updateData()
     }
     
     private func clearTimeInput() {

@@ -10,8 +10,8 @@ import EventKit
 
 struct MainScrollableContent: View {
     
-    @EnvironmentObject var itemList: CalendarItemListViewModel
-    @ObservedObject private var appSettings: AppSettings = .shared
+    @EnvironmentObject private var itemList: CalendarItemListViewModel
+    @EnvironmentObject private var appSettings: AppSettings
     let clockHorizPadding: CGFloat = 100
     let clockVertPadding: CGFloat = 20
     

@@ -10,6 +10,8 @@ import SwiftUI
 struct AddNotesInput: View {
     
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
+    @EnvironmentObject var appSettings: AppSettings
+    
     @FocusState var notesInputFocus: Bool
     private let barHeight: CGFloat = 96
     /// If notes are added to this event through the `viewModel` this will control the collapse state of the notes text area
@@ -42,7 +44,7 @@ struct AddNotesInput: View {
                 Divider().padding(.horizontal)
                 if !self.notesCollapsed {
                     HStack {
-                        MultilineTextField("Tap To Add Notes", text: self.$viewModel.notesInput, focus: self.$notesInputFocus, lineLimit: AppSettings.shared.$noteLineLimit)
+                        MultilineTextField("Tap To Add Notes", text: self.$viewModel.notesInput, focus: self.$notesInputFocus)
                             .frame(maxWidth: 600)
                             .background(RoundedRectangle(cornerRadius: 8)
                                             .fill(Color(uiColor: .systemGray5))

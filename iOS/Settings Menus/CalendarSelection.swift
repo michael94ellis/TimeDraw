@@ -10,13 +10,12 @@ import EventKit
 
 struct CalendarSelectionButton: View {
     
-    @EnvironmentObject var appSettings: AppSettings
-    @State var showingCalendarSelection: Bool = false
+    @EnvironmentObject private var appSettings: AppSettings
+    @State private var showingCalendarSelection: Bool = false
     
     var body: some View {
         Button(action: {
             self.showingCalendarSelection.toggle()
-            self.appSettings.fetchAllCalendars()
         }) {
             Spacer()
             Text("Select Calendars")
@@ -35,7 +34,7 @@ struct CalendarSelectionButton: View {
 struct CalendarSelection: View {
     
     @Binding var showingCalendarSelection: Bool
-    var selectedIds: [String] { AppSettings.shared.userSelectedCalendars.loadCalendarIds() }
+    var selectedIds: [String] { appSettings.userSelectedCalendars.loadCalendarIds() }
     @EnvironmentObject var appSettings: AppSettings
     
     func selectionList(of calendars: [EKCalendar], from selectedIds: [String]) -> some View {

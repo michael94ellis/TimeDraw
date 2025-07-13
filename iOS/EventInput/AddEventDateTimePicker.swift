@@ -11,10 +11,11 @@ import EventKit
 struct AddEventDateTimePicker: View {
     
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
+    @EnvironmentObject var calendarItemListViewModel: CalendarItemListViewModel
     private let barHeight: CGFloat = 96
     
     func setSuggestedTime() {
-        let displayDate = CalendarItemListViewModel.shared.displayDate
+        let displayDate = calendarItemListViewModel.displayDate
         if self.viewModel.newItemStartTime == nil {
             self.viewModel.newItemStartTime = displayDate.get(.hour, .minute, .second)
         }

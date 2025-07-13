@@ -13,7 +13,6 @@ fileprivate struct UITextViewWrapper: UIViewRepresentable {
 
     @Binding var text: String
     @Binding var calculatedHeight: CGFloat
-    @Binding var inputLineLimit: Int
     var isFocused: FocusState<Bool>.Binding
     var onCommit: (() -> Void)?
 
@@ -90,15 +89,13 @@ struct MultilineTextField: View {
     @Binding private var text: String
     @State private var dynamicHeight: CGFloat = 100
     @State private var showingPlaceholder = false
-    @Binding var inputLineLimit: Int
     var isFocused: FocusState<Bool>.Binding
 
-    init (_ placeholder: String = "", text: Binding<String>, focus: FocusState<Bool>.Binding, lineLimit: Binding<Int>, onCommit: (() -> Void)? = nil) {
+    init (_ placeholder: String = "", text: Binding<String>, focus: FocusState<Bool>.Binding, onCommit: (() -> Void)? = nil) {
         self.placeholder = placeholder
         self.isFocused = focus
         self.onCommit = onCommit
         self._text = text
-        self._inputLineLimit = lineLimit
         self._showingPlaceholder = State<Bool>(initialValue: self.text.isEmpty)
     }
     
@@ -110,7 +107,7 @@ struct MultilineTextField: View {
         self.text.forEach {
             if $0.isNewline {
                 totalNewLines += 1
-                if totalNewLines <= self.inputLineLimit {
+                if totalNewLines <= 3 {
                     newDailyGoalWithoutLastNewlines.append($0)
                 } else {
                     return
@@ -123,7 +120,7 @@ struct MultilineTextField: View {
     }
 
     var body: some View {
-        UITextViewWrapper(text: self.$text, calculatedHeight: self.$dynamicHeight, inputLineLimit: self.$inputLineLimit, isFocused: self.isFocused, onCommit: self.onCommit)
+        UITextViewWrapper(text: self.$text, calculatedHeight: self.$dynamicHeight, isFocused: self.isFocused, onCommit: self.onCommit)
             .focused(self.isFocused)
             .frame(minHeight: self.dynamicHeight, maxHeight: self.dynamicHeight)
             .background(self.placeholderView)
@@ -135,7 +132,7 @@ struct MultilineTextField: View {
                 if stringComponents.count < newString.count {
                     self.performStringSearchByChar()
                     return
-                } else if stringComponents.count - 1 >= self.inputLineLimit {
+                } else if stringComponents.count - 1 >= 3 {
                     // If theres 3 or more newline characters that is 4+ lines of text
                     self.performStringSearchByChar()
                 }

@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsControls:View {
     
     @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var calendarItemListViewModel: CalendarItemListViewModel
     
     func sectionLabel(title sectionName: String) -> some View {
         HStack {
@@ -47,7 +48,7 @@ struct SettingsControls:View {
             }
             .pickerStyle(.segmented)
             .onChange(of: self.appSettings.showCalendarItemType, perform: { _ in
-                CalendarItemListViewModel.shared.updateData()
+                calendarItemListViewModel.updateData()
             })
             Picker("", selection: self.appSettings.$showItemRecurrenceType) {
                 ForEach(ItemRecurrenceType.allCases ,id: \.self) { item in
@@ -57,7 +58,7 @@ struct SettingsControls:View {
             .pickerStyle(.segmented)
             .padding(.top, 6)
             .onChange(of: self.appSettings.showItemRecurrenceType, perform: { _ in
-                CalendarItemListViewModel.shared.updateData()
+                calendarItemListViewModel.updateData()
             })
         }
     }

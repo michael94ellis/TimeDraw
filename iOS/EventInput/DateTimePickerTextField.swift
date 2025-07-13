@@ -9,6 +9,7 @@ import SwiftUI
 
 final class DateTimePickerTextField: UITextField {
     
+    @EnvironmentObject private var appSettings: AppSettings
 //    let placeholder: String
     @Binding var date: Date?
     private let datePicker = UIDatePicker()
@@ -21,7 +22,7 @@ final class DateTimePickerTextField: UITextField {
         datePicker.date = date.wrappedValue ?? Date()
         datePicker.addTarget(self, action: #selector(datePickerDidSelect(_:)), for: .valueChanged)
         datePicker.datePickerMode = mode
-        datePicker.minuteInterval = AppSettings.shared.timePickerGranularity
+        datePicker.minuteInterval = appSettings.timePickerGranularity
         datePicker.preferredDatePickerStyle = .wheels
         let toolBar = UIToolbar()
         toolBar.barTintColor = .systemGray4

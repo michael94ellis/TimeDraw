@@ -10,11 +10,13 @@ import EventKit
 
 struct EventListCell: View {
     
-    var item: EKEvent
     @EnvironmentObject var itemList: CalendarItemListViewModel
     @EnvironmentObject var modifyItemViewModel: ModifyCalendarItemViewModel
+    @EnvironmentObject private var appSettings: AppSettings
+
     @State var showDelete: Bool = false
     
+    private var item: EKEvent
     private let timeOnly = DateFormatter()
     
     init(item: EKEvent) {
@@ -26,7 +28,7 @@ struct EventListCell: View {
         HStack {
             HStack {
                 HStack {
-                    if AppSettings.shared.showListIcons {
+                    if appSettings.showListIcons {
                         Image(systemName: "calendar")
                             .foregroundColor(Color(uiColor: .darkGray))
                     }

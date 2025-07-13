@@ -20,19 +20,14 @@ class CalendarItemListViewModel: ObservableObject {
     @Published public var events: [EKEvent] = []
     @Published public var reminders: [EKReminder] = []
     
-    // MARK: Static accessor
-    public static let shared = CalendarItemListViewModel()
-    // This prevents others from using the default '()' initializer for this class.
-    private init() {
-        if !AppSettings.shared.isFirstAppOpen {
-            self.updateData()
-        }
-    }
+    @AppStorage(AppStorageKey.userSelectedCalendars) private var userSelectedCalendars: Data?
+    @AppStorage(AppStorageKey.showCalendarItemType) private var showCalendarItemType: CalendarItemType = .all
+    @AppStorage(AppStorageKey.showRecurringItems) private var showRecurringItems = true
     
     func fetchEvents() {
         Task {
             do {
-                try await self.fetchEventsForDisplayDate(filterCalendarIDs: AppSettings.shared.userSelectedCalendars.loadCalendarIds())
+                try await self.fetchEventsForDisplayDate(filterCalendarIDs: userSelectedCalendars.loadCalendarIds())
             } catch {
                 print(error)
             }
@@ -41,7 +36,7 @@ class CalendarItemListViewModel: ObservableObject {
     func fetchReminders() {
         Task {
             do {
-                try await self.fetchRemindersForDisplayDate(filterCalendarIDs: AppSettings.shared.userSelectedCalendars.loadCalendarIds())
+                try await self.fetchRemindersForDisplayDate(filterCalendarIDs: userSelectedCalendars.loadCalendarIds())
             } catch {
                 print(error)
             }
@@ -51,7 +46,7 @@ class CalendarItemListViewModel: ObservableObject {
     public func updateData() {
         self.events = []
         self.reminders = []
-        switch AppSettings.shared.showCalendarItemType {
+        switch showCalendarItemType {
         case .scheduled:
             self.fetchEvents()
         case .unscheduled:
@@ -75,7 +70,7 @@ class CalendarItemListViewModel: ObservableObject {
     /// Returns: events for today
     private func fetchEventsForDisplayDate(filterCalendarIDs: [String] = []) async throws {
         var eventsResult = try await EventKitManager.shared.fetchEvents(startDate: self.displayDate.startOfDay, endDate: self.displayDate.endOfDay, calendars: filterCalendarIDs)
-        if !AppSettings.shared.showRecurringItems {
+        if !showRecurringItems {
             eventsResult.removeAll(where: { $0.hasRecurrenceRules })
         }
         DispatchQueue.main.async {
@@ -89,7 +84,7 @@ class CalendarItemListViewModel: ObservableObject {
     /// Returns: events for today
     private func fetchRemindersForDisplayDate(filterCalendarIDs: [String] = []) async throws {
         try await EventKitManager.shared.fetchReminders(calendars: filterCalendarIDs, completion: { reminders in
-            if !AppSettings.shared.showRecurringItems {
+            if !self.showRecurringItems {
                 self.reminders.removeAll(where: { $0.hasRecurrenceRules })
             }
             DispatchQueue.main.async {

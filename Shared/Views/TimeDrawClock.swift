@@ -88,20 +88,23 @@ struct TimeDrawClock: View {
     }
 }
 
-struct TimeDrawClock_preview: PreviewProvider {
-    
-    @ObservedObject private static var listViewModel: CalendarItemListViewModel = .shared
-    @StateObject private static var itemViewModel: ModifyCalendarItemViewModel = ModifyCalendarItemViewModel()
-    
-    static var previews: some View {
-        HStack {
-            Spacer()
-            GeometryReader { geo in
-                TimeDrawClock(width: geo.size.width)
+#Preview {
+    struct TimeDrawClock_preview: View {
+        
+        @ObservedObject private static var listViewModel: CalendarItemListViewModel = .init()
+        @StateObject private static var itemViewModel: ModifyCalendarItemViewModel = .init()
+        
+        var body: some View {
+            HStack {
+                Spacer()
+                GeometryReader { geo in
+                    TimeDrawClock(width: geo.size.width)
+                }
+                Spacer()
             }
-            Spacer()
+            .environmentObject(Self.itemViewModel)
+            .environmentObject(Self.listViewModel)
         }
-        .environmentObject(Self.itemViewModel)
-        .environmentObject(Self.listViewModel)
     }
+    return TimeDrawClock_preview()
 }

@@ -11,18 +11,20 @@ import EventKit
 @main
 struct TimeDrawApp: App {
     
+    @StateObject private var appSettings: AppSettings = .init()
+    @StateObject private var listViewModel: CalendarItemListViewModel = .init()
+    @StateObject private var itemViewModel: ModifyCalendarItemViewModel = .init()
+    
     init() {
         UIFont.overrideInitialize()
-        if AppSettings.shared.userSelectedCalendars == nil || AppSettings.shared.userSelectedCalendars.loadCalendarIds().isEmpty {
-            let allCalendars = AppSettings.shared.fetchAllCalendars()
-            AppSettings.shared.userSelectedCalendars = allCalendars.compactMap({ $0.calendarIdentifier }).archiveCalendars()
-        }
     }
     
     var body: some Scene {
         WindowGroup {
             MainViewContainer()
-                .font(.interRegular)
+                .environmentObject(itemViewModel)
+                .environmentObject(listViewModel)
+                .environmentObject(appSettings)
         }
     }
 }

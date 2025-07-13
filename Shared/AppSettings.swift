@@ -8,9 +8,36 @@
 import SwiftUI
 import EventKit
 
+enum AppStorageKey {
+    /// Bool
+    static let firstOpen = "first_open"
+    /// Bool
+    static let showEmojiButton = "showEmojiButton"
+    /// Bool
+    static let isDailyGoalEnabled = "isDailyGoalEnabled"
+    /// Bool
+    static let isTimeDrawClockEnabled = "isTimeDrawClockEnabled"
+    /// ItemRecurrenceType
+    static let showItemRecurrenceType = "showItemRecurrenceType"
+    /// CalendarItemType
+    static let showCalendarItemType = "showCalendarItemType"
+    /// Bool
+    static let showListIcons = "showListIcons"
+    /// Bool
+    static let showCalendarPickerButton = "showCalendarPickerButton"
+    /// Data?
+    static let userSelectedCalendars = "userSelectedCalendars"
+    /// Data?
+    static let currentSelectedCalendar = "currentSelectedCalendar"
+    /// Int
+    static let timePickerGranularity = "timePickerGranularity"
+    /// Bool
+    static let showRecurringItems = "showRecurringItems"
+}
+
 class AppSettings: ObservableObject {
     
-    @AppStorage("first_open") var isFirstAppOpen = true
+    @AppStorage(AppStorageKey.firstOpen) var isFirstAppOpen = true
     @AppStorage("showEmojiButton") var showEmojiButton: Bool = true
 
     @AppStorage("isDailyGoalEnabled") var isDailyGoalEnabled: Bool = false
@@ -25,15 +52,6 @@ class AppSettings: ObservableObject {
     @AppStorage("timePickerGranularity") var timePickerGranularity: Int = 15
     
     @AppStorage("showRecurringItems") var showRecurringItems: Bool = true
-    @AppStorage("noteLineLimit") var noteLineLimit: Int = 3
-    static let shared = AppSettings()
     
-    private init() { }
-    
-    @discardableResult
-    func fetchAllCalendars() -> [EKCalendar] {
-        var calendars = EventKitManager.shared.eventStore.calendars(for: .event)
-        calendars.append(contentsOf: EventKitManager.shared.eventStore.calendars(for: .reminder))
-        return calendars
-    }
+    init() { }
 }

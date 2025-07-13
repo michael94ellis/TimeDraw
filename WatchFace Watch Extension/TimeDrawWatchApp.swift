@@ -5,28 +5,32 @@
 //  Created by Michael Ellis on 6/7/22.
 //
 
+import EventKit
 import SwiftUI
 
 @main
 struct TimeDrawWatchApp: App {
         
-    @ObservedObject private var listViewModel: CalendarItemListViewModel = .shared
-    @StateObject private var itemViewModel: ModifyCalendarItemViewModel = ModifyCalendarItemViewModel()
+    @StateObject private var listViewModel: CalendarItemListViewModel = .init()
+    @StateObject private var itemViewModel: ModifyCalendarItemViewModel = .init()
+    @StateObject private var appSettings: AppSettings = .init()
     
     init() {
-        listViewModel.updateData()
         UIFont.overrideInitialize()
-        if AppSettings.shared.userSelectedCalendars == nil || AppSettings.shared.userSelectedCalendars.loadCalendarIds().isEmpty {
-            let allCalendars = AppSettings.shared.fetchAllCalendars()
-            AppSettings.shared.userSelectedCalendars = allCalendars.compactMap({ $0.calendarIdentifier }).archiveCalendars()
-        }
     }
     
     @SceneBuilder var body: some Scene {
         WindowGroup {
-            TimeDrawClock(width: 70)
-                .environmentObject(self.itemViewModel)
-                .environmentObject(self.listViewModel)
+            VStack(spacing: 0) {
+                Spacer()
+                GeometryReader { geo in
+                    TimeDrawClock(width: geo.size.width)
+                        .environmentObject(self.itemViewModel)
+                        .environmentObject(self.listViewModel)
+                }
+                Spacer()
+            }
+            .border(.red)
         }
 
         WKNotificationScene(controller: NotificationController.self, category: "myCategory")

@@ -8,10 +8,10 @@
 import SwiftUI
 import EventKit
 
-
 struct ReminderListCell: View {
     
     var item: EKReminder
+    @EnvironmentObject var appSettings: AppSettings
     @EnvironmentObject var itemList: CalendarItemListViewModel
     @EnvironmentObject var modifyItemViewModel: ModifyCalendarItemViewModel
     @State var showComplete: Bool = false
@@ -46,7 +46,7 @@ struct ReminderListCell: View {
                     .transition(.move(edge: .leading))
                 }
                 HStack {
-                    if AppSettings.shared.showListIcons {
+                    if appSettings.showListIcons {
                         Image(systemName: "deskclock")
                             .foregroundColor(Color(uiColor: .darkGray))
                     }

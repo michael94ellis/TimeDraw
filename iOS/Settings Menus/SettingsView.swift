@@ -15,7 +15,7 @@ struct SettingsView: View {
         self._showSettingsPopover = display
     }
     
-    @ObservedObject var appSettings: AppSettings = .shared
+    @ObservedObject var appSettings: AppSettings = .init()
     
     @Binding var showSettingsPopover: Bool
     let vineetURL = "https://www.vineetk.com/"

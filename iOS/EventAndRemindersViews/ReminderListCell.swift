@@ -46,10 +46,8 @@ struct ReminderListCell: View {
                     .transition(.move(edge: .leading))
                 }
                 HStack {
-                    if appSettings.showListIcons {
-                        Image(systemName: "deskclock")
-                            .foregroundColor(Color(uiColor: .darkGray))
-                    }
+                    Image(systemName: "deskclock")
+                        .foregroundColor(Color(uiColor: .darkGray))
                     Circle().fill(Color(cgColor: item.calendar.cgColor))
                         .frame(width: 12, height: 12)
                     Text(item.title.isEmpty ? "Untitled Reminder" : item.title)

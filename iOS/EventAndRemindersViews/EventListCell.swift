@@ -28,10 +28,8 @@ struct EventListCell: View {
         HStack {
             HStack {
                 HStack {
-                    if appSettings.showListIcons {
-                        Image(systemName: "calendar")
-                            .foregroundColor(Color(uiColor: .darkGray))
-                    }
+                    Image(systemName: "calendar")
+                        .foregroundColor(Color(uiColor: .darkGray))
                     if item.calendar != nil {
                         Circle().fill(Color(cgColor: item.calendar.cgColor))
                             .frame(width: 12, height: 12)

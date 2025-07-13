@@ -46,26 +46,24 @@ struct EventInput: View {
     }
     
     @ViewBuilder var selectCalendarButton: some View {
-        if self.appSettings.showCalendarPickerButton {
-            Menu(content: {
-                ForEach(self.appSettings.userSelectedCalendars.loadCalendarIds(), id: \.self) { calendarId in
-                    if let calendar = EventKitManager.shared.eventStore.calendar(withIdentifier: calendarId) {
-                        Button(action: {
-                            self.viewModel.selectedCalendar = calendar
-                        }) {
-                            Text(calendar.title)
-                        }
+        Menu(content: {
+            ForEach(self.appSettings.userSelectedCalendars.loadCalendarIds(), id: \.self) { calendarId in
+                if let calendar = EventKitManager.shared.eventStore.calendar(withIdentifier: calendarId) {
+                    Button(action: {
+                        self.viewModel.selectedCalendar = calendar
+                    }) {
+                        Text(calendar.title)
                     }
                 }
-            }) {
-                self.topButton(image: "calendar", color: Color(cgColor: self.viewModel.selectedCalendar?.cgColor ?? self.defaultCalendarColor), action: { self.showCalendarPickerMenu.toggle() })
             }
-            .gesture(TapGesture().onEnded({
-                withAnimation {
-                    self.viewModel.isAddEventTextFieldFocused = true
-                }
-            }))
+        }) {
+            self.topButton(image: "calendar", color: Color(cgColor: self.viewModel.selectedCalendar?.cgColor ?? self.defaultCalendarColor), action: { self.showCalendarPickerMenu.toggle() })
         }
+        .gesture(TapGesture().onEnded({
+            withAnimation {
+                self.viewModel.isAddEventTextFieldFocused = true
+            }
+        }))
     }
     
     @ViewBuilder var eventOptions: some View {
@@ -105,9 +103,6 @@ struct EventInput: View {
     
     var textFieldInput: some View {
         HStack {
-            if appSettings.showEmojiButton {
-                EmojiButton()
-            }
             TextField("", text: $viewModel.newItemTitle)
                 .focused($isFocused)
                 .onChange(of: viewModel.isAddEventTextFieldFocused) {
@@ -151,9 +146,6 @@ struct EventInput: View {
     
     var openEventInputButton: some View {
         HStack {
-            if appSettings.showEmojiButton {
-                EmojiButton().disabled(true)
-            }
             Text(viewModel.newItemTitle.isEmpty ? "New Event or Reminder" : viewModel.newItemTitle)
                 .lineLimit(1)
                 .foregroundColor(.gray)

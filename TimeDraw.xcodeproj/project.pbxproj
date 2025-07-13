@@ -76,7 +76,6 @@
 		2FB41CD027DE4A9D0067F250 /* ClockHands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CCF27DE4A9D0067F250 /* ClockHands.swift */; };
 		2FB41CD427DEDB3F0067F250 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD327DEDB3E0067F250 /* AppSettings.swift */; };
 		2FB41CD727DEDBB70067F250 /* SettingsControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD627DEDBB70067F250 /* SettingsControls.swift */; };
-		2FB41CDA27DEE1850067F250 /* EmojiButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD927DEE1850067F250 /* EmojiButton.swift */; };
 		2FB41CDD27DEE4DE0067F250 /* SegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CDC27DEE4DE0067F250 /* SegmentedPicker.swift */; };
 		2FB60E4927E21571004DA305 /* ClockEventLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB60E4827E21571004DA305 /* ClockEventLine.swift */; };
 		2FB60E4C27E21690004DA305 /* ClockFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB60E4B27E21690004DA305 /* ClockFace.swift */; };
@@ -218,7 +217,6 @@
 		2FB41CCF27DE4A9D0067F250 /* ClockHands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockHands.swift; sourceTree = "<group>"; };
 		2FB41CD327DEDB3E0067F250 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		2FB41CD627DEDBB70067F250 /* SettingsControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControls.swift; sourceTree = "<group>"; };
-		2FB41CD927DEE1850067F250 /* EmojiButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiButton.swift; sourceTree = "<group>"; };
 		2FB41CDC27DEE4DE0067F250 /* SegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedPicker.swift; sourceTree = "<group>"; };
 		2FB60E4827E21571004DA305 /* ClockEventLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockEventLine.swift; sourceTree = "<group>"; };
 		2FB60E4B27E21690004DA305 /* ClockFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockFace.swift; sourceTree = "<group>"; };
@@ -387,7 +385,6 @@
 			isa = PBXGroup;
 			children = (
 				2F6505052787DA3C00AF90F7 /* EventInput.swift */,
-				2FB41CD927DEE1850067F250 /* EmojiButton.swift */,
 				2F81230B2797B59500458B1A /* AddEventDateTimePicker.swift */,
 				2FB41CB627DACB8E0067F250 /* AddNotesInput.swift */,
 				2F211133279A4F4E0041EE85 /* AddRecurrenceRule.swift */,
@@ -760,7 +757,6 @@
 				2F42C5A32784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
 				2FB41CB427DA5E220067F250 /* EventListCell.swift in Sources */,
 				2F5427E928D60FB900F08952 /* UIDevice-Extension.swift in Sources */,
-				2FB41CDA27DEE1850067F250 /* EmojiButton.swift in Sources */,
 				2FD6BE452E2177C900AA7C5A /* Time.swift in Sources */,
 				2F8AB31027A229DA00654FEF /* Utils.swift in Sources */,
 				2F26FE5E28CE56E900A9A0AE /* OnboardingExperience.swift in Sources */,

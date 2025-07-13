@@ -50,10 +50,16 @@ struct ReminderListCell: View {
                         .foregroundColor(Color(uiColor: .darkGray))
                     Circle().fill(Color(cgColor: item.calendar.cgColor))
                         .frame(width: 12, height: 12)
-                    Text(item.title.isEmpty ? "Untitled Reminder" : item.title)
-                        .if(item.isCompleted) { $0.strikethrough() }
-                        .lineLimit(2)
-                        .foregroundColor(Color(uiColor: .darkGray))
+                    if item.isCompleted {
+                        Text(item.title.isEmpty ? "Untitled Reminder" : item.title)
+                            .strikethrough()
+                            .lineLimit(2)
+                            .foregroundColor(Color(uiColor: .darkGray))
+                    } else {
+                        Text(item.title.isEmpty ? "Untitled Reminder" : item.title)
+                            .lineLimit(2)
+                            .foregroundColor(Color(uiColor: .darkGray))
+                    }
                     Spacer()
                     if let rules = item.recurrenceRules, !rules.isEmpty {
                         Image("repeat")

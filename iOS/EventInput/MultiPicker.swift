@@ -53,14 +53,24 @@ struct MultipleSelectionItem: View {
                 .padding(.horizontal, 4)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(self.isSelected ? (self.colorScheme == .dark ? Color.lightGray2.opacity(0.3) : Color.gray2.opacity(0.3)) : Color.clear)
-                        .if(self.isSelected) { view in
-                            view.shadow(color: Color.darkGray,radius: 1, x: 0, y: 0)
-                                .shadow(color: Color.white, radius: 1, x: 0, y: 0)
-                                .clipShape(
-                                    RoundedRectangle(cornerRadius: 8)
-                                )
-                        }
+                        .fill(
+                            self.isSelected
+                            ? (self.colorScheme == .dark ? Color.lightGray2.opacity(0.3) : Color.gray2.opacity(0.3))
+                            : Color.clear
+                        )
+                        .shadow(
+                            color: self.isSelected ? Color.darkGray : .clear,
+                            radius: self.isSelected ? 1 : 0,
+                            x: 0,
+                            y: 0
+                        )
+                        .shadow(
+                            color: self.isSelected ? Color.white : .clear,
+                            radius: self.isSelected ? 1 : 0,
+                            x: 0,
+                            y: 0
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
                 )
         }
         .buttonStyle(.plain)

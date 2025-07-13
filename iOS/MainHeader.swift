@@ -11,9 +11,7 @@ import SwiftUI
 struct MainHeader: View {
     
     @State private var showSettingsPopover = false
-    // FIXME: Add a full month calendar feature somewhere
-    /// True means only show 1 week
-//    @AppStorage("compactHeader") private var showCompactCalendar = true
+    // TODO: Add a full month calendar feature somewhere
     @EnvironmentObject var itemList: CalendarItemListViewModel
     @State var swipeDirection: SwipeDirection = .left
     
@@ -26,37 +24,24 @@ struct MainHeader: View {
         return .asymmetric(insertion: .move(edge: .top), removal: .move(edge: .top))
     }
     
-    private let weekdayFormatter = DateFormatter()
-    private let monthYearFormatter = DateFormatter()
-    
-    init() {
-        self.weekdayFormatter.dateFormat = "EEE"
-        self.monthYearFormatter.dateFormat = "LLLL YYYY"
-    }
+    private let weekdayFormatter = DateFormatter(format: "EEE")
+    private let monthYearFormatter = DateFormatter(format: "LLLL YYYY")
     
     func weekDayHeader(for date: Date) -> some View {
-        Button(action: {
-            self.itemList.displayDate = date
-        }) {
-            let today = Calendar.current.isDateInToday(date)
-            let display = Calendar.current.isDate(date, inSameDayAs: self.itemList.displayDate)
-            VStack {
-                Text(self.weekdayFormatter.string(from: date))
-                    .font(today || display ? .interSemiBold : .interLight)
-                    .foregroundColor(Color(uiColor: .label))
-                    .frame(height: 30)
-                Text(date.get(.day).formatted())
-                    .font(today ? .interBold : display ? .interSemiBold : .interRegular)
-                    .foregroundColor(today ? Color.red1 : display ? Color(uiColor: .label) : Color.gray2)
-            }
-            .frame(width: 45)
-            .padding(.vertical, 8)
-            .padding(.horizontal, 1)
-            .if(Calendar.current.isDate(date, inSameDayAs: self.itemList.displayDate)) { view in
-                view.background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.2)))
-            }
+        let today = Calendar.current.isDateInToday(date)
+        let display = Calendar.current.isDate(date, inSameDayAs: self.itemList.displayDate)
+        return VStack {
+            Text(self.weekdayFormatter.string(from: date))
+                .font(today || display ? .interSemiBold : .interLight)
+                .foregroundColor(Color(uiColor: .label))
+                .frame(height: 30)
+            Text(date.get(.day).formatted())
+                .font(today ? .interBold : display ? .interSemiBold : .interRegular)
+                .foregroundColor(today ? Color.red1 : display ? Color(uiColor: .label) : Color.gray2)
         }
-        .buttonStyle(.plain)
+        .frame(width: 45)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 1)
     }
     
     func handleGesture(value: SwipeDirection) {
@@ -107,7 +92,17 @@ struct MainHeader: View {
             self.headerNav
             HStack(spacing: 4) {
                 ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.itemList.displayDate), id: \.self) { date in
-                    self.weekDayHeader(for: date)
+                    Button(action: {
+                        self.itemList.displayDate = date
+                    }, label: {
+                        if Calendar.current.isDate(date, inSameDayAs: self.itemList.displayDate) {
+                            self.weekDayHeader(for: date)
+                                .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.2)))
+                        } else {
+                            self.weekDayHeader(for: date)
+                        }
+                    })
+                    .buttonStyle(.plain)
                 }
                 .transition(self.transitionDirection(direction: self.swipeDirection))
             }
@@ -115,11 +110,11 @@ struct MainHeader: View {
         }
         .transition(self.switchTransition(direction: self.swipeDirection))
         .gesture(DragGesture()
-                    .onEnded { value in
-            withAnimation {
-                let direction = value.detectDirection()
-                self.handleGesture(value: direction)
-            }
-        })
+            .onEnded { value in
+                withAnimation {
+                    let direction = value.detectDirection()
+                    self.handleGesture(value: direction)
+                }
+            })
     }
 }

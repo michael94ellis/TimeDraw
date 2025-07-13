@@ -110,10 +110,8 @@ public final class EventKitManager {
         try await remindersAvailabilityCheck()
         let calendars = self.eventStore.calendars(for: .reminder).filter { calendar in
             if filterCalendarIDs.isEmpty {
-                print("NO")
                 return true
             }
-            print("yes")
             return filterCalendarIDs.contains(calendar.calendarIdentifier)
         }
         let predicate = self.eventStore.predicateForReminders(in: calendars)

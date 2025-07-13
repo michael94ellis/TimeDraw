@@ -38,19 +38,19 @@ struct CalendarMultiDateSelection: View {
                         }
                     }) {
                         let display = self.selectedDates.contains(date)
+
                         Text("00")
                             .padding(10)
                             .foregroundColor(.clear)
-                            .background(display ? Color(uiColor: .systemGray2)
-                                        : Color(uiColor: .systemGray6))
+                            .background(display ? Color(uiColor: .systemGray2) : Color(uiColor: .systemGray6))
                             .frame(width: 40, height: 30)
                             .cornerRadius(8)
                             .accessibilityHidden(true)
-                            .overlay(Text(String(date)))
-                            .if(display) { view in
-                                view.font(.interBold)
-                            }
-                            .foregroundColor(display ? .white : .gray2)
+                            .overlay(
+                                Text(String(date))
+                                    .font(display ? .interBold : .body)
+                                    .foregroundColor(display ? .white : .gray2)
+                            )
                     }
                 }
             )

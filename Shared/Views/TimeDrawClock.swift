@@ -47,13 +47,12 @@ struct TimeDrawClock: View {
         }
         ForEach(self.itemList.reminders ,id: \.self) { reminder in
             if let startDateComponents = reminder.startDateComponents, let dueDateComponents = reminder.dueDateComponents {
+                let color = reminder.calendar?.cgColor.map { Color($0) } ?? Color.clear
                 ClockEventLine(startComponents: startDateComponents, endComponents: dueDateComponents, radius: self.width, width: 4)
-                    .if((reminder.calendar != nil && reminder.calendar.cgColor != nil), transform: {
-                        $0.foregroundColor(Color(reminder.calendar.cgColor))
-                    })
-                        .gesture(TapGesture().onEnded({ value in
-                            self.modifyItemViewModel.open(reminder: reminder)
-                        }))
+                    .foregroundColor(color)
+                    .gesture(TapGesture().onEnded({ value in
+                        self.modifyItemViewModel.open(reminder: reminder)
+                    }))
             }
         }
     }

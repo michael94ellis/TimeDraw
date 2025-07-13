@@ -41,13 +41,13 @@ struct CalendarDateSelection: View {
                             .cornerRadius(8)
                             .accessibilityHidden(true)
                             .overlay(
-                                Text(DateFormatter.dayFormatter.string(from: date)))
-                            .if(today || display) { view in
-                                view.font(.interBold)
-                            }
-                            .foregroundColor(today ? .red1
-                                             : display ? .white
-                                             : .darkGray
+                                Text(DateFormatter.dayFormatter.string(from: date))
+                                    .font((today || display) ? .interBold : .body)
+                                    .foregroundColor(
+                                        today ? .red1 :
+                                            display ? .white :
+                                                .darkGray
+                                    )
                             )
                     }
                 },

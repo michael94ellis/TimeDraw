@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2F1F8FA427D3AAEF00648234 /* CalendarItemListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1F8FA327D3AAEF00648234 /* CalendarItemListViewModel.swift */; };
 		2F1F8FA827D3D11000648234 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 2F1F8FA727D3D11000648234 /* AlertToast */; };
-		2F21112D279908450041EE85 /* View-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21112C279908450041EE85 /* View-Extension.swift */; };
 		2F2111302799B62D0041EE85 /* MainScrollableContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21112F2799B62D0041EE85 /* MainScrollableContent.swift */; };
 		2F211134279A4F4E0041EE85 /* AddRecurrenceRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F211133279A4F4E0041EE85 /* AddRecurrenceRule.swift */; };
 		2F2343FC27D454BC0064B635 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2343FB27D454BC0064B635 /* CalendarView.swift */; };
@@ -100,7 +99,6 @@
 		2FD407C7284FBC760022FC49 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB30F27A229DA00654FEF /* Utils.swift */; };
 		2FD407C9284FBC7A0022FC49 /* Date-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59327848DF700F0BEB2 /* Date-Extension.swift */; };
 		2FD407CA284FBC7A0022FC49 /* EventKit-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24457E27D797C9005BF37D /* EventKit-Extension.swift */; };
-		2FD407CC284FBC7A0022FC49 /* View-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F21112C279908450041EE85 /* View-Extension.swift */; };
 		2FD407CF284FBC860022FC49 /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458A27D8BE37005BF37D /* Calendar-Extension.swift */; };
 		2FD407D1284FBC860022FC49 /* EventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A52784E6FC00F0BEB2 /* EventError.swift */; };
 		2FD407D4284FBCF70022FC49 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD327DEDB3E0067F250 /* AppSettings.swift */; };
@@ -156,7 +154,6 @@
 
 /* Begin PBXFileReference section */
 		2F1F8FA327D3AAEF00648234 /* CalendarItemListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarItemListViewModel.swift; sourceTree = "<group>"; };
-		2F21112C279908450041EE85 /* View-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View-Extension.swift"; sourceTree = "<group>"; };
 		2F21112F2799B62D0041EE85 /* MainScrollableContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScrollableContent.swift; sourceTree = "<group>"; };
 		2F211133279A4F4E0041EE85 /* AddRecurrenceRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecurrenceRule.swift; sourceTree = "<group>"; };
 		2F2343FB27D454BC0064B635 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -368,7 +365,6 @@
 				2F42C59327848DF700F0BEB2 /* Date-Extension.swift */,
 				2F5427E828D60FB900F08952 /* UIDevice-Extension.swift */,
 				2F8AB30F27A229DA00654FEF /* Utils.swift */,
-				2F21112C279908450041EE85 /* View-Extension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -735,7 +731,6 @@
 				2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */,
 				2F8AB303279D140E00654FEF /* PopoverButton.swift in Sources */,
 				2F8AB30A27A1026500654FEF /* PickerField.swift in Sources */,
-				2F21112D279908450041EE85 /* View-Extension.swift in Sources */,
 				2F24458227D7F0EB005BF37D /* MultiDateSelectCalendar.swift in Sources */,
 				2F8AB2FD279BB4F000654FEF /* DateTimePickerTextField.swift in Sources */,
 				2F39B889278241B500FE72C3 /* Colors.swift in Sources */,
@@ -815,7 +810,6 @@
 				2FD407D5284FBD5B0022FC49 /* ModifyCalendarItemViewModel.swift in Sources */,
 				2FD407D1284FBC860022FC49 /* EventError.swift in Sources */,
 				2FD407C1284FBC050022FC49 /* TimeDrawClock.swift in Sources */,
-				2FD407CC284FBC7A0022FC49 /* View-Extension.swift in Sources */,
 				2FD407C2284FBC050022FC49 /* ClockFace.swift in Sources */,
 				2FD40789284FBB700022FC49 /* TimeDrawWatchApp.swift in Sources */,
 				2FD6BE432E2177C900AA7C5A /* Time.swift in Sources */,

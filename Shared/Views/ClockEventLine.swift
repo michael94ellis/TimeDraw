@@ -42,7 +42,10 @@ struct ClockEventLine: Shape {
         self.endDegrees = self.getAngle(for: end)
     }
     
-    init(startComponents: DateComponents, endComponents: DateComponents, radius: Double, width: Double) {
+    init(startComponents: DateComponents,
+         endComponents: DateComponents,
+         radius: Double,
+         width: Double) {
         self.startComponents = startComponents
         self.endComponents = endComponents
         self.radius = radius

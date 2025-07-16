@@ -5,13 +5,15 @@
 //  Created by Michael Ellis on 1/18/22.
 //
 
-import SwiftUI
+import Dependencies
 import EventKit
+import SwiftUI
 
 struct AddEventDateTimePicker: View {
     
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
     @EnvironmentObject var calendarItemListViewModel: CalendarItemListViewModel
+    @Dependency(\.eventKitManager) private var eventKitManager
     private let barHeight: CGFloat = 96
     
     func setSuggestedTime() {
@@ -29,7 +31,7 @@ struct AddEventDateTimePicker: View {
             self.viewModel.newItemEndDate = displayDate.get(.year, .month, .day)
         }
         if self.viewModel.selectedCalendar == nil {
-            self.viewModel.selectedCalendar = EventKitManager.shared.eventStore.defaultCalendarForNewEvents
+            self.viewModel.selectedCalendar = eventKitManager.eventStore.defaultCalendarForNewEvents
         }
     }
     

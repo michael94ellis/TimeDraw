@@ -22,7 +22,7 @@ struct MainScrollableContent: View {
             List {
                 HStack {
                     Spacer()
-                    TimeDrawClock(width: min(geo.size.width - clockHorizPadding, 600))
+                    TimeDrawClock()
                         .listRowSeparator(.hidden)
                         .padding(.vertical, clockVertPadding)
                         .padding(.horizontal, clockHorizPadding)

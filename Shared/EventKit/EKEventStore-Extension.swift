@@ -157,7 +157,7 @@ extension EKEventStore {
     /// - Returns: App calendar for EKEvents
     /// - Parameter calendarColor: default new calendar color
     public func calendarForEvents(calendarColor: CGColor = .init(red: 1, green: 0, blue: 0, alpha: 1)) -> EKCalendar? {
-        let appName = EventKitManager.shared.appName
+        let appName = EventKitManager.appName
         let calendars = self.calendars(for: .event)
         
         if let appCalendar = calendars.first(where: { $0.title == appName }) {
@@ -177,7 +177,7 @@ extension EKEventStore {
     /// - Returns: App calendar for EKReminders
     /// - Parameter calendarColor: default new calendar color
     public func calendarForReminders(calendarColor: CGColor = .init(red: 12, green: 22, blue: 0, alpha: 1)) -> EKCalendar? {
-        let appName = EventKitManager.shared.appName
+        let appName = EventKitManager.appName
         let calendars = self.calendars(for: .reminder)
         
         if let appCalendar = calendars.first(where: { $0.title == appName }) {

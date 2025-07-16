@@ -5,8 +5,9 @@
 //  Created by Michael Ellis on 3/12/22.
 //
 
-import SwiftUI
+import Dependencies
 import EventKit
+import SwiftUI
 
 struct CalendarSelectionButton: View {
     
@@ -36,6 +37,7 @@ struct CalendarSelection: View {
     @Binding var showingCalendarSelection: Bool
     var selectedIds: [String] { appSettings.userSelectedCalendars.loadCalendarIds() }
     @EnvironmentObject var appSettings: AppSettings
+    @Dependency(\.eventKitManager) private var eventKitManager
     
     func selectionList(of calendars: [EKCalendar], from selectedIds: [String]) -> some View {
         ForEach(calendars, id: \.self) { calendar in
@@ -68,10 +70,10 @@ struct CalendarSelection: View {
             VStack {
                 List {
                     Section("Events") {
-                        self.selectionList(of: EventKitManager.shared.eventStore.calendars(for: .event), from: self.selectedIds)
+                        self.selectionList(of: eventKitManager.eventStore.calendars(for: .event), from: self.selectedIds)
                     }
                     Section("Reminders") {
-                        self.selectionList(of: EventKitManager.shared.eventStore.calendars(for: .reminder), from: self.selectedIds)
+                        self.selectionList(of: eventKitManager.eventStore.calendars(for: .reminder), from: self.selectedIds)
                     }
                 }
             }

@@ -5,10 +5,21 @@
 //  Created by Michael Ellis on 3/5/22.
 //
 
-import SwiftUI
+import Dependencies
 import EventKit
+import SwiftUI
 
-@MainActor
+struct CalendarListViewModelKey: DependencyKey {
+    static var liveValue: CalendarItemListViewModel = .init()
+}
+
+extension DependencyValues {
+    var calendarListViewModel: CalendarItemListViewModel {
+      get { self[CalendarListViewModelKey.self] }
+      set { self[CalendarListViewModelKey.self] = newValue }
+    }
+}
+
 class CalendarItemListViewModel: ObservableObject {
     
     @Published public var displayDate: Date = Date() {
@@ -23,6 +34,8 @@ class CalendarItemListViewModel: ObservableObject {
     @AppStorage(AppStorageKey.userSelectedCalendars) private var userSelectedCalendars: Data?
     @AppStorage(AppStorageKey.showCalendarItemType) private var showCalendarItemType: CalendarItemType = .all
     @AppStorage(AppStorageKey.showRecurringItems) private var showRecurringItems = true
+    
+    @Dependency(\.eventKitManager) private var eventKitManager
     
     func fetchEvents() {
         Task {
@@ -69,7 +82,7 @@ class CalendarItemListViewModel: ObservableObject {
     /// - Parameter filterCalendarIDs: filterable Calendar IDs
     /// Returns: events for today
     private func fetchEventsForDisplayDate(filterCalendarIDs: [String] = []) async throws {
-        var eventsResult = try await EventKitManager.shared.fetchEvents(startDate: self.displayDate.startOfDay, endDate: self.displayDate.endOfDay, calendars: filterCalendarIDs)
+        var eventsResult = try await eventKitManager.fetchEvents(startDate: self.displayDate.startOfDay, endDate: self.displayDate.endOfDay, calendars: filterCalendarIDs)
         if !showRecurringItems {
             eventsResult.removeAll(where: { $0.hasRecurrenceRules })
         }
@@ -82,15 +95,13 @@ class CalendarItemListViewModel: ObservableObject {
     /// Fetch events for today
     /// - Parameter filterCalendarIDs: filterable Calendar IDs
     /// Returns: events for today
+    @MainActor
     private func fetchRemindersForDisplayDate(filterCalendarIDs: [String] = []) async throws {
-        try await EventKitManager.shared.fetchReminders(calendars: filterCalendarIDs, completion: { reminders in
-            if !self.showRecurringItems {
-                self.reminders.removeAll(where: { $0.hasRecurrenceRules })
-            }
-            DispatchQueue.main.async {
-                self.reminders = reminders?.filter({ !$0.isCompleted }) ?? []
-            }
-        })
+        let reminders = try await eventKitManager.fetchReminders(calendars: filterCalendarIDs)
+        if !self.showRecurringItems {
+            self.reminders.removeAll(where: { $0.hasRecurrenceRules })
+        }
+        self.reminders = reminders?.filter({ !$0.isCompleted }) ?? []
     }
     
     
@@ -102,7 +113,7 @@ class CalendarItemListViewModel: ObservableObject {
     /// For EKCalendarItmes
     func performAsyncDelete(for item: EKCalendarItem) {
         Task {
-            self.delete(item)
+            await self.delete(item)
         }
     }
     
@@ -110,7 +121,7 @@ class CalendarItemListViewModel: ObservableObject {
         if let reminder = item as? EKReminder {
             self.reminders.removeAll(where: { $0 == reminder })
             do {
-                try EventKitManager.shared.eventStore.remove(reminder, commit: true)
+                try eventKitManager.eventStore.remove(reminder, commit: true)
             } catch  {
                 print("Error could not delete reminder: \(error)")
             }
@@ -118,7 +129,7 @@ class CalendarItemListViewModel: ObservableObject {
         if let event = item as? EKEvent {
             self.events.removeAll(where: { $0 == event })
             do {
-                try EventKitManager.shared.eventStore.remove(event, span: .futureEvents, commit: true)
+                try eventKitManager.eventStore.remove(event, span: .futureEvents, commit: true)
             } catch  {
                 print("Error could not delete event: \(error)")
             }

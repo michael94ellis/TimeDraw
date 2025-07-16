@@ -5,22 +5,33 @@
 //  Created by Michael Ellis on 1/4/22.
 //
 
-import SwiftUI
+import Dependencies
 import EventKit
+import SwiftUI
+
+struct EventKitManagerKey: DependencyKey {
+    static var liveValue: EventKitManager = .init()
+}
+
+extension DependencyValues {
+    var eventKitManager: EventKitManager {
+      get { self[EventKitManagerKey.self] }
+      set { self[EventKitManagerKey.self] = newValue }
+    }
+}
 
 public final class EventKitManager {
     
-    public var appName: String = "TimeDraw"
+    public static var appName: String = "TimeDraw"
 
     /// Event store: An object that accesses the user’s calendar and reminder events and supports the scheduling of new events.
     public private(set) var eventStore = EKEventStore()
 
     public func configureWithAppName(_ appName: String) {
-        self.appName = appName
+        Self.appName = appName
     }
     
-    public static let shared = EventKitManager()
-    private init() { }
+    init() { }
     
     /// Returns calendar object from event kit
     public var defaultEventCalendar: EKCalendar? {
@@ -62,7 +73,6 @@ public final class EventKitManager {
     /// Fetch events for a specific day
     /// - Parameters:
     ///   - date: day to fetch events from
-    ///   - completion: completion handler
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
     @discardableResult
@@ -73,7 +83,6 @@ public final class EventKitManager {
     /// Fetch events for a specific day
     /// - Parameters:
     ///   - date: day to fetch events from
-    ///   - completion: completion handler
     ///   - startDate: event start date
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
@@ -86,7 +95,6 @@ public final class EventKitManager {
     /// - Parameters:
     ///   - startDate: start date range
     ///   - endDate: end date range
-    ///   - completion: completion handler
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
     @discardableResult
@@ -103,10 +111,8 @@ public final class EventKitManager {
     
     /// Fetch all reminders
     /// - Parameters:
-    ///   - completion: completion handler
     ///   - filterCalendarIDs: filterable Calendar IDs
-    /// Returns: events
-    public func fetchReminders(calendars filterCalendarIDs: [String] = [], completion: @escaping (([EKReminder]?) -> ())) async throws {
+    public func fetchReminders(calendars filterCalendarIDs: [String] = []) async throws -> [EKReminder]? {
         try await remindersAvailabilityCheck()
         let calendars = self.eventStore.calendars(for: .reminder).filter { calendar in
             if filterCalendarIDs.isEmpty {
@@ -115,24 +121,30 @@ public final class EventKitManager {
             return filterCalendarIDs.contains(calendar.calendarIdentifier)
         }
         let predicate = self.eventStore.predicateForReminders(in: calendars)
-        self.eventStore.fetchReminders(matching: predicate, completion: completion)
+        return await withCheckedContinuation { continuation in
+            self.eventStore.fetchReminders(matching: predicate, completion: {
+                continuation.resume(returning: $0)
+            })
+        }
     }
     
     /// Fetch reminders from date range
     /// - Parameters:
     ///   - startDate: start date range
     ///   - endDate: end date range
-    ///   - completion: completion handler
     ///   - filterCalendarIDs: filterable Calendar IDs
-    /// Returns: events
-    public func fetchReminders(start: Date, end: Date, calendars filterCalendarIDs: [String] = [], completion: @escaping (([EKReminder]?) -> ())) async throws {
+    public func fetchReminders(start: Date, end: Date, calendars filterCalendarIDs: [String] = []) async throws -> [EKReminder]? {
         try await remindersAvailabilityCheck()
         let calendars = self.eventStore.calendars(for: .reminder).filter { calendar in
             if filterCalendarIDs.isEmpty { return true }
             return filterCalendarIDs.contains(calendar.calendarIdentifier)
         }
         let predicate = self.eventStore.predicateForReminders(in: calendars)
-        self.eventStore.fetchReminders(matching: predicate, completion: completion)
+        return await withCheckedContinuation { continuation in
+            self.eventStore.fetchReminders(matching: predicate, completion: {
+                continuation.resume(returning: $0)
+            })
+        }
     }
     
     /// Request event store authorization for Events

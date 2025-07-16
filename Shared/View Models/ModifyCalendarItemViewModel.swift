@@ -5,12 +5,23 @@
 //  Created by Michael Ellis on 1/21/22.
 //
 
-import Foundation
+import Dependencies
 import EventKit
+import Foundation
 import SwiftUI
 
+struct ModifyCalendarItemViewModelKey: DependencyKey {
+    static var liveValue: ModifyCalendarItemViewModel = .init()
+}
+
+extension DependencyValues {
+    var modifyCalendarItemViewModel: ModifyCalendarItemViewModel {
+      get { self[ModifyCalendarItemViewModelKey.self] }
+      set { self[ModifyCalendarItemViewModelKey.self] = newValue }
+    }
+}
+
 /// Used for creating an EKCalendarItem Event/Reminder with the Input Views
-/// 
 class ModifyCalendarItemViewModel: ObservableObject {
     
     var daysOfTheWeek = [String]()
@@ -57,6 +68,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var isRecurrencePickerOpen: Bool = false
     
     @AppStorage(AppStorageKey.currentSelectedCalendar) private var currentSelectedCalendar: Data?
+    @Dependency(\.eventKitManager) private var eventKitManager
     
     init() {
         self.frequencyMonthDate = Date().get(.month) - 1
@@ -315,7 +327,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @MainActor func delete() {
         if let reminder = self.calendarItem as? EKReminder {
             do {
-                try EventKitManager.shared.eventStore.deleteReminder(identifier: reminder.calendarItemIdentifier)
+                try eventKitManager.eventStore.deleteReminder(identifier: reminder.calendarItemIdentifier)
                 self.displayToast("Reminder Deleted")
             } catch  {
                 print(error)
@@ -324,7 +336,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
         }
         if let event = self.calendarItem as? EKEvent {
             do {
-                try EventKitManager.shared.eventStore.deleteEvent(identifier: event.eventIdentifier, span: .futureEvents)
+                try eventKitManager.eventStore.deleteEvent(identifier: event.eventIdentifier, span: .futureEvents)
                 self.displayToast("Event Deleted")
             } catch  {
                 print(error)
@@ -406,7 +418,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     @MainActor private func createEvent(start startDate: Date, end endDate: Date) async {
         do {
-            let newEvent = try await EventKitManager.shared.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
+            let newEvent = try await eventKitManager.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
             if let selectedCalendar = self.selectedCalendar {
                 newEvent.calendar = selectedCalendar
             }
@@ -422,7 +434,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     @MainActor private func createReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) async {
         do {
-            let newReminder = try await EventKitManager.shared.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
+            let newReminder = try await eventKitManager.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
             if let selectedCalendar = self.selectedCalendar {
                 newReminder.calendar = selectedCalendar
             }
@@ -463,7 +475,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
         // You can edit an existing event's recurrence earlier, but this point works for Create & Edit
         self.handleRecurrence(for: event)
         do {
-            try EventKitManager.shared.eventStore.save(event, span: .futureEvents)
+            try eventKitManager.eventStore.save(event, span: .futureEvents)
             self.displayToast(message)
             self.reset()
         } catch let error as NSError {
@@ -477,7 +489,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
         // You can edit an existing reminder's recurrence earlier, but this point works for Create & Edit
         self.handleRecurrence(for: reminder)
         do {
-            try EventKitManager.shared.eventStore.save(reminder, commit: true)
+            try eventKitManager.eventStore.save(reminder, commit: true)
             self.displayToast(message)
             self.reset()
         } catch let error as NSError {

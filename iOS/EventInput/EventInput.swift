@@ -5,9 +5,10 @@
 //  Created by Michael Ellis on 1/6/22.
 //
 
-import SwiftUI
-import EventKit
 import AlertToast
+import Dependencies
+import EventKit
+import SwiftUI
 
 struct EventInput: View {
     
@@ -15,10 +16,12 @@ struct EventInput: View {
     
     @EnvironmentObject var appSettings: AppSettings
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
+    
+    @Dependency(\.eventKitManager) private var eventKitManager
     @FocusState var isFocused: Bool
     @State var showCalendarPickerMenu: Bool = false
     
-    let defaultCalendarColor: CGColor = EventKitManager.shared.defaultReminderCalendar?.cgColor ?? .init(red: 55, green: 91, blue: 190, alpha: 1)
+    var defaultCalendarColor: CGColor { eventKitManager.defaultReminderCalendar?.cgColor ?? .init(red: 55, green: 91, blue: 190, alpha: 1) }
     private let barHeight: CGFloat = 44
     
     @ViewBuilder func topButton(image: String, color: Color, action: @escaping () -> ()) -> some View {
@@ -48,7 +51,7 @@ struct EventInput: View {
     @ViewBuilder var selectCalendarButton: some View {
         Menu(content: {
             ForEach(self.appSettings.userSelectedCalendars.loadCalendarIds(), id: \.self) { calendarId in
-                if let calendar = EventKitManager.shared.eventStore.calendar(withIdentifier: calendarId) {
+                if let calendar = eventKitManager.eventStore.calendar(withIdentifier: calendarId) {
                     Button(action: {
                         self.viewModel.selectedCalendar = calendar
                     }) {

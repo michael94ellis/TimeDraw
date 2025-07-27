@@ -418,10 +418,13 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     @MainActor private func createEvent(start startDate: Date, end endDate: Date) async {
         do {
-            let newEvent = try await eventKitManager.createEvent(self.newItemTitle, startDate: startDate, endDate: endDate)
+            var calendar: EKCalendar
             if let selectedCalendar = self.selectedCalendar {
-                newEvent.calendar = selectedCalendar
+                calendar = selectedCalendar
+            } else {
+                calendar = try await eventKitManager.accessEventsCalendar()
             }
+            let newEvent = try await eventKitManager.createEvent(self.newItemTitle, on: calendar, startDate: startDate, endDate: endDate)
             if self.isNotesInputOpen {
                 newEvent.notes = self.notesInput
             }
@@ -434,7 +437,13 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     @MainActor private func createReminder(start startComponents: DateComponents?, end endComponents: DateComponents?) async {
         do {
-            let newReminder = try await eventKitManager.createReminder(self.newItemTitle, startDate: startComponents, dueDate: endComponents)
+            var calendar: EKCalendar
+            if let selectedCalendar = self.selectedCalendar {
+                calendar = selectedCalendar
+            } else {
+                calendar = try await eventKitManager.accessRemindersCalendar()
+            }
+            let newReminder = try await eventKitManager.createReminder(self.newItemTitle, on: calendar, startDate: startComponents, dueDate: endComponents)
             if let selectedCalendar = self.selectedCalendar {
                 newReminder.calendar = selectedCalendar
             }

@@ -5,7 +5,6 @@
 //  Created by Michael Ellis on 1/6/22.
 //
 
-import AlertToast
 import Dependencies
 import EventKit
 import SwiftUI
@@ -197,12 +196,7 @@ struct EventInput: View {
                     viewModel.isAddEventTextFieldFocused = false
                 }
             }))
-            .toast(isPresenting: self.$viewModel.displayToast, duration: 2, tapToDismiss: true, alert: {
-                AlertToast(displayMode: .alert, type: .regular, title: viewModel.toastMessage)
-            }, completion: {
-                //Completion block after dismiss
-                viewModel.displayToast = false
-            })
+            // TODO Toast
         } else {
             VStack {
                 Button(action: {
@@ -214,12 +208,7 @@ struct EventInput: View {
                 .matchedGeometryEffect(id: "textInput", in: animation)
             }
             .padding(14)
-            .toast(isPresenting: self.$viewModel.displayToast, duration: 2, tapToDismiss: true, alert: {
-                AlertToast(displayMode: .alert, type: .regular, title: self.viewModel.toastMessage)
-            }, completion: {
-                //Completion block after dismiss
-                self.viewModel.displayToast = false
-            })
+            // TODO Toast
         }
     }
 }

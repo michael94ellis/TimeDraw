@@ -25,6 +25,9 @@ struct TimeDrawApp: App {
                 .environmentObject(itemViewModel)
                 .environmentObject(listViewModel)
                 .environmentObject(appSettings)
+                .onAppear {
+                    ReviewRequestManager.shared.requestReviewIfAppropriate()
+                }
         }
     }
 }

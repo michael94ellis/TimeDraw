@@ -11,7 +11,6 @@ import EventKit
 
 struct MainViewContainer: View {
     
-    @Environment(\.safeAreaInsets) private var safeAreaInsets
     @EnvironmentObject private var appSettings: AppSettings
     @EnvironmentObject private var itemViewModel: ModifyCalendarItemViewModel
     
@@ -57,7 +56,6 @@ struct MainViewContainer: View {
                 EventInput()
                     .environmentObject(appSettings)
             }
-            .padding(.bottom, safeAreaInsets.bottom)
         }
     }
     

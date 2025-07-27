@@ -72,7 +72,6 @@ struct TimeDrawClock: View {
             ClockFace()
         }
         .onAppear {
-            itemList.updateData()
             let calendar = Calendar.current
             let currentDateTime = Date()
             let sec = calendar.component(.second, from: currentDateTime)

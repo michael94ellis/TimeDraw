@@ -15,7 +15,7 @@ struct ClockHands: View {
         GeometryReader { geo in
             let size = min(geo.size.width, geo.size.height)
             let secondsOffset = size * 0.48
-            let hoursOffset = size * 0.38
+            let hoursOffset = size * 0.35
 
             ZStack {
                 // Hours hand
@@ -24,7 +24,7 @@ struct ClockHands: View {
 
                 RoundedRectangle(cornerRadius: cornerRounding)
                     .fill(Color.darkGray)
-                    .frame(width: 6, height: hoursOffset)
+                    .frame(width: 8, height: hoursOffset)
                     .offset(y: -hoursOffset / 2)
                     .rotationEffect(.degrees(hourAngle))
 

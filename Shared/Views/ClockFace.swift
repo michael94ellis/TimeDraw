@@ -57,12 +57,10 @@ struct ClockFace: View {
     }
 }
 
-struct ClockFace_preview: PreviewProvider {
-    static var previews: some View {
-        Group {
-            GeometryReader { geo in
-                ClockFace()
-            }
+#Preview {
+    Group {
+        GeometryReader { geo in
+            ClockFace()
         }
     }
 }

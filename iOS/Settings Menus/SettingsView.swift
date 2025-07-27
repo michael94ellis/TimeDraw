@@ -41,11 +41,7 @@ struct SettingsView: View {
             appSettings.isFirstAppOpen = true
         }
         Button("Share Feedback!") {
-            guard let window = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
-                assertionFailure()
-                return
-            }
-            SKStoreReviewController.requestReview(in: window)
+            ReviewRequestManager.shared.requestReview()
         }
         Image("Clock")
             .resizable()

@@ -24,7 +24,9 @@ class CalendarItemListViewModel: ObservableObject {
     
     @Published public var displayDate: Date = Date() {
         didSet {
-            self.updateData()
+            Task { @MainActor in
+                self.updateData()
+            }
         }
     }
     
@@ -36,6 +38,10 @@ class CalendarItemListViewModel: ObservableObject {
     @AppStorage(AppStorageKey.showRecurringItems) private var showRecurringItems = true
     
     @Dependency(\.eventKitManager) private var eventKitManager
+    
+    init() {
+        updateData()
+    }
     
     func fetchEvents() {
         Task {
@@ -70,11 +76,8 @@ class CalendarItemListViewModel: ObservableObject {
         }
     }
     
-    func performAsyncCompleteReminder(for reminder: EKReminder) {
-        Task {
-            reminder.isCompleted = true
-            self.updateData()
-        }
+    func completeReminder(_ reminder: EKReminder) {
+        reminder.isCompleted = true
     }
     
     // MARK: - Fetch Events
@@ -86,7 +89,7 @@ class CalendarItemListViewModel: ObservableObject {
         if !showRecurringItems {
             eventsResult.removeAll(where: { $0.hasRecurrenceRules })
         }
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.events = eventsResult
         }
     }
@@ -110,19 +113,12 @@ class CalendarItemListViewModel: ObservableObject {
     // https://developer.apple.com/forums/thread/42293
     #if !os(watchOS)
     
-    /// For EKCalendarItmes
-    func performAsyncDelete(for item: EKCalendarItem) {
-        Task {
-            await self.delete(item)
-        }
-    }
-    
     @MainActor func delete(_ item: EKCalendarItem) {
         if let reminder = item as? EKReminder {
             self.reminders.removeAll(where: { $0 == reminder })
             do {
                 try eventKitManager.eventStore.remove(reminder, commit: true)
-            } catch  {
+            } catch {
                 print("Error could not delete reminder: \(error)")
             }
         }
@@ -130,11 +126,11 @@ class CalendarItemListViewModel: ObservableObject {
             self.events.removeAll(where: { $0 == event })
             do {
                 try eventKitManager.eventStore.remove(event, span: .futureEvents, commit: true)
-            } catch  {
+            } catch {
                 print("Error could not delete event: \(error)")
             }
-            self.updateData()
         }
+        self.updateData()
     }
     #endif
 }

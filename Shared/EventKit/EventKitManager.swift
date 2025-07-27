@@ -214,12 +214,12 @@ public final class EventKitManager {
     /// - Returns: created event
     public func createEvent(
         _ title: String,
+        on calendar: EKCalendar,
         startDate: Date,
         endDate: Date?,
         span: EKSpan = .thisEvent,
         isAllDay: Bool = false
     ) async throws -> EKEvent {
-        let calendar = try await accessEventsCalendar()
         let createdEvent = try self.eventStore.createEvent(title: title, startDate: startDate, endDate: endDate, calendar: calendar, span: span, isAllDay: isAllDay)
         return createdEvent
     }
@@ -230,11 +230,11 @@ public final class EventKitManager {
     /// - Returns: created reminder
     public func createReminder(
         _ title: String,
+        on calendar: EKCalendar,
         startDate: DateComponents?,
         dueDate: DateComponents?
     ) async throws -> EKReminder {
         self.eventStore.calendars(for: .reminder)
-        let calendar = try await accessRemindersCalendar()
         let newReminder = try self.eventStore.createReminder(title: title, startDate: startDate, dueDate: dueDate, calendar: calendar)
         return newReminder
     }
@@ -267,7 +267,7 @@ public final class EventKitManager {
     /// Request access to Events calendar
     /// - Returns: calendar object
     @discardableResult
-    private func accessEventsCalendar() async throws -> EKCalendar {
+    func accessEventsCalendar() async throws -> EKCalendar {
         try await eventsAvailabilityCheck()
         guard let calendar = eventStore.calendarForEvents() else {
             throw EventError.unableToAccessCalendar
@@ -277,7 +277,7 @@ public final class EventKitManager {
     /// Request access to Reminders calendar
     /// - Returns: calendar object
     @discardableResult
-    private func accessRemindersCalendar() async throws -> EKCalendar {
+    func accessRemindersCalendar() async throws -> EKCalendar {
         try await remindersAvailabilityCheck()
         guard let calendar = eventStore.calendarForReminders() else {
             throw EventError.unableToAccessCalendar

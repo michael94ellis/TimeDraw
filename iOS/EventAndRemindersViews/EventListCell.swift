@@ -10,12 +10,6 @@ import EventKit
 
 struct EventListCell: View {
     
-    @EnvironmentObject var itemList: CalendarItemListViewModel
-    @EnvironmentObject var modifyItemViewModel: ModifyCalendarItemViewModel
-    @EnvironmentObject private var appSettings: AppSettings
-
-    @State var showDelete: Bool = false
-    
     private var item: EKEvent
     private let timeOnly = DateFormatter()
     
@@ -54,50 +48,13 @@ struct EventListCell: View {
                             .foregroundColor(Color(uiColor: .darkGray))
                     }
                 }
-                .padding(.vertical, 8)
+                .padding(.vertical, 4)
                 .padding(.horizontal)
-                if self.showDelete {
-                    Button(action: {
-                        self.itemList.performAsyncDelete(for: self.item)
-                        self.modifyItemViewModel.displayToast("Event Deleted")
-                    }) {
-                        VStack {
-                            Spacer()
-                            Image(systemName: "trash")
-                                .padding(.horizontal)
-                                .padding(.vertical, 8)
-                            Spacer()
-                        }
-                        .background(Color.red1)
-                    }
-                    .transition(.move(edge: .trailing))
-                }
             }
-            .frame(height: 55)
+            .frame(height: 45)
             .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
             .clipShape(RoundedRectangle(cornerRadius: 12))
         }
-        .listRowSeparator(.hidden)
-        .gesture(DragGesture(minimumDistance: 15)
-                    .onChanged({ value in
-            withAnimation {
-                let direction = value.detectDirection()
-                if direction == .left {
-                    self.showDelete = false
-                } else if direction == .right {
-                    if value.translation.width < -150 {
-                        self.itemList.performAsyncDelete(for: self.item)
-                        self.modifyItemViewModel.displayToast("Event Deleted")
-                    } else {
-                        self.showDelete = true
-                    }
-                }
-            }
-        }).exclusively(before:TapGesture().onEnded({
-            withAnimation {
-                self.showDelete = false
-                self.modifyItemViewModel.open(event: item)
-            }
-        })))
+        .contentShape(Rectangle())
     }
 }

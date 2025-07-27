@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -63,9 +63,36 @@
 		2F6505222791370D00AF90F7 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505122791370D00AF90F7 /* Inter-Black.ttf */; };
 		2F6505242791370D00AF90F7 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505132791370D00AF90F7 /* Inter-Bold.ttf */; };
 		2F6505292791384500AF90F7 /* Inter-Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505282791384500AF90F7 /* Inter-Font.swift */; };
-		2F7A0BC42E35C25300B69C71 /* MyToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7A0BC32E35C25300B69C71 /* MyToastView.swift */; };
 		2F7A0BC52E35C25300B69C71 /* MyToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7A0BC32E35C25300B69C71 /* MyToastView.swift */; };
 		2F7A0BC72E35C2EA00B69C71 /* ToastWindow in Frameworks */ = {isa = PBXBuildFile; productRef = 2F7A0BC62E35C2EA00B69C71 /* ToastWindow */; };
+		2F7A0BD02E35C5F100B69C71 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F7A0BCF2E35C5F100B69C71 /* WidgetKit.framework */; };
+		2F7A0BD22E35C5F100B69C71 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F7A0BD12E35C5F100B69C71 /* SwiftUI.framework */; };
+		2F7A0BDD2E35C5F200B69C71 /* TimeDrawWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2F7A0BCE2E35C5F100B69C71 /* TimeDrawWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2F7A0BE32E35C74C00B69C71 /* TimeDrawClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CAD27D97D710067F250 /* TimeDrawClock.swift */; };
+		2F7A0BE42E35C75400B69C71 /* ClockEventLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB60E4827E21571004DA305 /* ClockEventLine.swift */; };
+		2F7A0BE62E35C75400B69C71 /* ClockHands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CCF27DE4A9D0067F250 /* ClockHands.swift */; };
+		2F7A0BE72E35C76F00B69C71 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE422E2177C900AA7C5A /* Time.swift */; };
+		2F7A0BE82E35C77B00B69C71 /* CalendarItemListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1F8FA327D3AAEF00648234 /* CalendarItemListViewModel.swift */; };
+		2F7A0BEA2E35C80600B69C71 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD327DEDB3E0067F250 /* AppSettings.swift */; };
+		2F7A0BEB2E35C81300B69C71 /* ItemRecurrenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFD12E22C77B00B9D266 /* ItemRecurrenceType.swift */; };
+		2F7A0BEC2E35C81C00B69C71 /* CalendarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFCD2E22C77200B9D266 /* CalendarItemType.swift */; };
+		2F7A0BED2E35C82B00B69C71 /* ModifyCalendarItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */; };
+		2F7A0BEF2E35C83C00B69C71 /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458A27D8BE37005BF37D /* Calendar-Extension.swift */; };
+		2F7A0BF02E35C83C00B69C71 /* EKEventStore-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */; };
+		2F7A0BF12E35C83C00B69C71 /* EventKit-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24457E27D797C9005BF37D /* EventKit-Extension.swift */; };
+		2F7A0BF22E35C83C00B69C71 /* EventError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A52784E6FC00F0BEB2 /* EventError.swift */; };
+		2F7A0BF32E35C83C00B69C71 /* EventKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59C2784E3DE00F0BEB2 /* EventKitManager.swift */; };
+		2F7A0BF42E35C83C00B69C71 /* DateComponents-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F471C392E24950800D37709 /* DateComponents-Extension.swift */; };
+		2F7A0BF52E35C83C00B69C71 /* Date-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59327848DF700F0BEB2 /* Date-Extension.swift */; };
+		2F7A0BF62E35C84200B69C71 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B888278241B500FE72C3 /* Colors.swift */; };
+		2F7A0BF72E35C84200B69C71 /* Double-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */; };
+		2F7A0BF82E35C84200B69C71 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB30F27A229DA00654FEF /* Utils.swift */; };
+		2F7A0BF92E35C84200B69C71 /* SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458727D8BDD0005BF37D /* SwipeGesture.swift */; };
+		2F7A0BFA2E35C84200B69C71 /* SwiftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */; };
+		2F7A0BFB2E35C85800B69C71 /* MyToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7A0BC32E35C25300B69C71 /* MyToastView.swift */; };
+		2F7A0BFC2E35C8D200B69C71 /* ClockFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB60E4B27E21690004DA305 /* ClockFace.swift */; };
+		2F7A0BFE2E35C8EF00B69C71 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 2F7A0BFD2E35C8EF00B69C71 /* Dependencies */; };
+		2F7A0C002E35C90600B69C71 /* ToastWindow in Frameworks */ = {isa = PBXBuildFile; productRef = 2F7A0BFF2E35C90600B69C71 /* ToastWindow */; };
 		2F81230C2797B59500458B1A /* AddEventDateTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81230B2797B59500458B1A /* AddEventDateTimePicker.swift */; };
 		2F81230F2798957C00458B1A /* DateTimePickerInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81230E2798957C00458B1A /* DateTimePickerInputView.swift */; };
 		2F8AB2FD279BB4F000654FEF /* DateTimePickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB2FC279BB4F000654FEF /* DateTimePickerTextField.swift */; };
@@ -112,13 +139,11 @@
 		2FD407D7284FBDD70022FC49 /* CalendarItemListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1F8FA327D3AAEF00648234 /* CalendarItemListViewModel.swift */; };
 		2FD407D8284FBDFB0022FC49 /* EventKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59C2784E3DE00F0BEB2 /* EventKitManager.swift */; };
 		2FD6BE432E2177C900AA7C5A /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE422E2177C900AA7C5A /* Time.swift */; };
-		2FD6BE442E2177C900AA7C5A /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE422E2177C900AA7C5A /* Time.swift */; };
 		2FD6BE452E2177C900AA7C5A /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE422E2177C900AA7C5A /* Time.swift */; };
 		2FD6BE482E2177ED00AA7C5A /* Double-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */; };
 		2FD6BE492E2177ED00AA7C5A /* Double-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */; };
 		2FDFFFCE2E22C77200B9D266 /* CalendarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFCD2E22C77200B9D266 /* CalendarItemType.swift */; };
 		2FDFFFCF2E22C77200B9D266 /* CalendarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFCD2E22C77200B9D266 /* CalendarItemType.swift */; };
-		2FDFFFD02E22C77200B9D266 /* CalendarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFCD2E22C77200B9D266 /* CalendarItemType.swift */; };
 		2FDFFFD22E22C77B00B9D266 /* ItemRecurrenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFD12E22C77B00B9D266 /* ItemRecurrenceType.swift */; };
 		2FDFFFD32E22C77B00B9D266 /* ItemRecurrenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFD12E22C77B00B9D266 /* ItemRecurrenceType.swift */; };
 		2FDFFFD42E22C77B00B9D266 /* ItemRecurrenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFD12E22C77B00B9D266 /* ItemRecurrenceType.swift */; };
@@ -134,6 +159,13 @@
 			remoteGlobalIDString = 2F39B84A27823CF600FE72C3;
 			remoteInfo = "TimeDraw (iOS)";
 		};
+		2F7A0BDB2E35C5F200B69C71 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2F39B83C27823CF600FE72C3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2F7A0BCD2E35C5F100B69C71;
+			remoteInfo = TimeDrawWidgetExtension;
+		};
 		2FD407AF284FBB700022FC49 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2F39B83C27823CF600FE72C3 /* Project object */;
@@ -144,6 +176,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		2F7A0BE22E35C5F200B69C71 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2F7A0BDD2E35C5F200B69C71 /* TimeDrawWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2FD407B2284FBB700022FC49 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -205,6 +248,9 @@
 		2F6505272791373800AF90F7 /* TimeDraw--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TimeDraw--iOS--Info.plist"; sourceTree = "<group>"; };
 		2F6505282791384500AF90F7 /* Inter-Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Inter-Font.swift"; sourceTree = "<group>"; };
 		2F7A0BC32E35C25300B69C71 /* MyToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyToastView.swift; sourceTree = "<group>"; };
+		2F7A0BCE2E35C5F100B69C71 /* TimeDrawWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TimeDrawWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F7A0BCF2E35C5F100B69C71 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		2F7A0BD12E35C5F100B69C71 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		2F81230B2797B59500458B1A /* AddEventDateTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventDateTimePicker.swift; sourceTree = "<group>"; };
 		2F81230E2798957C00458B1A /* DateTimePickerInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerInputView.swift; sourceTree = "<group>"; };
 		2F8AB2FC279BB4F000654FEF /* DateTimePickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerTextField.swift; sourceTree = "<group>"; };
@@ -245,6 +291,20 @@
 		2FDFFFD72E22C83F00B9D266 /* UIPopoverWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPopoverWrapperViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		2F7A0BDE2E35C5F200B69C71 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 2F7A0BCD2E35C5F100B69C71 /* TimeDrawWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		2F7A0BD32E35C5F100B69C71 /* TimeDrawWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (2F7A0BDE2E35C5F200B69C71 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = TimeDrawWidget; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		2F39B84827823CF600FE72C3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -259,6 +319,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2F7A0BCB2E35C5F100B69C71 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F7A0BFE2E35C8EF00B69C71 /* Dependencies in Frameworks */,
+				2F7A0BD22E35C5F100B69C71 /* SwiftUI.framework in Frameworks */,
+				2F7A0C002E35C90600B69C71 /* ToastWindow in Frameworks */,
+				2F7A0BD02E35C5F100B69C71 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,6 +382,7 @@
 				2F5427DA28CF825C00F08952 /* WatchFace App */,
 				2FD40787284FBB700022FC49 /* WatchFace Watch Extension */,
 				2FD407A0284FBB700022FC49 /* WatchFaceTests */,
+				2F7A0BD32E35C5F100B69C71 /* TimeDrawWidget */,
 				2F39B84C27823CF600FE72C3 /* Products */,
 				2FD407D9284FC1C50022FC49 /* Frameworks */,
 			);
@@ -338,6 +410,7 @@
 				2F39B85827823CF600FE72C3 /* Tests iOS.xctest */,
 				2FD4077B284FBB6F0022FC49 /* WatchFace App.app */,
 				2FD4079D284FBB700022FC49 /* WatchFaceTests.xctest */,
+				2F7A0BCE2E35C5F100B69C71 /* TimeDrawWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -496,6 +569,8 @@
 		2FD407D9284FC1C50022FC49 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2F7A0BCF2E35C5F100B69C71 /* WidgetKit.framework */,
+				2F7A0BD12E35C5F100B69C71 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -550,11 +625,13 @@
 				2F39B84827823CF600FE72C3 /* Frameworks */,
 				2F39B84927823CF600FE72C3 /* Resources */,
 				2FD407B2284FBB700022FC49 /* Embed Watch Content */,
+				2F7A0BE22E35C5F200B69C71 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				2FD407B0284FBB700022FC49 /* PBXTargetDependency */,
+				2F7A0BDC2E35C5F200B69C71 /* PBXTargetDependency */,
 			);
 			name = "TimeDraw (iOS)";
 			packageProductDependencies = (
@@ -582,6 +659,30 @@
 			productName = "Tests iOS";
 			productReference = 2F39B85827823CF600FE72C3 /* Tests iOS.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		2F7A0BCD2E35C5F100B69C71 /* TimeDrawWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2F7A0BDF2E35C5F200B69C71 /* Build configuration list for PBXNativeTarget "TimeDrawWidgetExtension" */;
+			buildPhases = (
+				2F7A0BCA2E35C5F100B69C71 /* Sources */,
+				2F7A0BCB2E35C5F100B69C71 /* Frameworks */,
+				2F7A0BCC2E35C5F100B69C71 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				2F7A0BD32E35C5F100B69C71 /* TimeDrawWidget */,
+			);
+			name = TimeDrawWidgetExtension;
+			packageProductDependencies = (
+				2F7A0BFD2E35C8EF00B69C71 /* Dependencies */,
+				2F7A0BFF2E35C90600B69C71 /* ToastWindow */,
+			);
+			productName = TimeDrawWidgetExtension;
+			productReference = 2F7A0BCE2E35C5F100B69C71 /* TimeDrawWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		2FD4077A284FBB6F0022FC49 /* WatchFace App */ = {
 			isa = PBXNativeTarget;
@@ -624,7 +725,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1320;
+				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					2F39B84A27823CF600FE72C3 = {
@@ -633,6 +734,9 @@
 					2F39B85727823CF600FE72C3 = {
 						CreatedOnToolsVersion = 13.2;
 						TestTargetID = 2F39B84A27823CF600FE72C3;
+					};
+					2F7A0BCD2E35C5F100B69C71 = {
+						CreatedOnToolsVersion = 16.4;
 					};
 					2FD4077A284FBB6F0022FC49 = {
 						CreatedOnToolsVersion = 13.2;
@@ -664,6 +768,7 @@
 				2F39B85727823CF600FE72C3 /* Tests iOS */,
 				2FD4077A284FBB6F0022FC49 /* WatchFace App */,
 				2FD4079C284FBB700022FC49 /* WatchFaceTests */,
+				2F7A0BCD2E35C5F100B69C71 /* TimeDrawWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -690,6 +795,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2F39B85627823CF600FE72C3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2F7A0BCC2E35C5F100B69C71 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -797,6 +909,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2F7A0BCA2E35C5F100B69C71 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2F7A0BEF2E35C83C00B69C71 /* Calendar-Extension.swift in Sources */,
+				2F7A0BF02E35C83C00B69C71 /* EKEventStore-Extension.swift in Sources */,
+				2F7A0BF12E35C83C00B69C71 /* EventKit-Extension.swift in Sources */,
+				2F7A0BF22E35C83C00B69C71 /* EventError.swift in Sources */,
+				2F7A0BF32E35C83C00B69C71 /* EventKitManager.swift in Sources */,
+				2F7A0BF42E35C83C00B69C71 /* DateComponents-Extension.swift in Sources */,
+				2F7A0BF52E35C83C00B69C71 /* Date-Extension.swift in Sources */,
+				2F7A0BFC2E35C8D200B69C71 /* ClockFace.swift in Sources */,
+				2F7A0BE32E35C74C00B69C71 /* TimeDrawClock.swift in Sources */,
+				2F7A0BE72E35C76F00B69C71 /* Time.swift in Sources */,
+				2F7A0BF62E35C84200B69C71 /* Colors.swift in Sources */,
+				2F7A0BF72E35C84200B69C71 /* Double-Extension.swift in Sources */,
+				2F7A0BF82E35C84200B69C71 /* Utils.swift in Sources */,
+				2F7A0BF92E35C84200B69C71 /* SwipeGesture.swift in Sources */,
+				2F7A0BFA2E35C84200B69C71 /* SwiftBarButtonItem.swift in Sources */,
+				2F7A0BE82E35C77B00B69C71 /* CalendarItemListViewModel.swift in Sources */,
+				2F7A0BFB2E35C85800B69C71 /* MyToastView.swift in Sources */,
+				2F7A0BEC2E35C81C00B69C71 /* CalendarItemType.swift in Sources */,
+				2F7A0BEB2E35C81300B69C71 /* ItemRecurrenceType.swift in Sources */,
+				2F7A0BEA2E35C80600B69C71 /* AppSettings.swift in Sources */,
+				2F7A0BE42E35C75400B69C71 /* ClockEventLine.swift in Sources */,
+				2F7A0BED2E35C82B00B69C71 /* ModifyCalendarItemViewModel.swift in Sources */,
+				2F7A0BE62E35C75400B69C71 /* ClockHands.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2FD4077F284FBB700022FC49 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -814,7 +956,6 @@
 				2FDFFFD22E22C77B00B9D266 /* ItemRecurrenceType.swift in Sources */,
 				2FD407CA284FBC7A0022FC49 /* EventKit-Extension.swift in Sources */,
 				2FD407CF284FBC860022FC49 /* Calendar-Extension.swift in Sources */,
-				2F7A0BC42E35C25300B69C71 /* MyToastView.swift in Sources */,
 				2F471C452E35B95C00D37709 /* ReviewRequestManager.swift in Sources */,
 				2FD407C9284FBC7A0022FC49 /* Date-Extension.swift in Sources */,
 				2FD407D8284FBDFB0022FC49 /* EventKitManager.swift in Sources */,
@@ -834,8 +975,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FD6BE442E2177C900AA7C5A /* Time.swift in Sources */,
-				2FDFFFD02E22C77200B9D266 /* CalendarItemType.swift in Sources */,
 				2FDFFFD32E22C77B00B9D266 /* ItemRecurrenceType.swift in Sources */,
 				2FD407A2284FBB700022FC49 /* WatchFaceTests.swift in Sources */,
 			);
@@ -848,6 +987,11 @@
 			isa = PBXTargetDependency;
 			target = 2F39B84A27823CF600FE72C3 /* TimeDraw (iOS) */;
 			targetProxy = 2F39B85927823CF600FE72C3 /* PBXContainerItemProxy */;
+		};
+		2F7A0BDC2E35C5F200B69C71 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2F7A0BCD2E35C5F100B69C71 /* TimeDrawWidgetExtension */;
+			targetProxy = 2F7A0BDB2E35C5F200B69C71 /* PBXContainerItemProxy */;
 		};
 		2FD407B0284FBB700022FC49 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1092,6 +1236,70 @@
 			};
 			name = Release;
 		};
+		2F7A0BE02E35C5F200B69C71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TimeDrawWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TimeDrawWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw.TimeDrawWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2F7A0BE12E35C5F200B69C71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TimeDrawWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TimeDrawWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw.TimeDrawWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		2FD407B3284FBB700022FC49 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1232,6 +1440,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		2F7A0BDF2E35C5F200B69C71 /* Build configuration list for PBXNativeTarget "TimeDrawWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F7A0BE02E35C5F200B69C71 /* Debug */,
+				2F7A0BE12E35C5F200B69C71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2FD407BD284FBB700022FC49 /* Build configuration list for PBXNativeTarget "WatchFace App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1283,6 +1500,16 @@
 			productName = Dependencies;
 		};
 		2F7A0BC62E35C2EA00B69C71 /* ToastWindow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2FDFFFCC2E2298F800B9D266 /* XCRemoteSwiftPackageReference "ToastWindow" */;
+			productName = ToastWindow;
+		};
+		2F7A0BFD2E35C8EF00B69C71 /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2F471C3F2E27403D00D37709 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = Dependencies;
+		};
+		2F7A0BFF2E35C90600B69C71 /* ToastWindow */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2FDFFFCC2E2298F800B9D266 /* XCRemoteSwiftPackageReference "ToastWindow" */;
 			productName = ToastWindow;

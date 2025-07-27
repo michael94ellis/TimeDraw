@@ -24,7 +24,7 @@ struct MainScrollableContent: View {
         
     var body: some View {
         List {
-            TimeDrawClock()
+            TimeDrawClock(events: itemList.events, reminders: itemList.reminders)
                 .padding(.vertical, clockVertPadding)
                 .padding(.horizontal, clockHorizPadding)
                 .listRowSeparator(.hidden)

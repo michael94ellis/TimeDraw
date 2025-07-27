@@ -33,14 +33,14 @@ struct ClockFace: View {
                     .frame(width: size, height: size)
 
                 // Hour numbers
-                ForEach(Self.hours, id: \.self) { i in
-                    let num = (i / 5) + 6
-                    Text("\(num > 12 ? num - 12 : num)")
-                        .font(.interFine)
-                        .rotationEffect(.degrees(Double((num - 12) * -30) - 180))
-                        .offset(y: markOffset)
-                        .rotationEffect(Angle(degrees: Double(i) * 6))
-                }
+//                ForEach(Self.hours, id: \.self) { i in
+//                    let num = (i / 5) + 6
+//                    Text("\(num > 12 ? num - 12 : num)")
+//                        .font(.interFine)
+//                        .rotationEffect(.degrees(Double((num - 12) * -30) - 180))
+//                        .offset(y: markOffset)
+//                        .rotationEffect(Angle(degrees: Double(i) * 6))
+//                }
 
                 // Tick marks
                 ForEach(Self.quarterHours, id: \.self) { i in

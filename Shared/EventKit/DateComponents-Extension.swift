@@ -14,6 +14,6 @@ extension DateComponents {
               let newDate = Calendar.current.date(byAdding: component, value: value, to: date)
         else { return nil }
 
-        return calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: newDate)
+        return calendar?.dateComponents([.year, .month, .day, .hour, .minute, .second], from: newDate)
     }
 }

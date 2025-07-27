@@ -25,7 +25,7 @@ struct TimeDrawWatchApp: App {
         WindowGroup {
             VStack(spacing: 0) {
                 Spacer()
-                TimeDrawClock()
+                TimeDrawClock(events: listViewModel.events, reminders: listViewModel.reminders)
                 #if !os(watchOS)
                     .environmentObject(self.itemViewModel)
                 #endif

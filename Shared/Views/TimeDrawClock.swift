@@ -12,7 +12,8 @@ struct TimeDrawClock: View {
     
     @State var currentTime = Time(sec: 0, min: 0, hour: 0)
     @State var timer = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
-    @EnvironmentObject var itemList: CalendarItemListViewModel
+    var events: [EKEvent]
+    var reminders: [EKReminder]
     
     #if !os(watchOS)
     @EnvironmentObject var modifyItemViewModel: ModifyCalendarItemViewModel
@@ -33,7 +34,7 @@ struct TimeDrawClock: View {
     func timeCircles() -> some View {
         GeometryReader { geo in
             let width = min(geo.size.width, geo.size.height)
-            ForEach(itemList.events, id: \.self) { event in
+            ForEach(events, id: \.self) { event in
                 let radius = event.isAllDay ? width * 1.1 : width / 2
                 let lineWidth = event.isAllDay ? 2 : width / 24
                 ClockEventLine(start: event.startDate,
@@ -47,7 +48,7 @@ struct TimeDrawClock: View {
                     })
                     #endif
             }
-            ForEach(itemList.reminders, id: \.self) { reminder in
+            ForEach(reminders, id: \.self) { reminder in
                 if let startDateComponents = reminder.startDateComponents {
                     if let dueDateComponents = reminder.dueDateComponents {
                         ClockEventLine(startComponents: startDateComponents, endComponents: dueDateComponents, radius: width / 2, width: 4)
@@ -101,14 +102,13 @@ struct TimeDrawClock: View {
 #Preview("Phone") {
     struct TimeDrawClock_Previews: View {
         var body: some View {
-            let viewModel = CalendarItemListViewModel()
-            viewModel.events = [
+            let mockEvents = [
                 EKEvent.mock(startHour: 8, endHour: 10, color: .red),
-                EKEvent.mock(startHour: 11, endHour: 13, color: .blue),
-                EKEvent.mock(startHour: 17, endHour: 24, color: .orange)
+                .mock(startHour: 11, endHour: 13, color: .blue),
+                .mock(startHour: 17, endHour: 24, color: .orange)
             ]
-            viewModel.reminders = [
-                .mock(startHour: nil, endHour: nil, color: .yellow),
+            let mockReminders = [
+                EKReminder.mock(startHour: nil, endHour: nil, color: .yellow),
                 .mock(startHour: 1, endHour: nil, color: .purple),
                 .mock(startHour: 1, endHour: 2, color: .cyan)
             ]
@@ -121,7 +121,7 @@ struct TimeDrawClock: View {
                 List {
                     HStack {
                         Spacer()
-                        TimeDrawClock()
+                        TimeDrawClock(events: mockEvents, reminders: mockReminders)
                         Spacer()
                     }
                     Rectangle()
@@ -132,7 +132,6 @@ struct TimeDrawClock: View {
                         })
                 }
             }
-            .environmentObject(viewModel)
             #if !os(watchOS)
             .environmentObject(modifyViewModel)
             #endif
@@ -145,22 +144,15 @@ struct TimeDrawClock: View {
 #Preview("Watch") {
     struct TimeDrawClock_Previews: View {
         var body: some View {
-            let viewModel = CalendarItemListViewModel()
-            viewModel.events = [
-                EKEvent.mock(startHour: 8,
-                             endHour: 10,
-                             color: .red),
-                EKEvent.mock(startHour: 11,
-                             endHour: 13,
-                             color: .blue),
-                EKEvent.mock(startHour: 17,
-                             endHour: 24,
-                             color: .orange)
+            let mockEvents = [
+                EKEvent.mock(startHour: 8, endHour: 10, color: .red),
+                .mock(startHour: 11, endHour: 13, color: .blue),
+                .mock(startHour: 17, endHour: 24, color: .orange)
             ]
-            viewModel.reminders = [
-                .mock(startHour: nil, endHour: nil, color: .yellow),
+            let mockReminders = [
+                EKReminder.mock(startHour: nil, endHour: nil, color: .yellow),
                 .mock(startHour: 1, endHour: nil, color: .purple),
-                .mock(startHour: 22, endHour: 23, color: .cyan)
+                .mock(startHour: 1, endHour: 2, color: .cyan)
             ]
             
             #if !os(watchOS)
@@ -169,10 +161,9 @@ struct TimeDrawClock: View {
             
             return VStack(spacing: 0) {
                 Spacer()
-                TimeDrawClock()
+                TimeDrawClock(events: mockEvents, reminders: mockReminders)
                 Spacer()
             }
-            .environmentObject(viewModel)
             #if !os(watchOS)
             .environmentObject(modifyViewModel)
             #endif

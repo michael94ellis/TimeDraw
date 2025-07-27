@@ -76,7 +76,7 @@ struct OnboardingExperience: View {
                     belowContent:
                         VStack {
                             OnboardingDailyGoalTextField()
-                            TimeDrawClock()
+                            TimeDrawClock(events: [], reminders: [])
                             EventInput()
                         },
                     currentPageIndex: $currentPageIndex)
@@ -86,7 +86,7 @@ struct OnboardingExperience: View {
                     content: OnboardingDailyGoalTextField(),
                     belowContent:
                         VStack {
-                            TimeDrawClock()
+                            TimeDrawClock(events: [], reminders: [])
                             EventInput()
                         },
                     currentPageIndex: $currentPageIndex)
@@ -98,7 +98,7 @@ struct OnboardingExperience: View {
                             OnboardingDailyGoalTextField()
                         },
                     content:
-                        TimeDrawClock(),
+                        TimeDrawClock(events: [], reminders: []),
                     belowContent:
                         VStack {
                             EventInput()
@@ -110,7 +110,7 @@ struct OnboardingExperience: View {
                         VStack {
                             MainHeader()
                             OnboardingDailyGoalTextField()
-                            TimeDrawClock()
+                            TimeDrawClock(events: [], reminders: [])
                         },
                     content: EventInput(),
                     belowContent: EmptyView(),

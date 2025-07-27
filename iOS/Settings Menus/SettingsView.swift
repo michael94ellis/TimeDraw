@@ -51,7 +51,6 @@ struct SettingsView: View {
         link(for: self.vineetURL, title: "Design: Vineet Kapil")
         Spacer()
         Text("Version \(Bundle.main.releaseVersionNumber) (\(Bundle.main.buildVersionNumber))")
-            .font(.interFine)
         Spacer()
         Spacer()
     }

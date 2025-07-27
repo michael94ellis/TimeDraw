@@ -32,10 +32,8 @@ struct OnboardingExperience: View {
             Spacer()
             Text("\(index)/4")
                 .foregroundColor(.white)
-                .font(.interFine)
             Text("Tap anywhere")
                 .foregroundColor(.white)
-                .font(.interFine)
             Spacer()
         }
         .padding(18)
@@ -57,7 +55,6 @@ struct OnboardingExperience: View {
                     Text("Welcome to TimeDraw!")
                     Spacer()
                     Text("Tap anywhere")
-                        .font(.interFine)
                 })
                 .onTapGesture { incrementOnboardingPage() }
             case 1:
@@ -66,7 +63,6 @@ struct OnboardingExperience: View {
                     Text("")
                     Spacer()
                     Text("Tap anywhere")
-                        .font(.interFine)
                 })
                 .onTapGesture { incrementOnboardingPage() }
             case 2:

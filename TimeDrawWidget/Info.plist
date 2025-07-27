@@ -7,5 +7,9 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.widgetkit-extension</string>
 	</dict>
+	<key>NSCalendarsUsageDescription</key>
+	<string>TimeDraw Widget needs access to your calendars to display your events and reminders.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>TimeDraw Widget needs access to your reminders to display them on the clock face.</string>
 </dict>
 </plist>

@@ -80,6 +80,18 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.selectedCalendar = currentSelectedCalendar.loadEKCalendar()
     }
     
+    @MainActor
+    func open(item: EKCalendarItem) {
+        switch item {
+        case let reminder as EKReminder:
+            open(reminder: reminder)
+        case let event as EKEvent:
+            open(event: event)
+        default:
+            assertionFailure("Unknown EKCalendarItem type: \(type(of: item))")
+        }
+    }
+    
     @MainActor func open(event: EKEvent) {
         self.reset()
         self.editMode = true

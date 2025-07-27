@@ -15,9 +15,7 @@ struct TimeDrawClock: View {
     var events: [EKEvent]
     var reminders: [EKReminder]
     
-    #if !os(watchOS)
-    @EnvironmentObject var modifyItemViewModel: ModifyCalendarItemViewModel
-    #endif
+    @Environment(\.openCalendarItem) var open
     
     func setCurrentTime()  {
         let timeZone = TimeZone.autoupdatingCurrent
@@ -42,22 +40,18 @@ struct TimeDrawClock: View {
                                radius: radius,
                                width: lineWidth)
                     .foregroundColor(Color(cgColor: event.calendar?.cgColor ?? UIColor.clear.cgColor))
-                    #if !os(watchOS)
                     .gesture(TapGesture().onEnded {
-                        modifyItemViewModel.open(event: event)
+                        open(event)
                     })
-                    #endif
             }
             ForEach(reminders, id: \.self) { reminder in
                 if let startDateComponents = reminder.startDateComponents {
                     if let dueDateComponents = reminder.dueDateComponents {
                         ClockEventLine(startComponents: startDateComponents, endComponents: dueDateComponents, radius: width / 2, width: 4)
                             .foregroundColor(reminder.calendar?.cgColor.map { Color($0) } ?? Color.clear)
-                            #if !os(watchOS)
                             .gesture(TapGesture().onEnded {
-                                modifyItemViewModel.open(reminder: reminder)
+                                open(reminder)
                             })
-                            #endif
                     } else {
                         ClockEventLine(startComponents: startDateComponents,
                                        endComponents: startDateComponents,
@@ -66,7 +60,7 @@ struct TimeDrawClock: View {
                         .foregroundColor(reminder.calendar?.cgColor.map { Color($0) } ?? Color.clear)
                         #if !os(watchOS)
                         .gesture(TapGesture().onEnded {
-                            modifyItemViewModel.open(reminder: reminder)
+                            open(reminder)
                         })
                         #endif
                     }

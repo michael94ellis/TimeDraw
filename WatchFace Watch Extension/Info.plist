@@ -12,6 +12,10 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.watchkit</string>
 	</dict>
+	<key>NSCalendarsUsageDescription</key>
+	<string>TimeDraw Watch needs access to your calendars to display your events and reminders.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>TimeDraw Watch needs access to your reminders to display them on the clock face.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Inter-Black.ttf</string>

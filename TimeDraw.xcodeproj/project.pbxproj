@@ -93,6 +93,10 @@
 		2F7A0BFC2E35C8D200B69C71 /* ClockFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB60E4B27E21690004DA305 /* ClockFace.swift */; };
 		2F7A0BFE2E35C8EF00B69C71 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 2F7A0BFD2E35C8EF00B69C71 /* Dependencies */; };
 		2F7A0C002E35C90600B69C71 /* ToastWindow in Frameworks */ = {isa = PBXBuildFile; productRef = 2F7A0BFF2E35C90600B69C71 /* ToastWindow */; };
+		2F7A0C0B2E3649C000B69C71 /* OpenCalendarItemKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7A0C0A2E3649C000B69C71 /* OpenCalendarItemKey.swift */; };
+		2F7A0C0C2E3649C000B69C71 /* OpenCalendarItemKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7A0C0A2E3649C000B69C71 /* OpenCalendarItemKey.swift */; };
+		2F7A0C0D2E3649C000B69C71 /* OpenCalendarItemKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7A0C0A2E3649C000B69C71 /* OpenCalendarItemKey.swift */; };
+		2F7A0C0F2E364BA200B69C71 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7A0C0E2E364BA200B69C71 /* ComplicationController.swift */; };
 		2F81230C2797B59500458B1A /* AddEventDateTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81230B2797B59500458B1A /* AddEventDateTimePicker.swift */; };
 		2F81230F2798957C00458B1A /* DateTimePickerInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F81230E2798957C00458B1A /* DateTimePickerInputView.swift */; };
 		2F8AB2FD279BB4F000654FEF /* DateTimePickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB2FC279BB4F000654FEF /* DateTimePickerTextField.swift */; };
@@ -117,7 +121,6 @@
 		2FD40789284FBB700022FC49 /* TimeDrawWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */; };
 		2FD4078D284FBB700022FC49 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4078C284FBB700022FC49 /* NotificationController.swift */; };
 		2FD4078F284FBB700022FC49 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4078E284FBB700022FC49 /* NotificationView.swift */; };
-		2FD40791284FBB700022FC49 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD40790284FBB700022FC49 /* ComplicationController.swift */; };
 		2FD40793284FBB700022FC49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FD40792284FBB700022FC49 /* Assets.xcassets */; };
 		2FD40796284FBB700022FC49 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FD40795284FBB700022FC49 /* Preview Assets.xcassets */; };
 		2FD407A2284FBB700022FC49 /* WatchFaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD407A1284FBB700022FC49 /* WatchFaceTests.swift */; };
@@ -251,6 +254,8 @@
 		2F7A0BCE2E35C5F100B69C71 /* TimeDrawWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TimeDrawWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F7A0BCF2E35C5F100B69C71 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		2F7A0BD12E35C5F100B69C71 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		2F7A0C0A2E3649C000B69C71 /* OpenCalendarItemKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCalendarItemKey.swift; sourceTree = "<group>"; };
+		2F7A0C0E2E364BA200B69C71 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		2F81230B2797B59500458B1A /* AddEventDateTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventDateTimePicker.swift; sourceTree = "<group>"; };
 		2F81230E2798957C00458B1A /* DateTimePickerInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerInputView.swift; sourceTree = "<group>"; };
 		2F8AB2FC279BB4F000654FEF /* DateTimePickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerTextField.swift; sourceTree = "<group>"; };
@@ -276,7 +281,6 @@
 		2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawWatchApp.swift; sourceTree = "<group>"; };
 		2FD4078C284FBB700022FC49 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		2FD4078E284FBB700022FC49 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
-		2FD40790284FBB700022FC49 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		2FD40792284FBB700022FC49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2FD40795284FBB700022FC49 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2FD40797284FBB700022FC49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -443,6 +447,7 @@
 			children = (
 				2F24458727D8BDD0005BF37D /* SwipeGesture.swift */,
 				2F39B888278241B500FE72C3 /* Colors.swift */,
+				2F7A0C0A2E3649C000B69C71 /* OpenCalendarItemKey.swift */,
 				2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */,
 				2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */,
 				2F8AB30F27A229DA00654FEF /* Utils.swift */,
@@ -540,8 +545,8 @@
 			children = (
 				2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */,
 				2FD4078C284FBB700022FC49 /* NotificationController.swift */,
+				2F7A0C0E2E364BA200B69C71 /* ComplicationController.swift */,
 				2FD4078E284FBB700022FC49 /* NotificationView.swift */,
-				2FD40790284FBB700022FC49 /* ComplicationController.swift */,
 				2FD40792284FBB700022FC49 /* Assets.xcassets */,
 				2FD40797284FBB700022FC49 /* Info.plist */,
 				2FD40798284FBB700022FC49 /* PushNotificationPayload.apns */,
@@ -857,6 +862,7 @@
 				2F8AB30A27A1026500654FEF /* PickerField.swift in Sources */,
 				2F24458227D7F0EB005BF37D /* MultiDateSelectCalendar.swift in Sources */,
 				2F8AB2FD279BB4F000654FEF /* DateTimePickerTextField.swift in Sources */,
+				2F7A0C0D2E3649C000B69C71 /* OpenCalendarItemKey.swift in Sources */,
 				2F39B889278241B500FE72C3 /* Colors.swift in Sources */,
 				2FDFFFD82E22C83F00B9D266 /* UIPopoverWrapperViewController.swift in Sources */,
 				2F8AB30727A1025100654FEF /* UIPickerTextField.swift in Sources */,
@@ -915,6 +921,7 @@
 			files = (
 				2F7A0BEF2E35C83C00B69C71 /* Calendar-Extension.swift in Sources */,
 				2F7A0BF02E35C83C00B69C71 /* EKEventStore-Extension.swift in Sources */,
+				2F7A0C0C2E3649C000B69C71 /* OpenCalendarItemKey.swift in Sources */,
 				2F7A0BF12E35C83C00B69C71 /* EventKit-Extension.swift in Sources */,
 				2F7A0BF22E35C83C00B69C71 /* EventError.swift in Sources */,
 				2F7A0BF32E35C83C00B69C71 /* EventKitManager.swift in Sources */,
@@ -945,6 +952,7 @@
 			files = (
 				2FDFFFCE2E22C77200B9D266 /* CalendarItemType.swift in Sources */,
 				2FD407D4284FBCF70022FC49 /* AppSettings.swift in Sources */,
+				2F7A0C0B2E3649C000B69C71 /* OpenCalendarItemKey.swift in Sources */,
 				2FD4078D284FBB700022FC49 /* NotificationController.swift in Sources */,
 				2FD407C5284FBC600022FC49 /* Colors.swift in Sources */,
 				2FD407C4284FBC260022FC49 /* Inter-Font.swift in Sources */,
@@ -957,10 +965,10 @@
 				2FD407CA284FBC7A0022FC49 /* EventKit-Extension.swift in Sources */,
 				2FD407CF284FBC860022FC49 /* Calendar-Extension.swift in Sources */,
 				2F471C452E35B95C00D37709 /* ReviewRequestManager.swift in Sources */,
+				2F7A0C0F2E364BA200B69C71 /* ComplicationController.swift in Sources */,
 				2FD407C9284FBC7A0022FC49 /* Date-Extension.swift in Sources */,
 				2FD407D8284FBDFB0022FC49 /* EventKitManager.swift in Sources */,
 				2FD6BE492E2177ED00AA7C5A /* Double-Extension.swift in Sources */,
-				2FD40791284FBB700022FC49 /* ComplicationController.swift in Sources */,
 				2FD407C0284FBC050022FC49 /* ClockEventLine.swift in Sources */,
 				2FD407D1284FBC860022FC49 /* EventError.swift in Sources */,
 				2FD407C1284FBC050022FC49 /* TimeDrawClock.swift in Sources */,

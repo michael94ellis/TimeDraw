@@ -8,6 +8,7 @@
 import Foundation
 import StoreKit
 import SwiftUI
+
 import UIKit
 
 @MainActor
@@ -28,20 +29,25 @@ final class ReviewRequestManager {
             return
         }
 
-        guard let launchDate = defaults.object(forKey: firstLaunchKey) as? Date else { return }
+        guard let launchDate = defaults.object(forKey: firstLaunchKey) as? Date else {
+            return
+        }
+        
         let daysSinceLaunch = now.timeIntervalSince(launchDate) / (60 * 60 * 24)
+        guard daysSinceLaunch >= triggerDays else {
+            return
+        }
 
-        guard daysSinceLaunch >= triggerDays else { return }
-
-        // Trigger App Review
         requestReview()
     }
     
     func requestReview() {
+        #if !os(watchOS)
         guard let window = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
             assertionFailure()
             return
         }
         AppStore.requestReview(in: window)
+        #endif
     }
 }

@@ -39,8 +39,8 @@ struct MainScrollableContent: View {
                 }
                 .buttonStyle(.plain)
                 .listRowSeparator(.hidden)
-                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                .swipeActions {
+                .listRowInsets(.init(top: 4, leading: 8, bottom: 4, trailing: 8))
+                .swipeActions(allowsFullSwipe: true) {
                     Button(action: {
                         self.itemList.delete(item)
                         self.modifyItemViewModel.displayToast("Event Deleted")
@@ -61,8 +61,8 @@ struct MainScrollableContent: View {
                 }
                 .buttonStyle(.plain)
                 .listRowSeparator(.hidden)
-                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                .swipeActions {
+                .listRowInsets(.init(top: 4, leading: 8, bottom: 4, trailing: 8))
+                .swipeActions(allowsFullSwipe: true) {
                     Button(action: {
                         self.performComplete(for: item)
                         self.itemList.updateData()
@@ -81,13 +81,19 @@ struct MainScrollableContent: View {
                 }
             }
             Spacer(minLength: 120)
+                .listRowSeparator(.hidden)
+                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
         }
-        .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
         .environment(\.defaultMinListRowHeight, 0)
         .listRowSpacing(0)
         .listStyle(.plain)
         .refreshable(action: {
             self.itemList.updateData()
         })
+        .onChange(of: modifyItemViewModel.isAddEventTextFieldFocused) { newValue in
+            if !newValue {
+                self.itemList.updateData()
+            }
+        }
     }
 }

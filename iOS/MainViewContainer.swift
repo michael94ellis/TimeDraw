@@ -5,18 +5,21 @@
 //  Created by Michael Ellis on 1/2/22.
 //
 
-import SwiftUI
 import CoreData
 import EventKit
+import SwiftUI
+import ToastWindow
 
 struct MainViewContainer: View {
     
+    @Environment(\.toastManager) private var toastManager
     @EnvironmentObject private var appSettings: AppSettings
     @EnvironmentObject private var itemViewModel: ModifyCalendarItemViewModel
+    @EnvironmentObject private var listViewModel: CalendarItemListViewModel
     
     /// The secondary textfield that can be edited
     @FocusState private var isDailyGoalFocused: Bool
-    
+
     @ViewBuilder var blurOverlay: some View {
         if self.itemViewModel.isAddEventTextFieldFocused {
             Color.black.opacity(0.6)
@@ -46,7 +49,7 @@ struct MainViewContainer: View {
         }
     }
     
-    @ViewBuilder var mainContentContainer: some View {
+    var body: some View {
         ZStack {
             mainContent
                 .transition(.opacity)
@@ -57,15 +60,17 @@ struct MainViewContainer: View {
                     .environmentObject(appSettings)
             }
         }
+        .onAppear {
+            showOnboardingIfAppropriate()
+        }
+        .onChange(of: appSettings.isFirstAppOpen) { _ in
+            showOnboardingIfAppropriate()
+        }
     }
     
-    var body: some View {
-        VStack {
-            if appSettings.isFirstAppOpen {
-                OnboardingExperience()
-            } else {
-                mainContentContainer
-            }
+    func showOnboardingIfAppropriate() {
+        if appSettings.isFirstAppOpen {
+            _ = toastManager.showToast(content: OnboardingExperience(itemViewModel: itemViewModel, listViewModel: listViewModel))
         }
     }
 }

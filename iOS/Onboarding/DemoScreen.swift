@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ToastWindow
 
 struct DemoScreen<Content: View, Above: View, Below: View>: View {
     
@@ -13,6 +14,7 @@ struct DemoScreen<Content: View, Above: View, Below: View>: View {
     var content: Content
     var belowContent: Below?
     
+    @Environment(\.dismissAllToasts) private var dismissAllToasts
     @EnvironmentObject private var calendarItemListViewModel: CalendarItemListViewModel
     @AppStorage(AppStorageKey.firstOpen) var isFirstAppOpen: Bool = true
     @Binding var currentPageIndex: Int
@@ -21,6 +23,7 @@ struct DemoScreen<Content: View, Above: View, Below: View>: View {
         currentPageIndex += 1
         if currentPageIndex >= 6 {
             isFirstAppOpen = false
+            dismissAllToasts()
             calendarItemListViewModel.updateData()
         }
     }
@@ -39,7 +42,7 @@ struct DemoScreen<Content: View, Above: View, Below: View>: View {
                 .overlay(content: {
                     VStack {
                         if currentPageIndex == 4 {
-                            OnboardingExperience.overlayText("The Analog Clock - visualize your events and reminders from any calendars\n\nYou can hide this in settings")
+                            OnboardingExperience.overlayText("The Analog Clock - visualize your events and reminders from any calendars")
                         } else if currentPageIndex == 5 {
                             OnboardingExperience.overlayText("You can create events and reminders from TimeDraw as well")
                         }

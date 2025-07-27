@@ -9,6 +9,9 @@ import SwiftUI
 
 struct OnboardingExperience: View {
     
+    var itemViewModel: ModifyCalendarItemViewModel
+    var listViewModel: CalendarItemListViewModel
+    
     @AppStorage(AppStorageKey.firstOpen) var isFirstAppOpen: Bool = true
     @State var currentPageIndex = 0
     
@@ -68,22 +71,26 @@ struct OnboardingExperience: View {
             case 2:
                 DemoScreen(
                     aboveContent: EmptyView(),
-                    content: MainHeader(),
+                    content: MainHeader()
+                        .environmentObject(listViewModel),
                     belowContent:
                         VStack {
                             OnboardingDailyGoalTextField()
                             TimeDrawClock(events: [], reminders: [])
                             EventInput()
+                                .environmentObject(itemViewModel)
                         },
                     currentPageIndex: $currentPageIndex)
             case 3:
                 DemoScreen(
-                    aboveContent: MainHeader(),
+                    aboveContent: MainHeader()
+                        .environmentObject(listViewModel),
                     content: OnboardingDailyGoalTextField(),
                     belowContent:
                         VStack {
                             TimeDrawClock(events: [], reminders: [])
                             EventInput()
+                                .environmentObject(itemViewModel)
                         },
                     currentPageIndex: $currentPageIndex)
             case 4:
@@ -91,6 +98,7 @@ struct OnboardingExperience: View {
                     aboveContent:
                         VStack {
                             MainHeader()
+                                .environmentObject(listViewModel)
                             OnboardingDailyGoalTextField()
                         },
                     content:
@@ -98,6 +106,7 @@ struct OnboardingExperience: View {
                     belowContent:
                         VStack {
                             EventInput()
+                                .environmentObject(itemViewModel)
                         },
                     currentPageIndex: $currentPageIndex)
             case 5:
@@ -105,16 +114,21 @@ struct OnboardingExperience: View {
                     aboveContent:
                         VStack {
                             MainHeader()
+                                .environmentObject(listViewModel)
                             OnboardingDailyGoalTextField()
                             TimeDrawClock(events: [], reminders: [])
                         },
-                    content: EventInput(),
+                    content: EventInput()
+                        .environmentObject(itemViewModel),
                     belowContent: EmptyView(),
                     currentPageIndex: $currentPageIndex)
+                .environmentObject(listViewModel)
             default:
                 EmptyView()
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .contentShape(Rectangle())
+        .background(.black)
     }
 }

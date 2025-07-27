@@ -9,6 +9,7 @@ import Dependencies
 import EventKit
 import Foundation
 import SwiftUI
+import ToastWindow
 
 struct ModifyCalendarItemViewModelKey: DependencyKey {
     static var liveValue: ModifyCalendarItemViewModel = .init()
@@ -16,8 +17,8 @@ struct ModifyCalendarItemViewModelKey: DependencyKey {
 
 extension DependencyValues {
     var modifyCalendarItemViewModel: ModifyCalendarItemViewModel {
-      get { self[ModifyCalendarItemViewModelKey.self] }
-      set { self[ModifyCalendarItemViewModelKey.self] = newValue }
+        get { self[ModifyCalendarItemViewModelKey.self] }
+        set { self[ModifyCalendarItemViewModelKey.self] = newValue }
     }
 }
 
@@ -67,6 +68,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var isNotesInputOpen: Bool = false
     @Published var isRecurrencePickerOpen: Bool = false
     
+    let toastManager = ToastManager()
     @AppStorage(AppStorageKey.currentSelectedCalendar) private var currentSelectedCalendar: Data?
     @Dependency(\.eventKitManager) private var eventKitManager
     
@@ -278,8 +280,8 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     /// Update the Toast notification to alert the user
     @MainActor public func displayToast(_ message: String) {
-        self.toastMessage = message
-        self.displayToast = true
+        let toast = MyToastView(message: message, duration: 3.0, animationDuration: 0.5)
+        toastManager.showToast(content: toast, duration: 3.5)
     }
     
     @MainActor func handleError(_ error: NSError) {
@@ -322,7 +324,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
         }
     }
     
-    #if !os(watchOS)
+#if !os(watchOS)
     
     @MainActor func delete() {
         if let reminder = self.calendarItem as? EKReminder {
@@ -349,70 +351,68 @@ class ModifyCalendarItemViewModel: ObservableObject {
     // MARK: - Create
     
     /// Create an EKCalendarItem for the given information OR the currently displayed EKCalendarItem will be saved
-    @MainActor public func submitEventOrReminder() {
+    @MainActor public func submitEventOrReminder() async {
         if self.isRecurrencePickerOpen, !self.isDateTimePickerOpen || self.newItemEndDate == nil {
             self.displayToast("End Date Required")
             return
         }
-        Task {
-            // ToDo extract to function, clean up this date extraction
-            let startDateComponents = self.newItemStartDate
-            let startTimeComponents = self.newItemStartTime
-            let endTimeComponents = self.newItemEndTime
-            let endDateComponents = self.newItemEndDate
-            var mergedStartComponments: DateComponents?
-            var mergedEndComponments: DateComponents?
-            if startDateComponents != nil {
-                mergedStartComponments = DateComponents()
-                mergedStartComponments?.year = startDateComponents?.year
-                mergedStartComponments?.month = startDateComponents?.month
-                mergedStartComponments?.day = startDateComponents?.day
-                // Not possible to have a date without the first three
-                if startTimeComponents != nil {
-                    mergedStartComponments?.hour = startTimeComponents?.hour
-                    mergedStartComponments?.minute = startTimeComponents?.minute
-                    mergedStartComponments?.second = startTimeComponents?.second
-                }
+        // ToDo extract to function, clean up this date extraction
+        let startDateComponents = self.newItemStartDate
+        let startTimeComponents = self.newItemStartTime
+        let endTimeComponents = self.newItemEndTime
+        let endDateComponents = self.newItemEndDate
+        var mergedStartComponments: DateComponents?
+        var mergedEndComponments: DateComponents?
+        if startDateComponents != nil {
+            mergedStartComponments = DateComponents()
+            mergedStartComponments?.year = startDateComponents?.year
+            mergedStartComponments?.month = startDateComponents?.month
+            mergedStartComponments?.day = startDateComponents?.day
+            // Not possible to have a date without the first three
+            if startTimeComponents != nil {
+                mergedStartComponments?.hour = startTimeComponents?.hour
+                mergedStartComponments?.minute = startTimeComponents?.minute
+                mergedStartComponments?.second = startTimeComponents?.second
             }
-            if endDateComponents != nil {
-                mergedEndComponments = DateComponents()
-                mergedEndComponments?.year = endDateComponents?.year
-                mergedEndComponments?.month = endDateComponents?.month
-                mergedEndComponments?.day = endDateComponents?.day
-                if endTimeComponents != nil {
-                    mergedEndComponments?.hour = endTimeComponents?.hour
-                    mergedEndComponments?.minute = endTimeComponents?.minute
-                    mergedEndComponments?.second = endTimeComponents?.second
-                }
+        }
+        if endDateComponents != nil {
+            mergedEndComponments = DateComponents()
+            mergedEndComponments?.year = endDateComponents?.year
+            mergedEndComponments?.month = endDateComponents?.month
+            mergedEndComponments?.day = endDateComponents?.day
+            if endTimeComponents != nil {
+                mergedEndComponments?.hour = endTimeComponents?.hour
+                mergedEndComponments?.minute = endTimeComponents?.minute
+                mergedEndComponments?.second = endTimeComponents?.second
+            }
+        }
+        
+        // Save For Existing Calendar Items(Events/Reminders)
+        if self.editMode {
+            if self.isNotesInputOpen || self.calendarItem?.hasNotes ?? false {
+                self.calendarItem?.notes = self.notesInput
+            }
+            self.calendarItem?.calendar = self.selectedCalendar
+            if let event = self.calendarItem as? EKEvent,
+               let startComponents = mergedStartComponments,
+               let endComponents = mergedEndComponments,
+               let startDate = Calendar.current.date(from: startComponents),
+               let endDate = Calendar.current.date(from: endComponents) {
+                self.saveNewDates(for: event, newStart: startDate, newEnd: endDate)
+            } else if let reminder = self.calendarItem as? EKReminder {
+                self.saveNewDates(for: reminder, newStart: mergedStartComponments, newEnd: mergedEndComponments)
             }
             
-            // Save For Existing Calendar Items(Events/Reminders)
-            if self.editMode {
-                if self.isNotesInputOpen || self.calendarItem?.hasNotes ?? false {
-                    self.calendarItem?.notes = self.notesInput
-                }
-                self.calendarItem?.calendar = self.selectedCalendar
-                if let event = self.calendarItem as? EKEvent,
-                   let startComponents = mergedStartComponments,
-                   let endComponents = mergedEndComponments,
-                   let startDate = Calendar.current.date(from: startComponents),
-                   let endDate = Calendar.current.date(from: endComponents) {
-                    self.saveNewDates(for: event, newStart: startDate, newEnd: endDate)
-                } else if let reminder = self.calendarItem as? EKReminder {
-                    self.saveNewDates(for: reminder, newStart: mergedStartComponments, newEnd: mergedEndComponments)
-                }
-                
-                // Create New Events or Reminders
-            } else if let startComponents = mergedStartComponments,
-                      let endComponents = mergedEndComponments,
-                      let startDate = Calendar.current.date(from: startComponents),
-                      let endDate = Calendar.current.date(from: endComponents) {
-                await self.createEvent(start: startDate, end: endDate)
-            } else {
-                let startDate = mergedStartComponments != nil ? mergedStartComponments : nil
-                let endDate = mergedEndComponments != nil ? mergedEndComponments : nil
-                await self.createReminder(start: startDate, end: endDate)
-            }
+            // Create New Events or Reminders
+        } else if let startComponents = mergedStartComponments,
+                  let endComponents = mergedEndComponments,
+                  let startDate = Calendar.current.date(from: startComponents),
+                  let endDate = Calendar.current.date(from: endComponents) {
+            await self.createEvent(start: startDate, end: endDate)
+        } else {
+            let startDate = mergedStartComponments != nil ? mergedStartComponments : nil
+            let endDate = mergedEndComponments != nil ? mergedEndComponments : nil
+            await self.createReminder(start: startDate, end: endDate)
         }
     }
     
@@ -506,5 +506,5 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.handleError(error)
         }
     }
-    #endif
+#endif
 }

@@ -13,7 +13,10 @@ struct TimeDrawClock: View {
     @State var currentTime = Time(sec: 0, min: 0, hour: 0)
     @State var timer = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
     @EnvironmentObject var itemList: CalendarItemListViewModel
+    
+    #if !os(watchOS)
     @EnvironmentObject var modifyItemViewModel: ModifyCalendarItemViewModel
+    #endif
     
     func setCurrentTime()  {
         let timeZone = TimeZone.autoupdatingCurrent
@@ -38,27 +41,33 @@ struct TimeDrawClock: View {
                                radius: radius,
                                width: lineWidth)
                     .foregroundColor(Color(cgColor: event.calendar?.cgColor ?? UIColor.clear.cgColor))
+                    #if !os(watchOS)
                     .gesture(TapGesture().onEnded {
                         modifyItemViewModel.open(event: event)
                     })
+                    #endif
             }
             ForEach(itemList.reminders, id: \.self) { reminder in
                 if let startDateComponents = reminder.startDateComponents {
                     if let dueDateComponents = reminder.dueDateComponents {
                         ClockEventLine(startComponents: startDateComponents, endComponents: dueDateComponents, radius: width / 2, width: 4)
                             .foregroundColor(reminder.calendar?.cgColor.map { Color($0) } ?? Color.clear)
-                            .gesture(TapGesture().onEnded({ value in
-                                self.modifyItemViewModel.open(reminder: reminder)
-                            }))
+                            #if !os(watchOS)
+                            .gesture(TapGesture().onEnded {
+                                modifyItemViewModel.open(reminder: reminder)
+                            })
+                            #endif
                     } else {
                         ClockEventLine(startComponents: startDateComponents,
                                        endComponents: startDateComponents,
                                        radius: width / 2,
                                        width: 4)
                         .foregroundColor(reminder.calendar?.cgColor.map { Color($0) } ?? Color.clear)
+                        #if !os(watchOS)
                         .gesture(TapGesture().onEnded {
                             modifyItemViewModel.open(reminder: reminder)
                         })
+                        #endif
                     }
                 }
             }
@@ -104,7 +113,9 @@ struct TimeDrawClock: View {
                 .mock(startHour: 1, endHour: 2, color: .cyan)
             ]
             
+            #if !os(watchOS)
             let modifyViewModel = ModifyCalendarItemViewModel()
+            #endif
             
             return GeometryReader { geo in
                 List {
@@ -122,7 +133,9 @@ struct TimeDrawClock: View {
                 }
             }
             .environmentObject(viewModel)
+            #if !os(watchOS)
             .environmentObject(modifyViewModel)
+            #endif
         }
     }
     
@@ -150,7 +163,9 @@ struct TimeDrawClock: View {
                 .mock(startHour: 22, endHour: 23, color: .cyan)
             ]
             
+            #if !os(watchOS)
             let modifyViewModel = ModifyCalendarItemViewModel()
+            #endif
             
             return VStack(spacing: 0) {
                 Spacer()
@@ -158,7 +173,9 @@ struct TimeDrawClock: View {
                 Spacer()
             }
             .environmentObject(viewModel)
+            #if !os(watchOS)
             .environmentObject(modifyViewModel)
+            #endif
         }
     }
     

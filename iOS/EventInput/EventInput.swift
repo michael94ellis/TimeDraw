@@ -129,9 +129,11 @@ struct EventInput: View {
                 .padding(.leading, 24)
             // Submit Button
             Button(action: {
-                // User submitted event by tapping plus
-                viewModel.submitEventOrReminder()
-                isFocused = false
+                Task {
+                    // User submitted event by tapping plus
+                    await viewModel.submitEventOrReminder()
+                    isFocused = false
+                }
             }) {
                 Image(systemName: viewModel.displayToast ? "checkmark.circle" : viewModel.editMode ? "circle" : "plus")
                     .frame(width: barHeight, height: barHeight)
@@ -196,7 +198,6 @@ struct EventInput: View {
                     viewModel.isAddEventTextFieldFocused = false
                 }
             }))
-            // TODO Toast
         } else {
             VStack {
                 Button(action: {
@@ -208,7 +209,6 @@ struct EventInput: View {
                 .matchedGeometryEffect(id: "textInput", in: animation)
             }
             .padding(14)
-            // TODO Toast
         }
     }
 }

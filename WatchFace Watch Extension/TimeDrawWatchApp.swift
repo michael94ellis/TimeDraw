@@ -12,7 +12,9 @@ import SwiftUI
 struct TimeDrawWatchApp: App {
         
     @StateObject private var listViewModel: CalendarItemListViewModel = .init()
+    #if !os(watchOS)
     @StateObject private var itemViewModel: ModifyCalendarItemViewModel = .init()
+    #endif
     @StateObject private var appSettings: AppSettings = .init()
     
     init() {
@@ -24,7 +26,9 @@ struct TimeDrawWatchApp: App {
             VStack(spacing: 0) {
                 Spacer()
                 TimeDrawClock()
+                #if !os(watchOS)
                     .environmentObject(self.itemViewModel)
+                #endif
                     .environmentObject(self.listViewModel)
                 #if DEBUG
                     .onAppear {

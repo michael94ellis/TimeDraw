@@ -8,6 +8,10 @@
 import SwiftUI
 
 extension Color {
+    
+    #if !os(watchOS)
+    static let systemBackground = Color(uiColor: .systemBackground)
+    #endif
     // App White, Gray, Black, Light/Dark colors
     static let dark: Color = Color(hex: "2D2926")
     static let darkGray: Color = Color(hex: "46403c")

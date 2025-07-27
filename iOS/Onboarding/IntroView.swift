@@ -21,7 +21,6 @@ struct IntroView<Content: View>: View {
             }
             Spacer()
         }
-        .background(.background)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

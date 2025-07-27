@@ -38,7 +38,6 @@
 		2F471C462E35B95C00D37709 /* ReviewRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F471C442E35B95C00D37709 /* ReviewRequestManager.swift */; };
 		2F542010279B4AE90046696B /* ModifyCalendarItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */; };
 		2F5427EC28D753D700F08952 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5427EB28D753D600F08952 /* IntroView.swift */; };
-		2F5427EF28D7787300F08952 /* DemoScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5427EE28D7787300F08952 /* DemoScreen.swift */; };
 		2F646BA72850283D00D7445D /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505122791370D00AF90F7 /* Inter-Black.ttf */; };
 		2F646BA82850283D00D7445D /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505132791370D00AF90F7 /* Inter-Bold.ttf */; };
 		2F646BA92850283D00D7445D /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505112791370C00AF90F7 /* Inter-ExtraBold.ttf */; };
@@ -233,7 +232,6 @@
 		2F52377829F99E5200BAD1EC /* WatchFace-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "WatchFace-App-Info.plist"; sourceTree = SOURCE_ROOT; };
 		2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyCalendarItemViewModel.swift; sourceTree = "<group>"; };
 		2F5427EB28D753D600F08952 /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
-		2F5427EE28D7787300F08952 /* DemoScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoScreen.swift; sourceTree = "<group>"; };
 		2F646BB0285038CF00D7445D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBarButtonItem.swift; sourceTree = "<group>"; };
 		2F6505022787A09900AF90F7 /* MainHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeader.swift; sourceTree = "<group>"; };
@@ -369,7 +367,6 @@
 			isa = PBXGroup;
 			children = (
 				2F26FE5D28CE56E900A9A0AE /* OnboardingExperience.swift */,
-				2F5427EE28D7787300F08952 /* DemoScreen.swift */,
 				2F5427EB28D753D600F08952 /* IntroView.swift */,
 			);
 			path = Onboarding;
@@ -867,7 +864,6 @@
 				2FDFFFD82E22C83F00B9D266 /* UIPopoverWrapperViewController.swift in Sources */,
 				2F8AB30727A1025100654FEF /* UIPickerTextField.swift in Sources */,
 				2F6505292791384500AF90F7 /* Inter-Font.swift in Sources */,
-				2F5427EF28D7787300F08952 /* DemoScreen.swift in Sources */,
 				2FB41CAE27D97D710067F250 /* TimeDrawClock.swift in Sources */,
 				2F471C462E35B95C00D37709 /* ReviewRequestManager.swift in Sources */,
 				2F5427EC28D753D700F08952 /* IntroView.swift in Sources */,

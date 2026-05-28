@@ -8,11 +8,9 @@
 import CoreData
 import EventKit
 import SwiftUI
-import ToastWindow
 
 struct MainViewContainer: View {
     
-    @Environment(\.toastManager) private var toastManager
     @EnvironmentObject private var appSettings: AppSettings
     @EnvironmentObject private var itemViewModel: ModifyCalendarItemViewModel
     @EnvironmentObject private var listViewModel: CalendarItemListViewModel
@@ -22,17 +20,14 @@ struct MainViewContainer: View {
 
     @ViewBuilder var blurOverlay: some View {
         if self.itemViewModel.isAddEventTextFieldFocused {
-            Color.black.opacity(0.6)
-                .blur(radius: 1)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .blur(radius: 1)
+            Color.black.opacity(0.25)
+                .ignoresSafeArea()
                 .contentShape(Rectangle())
-                .gesture(TapGesture().onEnded({
+                .onTapGesture {
                     withAnimation {
                         self.itemViewModel.isAddEventTextFieldFocused = false
                     }
-                }))
-                .edgesIgnoringSafeArea(.all)
+                }
         }
     }
     
@@ -59,18 +54,12 @@ struct MainViewContainer: View {
                 EventInput()
                     .environmentObject(appSettings)
             }
-        }
-        .onAppear {
-            showOnboardingIfAppropriate()
-        }
-        .onChange(of: appSettings.isFirstAppOpen) { _ in
-            showOnboardingIfAppropriate()
-        }
-    }
-    
-    func showOnboardingIfAppropriate() {
-        if appSettings.isFirstAppOpen {
-            _ = toastManager.showToast(content: OnboardingExperience(itemViewModel: itemViewModel, listViewModel: listViewModel))
+
+            if appSettings.isFirstAppOpen {
+                OnboardingExperience(itemViewModel: itemViewModel, listViewModel: listViewModel)
+                    .environmentObject(appSettings)
+                    .zIndex(1)
+            }
         }
     }
 }

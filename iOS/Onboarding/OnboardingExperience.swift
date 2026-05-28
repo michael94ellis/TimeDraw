@@ -6,13 +6,11 @@
 //
 
 import SwiftUI
-import ToastWindow
 
 struct OnboardingExperience: View {
     var itemViewModel: ModifyCalendarItemViewModel
     var listViewModel: CalendarItemListViewModel
     
-    @Environment(\.dismissAllToasts) private var dismissAllToasts
     @AppStorage(AppStorageKey.firstOpen) var isFirstAppOpen: Bool = true
     @State var currentPageIndex = 0
     
@@ -20,7 +18,6 @@ struct OnboardingExperience: View {
         currentPageIndex += 1
         if currentPageIndex >= 6 {
             isFirstAppOpen = false
-            dismissAllToasts()
             listViewModel.updateData()
         }
     }
@@ -43,12 +40,12 @@ struct OnboardingExperience: View {
                 Spacer()
             }
         case 4:
-            VStack {
-                Spacer()
+            VStack(spacing: 16) {
                 TimeDrawClock(events: [], reminders: [])
                 Text("The Analog Clock - visualize your events and reminders from any calendars")
-                Spacer()
+                    .multilineTextAlignment(.center)
             }
+            .frame(maxWidth: .infinity)
         case 5:
             VStack {
                 Spacer()
@@ -63,7 +60,6 @@ struct OnboardingExperience: View {
     
     var body: some View {
         ZStack {
-            // Full-screen background that collects taps
             Color.systemBackground.ignoresSafeArea()
             
             VStack {
@@ -94,6 +90,7 @@ struct OnboardingExperience: View {
                     VStack(spacing: 0) {
                         Spacer()
                         demoScreenContent
+                            .allowsHitTesting(false)
                         Spacer()
                     }
                     .padding(24)
@@ -101,8 +98,9 @@ struct OnboardingExperience: View {
             }
             .environmentObject(listViewModel)
             .padding(24)
-            .contentShape(Rectangle())
-            .onTapGesture { incrementOnboardingPage() }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .contentShape(Rectangle())
+        .onTapGesture { incrementOnboardingPage() }
     }
 }

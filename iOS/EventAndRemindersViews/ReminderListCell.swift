@@ -9,64 +9,74 @@ import SwiftUI
 import EventKit
 
 struct ReminderListCell: View {
-    
+
     var item: EKReminder
-    
+
+    private var timeSummary: String? {
+        if item.isCompleted, let completionDate = item.completionDate {
+            return DateFormatter.timeFormatter.string(from: completionDate)
+        }
+        return CalendarDisplayFormatters.reminderTimeRange(start: item.startDateComponents, due: item.dueDateComponents)
+    }
+
+    private var priorityLabel: String? {
+        CalendarDisplayFormatters.priorityLabel(for: item.priority)
+    }
+
     var body: some View {
-        HStack {
-            HStack {
-                Image(systemName: "deskclock")
-                    .foregroundColor(Color(uiColor: .darkGray))
-                Circle().fill(Color(cgColor: item.calendar.cgColor))
-                    .frame(width: 12, height: 12)
-                if item.isCompleted {
-                    Text(item.title.isEmpty ? "Untitled Reminder" : item.title)
-                        .strikethrough()
-                        .lineLimit(2)
-                        .foregroundColor(Color(uiColor: .darkGray))
-                } else {
-                    Text(item.title.isEmpty ? "Untitled Reminder" : item.title)
-                        .lineLimit(2)
-                        .foregroundColor(Color(uiColor: .darkGray))
-                }
-                Spacer()
-                if let rules = item.recurrenceRules, !rules.isEmpty {
-                    Image("repeat")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .font(.subheadline)
-                        .foregroundColor(Color(uiColor: .darkGray))
-                }
-                if item.priority > 0 {
-                    Text("Priority: \(item.priority)")
-                        .font(.caption)
-                        .foregroundColor(Color(uiColor: .darkGray))
-                }
-                if item.isCompleted, let completionDate = item.completionDate {
-                    Text(DateFormatter.timeFormatter.string(from: completionDate))
-                        .font(.callout)
-                        .foregroundColor(Color(uiColor: .darkGray))
-                } else {
-                    if let startDate = item.startDateComponents,
-                       let startHour = startDate.hour, let startMinute = startDate.minute {
-                        let startTime = "\(startHour):\(startMinute < 10 ? "0" : "")\(startMinute) \(startHour > 11 ? "PM" : "AM")"
-                        Text("\(startTime)")
-                            .font(.callout)
-                            .foregroundColor(Color(uiColor: .darkGray))
+        HStack(spacing: 12) {
+            Image(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
+                .font(.title3)
+                .foregroundStyle(item.isCompleted ? Color.green1 : Color.gray2)
+
+            RoundedRectangle(cornerRadius: 2, style: .continuous)
+                .fill(Color(cgColor: item.calendar.cgColor))
+                .frame(width: 4)
+                .padding(.vertical, 4)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(item.title.isEmpty ? "Untitled Reminder" : item.title)
+                    .font(.interSemiBold)
+                    .foregroundStyle(Color(uiColor: .label))
+                    .strikethrough(item.isCompleted, color: .secondary)
+                    .lineLimit(2)
+
+                HStack(spacing: 6) {
+                    if let timeSummary {
+                        Text(timeSummary)
+                            .font(.interFine)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
                     }
-                    if let dueDate = item.dueDateComponents,
-                       let dueHour = dueDate.hour, let dueMinute = dueDate.minute {
-                        Text(" - \(dueHour):\(dueMinute < 10 ? "0" : "")\(dueMinute) \(dueHour > 11 ? "PM" : "AM")")
-                            .font(.callout)
-                            .foregroundColor(Color(uiColor: .darkGray))
+                    if let priorityLabel {
+                        Text(priorityLabel)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                     }
                 }
             }
-            .padding(.vertical, 4)
-            .padding(.horizontal)
+
+            Spacer(minLength: 8)
+
+            if let rules = item.recurrenceRules, !rules.isEmpty {
+                Image(systemName: "repeat")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
         }
-        .frame(height: 45)
-        .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.15)))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .padding(.vertical, 10)
+        .padding(.horizontal, 12)
+        .opacity(item.isCompleted ? 0.55 : 1)
+        .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(accessibilityDescription)
+    }
+
+    private var accessibilityDescription: String {
+        var parts = [item.title.isEmpty ? "Untitled Reminder" : item.title]
+        if item.isCompleted { parts.append("completed") }
+        if let timeSummary { parts.append(timeSummary) }
+        if let priorityLabel { parts.append("\(priorityLabel) priority") }
+        return Array(parts).compactMap({ $0 }).joined(separator: ", ")
     }
 }

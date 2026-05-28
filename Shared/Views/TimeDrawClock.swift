@@ -75,6 +75,8 @@ struct TimeDrawClock: View {
             timeCircles()
             ClockFace()
         }
+        .frame(maxWidth: .infinity)
+        .aspectRatio(1, contentMode: .fit)
         .onAppear {
             let calendar = Calendar.current
             let currentDateTime = Date()

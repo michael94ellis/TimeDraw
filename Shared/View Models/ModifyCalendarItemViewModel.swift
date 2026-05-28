@@ -58,9 +58,6 @@ class ModifyCalendarItemViewModel: ObservableObject {
     // MARK: - Display State vars
     /// Used to determine if the event is being created or edited
     private(set) var editMode: Bool = false
-    /// Used to display the toast for when new things are mode
-    @Published var displayToast: Bool = false
-    @Published var toastMessage: String = ""
     
     @Published var isAddEventTextFieldFocused: Bool = false
     @Published var isDisplayingOptions: Bool = false
@@ -78,6 +75,45 @@ class ModifyCalendarItemViewModel: ObservableObject {
         let daysInThisWeek = Calendar.current.daysWithSameWeekOfYear(as: Date())
         self.daysOfTheWeek = daysInThisWeek.compactMap { DateFormatter.weekdayLetterFormatter.string(from: $0) }
         self.selectedCalendar = currentSelectedCalendar.loadEKCalendar()
+    }
+
+    var dateTimeSummary: String? {
+        guard isDateTimePickerOpen else { return nil }
+        return CalendarDisplayFormatters.inputDateTimeSummary(
+            startDate: newItemStartDate,
+            startTime: newItemStartTime,
+            endDate: newItemEndDate,
+            endTime: newItemEndTime
+        )
+    }
+
+    var notesSummary: String? {
+        guard isNotesInputOpen, !notesInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
+        let firstLine = notesInput.split(separator: "\n", maxSplits: 1).first.map(String.init) ?? notesInput
+        return firstLine.count > 40 ? String(firstLine.prefix(37)) + "…" : firstLine
+    }
+
+    var recurrenceSummary: String? {
+        guard isRecurrencePickerOpen else { return nil }
+        switch selectedRule {
+        case .daily:
+            let interval = frequencyDayValueInt ?? 1
+            return interval == 1 ? "Daily" : "Every \(interval) days"
+        case .weekly:
+            if frequencyWeekdayValues.isEmpty {
+                return "Weekly"
+            }
+            let names = frequencyWeekdayValues.map { String($0.description.prefix(3)) }.joined(separator: ", ")
+            return "Weekly · \(names)"
+        case .monthly:
+            if selectedMonthDays.isEmpty { return "Monthly" }
+            let days = selectedMonthDays.sorted().map(String.init).joined(separator: ", ")
+            return "Monthly · \(days)"
+        case .yearly:
+            return "Yearly"
+        @unknown default:
+            return selectedRule.description
+        }
     }
     
     @MainActor
@@ -291,13 +327,14 @@ class ModifyCalendarItemViewModel: ObservableObject {
     }
     
     /// Update the Toast notification to alert the user
-    @MainActor public func displayToast(_ message: String) {
-        let toast = MyToastView(message: message, duration: 3.0, animationDuration: 0.5)
-        toastManager.showToast(content: toast, duration: 3.5)
+    @MainActor public func displayToast(_ message: String, style: ToastStyle? = nil) {
+        let resolvedStyle = style ?? ToastStyle.inferred(from: message)
+        let toast = MyToastView(message: message, style: resolvedStyle, duration: 2.4, animationDuration: 0.3)
+        toastManager.showToast(content: toast, duration: 2.8)
     }
     
     @MainActor func handleError(_ error: NSError) {
-        self.displayToast(error.displayEKErrorDescription)
+        self.displayToast(error.displayEKErrorDescription, style: .error)
     }
     
     func addTimeToEvent() {
@@ -342,19 +379,19 @@ class ModifyCalendarItemViewModel: ObservableObject {
         if let reminder = self.calendarItem as? EKReminder {
             do {
                 try eventKitManager.eventStore.deleteReminder(identifier: reminder.calendarItemIdentifier)
-                self.displayToast("Reminder Deleted")
+                self.displayToast("Reminder Deleted", style: .destructive)
             } catch  {
                 print(error)
-                self.displayToast(error.localizedDescription)
+                self.displayToast(error.localizedDescription, style: .error)
             }
         }
         if let event = self.calendarItem as? EKEvent {
             do {
                 try eventKitManager.eventStore.deleteEvent(identifier: event.eventIdentifier, span: .futureEvents)
-                self.displayToast("Event Deleted")
+                self.displayToast("Event Deleted", style: .destructive)
             } catch  {
                 print(error)
-                self.displayToast(error.localizedDescription)
+                self.displayToast(error.localizedDescription, style: .error)
             }
         }
         self.reset()
@@ -365,7 +402,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     /// Create an EKCalendarItem for the given information OR the currently displayed EKCalendarItem will be saved
     @MainActor public func submitEventOrReminder() async {
         if self.isRecurrencePickerOpen, !self.isDateTimePickerOpen || self.newItemEndDate == nil {
-            self.displayToast("End Date Required")
+            self.displayToast("End Date Required", style: .error)
             return
         }
         // ToDo extract to function, clean up this date extraction
@@ -497,7 +534,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.handleRecurrence(for: event)
         do {
             try eventKitManager.eventStore.save(event, span: .futureEvents)
-            self.displayToast(message)
+            self.displayToast(message, style: .success)
             self.reset()
         } catch let error as NSError {
             print("Error saving event: \(error)")
@@ -511,7 +548,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.handleRecurrence(for: reminder)
         do {
             try eventKitManager.eventStore.save(reminder, commit: true)
-            self.displayToast(message)
+            self.displayToast(message, style: .success)
             self.reset()
         } catch let error as NSError {
             print("Error: saving reminder: \(error)")

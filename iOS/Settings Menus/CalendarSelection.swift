@@ -9,83 +9,53 @@ import Dependencies
 import EventKit
 import SwiftUI
 
-struct CalendarSelectionButton: View {
-    
-    @EnvironmentObject private var appSettings: AppSettings
-    @State private var showingCalendarSelection: Bool = false
-    
-    var body: some View {
-        Button(action: {
-            self.showingCalendarSelection.toggle()
-        }) {
-            Spacer()
-            Text("Select Calendars")
-            Spacer()
-        }
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 34)
-                        .fill(Color(uiColor: .systemGray6)))
-        .padding(.horizontal, 20)
-        .sheet(isPresented: self.$showingCalendarSelection) {
-            CalendarSelection(showingCalendarSelection: self.$showingCalendarSelection)
-        }
-    }
-}
-
 struct CalendarSelection: View {
-    
-    @Binding var showingCalendarSelection: Bool
+
     var selectedIds: [String] { appSettings.userSelectedCalendars.loadCalendarIds() }
     @EnvironmentObject var appSettings: AppSettings
     @Dependency(\.eventKitManager) private var eventKitManager
-    
-    func selectionList(of calendars: [EKCalendar], from selectedIds: [String]) -> some View {
-        ForEach(calendars, id: \.self) { calendar in
-            Button(action: {
-                var newIds = self.appSettings.userSelectedCalendars.loadCalendarIds()
-                if newIds.contains(where: { $0 == calendar.calendarIdentifier }) {
-                    newIds.removeAll(where: { $0 == calendar.calendarIdentifier })
-                    self.appSettings.userSelectedCalendars = newIds.archiveCalendars()
-                } else {
-                    newIds.append(calendar.calendarIdentifier)
-                    self.appSettings.userSelectedCalendars = newIds.archiveCalendars()
-                }
-            }) {
+
+    func toggleCalendar(_ calendar: EKCalendar) {
+        var newIds = appSettings.userSelectedCalendars.loadCalendarIds()
+        if newIds.contains(calendar.calendarIdentifier) {
+            newIds.removeAll { $0 == calendar.calendarIdentifier }
+        } else {
+            newIds.append(calendar.calendarIdentifier)
+        }
+        appSettings.userSelectedCalendars = newIds.archiveCalendars()
+    }
+
+    func selectionList(of calendars: [EKCalendar]) -> some View {
+        ForEach(calendars, id: \.calendarIdentifier) { calendar in
+            Button {
+                toggleCalendar(calendar)
+            } label: {
                 HStack {
-                    Circle().fill(Color(cgColor: calendar.cgColor)).frame(width: 20, height: 20)
+                    Circle()
+                        .fill(Color(cgColor: calendar.cgColor))
+                        .frame(width: 12, height: 12)
                     Text(calendar.title)
-                        .foregroundColor(.blue1)
+                        .foregroundStyle(Color(uiColor: .label))
                     Spacer()
                     if selectedIds.contains(calendar.calendarIdentifier) {
                         Image(systemName: "checkmark")
-                            .foregroundColor(.blue1)
+                            .foregroundStyle(Color.blue1)
                     }
                 }
             }
         }
     }
-    
+
     var body: some View {
-        NavigationView {
-            VStack {
-                List {
-                    Section("Events") {
-                        self.selectionList(of: eventKitManager.eventStore.calendars(for: .event), from: self.selectedIds)
-                    }
-                    Section("Reminders") {
-                        self.selectionList(of: eventKitManager.eventStore.calendars(for: .reminder), from: self.selectedIds)
-                    }
-                }
+        List {
+            Section("Events") {
+                selectionList(of: eventKitManager.eventStore.calendars(for: .event))
             }
-            .padding(.horizontal)
-            .padding(.top, 22)
-            .navigationTitle("Select Calendars")
-            .toolbar(content:  {
-                HStack {
-                    Spacer()
-                    Button("Done", action: { self.showingCalendarSelection.toggle() })
-                }
-            })
+            Section("Reminders") {
+                selectionList(of: eventKitManager.eventStore.calendars(for: .reminder))
+            }
         }
+        .navigationTitle("Calendars")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

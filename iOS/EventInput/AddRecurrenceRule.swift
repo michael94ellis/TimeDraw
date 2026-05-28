@@ -9,175 +9,118 @@ import SwiftUI
 import EventKit
 
 struct AddRecurrenceRule: View {
-    
+
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
-    @State var frequencyMonthDateAdaptor: Int? {
-        didSet {
-            if let frequencyMonthDateAdaptor = frequencyMonthDateAdaptor {
-                self.viewModel.frequencyMonthDate = frequencyMonthDateAdaptor - 1
-            }
-        }
-    }
-    
-    var selectedRecurrenceRuleBinding: Binding<EKRecurrenceFrequency> { Binding<EKRecurrenceFrequency>(get: { self.viewModel.selectedRule }, set: { self.viewModel.selectedRule = $0 })}
-    
-    var unselectedButton: some View {
-        Button(action: self.viewModel.openRecurrencePicker) {
-            HStack {
-                Image(systemName: "repeat")
-                    .resizable()
-                    .frame(width: 25, height: 21)
-                Text("Repeat")
-                    .frame(height: 48)
-            }
-            .foregroundColor(Color.blue1)
-            .frame(height: 48)
-            .frame(maxWidth: 600)
-            .background(RoundedRectangle(cornerRadius: 13).fill(Color(uiColor: .systemGray6))
-                            .shadow(radius: 4, x: 2, y: 4))
-        }
-        .contentShape(Rectangle())
-        .buttonStyle(.plain)
-    }
-    
-    var header: some View {
-        HStack {
-            Button(action: {
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Button {
                 withAnimation {
-                    self.viewModel.isRecurrenceUsingOccurences.toggle()
+                    if viewModel.isRecurrencePickerOpen {
+                        return
+                    }
+                    viewModel.openRecurrencePicker()
                 }
-            }) {
-                Text(self.viewModel.isRecurrenceUsingOccurences ? "Occurrences" : "Repeat")
-                    .padding(.horizontal)
+            } label: {
+                SummaryRowLabel(
+                    title: "Repeat",
+                    value: viewModel.isRecurrencePickerOpen ? viewModel.recurrenceSummary : nil,
+                    isExpanded: viewModel.isRecurrencePickerOpen
+                )
             }
             .buttonStyle(.plain)
-            Spacer()
-            Button(action: { self.viewModel.removeRecurrenceFromEvent() }) {
-                Text("Remove").foregroundColor(.red1)
+
+            if viewModel.isRecurrencePickerOpen {
+                FormDivider()
+                recurrenceDetails
             }
-            .padding(.horizontal)
         }
-        .padding(.top)
     }
-    
-    var rulePickerBinding: Binding<String?> {
-        Binding<String?>(get: { self.viewModel.selectedRule.description }, set: { newRule in
-            self.viewModel.selectedRule = EKRecurrenceFrequency.allCases.first(where: { $0.description == newRule }) ?? .daily })
+
+    private var recurrenceDetails: some View {
+        VStack(spacing: 12) {
+            Picker("Frequency", selection: $viewModel.selectedRule) {
+                ForEach(EKRecurrenceFrequency.allCases, id: \.self) { rule in
+                    Text(rule.description).tag(rule)
+                }
+            }
+            .pickerStyle(.segmented)
+            .padding(.horizontal, 12)
+            .padding(.top, 8)
+
+            recurrenceFrequencyContent
+                .padding(.horizontal, 12)
+
+            endConditionSection
+                .padding(.horizontal, 12)
+                .padding(.bottom, 12)
+
+            HStack {
+                Spacer()
+                DestructiveTextButton(title: "Remove Repeat") {
+                    viewModel.removeRecurrenceFromEvent()
+                }
+            }
+            .padding(.horizontal, 12)
+            .padding(.bottom, 12)
+        }
     }
-    
-    var rulePicker: some View {
-        SegmentedPicker(EKRecurrenceFrequency.allCases.compactMap({ $0.description }),
-                        selectedItem: self.rulePickerBinding,
-                        content: { item in
-            Text(item)
-                .font(.interRegular)
-                .padding(.horizontal, 8)
+
+    @ViewBuilder
+    private var recurrenceFrequencyContent: some View {
+        switch viewModel.selectedRule {
+        case .daily:
+            Stepper(value: Binding(
+                get: { viewModel.frequencyDayValueInt ?? 1 },
+                set: { viewModel.frequencyDayValueInt = $0; viewModel.endRecurrenceDate = nil }
+            ), in: 1...365) {
+                Text("Every \(viewModel.frequencyDayValueInt ?? 1) day(s)")
+                    .font(.interRegular)
+            }
+        case .weekly:
+            MultiPicker(EKWeekday.allCases, selections: $viewModel.frequencyWeekdayValues)
                 .padding(.vertical, 4)
-        })
-    }
-    
-    func dayFrequencyTextField(_ label: String) -> some View {
-        HStack {
-            Spacer()
-            Text(label)
-            TextField("", text: self.$viewModel.dayFrequencyText)
-                .keyboardType(.numberPad)
-                .frame(width: 90, height: 30)
-                .multilineTextAlignment(TextAlignment.center)
-                .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
-                .onChange(of: self.viewModel.dayFrequencyText, perform: { newText in
-                    if let intValue = Int(newText) {
-                        self.viewModel.frequencyDayValueInt = intValue
-                    }
-                })
-            Spacer()
-        }
-        .frame(height: 40)
-        .padding(.bottom, 10)
-    }
-    
-    var body: some View {
-        if self.viewModel.isRecurrencePickerOpen {
-            VStack {
-                self.header
-                Divider()
-                    .padding(.horizontal)
-                self.rulePicker
-                    .padding(.horizontal)
-                switch self.viewModel.selectedRule {
-                case .daily:
-                    HStack {
-                        Spacer()
-                        Text("Every")
-                        TextField("1", value: self.$viewModel.frequencyDayValueInt, formatter: NumberFormatter())
-                            .keyboardType(.numberPad)
-                            .frame(width: 90, height: 30)
-                            .multilineTextAlignment(TextAlignment.center)
-                            .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
-                            .onChange(of: self.viewModel.frequencyDayValueInt) { newNumber in
-                                if newNumber != nil {
-                                    self.viewModel.endRecurrenceDate = nil
-                                }
-                            }
-                        Text("Days")
-                        Spacer()
-                    }
-                    .frame(height: 40)
-                    .padding(.bottom, 10)
-                case .weekly:
-                    MultiPicker(EKWeekday.allCases, selections: self.$viewModel.frequencyWeekdayValues)
-                        .background(RoundedRectangle(cornerRadius: 8).fill(Color(uiColor: .systemGray3))
-                                        .shadow(radius: 4, x: 2, y: 4))
-                    .frame(height: 40)
-                    .padding(.bottom, 10)
-                case .monthly:
-                    CalendarMultiDateSelection(selectedDates: self.$viewModel.selectedMonthDays)
-                case .yearly:
-                    HStack {
-                        Text("Every:")
-                        PickerField("Month", data: Calendar.current.monthSymbols, selectionIndex: self.$viewModel.frequencyMonthDate)
-                            .frame(width: 90, height: 30)
-                            .multilineTextAlignment(TextAlignment.center)
-                            .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
-                    }
-                    CalendarMultiDateSelection(selectedDates: self.$viewModel.selectedMonthDays)
-                @unknown default:
-                    EmptyView()
-                }
+        case .monthly:
+            CalendarMultiDateSelection(selectedDates: $viewModel.selectedMonthDays)
+        case .yearly:
+            VStack(spacing: 8) {
                 HStack {
-                    if self.viewModel.isRecurrenceUsingOccurences {
-                        Spacer()
-                        Text("Repeat")
-                        TextField("123", value: self.$viewModel.numberOfOccurences, formatter: NumberFormatter())
-                            .keyboardType(.numberPad)
-                            .frame(width: 90, height: 30)
-                            .multilineTextAlignment(TextAlignment.center)
-                            .background(RoundedRectangle(cornerRadius: 4).fill(Color(uiColor: .systemGray5)))
-                            .onChange(of: self.viewModel.numberOfOccurences) { newNumber in
-                                if newNumber != nil {
-                                    self.viewModel.endRecurrenceDate = nil
-                                }
-                            }
-                        Text("times")
-                        Spacer()
-                    } else {
-                        Spacer()
-                        Text("End Date:  ")
-                        DateAndTimePickers(dateTime: self.$viewModel.endRecurrenceTime, dateDate: self.$viewModel.endRecurrenceDate, onTap: {
-                            self.viewModel.setSuggestedEndRecurrenceDate()
-                        })
-                        Spacer()
-                    }
+                    Text("Month")
+                        .font(.interRegular)
+                    Spacer()
+                    PickerField("Month", data: Calendar.current.monthSymbols, selectionIndex: $viewModel.frequencyMonthDate)
+                        .frame(width: 140, height: 34)
                 }
-                .padding(.horizontal)
-                .padding(.bottom)
+                CalendarMultiDateSelection(selectedDates: $viewModel.selectedMonthDays)
             }
-            .frame(maxWidth: 600)
-            .background(RoundedRectangle(cornerRadius: 13)
-                            .fill(Color(uiColor: .systemGray6))
-                            .shadow(radius: 4, x: 2, y: 4))
-        } else {
-            self.unselectedButton
+        @unknown default:
+            EmptyView()
+        }
+    }
+
+    private var endConditionSection: some View {
+        VStack(spacing: 8) {
+            Picker("Ends", selection: $viewModel.isRecurrenceUsingOccurences) {
+                Text("On date").tag(false)
+                Text("After").tag(true)
+            }
+            .pickerStyle(.segmented)
+
+            if viewModel.isRecurrenceUsingOccurences {
+                Stepper(value: Binding(
+                    get: { viewModel.numberOfOccurences ?? 1 },
+                    set: { viewModel.numberOfOccurences = $0; viewModel.endRecurrenceDate = nil }
+                ), in: 1...999) {
+                    Text("\(viewModel.numberOfOccurences ?? 1) occurrence(s)")
+                        .font(.interRegular)
+                }
+            } else {
+                DateAndTimePickers(
+                    dateTime: $viewModel.endRecurrenceTime,
+                    dateDate: $viewModel.endRecurrenceDate,
+                    onTap: { viewModel.setSuggestedEndRecurrenceDate() }
+                )
+            }
         }
     }
 }

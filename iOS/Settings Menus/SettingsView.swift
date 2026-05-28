@@ -10,69 +10,56 @@ import EventKit
 import StoreKit
 
 struct SettingsView: View {
-    
+
     public init(display: Binding<Bool>) {
         self._showSettingsPopover = display
     }
-    
-    @ObservedObject var appSettings: AppSettings = .init()
-    
+
+    @EnvironmentObject var appSettings: AppSettings
     @Binding var showSettingsPopover: Bool
-    let vineetURL = "https://www.vineetk.com/"
-    let michaelURL = "https://www.michaelrobertellis.com/"
-    let contactURL = "https://www.michaelrobertellis.com/contact"
-    
-    func link(for url: String, title: String) -> some View {
-        Link(destination: URL(string: url)!) {
-            Text(title)
-                .lineLimit(2)
-                .multilineTextAlignment(.leading)
-                .padding(.horizontal, 18)
-        }
-        .padding(.vertical)
-        .padding(.horizontal, 18)
-        .background(RoundedRectangle(cornerRadius: 34)
-                        .fill(Color(uiColor: .systemGray6)))
-    }
-    
-    @ViewBuilder var settingsFooter: some View {
-        
-        Button("Show Onboarding Info") {
-            appSettings.isFirstAppOpen = true
-        }
-        Button("Share Feedback!") {
-            ReviewRequestManager.shared.requestReview()
-        }
-        Image("Clock")
-            .resizable()
-            .frame(width: 66, height: 66)
-        Text("Team")
-        link(for: self.michaelURL, title: "iOS: Michael Robert Ellis")
-        link(for: self.vineetURL, title: "Design: Vineet Kapil")
-        Spacer()
-        Text("Version \(Bundle.main.releaseVersionNumber) (\(Bundle.main.buildVersionNumber))")
-        Spacer()
-        Spacer()
-    }
-    
+
+    private let vineetURL = "https://www.vineetk.com/"
+    private let michaelURL = "https://www.michaelrobertellis.com/"
+
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack(spacing: 12) {
-                    SettingsControls()
-                        .padding()
-                    Spacer()
-                    self.settingsFooter
-                }
-                .padding(.horizontal)
-                .padding(.top, 22)
-                .navigationTitle("Settings")
-                .toolbar(content:  {
-                    HStack {
-                        Spacer()
-                        Button("Done", action: { self.showSettingsPopover.toggle() })
+        NavigationStack {
+            Form {
+                SettingsControls()
+
+                Section("About") {
+                    Link(destination: URL(string: michaelURL)!) {
+                        Text("iOS: Michael Robert Ellis")
                     }
-                })
+                    Link(destination: URL(string: vineetURL)!) {
+                        Text("Design: Vineet Kapil")
+                    }
+                    NavigationLink {
+                        CalendlyInlineWidgetView()
+                    } label: {
+                        Text("Contact")
+                    }
+                    Button("Show Onboarding Info") {
+                        appSettings.isFirstAppOpen = true
+                    }
+                    Button("Share Feedback!") {
+                        ReviewRequestManager.shared.requestReview()
+                    }
+                    HStack {
+                        Text("Version")
+                        Spacer()
+                        Text("\(Bundle.main.releaseVersionNumber) (\(Bundle.main.buildVersionNumber))")
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+            .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") {
+                        showSettingsPopover = false
+                    }
+                }
             }
         }
     }

@@ -13,13 +13,12 @@ struct MainScrollableContent: View {
     @EnvironmentObject private var modifyItemViewModel: ModifyCalendarItemViewModel
     @EnvironmentObject private var itemList: CalendarItemListViewModel
     @EnvironmentObject private var appSettings: AppSettings
-    let clockHorizPadding: CGFloat = 100
+    let clockHorizPadding: CGFloat = 16
     let clockVertPadding: CGFloat = 20
     
     func performComplete(for item: EKReminder) {
         self.itemList.completeReminder(item)
-        self.modifyItemViewModel.saveAndDisplayToast(reminder: item, "Completed")
-        self.modifyItemViewModel.displayToast("Reminder Completed")
+        self.modifyItemViewModel.saveAndDisplayToast(reminder: item, "Reminder Completed")
     }
         
     var body: some View {
@@ -40,11 +39,15 @@ struct MainScrollableContent: View {
                 }
                 .buttonStyle(.plain)
                 .listRowSeparator(.hidden)
-                .listRowInsets(.init(top: 4, leading: 8, bottom: 4, trailing: 8))
+                .listRowInsets(.init(top: 2, leading: 16, bottom: 2, trailing: 16))
+                .listRowBackground(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(Color(uiColor: .secondarySystemGroupedBackground))
+                )
                 .swipeActions(allowsFullSwipe: true) {
                     Button(action: {
                         self.itemList.delete(item)
-                        self.modifyItemViewModel.displayToast("Event Deleted")
+                        self.modifyItemViewModel.displayToast("Event Deleted", style: .destructive)
                         self.itemList.updateData()
                     }) {
                         Image(systemName: "trash")
@@ -62,7 +65,11 @@ struct MainScrollableContent: View {
                 }
                 .buttonStyle(.plain)
                 .listRowSeparator(.hidden)
-                .listRowInsets(.init(top: 4, leading: 8, bottom: 4, trailing: 8))
+                .listRowInsets(.init(top: 2, leading: 16, bottom: 2, trailing: 16))
+                .listRowBackground(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(Color(uiColor: .secondarySystemGroupedBackground))
+                )
                 .swipeActions(allowsFullSwipe: true) {
                     Button(action: {
                         self.performComplete(for: item)
@@ -73,7 +80,7 @@ struct MainScrollableContent: View {
                     }
                     Button(action: {
                         self.itemList.delete(item)
-                        self.modifyItemViewModel.displayToast("Reminder Deleted")
+                        self.modifyItemViewModel.displayToast("Reminder Deleted", style: .destructive)
                         self.itemList.updateData()
                     }) {
                         Image(systemName: "trash")
@@ -86,8 +93,10 @@ struct MainScrollableContent: View {
                 .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
         }
         .environment(\.defaultMinListRowHeight, 0)
-        .listRowSpacing(0)
-        .listStyle(.plain)
+        .listRowSpacing(4)
+        .listStyle(.insetGrouped)
+        .scrollContentBackground(.hidden)
+        .background(Color(uiColor: .systemGroupedBackground))
         .refreshable(action: {
             self.itemList.updateData()
         })

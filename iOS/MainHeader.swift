@@ -70,19 +70,17 @@ struct MainHeader: View {
                 .fontWeight(.semibold)
                 .foregroundColor(Color.red1)
             Spacer()
-            Button(action: { self.showSettingsPopover.toggle() }) {
-                Image(systemName: "ellipsis")
-                    .frame(width: 40, height: 30)
+            Button {
+                showSettingsPopover.toggle()
+            } label: {
+                Image(systemName: "ellipsis.circle")
+                    .font(.title2)
+                    .foregroundStyle(Color(uiColor: .label))
             }
             .buttonStyle(.plain)
-            .frame(width: 55, height: 55)
-            .onTapGesture {
-                self.showSettingsPopover.toggle()
-            }
-            .contentShape(Rectangle())
-            .sheet(isPresented: self.$showSettingsPopover, content: {
+            .sheet(isPresented: $showSettingsPopover) {
                 SettingsView(display: $showSettingsPopover)
-            })
+            }
         }
         .padding(.horizontal)
     }
@@ -92,16 +90,17 @@ struct MainHeader: View {
             self.headerNav
             HStack(spacing: 4) {
                 ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.itemList.displayDate), id: \.self) { date in
-                    Button(action: {
-                        self.itemList.displayDate = date
-                    }, label: {
-                        if Calendar.current.isDate(date, inSameDayAs: self.itemList.displayDate) {
-                            self.weekDayHeader(for: date)
-                                .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.2)))
-                        } else {
-                            self.weekDayHeader(for: date)
-                        }
-                    })
+                    Button {
+                        itemList.displayDate = date
+                    } label: {
+                        weekDayHeader(for: date)
+                            .background {
+                                if Calendar.current.isDate(date, inSameDayAs: itemList.displayDate) {
+                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                        .fill(Color.secondary.opacity(0.15))
+                                }
+                            }
+                    }
                     .buttonStyle(.plain)
                 }
                 .transition(self.transitionDirection(direction: self.swipeDirection))

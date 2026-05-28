@@ -10,91 +10,93 @@ import EventKit
 import SwiftUI
 
 struct AddEventDateTimePicker: View {
-    
+
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
     @EnvironmentObject var calendarItemListViewModel: CalendarItemListViewModel
     @Dependency(\.eventKitManager) private var eventKitManager
-    private let barHeight: CGFloat = 96
-    
+
     func setSuggestedTime() {
         let displayDate = calendarItemListViewModel.displayDate
-        if self.viewModel.newItemStartTime == nil {
-            self.viewModel.newItemStartTime = displayDate.get(.hour, .minute, .second)
+        if viewModel.newItemStartTime == nil {
+            viewModel.newItemStartTime = displayDate.get(.hour, .minute, .second)
         }
-        if self.viewModel.newItemStartDate == nil {
-            self.viewModel.newItemStartDate = displayDate.get(.year, .month, .day)
+        if viewModel.newItemStartDate == nil {
+            viewModel.newItemStartDate = displayDate.get(.year, .month, .day)
         }
-        if self.viewModel.newItemEndTime == nil {
-            self.viewModel.newItemEndTime = Calendar.current.date(byAdding: .hour, value: 1, to: displayDate)?.get(.hour, .minute, .second)
+        if viewModel.newItemEndTime == nil {
+            viewModel.newItemEndTime = Calendar.current.date(byAdding: .hour, value: 1, to: displayDate)?.get(.hour, .minute, .second)
         }
-        if self.viewModel.newItemEndDate == nil {
-            self.viewModel.newItemEndDate = displayDate.get(.year, .month, .day)
+        if viewModel.newItemEndDate == nil {
+            viewModel.newItemEndDate = displayDate.get(.year, .month, .day)
         }
-        if self.viewModel.selectedCalendar == nil {
-            self.viewModel.selectedCalendar = eventKitManager.eventStore.defaultCalendarForNewEvents
+        if viewModel.selectedCalendar == nil {
+            viewModel.selectedCalendar = eventKitManager.eventStore.defaultCalendarForNewEvents
         }
     }
-    
+
+    private var startBinding: Binding<Date> {
+        dateBinding(date: $viewModel.newItemStartDate, time: $viewModel.newItemStartTime)
+    }
+
+    private var endBinding: Binding<Date> {
+        dateBinding(date: $viewModel.newItemEndDate, time: $viewModel.newItemEndTime)
+    }
+
     var body: some View {
-        if self.viewModel.isDateTimePickerOpen {
-            VStack {
-                HStack {
-                    Text("Time")
-                        .padding(.horizontal)
-                    Spacer()
-                    if !self.viewModel.editMode || self.viewModel.calendarItem as? EKReminder != nil {
-                        Button(action: { self.viewModel.removeTimeFromEvent() }) {
-                            Text("Remove").foregroundColor(.red1)
-                        }
-                        .padding(.horizontal)
+        VStack(spacing: 0) {
+            Button {
+                withAnimation {
+                    if viewModel.isDateTimePickerOpen {
+                        return
                     }
+                    viewModel.addTimeToEvent()
+                    setSuggestedTime()
                 }
-                .padding(.top)
-                Divider()
-                    .padding(.horizontal)
-                VStack {
-                    HStack {
-                        Spacer()
-                        Text("Start:")
-                            .frame(width: 75, height: 30, alignment: .leading)
-                        Spacer()
-                        DateAndTimePickers(dateTime: self.$viewModel.newItemStartTime,
-                                           dateDate: self.$viewModel.newItemStartDate,
-                                           onTap: { })
-                        Spacer()
-                    }
-                    .padding(.horizontal, 16)
-                    HStack {
-                        Spacer()
-                        Text("End:")
-                            .frame(width: 75, height: 30, alignment: .leading)
-                        Spacer()
-                        DateAndTimePickers(dateTime: self.$viewModel.newItemEndTime,
-                                           dateDate: self.$viewModel.newItemEndDate,
-                                           onTap: { })
-                        Spacer()
-                    }
-                    .padding(.horizontal, 16)
-                }
-                .padding(.bottom)
-                
+            } label: {
+                SummaryRowLabel(
+                    title: "Date & Time",
+                    value: viewModel.isDateTimePickerOpen ? viewModel.dateTimeSummary : nil,
+                    isExpanded: viewModel.isDateTimePickerOpen
+                )
             }
-            .frame(maxWidth: 600)
-            .background(RoundedRectangle(cornerRadius: 13)
-                            .fill(Color(uiColor: .systemGray6))
-                            .shadow(radius: 4, x: 2, y: 4))
-            .onAppear(perform: self.setSuggestedTime)
-        } else {
-            Button(action: self.viewModel.addTimeToEvent) {
-                Text("Add Time")
-                    .frame(maxWidth: 600)
-                    .frame(height: 48)
-                    .foregroundColor(Color.blue1)
-                    .background(RoundedRectangle(cornerRadius: 13).fill(Color(uiColor: .systemGray6))
-                                    .shadow(radius: 4, x: 2, y: 4))
-            }
-            .contentShape(Rectangle())
             .buttonStyle(.plain)
+
+            if viewModel.isDateTimePickerOpen {
+                FormDivider()
+                VStack(spacing: 4) {
+                    DatePicker("Starts", selection: startBinding, displayedComponents: [.date, .hourAndMinute])
+                        .font(.interRegular)
+                        .padding(.horizontal, 12)
+                    DatePicker("Ends", selection: endBinding, displayedComponents: [.date, .hourAndMinute])
+                        .font(.interRegular)
+                        .padding(.horizontal, 12)
+
+                    if !viewModel.editMode || viewModel.calendarItem as? EKReminder != nil {
+                        HStack {
+                            Spacer()
+                            DestructiveTextButton(title: "Remove Time") {
+                                viewModel.removeTimeFromEvent()
+                            }
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.bottom, 12)
+                    }
+                }
+                .padding(.top, 4)
+                .onAppear(perform: setSuggestedTime)
+            }
         }
+    }
+
+    private func dateBinding(date: Binding<DateComponents?>, time: Binding<DateComponents?>) -> Binding<Date> {
+        Binding(
+            get: {
+                CalendarDisplayFormatters.mergedDate(date: date.wrappedValue, time: time.wrappedValue) ?? Date()
+            },
+            set: { newValue in
+                date.wrappedValue = Calendar.current.dateComponents([.year, .month, .day], from: newValue)
+                time.wrappedValue = Calendar.current.dateComponents([.hour, .minute, .second], from: newValue)
+            }
+        )
     }
 }

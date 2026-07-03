@@ -28,6 +28,7 @@ struct MainScrollableContent: View {
                 .padding(.horizontal, clockHorizPadding)
                 .listRowSeparator(.hidden)
                 .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                .listRowBackground(Color.clear)
                 .environment(\.openCalendarItem, modifyItemViewModel.open)
             ForEach(self.itemList.events) { item in
                 Button(action: {
@@ -88,10 +89,8 @@ struct MainScrollableContent: View {
                     }
                 }
             }
-            Spacer(minLength: 120)
-                .listRowSeparator(.hidden)
-                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
         }
+        .padding(.bottom, 80)
         .environment(\.defaultMinListRowHeight, 0)
         .listRowSpacing(4)
         .listStyle(.insetGrouped)
@@ -100,8 +99,8 @@ struct MainScrollableContent: View {
         .refreshable(action: {
             self.itemList.updateData()
         })
-        .onChange(of: modifyItemViewModel.isAddEventTextFieldFocused) { newValue in
-            if !newValue {
+        .onChange(of: modifyItemViewModel.isAddEventTextFieldFocused) {
+            if !modifyItemViewModel.isAddEventTextFieldFocused {
                 self.itemList.updateData()
             }
         }

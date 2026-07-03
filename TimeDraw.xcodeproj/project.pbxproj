@@ -63,9 +63,6 @@
 		2F6505242791370D00AF90F7 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505132791370D00AF90F7 /* Inter-Bold.ttf */; };
 		2F6505292791384500AF90F7 /* Inter-Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505282791384500AF90F7 /* Inter-Font.swift */; };
 		2F7A0BC52E35C25300B69C71 /* MyToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7A0BC32E35C25300B69C71 /* MyToastView.swift */; };
-		2FAPP0012E36000100B69C71 /* FormStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAPP0002E36000100B69C71 /* FormStyles.swift */; };
-		2FAPP0032E36000200B69C71 /* CalendlyInlineWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAPP0022E36000200B69C71 /* CalendlyInlineWidgetView.swift */; };
-		2FDEBUG022E37000100B69C71 /* DebugTestDataSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDEBUG012E37000100B69C71 /* DebugTestDataSeeder.swift */; };
 		2F7A0BC72E35C2EA00B69C71 /* ToastWindow in Frameworks */ = {isa = PBXBuildFile; productRef = 2F7A0BC62E35C2EA00B69C71 /* ToastWindow */; };
 		2F7A0BD02E35C5F100B69C71 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F7A0BCF2E35C5F100B69C71 /* WidgetKit.framework */; };
 		2F7A0BD22E35C5F100B69C71 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F7A0BD12E35C5F100B69C71 /* SwiftUI.framework */; };
@@ -107,6 +104,8 @@
 		2F8AB30A27A1026500654FEF /* PickerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB30927A1026500654FEF /* PickerField.swift */; };
 		2F8AB30D27A220E400654FEF /* DateAndTimePickers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB30C27A220E400654FEF /* DateAndTimePickers.swift */; };
 		2F8AB31027A229DA00654FEF /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB30F27A229DA00654FEF /* Utils.swift */; };
+		2FAPP0012E36000100B69C71 /* FormStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAPP0002E36000100B69C71 /* FormStyles.swift */; };
+		2FAPP0032E36000200B69C71 /* CalendlyInlineWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAPP0022E36000200B69C71 /* CalendlyInlineWidgetView.swift */; };
 		2FB41CAE27D97D710067F250 /* TimeDrawClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CAD27D97D710067F250 /* TimeDrawClock.swift */; };
 		2FB41CB127DA5DBE0067F250 /* ReminderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CB027DA5DBE0067F250 /* ReminderListCell.swift */; };
 		2FB41CB427DA5E220067F250 /* EventListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CB327DA5E220067F250 /* EventListCell.swift */; };
@@ -120,6 +119,13 @@
 		2FB60E5527E48DFE004DA305 /* CalendarSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB60E5427E48DFE004DA305 /* CalendarSelection.swift */; };
 		2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
+		2FCLKGE22E38000200B69C71 /* ClockEventGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCLKGE02E38000100B69C71 /* ClockEventGeometry.swift */; };
+		2FCLKGE32E38000200B69C71 /* ClockEventLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCLKGE12E38000100B69C71 /* ClockEventLayoutEngine.swift */; };
+		2FCLKGE42E38000300B69C71 /* ClockEventGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCLKGE02E38000100B69C71 /* ClockEventGeometry.swift */; };
+		2FCLKGE52E38000300B69C71 /* ClockEventLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCLKGE12E38000100B69C71 /* ClockEventLayoutEngine.swift */; };
+		2FCLKGE62E38000400B69C71 /* ClockEventGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCLKGE02E38000100B69C71 /* ClockEventGeometry.swift */; };
+		2FCLKGE72E38000400B69C71 /* ClockEventLayoutEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCLKGE12E38000100B69C71 /* ClockEventLayoutEngine.swift */; };
+		2FCLKGE92E38000500B69C71 /* ClockEventLayoutEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCLKGE82E38000500B69C71 /* ClockEventLayoutEngineTests.swift */; };
 		2FD40789284FBB700022FC49 /* TimeDrawWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */; };
 		2FD4078D284FBB700022FC49 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4078C284FBB700022FC49 /* NotificationController.swift */; };
 		2FD4078F284FBB700022FC49 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4078E284FBB700022FC49 /* NotificationView.swift */; };
@@ -147,6 +153,7 @@
 		2FD6BE452E2177C900AA7C5A /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE422E2177C900AA7C5A /* Time.swift */; };
 		2FD6BE482E2177ED00AA7C5A /* Double-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */; };
 		2FD6BE492E2177ED00AA7C5A /* Double-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */; };
+		2FDEBUG022E37000100B69C71 /* DebugTestDataSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDEBUG012E37000100B69C71 /* DebugTestDataSeeder.swift */; };
 		2FDFFFCE2E22C77200B9D266 /* CalendarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFCD2E22C77200B9D266 /* CalendarItemType.swift */; };
 		2FDFFFCF2E22C77200B9D266 /* CalendarItemType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFCD2E22C77200B9D266 /* CalendarItemType.swift */; };
 		2FDFFFD22E22C77B00B9D266 /* ItemRecurrenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFD12E22C77B00B9D266 /* ItemRecurrenceType.swift */; };
@@ -252,9 +259,6 @@
 		2F6505272791373800AF90F7 /* TimeDraw--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TimeDraw--iOS--Info.plist"; sourceTree = "<group>"; };
 		2F6505282791384500AF90F7 /* Inter-Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Inter-Font.swift"; sourceTree = "<group>"; };
 		2F7A0BC32E35C25300B69C71 /* MyToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyToastView.swift; sourceTree = "<group>"; };
-		2FAPP0002E36000100B69C71 /* FormStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStyles.swift; sourceTree = "<group>"; };
-		2FAPP0022E36000200B69C71 /* CalendlyInlineWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendlyInlineWidgetView.swift; sourceTree = "<group>"; };
-		2FDEBUG012E37000100B69C71 /* DebugTestDataSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTestDataSeeder.swift; sourceTree = "<group>"; };
 		2F7A0BCE2E35C5F100B69C71 /* TimeDrawWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TimeDrawWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F7A0BCF2E35C5F100B69C71 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		2F7A0BD12E35C5F100B69C71 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -268,6 +272,8 @@
 		2F8AB30927A1026500654FEF /* PickerField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerField.swift; sourceTree = "<group>"; };
 		2F8AB30C27A220E400654FEF /* DateAndTimePickers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndTimePickers.swift; sourceTree = "<group>"; };
 		2F8AB30F27A229DA00654FEF /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		2FAPP0002E36000100B69C71 /* FormStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStyles.swift; sourceTree = "<group>"; };
+		2FAPP0022E36000200B69C71 /* CalendlyInlineWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendlyInlineWidgetView.swift; sourceTree = "<group>"; };
 		2FB41CAD27D97D710067F250 /* TimeDrawClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawClock.swift; sourceTree = "<group>"; };
 		2FB41CB027DA5DBE0067F250 /* ReminderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListCell.swift; sourceTree = "<group>"; };
 		2FB41CB327DA5E220067F250 /* EventListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListCell.swift; sourceTree = "<group>"; };
@@ -281,6 +287,9 @@
 		2FB60E5427E48DFE004DA305 /* CalendarSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarSelection.swift; sourceTree = "<group>"; };
 		2FC6C7B42786434600D75568 /* MultiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTextField.swift; sourceTree = "<group>"; };
 		2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalTextField.swift; sourceTree = "<group>"; };
+		2FCLKGE02E38000100B69C71 /* ClockEventGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockEventGeometry.swift; sourceTree = "<group>"; };
+		2FCLKGE12E38000100B69C71 /* ClockEventLayoutEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockEventLayoutEngine.swift; sourceTree = "<group>"; };
+		2FCLKGE82E38000500B69C71 /* ClockEventLayoutEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockEventLayoutEngineTests.swift; sourceTree = "<group>"; };
 		2FD4077B284FBB6F0022FC49 /* WatchFace App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchFace App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawWatchApp.swift; sourceTree = "<group>"; };
 		2FD4078C284FBB700022FC49 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
@@ -293,6 +302,7 @@
 		2FD407A1284FBB700022FC49 /* WatchFaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchFaceTests.swift; sourceTree = "<group>"; };
 		2FD6BE422E2177C900AA7C5A /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double-Extension.swift"; sourceTree = "<group>"; };
+		2FDEBUG012E37000100B69C71 /* DebugTestDataSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTestDataSeeder.swift; sourceTree = "<group>"; };
 		2FDFFFCD2E22C77200B9D266 /* CalendarItemType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarItemType.swift; sourceTree = "<group>"; };
 		2FDFFFD12E22C77B00B9D266 /* ItemRecurrenceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRecurrenceType.swift; sourceTree = "<group>"; };
 		2FDFFFD52E22C82A00B9D266 /* PopoverWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverWrapper.swift; sourceTree = "<group>"; };
@@ -427,6 +437,7 @@
 			children = (
 				2F39B85C27823CF600FE72C3 /* Tests_iOS.swift */,
 				2F39B85E27823CF700FE72C3 /* Tests_iOSLaunchTests.swift */,
+				2FCLKGE82E38000500B69C71 /* ClockEventLayoutEngineTests.swift */,
 			);
 			path = "Tests iOS";
 			sourceTree = "<group>";
@@ -538,6 +549,8 @@
 			children = (
 				2FB41CAD27D97D710067F250 /* TimeDrawClock.swift */,
 				2FB60E4B27E21690004DA305 /* ClockFace.swift */,
+				2FCLKGE02E38000100B69C71 /* ClockEventGeometry.swift */,
+				2FCLKGE12E38000100B69C71 /* ClockEventLayoutEngine.swift */,
 				2FB60E4827E21571004DA305 /* ClockEventLine.swift */,
 				2F7A0BC32E35C25300B69C71 /* MyToastView.swift */,
 				2FAPP0002E36000100B69C71 /* FormStyles.swift */,
@@ -737,7 +750,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					2F39B84A27823CF600FE72C3 = {
 						CreatedOnToolsVersion = 13.2;
@@ -881,6 +894,8 @@
 				2F24458827D8BDD0005BF37D /* SwipeGesture.swift in Sources */,
 				2F2111302799B62D0041EE85 /* MainScrollableContent.swift in Sources */,
 				2FB60E4927E21571004DA305 /* ClockEventLine.swift in Sources */,
+				2FCLKGE22E38000200B69C71 /* ClockEventGeometry.swift in Sources */,
+				2FCLKGE32E38000200B69C71 /* ClockEventLayoutEngine.swift in Sources */,
 				2F6505062787DA3C00AF90F7 /* EventInput.swift in Sources */,
 				2F42C59D2784E3DE00F0BEB2 /* EventKitManager.swift in Sources */,
 				2F2343FC27D454BC0064B635 /* CalendarView.swift in Sources */,
@@ -919,6 +934,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F39B85F27823CF700FE72C3 /* Tests_iOSLaunchTests.swift in Sources */,
+				2FCLKGE92E38000500B69C71 /* ClockEventLayoutEngineTests.swift in Sources */,
 				2F39B85D27823CF600FE72C3 /* Tests_iOS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -949,6 +965,8 @@
 				2F7A0BEB2E35C81300B69C71 /* ItemRecurrenceType.swift in Sources */,
 				2F7A0BEA2E35C80600B69C71 /* AppSettings.swift in Sources */,
 				2F7A0BE42E35C75400B69C71 /* ClockEventLine.swift in Sources */,
+				2FCLKGE42E38000300B69C71 /* ClockEventGeometry.swift in Sources */,
+				2FCLKGE52E38000300B69C71 /* ClockEventLayoutEngine.swift in Sources */,
 				2F7A0BED2E35C82B00B69C71 /* ModifyCalendarItemViewModel.swift in Sources */,
 				2F7A0BE62E35C75400B69C71 /* ClockHands.swift in Sources */,
 			);
@@ -978,6 +996,8 @@
 				2FD407D8284FBDFB0022FC49 /* EventKitManager.swift in Sources */,
 				2FD6BE492E2177ED00AA7C5A /* Double-Extension.swift in Sources */,
 				2FD407C0284FBC050022FC49 /* ClockEventLine.swift in Sources */,
+				2FCLKGE62E38000400B69C71 /* ClockEventGeometry.swift in Sources */,
+				2FCLKGE72E38000400B69C71 /* ClockEventLayoutEngine.swift in Sources */,
 				2FD407D1284FBC860022FC49 /* EventError.swift in Sources */,
 				2FD407C1284FBC050022FC49 /* TimeDrawClock.swift in Sources */,
 				2FD407C2284FBC050022FC49 /* ClockFace.swift in Sources */,
@@ -1076,6 +1096,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1133,6 +1154,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
@@ -1160,7 +1182,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1198,7 +1220,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

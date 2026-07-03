@@ -65,6 +65,7 @@
 		2F7A0BC52E35C25300B69C71 /* MyToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7A0BC32E35C25300B69C71 /* MyToastView.swift */; };
 		2FAPP0012E36000100B69C71 /* FormStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAPP0002E36000100B69C71 /* FormStyles.swift */; };
 		2FAPP0032E36000200B69C71 /* CalendlyInlineWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAPP0022E36000200B69C71 /* CalendlyInlineWidgetView.swift */; };
+		2FDEBUG022E37000100B69C71 /* DebugTestDataSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDEBUG012E37000100B69C71 /* DebugTestDataSeeder.swift */; };
 		2F7A0BC72E35C2EA00B69C71 /* ToastWindow in Frameworks */ = {isa = PBXBuildFile; productRef = 2F7A0BC62E35C2EA00B69C71 /* ToastWindow */; };
 		2F7A0BD02E35C5F100B69C71 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F7A0BCF2E35C5F100B69C71 /* WidgetKit.framework */; };
 		2F7A0BD22E35C5F100B69C71 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F7A0BD12E35C5F100B69C71 /* SwiftUI.framework */; };
@@ -253,6 +254,7 @@
 		2F7A0BC32E35C25300B69C71 /* MyToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyToastView.swift; sourceTree = "<group>"; };
 		2FAPP0002E36000100B69C71 /* FormStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStyles.swift; sourceTree = "<group>"; };
 		2FAPP0022E36000200B69C71 /* CalendlyInlineWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendlyInlineWidgetView.swift; sourceTree = "<group>"; };
+		2FDEBUG012E37000100B69C71 /* DebugTestDataSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTestDataSeeder.swift; sourceTree = "<group>"; };
 		2F7A0BCE2E35C5F100B69C71 /* TimeDrawWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TimeDrawWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F7A0BCF2E35C5F100B69C71 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		2F7A0BD12E35C5F100B69C71 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -524,6 +526,7 @@
 				2FDFFFD92E22C84400B9D266 /* Popover */,
 				2F6505082787F87A00AF90F7 /* SettingsView.swift */,
 				2FAPP0022E36000200B69C71 /* CalendlyInlineWidgetView.swift */,
+				2FDEBUG012E37000100B69C71 /* DebugTestDataSeeder.swift */,
 				2FB41CD627DEDBB70067F250 /* SettingsControls.swift */,
 				2FB60E5427E48DFE004DA305 /* CalendarSelection.swift */,
 			);
@@ -894,6 +897,7 @@
 				2F7A0BC52E35C25300B69C71 /* MyToastView.swift in Sources */,
 				2FAPP0012E36000100B69C71 /* FormStyles.swift in Sources */,
 				2FAPP0032E36000200B69C71 /* CalendlyInlineWidgetView.swift in Sources */,
+				2FDEBUG022E37000100B69C71 /* DebugTestDataSeeder.swift in Sources */,
 				2F42C5A62784E6FC00F0BEB2 /* EventError.swift in Sources */,
 				2FB41CB127DA5DBE0067F250 /* ReminderListCell.swift in Sources */,
 				2FB41CDD27DEE4DE0067F250 /* SegmentedPicker.swift in Sources */,

@@ -26,6 +26,12 @@ struct SettingsView: View {
             Form {
                 SettingsControls()
 
+                #if DEBUG
+                Section("Debug") {
+                    DebugSeedTestDataButton()
+                }
+                #endif
+
                 Section("About") {
                     Link(destination: URL(string: michaelURL)!) {
                         Text("iOS: Michael Robert Ellis")

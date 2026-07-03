@@ -26,6 +26,7 @@ struct TimeDrawApp: App {
                 .environmentObject(listViewModel)
                 .environmentObject(appSettings)
                 .onAppear {
+                    // FIXME: This should go after adding an event
                     ReviewRequestManager.shared.requestReviewIfAppropriate()
                 }
         }

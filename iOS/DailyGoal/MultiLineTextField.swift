@@ -21,7 +21,7 @@ fileprivate struct UITextViewWrapper: UIViewRepresentable {
         textField.delegate = context.coordinator
         textField.font = .preferredFont(forTextStyle: .callout)
         textField.isEditable = true
-        textField.textAlignment = .left
+        textField.textAlignment = .center
         textField.font = UIFont.preferredFont(forTextStyle: .body)
         textField.isSelectable = true
         textField.isUserInteractionEnabled = true
@@ -143,9 +143,8 @@ struct MultilineTextField: View {
     var placeholderView: some View {
         if self.text.isEmpty, self.showingPlaceholder, !self.isFocused.wrappedValue {
             Text(placeholder)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(alignment: .center)
                 .foregroundColor(.gray)
-                .padding(.horizontal, 4)
         }
     }
 }

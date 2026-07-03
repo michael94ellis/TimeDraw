@@ -90,6 +90,105 @@ struct ClockEventLine: Shape {
         let y = rect.midY + radius * sin(bearing)
         return CGPoint(x: x, y: y)
     }
+
+    private func smoothstep(_ t: Double) -> Double {
+        let clamped = min(max(t, 0), 1)
+        return clamped * clamped * (3 - 2 * clamped)
+    }
+
+    private func addRadiusInterpolatedSweep(
+        to path: inout Path,
+        in rect: CGRect,
+        from startAngle: Double,
+        to endAngle: Double,
+        amRadius: CGFloat,
+        pmRadius: CGFloat,
+        steps: Int,
+        moveToStart: Bool
+    ) {
+        guard endAngle > startAngle else { return }
+
+        for i in 0...steps {
+            let t = Double(i) / Double(steps)
+            let angle = startAngle + (endAngle - startAngle) * t
+            let eased = smoothstep(t)
+            let r = amRadius + (pmRadius - amRadius) * CGFloat(eased)
+            let point = getPoint(radius: r, in: rect, for: CGFloat(angle * .pi / 180))
+            if i == 0 && moveToStart {
+                path.move(to: point)
+            } else {
+                path.addLine(to: point)
+            }
+        }
+    }
+
+    private func addNoonCrossover(
+        to path: inout Path,
+        in rect: CGRect,
+        center: CGPoint,
+        amRadius: CGFloat,
+        pmRadius: CGFloat,
+        startDegrees: Double,
+        endDegrees: Double
+    ) {
+        let noon = 270.0
+        let bendHalf = 8.0
+        let steps = 24
+
+        // PM times map to negative degrees (e.g. 1pm = -60°); unwrap for comparisons.
+        var normalizedEndDegrees = endDegrees
+        if normalizedEndDegrees < startDegrees {
+            normalizedEndDegrees += 360
+        }
+
+        let bendStart = max(startDegrees, noon - bendHalf)
+        let bendEnd = min(normalizedEndDegrees, noon + bendHalf)
+
+        if bendStart >= bendEnd {
+            addRadiusInterpolatedSweep(
+                to: &path,
+                in: rect,
+                from: startDegrees,
+                to: normalizedEndDegrees,
+                amRadius: amRadius,
+                pmRadius: pmRadius,
+                steps: steps,
+                moveToStart: true
+            )
+            return
+        }
+
+        if startDegrees < bendStart {
+            path.addArc(
+                center: center,
+                radius: amRadius,
+                startAngle: .degrees(startDegrees),
+                endAngle: .degrees(bendStart),
+                clockwise: false
+            )
+        }
+
+        addRadiusInterpolatedSweep(
+            to: &path,
+            in: rect,
+            from: bendStart,
+            to: bendEnd,
+            amRadius: amRadius,
+            pmRadius: pmRadius,
+            steps: steps,
+            moveToStart: startDegrees >= bendStart
+        )
+
+        if bendEnd < normalizedEndDegrees {
+            path.addArc(
+                center: center,
+                radius: pmRadius,
+                startAngle: .degrees(bendEnd),
+                endAngle: .degrees(endDegrees),
+                clockwise: false
+            )
+        }
+    }
     
     func path(in rect: CGRect) -> Path {
         let center = CGPoint(x: rect.midX, y: rect.midY)
@@ -104,15 +203,18 @@ struct ClockEventLine: Shape {
         case.evening:
             path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: pmRadius, startAngle: .degrees(self.startDegrees), endAngle: .degrees(self.endDegrees), clockwise: false)
         case .both:
-            // noon crossover
-            let afternoonCrossoverDegrees: Double = 270
-            // morning
-            path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: amRadius, startAngle: .degrees(self.startDegrees), endAngle: .degrees(afternoonCrossoverDegrees), clockwise: false)
-            // evening
-            path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: pmRadius, startAngle: .degrees(afternoonCrossoverDegrees), endAngle: .degrees(self.endDegrees), clockwise: false)
+            addNoonCrossover(
+                to: &path,
+                in: rect,
+                center: center,
+                amRadius: amRadius,
+                pmRadius: pmRadius,
+                startDegrees: self.startDegrees,
+                endDegrees: self.endDegrees
+            )
         default:
             lineDashes = [0, 0]
         }
-        return path.strokedPath(.init(lineWidth: self.width, lineCap: .square, lineJoin: .miter, dash: lineDashes))
+        return path.strokedPath(.init(lineWidth: self.width, lineCap: .round, lineJoin: .round, dash: lineDashes))
     }
 }

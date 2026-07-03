@@ -71,9 +71,9 @@ struct TimeDrawClock: View {
     
     var body: some View {
         ZStack {
-            ClockHands(currentTime: $currentTime)
             timeCircles()
             ClockFace()
+            ClockHands(currentTime: $currentTime)
         }
         .frame(maxWidth: .infinity)
         .aspectRatio(1, contentMode: .fit)

@@ -21,6 +21,7 @@ struct ClockFace: View {
         ForEach(hours, id: \.self) { i in
             let num = (i / 5) + 6
             Text("\(num > 12 ? num - 12 : num)")
+                .bold()
                 .rotationEffect(.degrees(Double((num - 12) * -30) - 180))
                 .offset(y: markOffset)
                 .rotationEffect(Angle(degrees: Double(i) * 6))
@@ -46,9 +47,9 @@ struct ClockFace: View {
                 // Border Circle
                 Circle()
                 #if !os(watchOS)
-                    .strokeBorder(Color(uiColor: .systemGray3), lineWidth: outlineWidth)
+                    .strokeBorder(Color(uiColor: .systemGray3).opacity(0.5), lineWidth: outlineWidth)
                 #else
-                    .strokeBorder(Color(uiColor: .gray), lineWidth: outlineWidth)
+                    .strokeBorder(Color(uiColor: .gray).opacity(0.5), lineWidth: outlineWidth)
                 #endif
                     .frame(width: size, height: size)
 
@@ -64,6 +65,7 @@ struct ClockFace: View {
     Group {
         GeometryReader { geo in
             ClockFace()
+                .padding(24)
         }
     }
 }

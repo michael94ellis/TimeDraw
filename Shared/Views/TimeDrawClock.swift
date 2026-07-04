@@ -28,18 +28,20 @@ struct TimeDrawClock: View {
         self.currentTime = Time(sec: second, min: minute, hour: hour)
     }
 
-    private func crossoverFill(for segment: ClockCrossoverSegment) -> some ShapeStyle {
-        if segment.colors.count == 1, let color = segment.colors.first {
-            return AnyShapeStyle(color)
+    private func laneStyle(
+        for item: ClockDrawableItem,
+        in layout: ClockLayout,
+        fallbackWidth: CGFloat
+    ) -> (lineWidth: CGFloat, radiusOffset: CGFloat) {
+        let segments = layout.arcSegments.filter { $0.item.id == item.id }
+        guard !segments.isEmpty else {
+            return (fallbackWidth, 0)
         }
-        return AnyShapeStyle(
-            AngularGradient(
-                gradient: Gradient(colors: segment.colors),
-                center: .center,
-                startAngle: .degrees(segment.startDegrees),
-                endAngle: .degrees(segment.endDegrees)
-            )
-        )
+        let lineWidth = segments.map(\.lineWidth).min() ?? fallbackWidth
+        let radiusOffset = segments.first(where: { $0.ring == .am })?.radiusOffset
+            ?? segments.first?.radiusOffset
+            ?? 0
+        return (lineWidth, radiusOffset)
     }
 
     @ViewBuilder
@@ -48,9 +50,30 @@ struct TimeDrawClock: View {
         let baseWidth = clockSize / 24
         let drawableItems = ClockDrawableItem.from(events: events, reminders: reminders)
         let layout = ClockEventLayoutEngine.layout(items: drawableItems, clockWidth: clockSize)
+        let noonCrossers = drawableItems.filter { $0.eventType == .both }
+        let noonCrosserIDs = Set(noonCrossers.map(\.id))
 
         ZStack {
-            ForEach(layout.arcSegments) { segment in
+            ForEach(noonCrossers) { item in
+                let style = laneStyle(for: item, in: layout, fallbackWidth: baseWidth)
+                ClockEventLine(
+                    start: item.startDate,
+                    end: item.endDate,
+                    radius: baseRadius,
+                    width: Double(style.lineWidth),
+                    radiusOffset: style.radiusOffset
+                )
+                .stroke(
+                    item.color,
+                    style: StrokeStyle(
+                        lineWidth: style.lineWidth,
+                        lineCap: .round,
+                        lineJoin: .round
+                    )
+                )
+            }
+
+            ForEach(layout.arcSegments.filter { !noonCrosserIDs.contains($0.item.id) }) { segment in
                 ClockEventLine(
                     arcRing: segment.ring,
                     startDegrees: segment.startDegrees,
@@ -69,24 +92,28 @@ struct TimeDrawClock: View {
                 )
             }
 
-            ForEach(layout.crossoverSegments) { segment in
-                ClockCrossoverBend(
-                    startDegrees: segment.startDegrees,
-                    endDegrees: segment.endDegrees,
-                    radius: baseRadius,
-                    width: Double(baseWidth)
+            let allDayRadius = clockSize * 0.55
+            let allDayLineWidth: CGFloat = 2
+            let allDaySegments = ClockAllDayLayoutEngine.layout(
+                events: ClockDrawableItem.allDayEvents(from: events)
+            )
+            ForEach((0..<allDaySegments.count), id: \.self) { index in
+                ClockAllDayEventLine(
+                    startDegrees: allDaySegments[index].startDegrees,
+                    endDegrees: allDaySegments[index].endDegrees,
+                    radius: (allDayRadius + (CGFloat(index + 1) * 2))
                 )
-                .fill(crossoverFill(for: segment))
-            }
-            let allDayEvents = ClockDrawableItem.allDayEvents(from: events)
-            if !allDayEvents.isEmpty {
-                ForEach(ClockDrawableItem.allDayEvents(from: events), id: \.self) { event in
-                    let radius = clockSize * 0.75
-                    ClockEventLine(start: event.startDate,
-                                   end: event.endDate,
-                                   radius: radius,
-                                   width: 2)
-                    .foregroundColor(Color(cgColor: event.calendar?.cgColor ?? UIColor.clear.cgColor))
+                .stroke(
+                    allDaySegments[index].color,
+                    style: StrokeStyle(
+                        lineWidth: allDayLineWidth,
+                        lineCap: .round,
+                        dash: [6, 4],
+                        dashPhase: allDaySegments[index].dashPhase
+                    )
+                )
+                .onAppear {
+                    print((allDayRadius + (CGFloat(index + 1))))
                 }
             }
         }

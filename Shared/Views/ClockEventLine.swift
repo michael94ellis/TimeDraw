@@ -33,12 +33,12 @@ struct ClockEventLine: Shape {
         self.endComponents = nil
     }
 
-    init(start: Date, end: Date, radius: Double, width: Double) {
+    init(start: Date, end: Date, radius: Double, width: Double, radiusOffset: CGFloat = 0) {
         self.startComponents = Calendar.current.dateComponents([.hour, .minute], from: start)
         self.endComponents = Calendar.current.dateComponents([.hour, .minute], from: end)
         self.radius = radius
         self.width = width
-        self.radiusOffset = 0
+        self.radiusOffset = radiusOffset
         self.segmentMode = .fullEvent
         self.startDegrees = ClockEventGeometry.angle(for: start)
         self.endDegrees = ClockEventGeometry.angle(for: end)

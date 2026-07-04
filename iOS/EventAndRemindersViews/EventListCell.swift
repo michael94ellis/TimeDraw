@@ -23,36 +23,41 @@ struct EventListCell: View {
         return CalendarDisplayFormatters.eventTimeRange(from: item.startDate, to: item.endDate, isAllDay: false)
     }
 
+    @ViewBuilder
+    var cellContent: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(item.title.isEmpty ? "Untitled Event" : item.title)
+                .font(.interSemiBold)
+                .foregroundStyle(Color(uiColor: .label))
+                .lineLimit(2)
+            Text(subtitle)
+                .font(.interFine)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+
+        if item.hasRecurrenceRules {
+            Image(systemName: "repeat")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .padding(.trailing, 8)
+        }
+    }
+    
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 8) {
+            
             RoundedRectangle(cornerRadius: 2, style: .continuous)
                 .fill(Color(cgColor: item.calendar.cgColor))
-                .frame(width: 4)
-                .padding(.vertical, 4)
+                .frame(width: 12)
+            
+            cellContent
+                .padding(.vertical, 8)
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(item.title.isEmpty ? "Untitled Event" : item.title)
-                    .font(.interSemiBold)
-                    .foregroundStyle(Color(uiColor: .label))
-                    .lineLimit(2)
-                Text(subtitle)
-                    .font(.interFine)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-            }
-
-            Spacer(minLength: 8)
-
-            if item.hasRecurrenceRules {
-                Image(systemName: "repeat")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-            }
         }
-        .padding(.vertical, 10)
-        .padding(.horizontal, 12)
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(item.title.isEmpty ? "Untitled Event" : item.title), \(subtitle)")
+        .accessibilityLabel("\(String(describing: item.title.isEmpty ? "Untitled Event" : item.title)), \(subtitle)")
     }
 }

@@ -39,9 +39,7 @@ class CalendarItemListViewModel: ObservableObject {
     
     @Dependency(\.eventKitManager) private var eventKitManager
     
-    init() {
-        updateData()
-    }
+    init() { }
     
     func fetchEvents() {
         Task {

@@ -27,78 +27,86 @@ struct MainScrollableContent: View {
                 .padding(.vertical, clockVertPadding)
                 .padding(.horizontal, clockHorizPadding)
                 .listRowSeparator(.hidden)
-                .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                 .listRowBackground(Color.clear)
                 .environment(\.openCalendarItem, modifyItemViewModel.open)
-            ForEach(self.itemList.events) { item in
-                Button(action: {
-                    withAnimation {
-                        self.modifyItemViewModel.open(event: item)
-                    }
-                }) {
-                    EventListCell(item: item)
-                }
-                .buttonStyle(.plain)
-                .listRowSeparator(.hidden)
-                .listRowInsets(.init(top: 2, leading: 16, bottom: 2, trailing: 16))
-                .listRowBackground(
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill(Color(uiColor: .secondarySystemGroupedBackground))
-                )
-                .swipeActions(allowsFullSwipe: true) {
+            Section(header: Text("Events")) {
+                ForEach(self.itemList.events) { item in
                     Button(action: {
-                        self.itemList.delete(item)
-                        self.modifyItemViewModel.displayToast("Event Deleted", style: .destructive)
-                        self.itemList.updateData()
+                        withAnimation {
+                            self.modifyItemViewModel.open(event: item)
+                        }
                     }) {
-                        Image(systemName: "trash")
-                            .tint(Color.red1)
+                        EventListCell(item: item)
+                    }
+                    .buttonStyle(.plain)
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(EmptyView())
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Color(uiColor: .secondarySystemGroupedBackground))
+                    )
+                    .swipeActions(allowsFullSwipe: true) {
+                        Button(action: {
+                            self.itemList.delete(item)
+                            self.modifyItemViewModel.displayToast("Event Deleted", style: .destructive)
+                            self.itemList.updateData()
+                        }) {
+                            Image(systemName: "trash")
+                                .tint(Color.red1)
+                        }
                     }
                 }
             }
-            ForEach(self.itemList.reminders) { item in
-                Button(action: {
-                    withAnimation {
-                        self.modifyItemViewModel.open(reminder: item)
-                    }
-                }) {
-                    ReminderListCell(item: item)
-                }
-                .buttonStyle(.plain)
-                .listRowSeparator(.hidden)
-                .listRowInsets(.init(top: 2, leading: 16, bottom: 2, trailing: 16))
-                .listRowBackground(
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill(Color(uiColor: .secondarySystemGroupedBackground))
-                )
-                .swipeActions(allowsFullSwipe: true) {
+            Section(header: Text("Reminders")) {
+                ForEach(self.itemList.reminders) { item in
                     Button(action: {
-                        self.performComplete(for: item)
-                        self.itemList.updateData()
+                        withAnimation {
+                            self.modifyItemViewModel.open(reminder: item)
+                        }
                     }) {
-                        Image(systemName: "checkmark")
-                            .tint(Color.green1)
+                        ReminderListCell(item: item)
                     }
-                    Button(action: {
-                        self.itemList.delete(item)
-                        self.modifyItemViewModel.displayToast("Reminder Deleted", style: .destructive)
-                        self.itemList.updateData()
-                    }) {
-                        Image(systemName: "trash")
-                            .tint(Color.red1)
+                    .buttonStyle(.plain)
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(EmptyView())
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Color(uiColor: .secondarySystemGroupedBackground))
+                    )
+                    .swipeActions(allowsFullSwipe: true) {
+                        Button(action: {
+                            self.performComplete(for: item)
+                            self.itemList.updateData()
+                        }) {
+                            Image(systemName: "checkmark")
+                                .tint(Color.green1)
+                        }
+                        Button(action: {
+                            self.itemList.delete(item)
+                            self.modifyItemViewModel.displayToast("Reminder Deleted", style: .destructive)
+                            self.itemList.updateData()
+                        }) {
+                            Image(systemName: "trash")
+                                .tint(Color.red1)
+                        }
                     }
                 }
             }
+            Rectangle()
+                .fill(.clear)
+                .frame(height: 150)
+                .listRowSeparator(.hidden)
+                .listRowBackground(EmptyView())
         }
-        .padding(.bottom, 80)
-        .environment(\.defaultMinListRowHeight, 0)
-        .listRowSpacing(4)
-        .listStyle(.insetGrouped)
+        .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(Color(uiColor: .systemGroupedBackground))
         .refreshable(action: {
             self.itemList.updateData()
         })
+        .onAppear {
+            self.itemList.updateData()
+        }
         .onChange(of: modifyItemViewModel.isAddEventTextFieldFocused) {
             if !modifyItemViewModel.isAddEventTextFieldFocused {
                 self.itemList.updateData()

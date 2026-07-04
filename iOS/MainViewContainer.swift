@@ -46,19 +46,21 @@ struct MainViewContainer: View {
     
     var body: some View {
         ZStack {
-            mainContent
-                .transition(.opacity)
-                .overlay(self.blurOverlay)
-            VStack {
-                Spacer()
-                EventInput()
-                    .environmentObject(appSettings)
-            }
 
             if appSettings.isFirstAppOpen {
                 OnboardingExperience(itemViewModel: itemViewModel, listViewModel: listViewModel)
                     .environmentObject(appSettings)
                     .zIndex(1)
+            } else {
+                
+                mainContent
+                    .transition(.opacity)
+                    .overlay(self.blurOverlay)
+                VStack {
+                    Spacer()
+                    EventInput()
+                        .environmentObject(appSettings)
+                }
             }
         }
     }

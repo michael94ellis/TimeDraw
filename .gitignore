@@ -8,3 +8,5 @@ GoogleService-Info.plist
 TimeDraw.app.dSYM.zip
 TimeDraw.ipa
 TimeDraw.xcodeproj/project.xcworkspace/xcuserdata/*
+/build/XCBuildData
+/build

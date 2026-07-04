@@ -44,27 +44,15 @@ public final class EventKitManager {
     
     private func eventsAvailabilityCheck() async throws {
         let authorization = try await determineEventStoreAuthorization()
-        if #available(macOS 10.15, iOS 17.0, tvOS 13.0, watchOS 7.0, *) {
-            guard authorization == .fullAccess else {
-                throw EventError.eventAuthorizationStatus(authorization)
-            }
-        } else {
-            guard authorization == .authorized else {
-                throw EventError.eventAuthorizationStatus(authorization)
-            }
+        guard authorization == .fullAccess else {
+            throw EventError.eventAuthorizationStatus(authorization)
         }
     }
     
     private func remindersAvailabilityCheck() async throws {
         let authorization = try await determineReminderStoreAuthorization()
-        if #available(macOS 10.15, iOS 17.0, tvOS 13.0, watchOS 7.0, *) {
-            guard authorization == .fullAccess else {
-                throw EventError.eventAuthorizationStatus(authorization)
-            }
-        } else {
-            guard authorization == .authorized else {
-                throw EventError.eventAuthorizationStatus(authorization)
-            }
+        guard authorization == .fullAccess else {
+            throw EventError.eventAuthorizationStatus(authorization)
         }
     }
     
@@ -156,19 +144,11 @@ public final class EventKitManager {
     }
 
     public func isEventAccessGranted(_ status: EKAuthorizationStatus) -> Bool {
-        if #available(macOS 10.15, iOS 17.0, tvOS 13.0, watchOS 7.0, *) {
-            status == .fullAccess
-        } else {
-            status == .authorized
-        }
+        status == .fullAccess
     }
 
     public func isReminderAccessGranted(_ status: EKAuthorizationStatus) -> Bool {
-        if #available(macOS 10.15, iOS 17.0, tvOS 13.0, watchOS 7.0, *) {
-            status == .fullAccess
-        } else {
-            status == .authorized
-        }
+        status == .fullAccess
     }
 
     /// Check event store authorization for Events without prompting.
@@ -191,12 +171,7 @@ public final class EventKitManager {
 
     @discardableResult
     public func requestEventAccess() async throws -> Bool {
-        let granted: Bool
-        if #available(iOS 17.0, *) {
-            granted = try await eventStore.requestFullAccessToEvents()
-        } else {
-            granted = try await eventStore.requestAccess(to: .event)
-        }
+        let granted = try await eventStore.requestFullAccessToEvents()
         if granted {
             self.eventStore = EKEventStore()
         }
@@ -205,12 +180,7 @@ public final class EventKitManager {
 
     @discardableResult
     public func requestReminderAccess() async throws -> Bool {
-        let granted: Bool
-        if #available(iOS 17.0, *) {
-            granted = try await eventStore.requestFullAccessToReminders()
-        } else {
-            granted = try await eventStore.requestAccess(to: .reminder)
-        }
+        let granted = try await eventStore.requestFullAccessToReminders()
         if granted {
             self.eventStore = EKEventStore()
         }

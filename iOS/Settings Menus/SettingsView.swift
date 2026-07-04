@@ -8,6 +8,7 @@
 import SwiftUI
 import EventKit
 import StoreKit
+import UIKit
 
 struct SettingsView: View {
 
@@ -25,6 +26,14 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 SettingsControls()
+
+                Section {
+                    Button("Open in Settings App") {
+                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(url)
+                        }
+                    }
+                }
 
                 #if DEBUG
                 Section("Debug") {

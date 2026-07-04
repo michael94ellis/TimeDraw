@@ -61,6 +61,7 @@
 		2F6505202791370D00AF90F7 /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505112791370C00AF90F7 /* Inter-ExtraBold.ttf */; };
 		2F6505222791370D00AF90F7 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505122791370D00AF90F7 /* Inter-Black.ttf */; };
 		2F6505242791370D00AF90F7 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6505132791370D00AF90F7 /* Inter-Bold.ttf */; };
+		2FSET0022E37000100B69C71 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2FSET0012E37000100B69C71 /* Settings.bundle */; };
 		2F6505292791384500AF90F7 /* Inter-Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505282791384500AF90F7 /* Inter-Font.swift */; };
 		2F7A0BC52E35C25300B69C71 /* MyToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7A0BC32E35C25300B69C71 /* MyToastView.swift */; };
 		2F7A0BC72E35C2EA00B69C71 /* ToastWindow in Frameworks */ = {isa = PBXBuildFile; productRef = 2F7A0BC62E35C2EA00B69C71 /* ToastWindow */; };
@@ -109,6 +110,7 @@
 		2FB41CAE27D97D710067F250 /* TimeDrawClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CAD27D97D710067F250 /* TimeDrawClock.swift */; };
 		2FB41CB127DA5DBE0067F250 /* ReminderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CB027DA5DBE0067F250 /* ReminderListCell.swift */; };
 		2FB41CB427DA5E220067F250 /* EventListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CB327DA5E220067F250 /* EventListCell.swift */; };
+		2FDEPH022E39000200B69C71 /* DismissableEventKitPermissionPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDEPH012E39000200B69C71 /* DismissableEventKitPermissionPlaceholder.swift */; };
 		2FB41CB727DACB8E0067F250 /* AddNotesInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CB627DACB8E0067F250 /* AddNotesInput.swift */; };
 		2FB41CD027DE4A9D0067F250 /* ClockHands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CCF27DE4A9D0067F250 /* ClockHands.swift */; };
 		2FB41CD427DEDB3F0067F250 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD327DEDB3E0067F250 /* AppSettings.swift */; };
@@ -117,6 +119,7 @@
 		2FB60E4927E21571004DA305 /* ClockEventLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB60E4827E21571004DA305 /* ClockEventLine.swift */; };
 		2FB60E4C27E21690004DA305 /* ClockFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB60E4B27E21690004DA305 /* ClockFace.swift */; };
 		2FB60E5527E48DFE004DA305 /* CalendarSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB60E5427E48DFE004DA305 /* CalendarSelection.swift */; };
+		2FEKPH022E38000200B69C71 /* EventKitPermissionPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEKPH012E38000200B69C71 /* EventKitPermissionPlaceholder.swift */; };
 		2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
 		2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
 		2FCLKGE22E38000200B69C71 /* ClockEventGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCLKGE02E38000100B69C71 /* ClockEventGeometry.swift */; };
@@ -258,6 +261,7 @@
 		2F6505122791370D00AF90F7 /* Inter-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Black.ttf"; sourceTree = "<group>"; };
 		2F6505132791370D00AF90F7 /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
 		2F6505272791373800AF90F7 /* TimeDraw--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TimeDraw--iOS--Info.plist"; sourceTree = "<group>"; };
+		2FSET0012E37000100B69C71 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cfbundle; path = Settings.bundle; sourceTree = "<group>"; };
 		2F6505282791384500AF90F7 /* Inter-Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Inter-Font.swift"; sourceTree = "<group>"; };
 		2F7A0BC32E35C25300B69C71 /* MyToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyToastView.swift; sourceTree = "<group>"; };
 		2F7A0BCE2E35C5F100B69C71 /* TimeDrawWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TimeDrawWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -278,6 +282,7 @@
 		2FB41CAD27D97D710067F250 /* TimeDrawClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawClock.swift; sourceTree = "<group>"; };
 		2FB41CB027DA5DBE0067F250 /* ReminderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderListCell.swift; sourceTree = "<group>"; };
 		2FB41CB327DA5E220067F250 /* EventListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListCell.swift; sourceTree = "<group>"; };
+		2FDEPH012E39000200B69C71 /* DismissableEventKitPermissionPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissableEventKitPermissionPlaceholder.swift; sourceTree = "<group>"; };
 		2FB41CB627DACB8E0067F250 /* AddNotesInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNotesInput.swift; sourceTree = "<group>"; };
 		2FB41CCF27DE4A9D0067F250 /* ClockHands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockHands.swift; sourceTree = "<group>"; };
 		2FB41CD327DEDB3E0067F250 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
@@ -286,6 +291,7 @@
 		2FB60E4827E21571004DA305 /* ClockEventLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockEventLine.swift; sourceTree = "<group>"; };
 		2FB60E4B27E21690004DA305 /* ClockFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockFace.swift; sourceTree = "<group>"; };
 		2FB60E5427E48DFE004DA305 /* CalendarSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarSelection.swift; sourceTree = "<group>"; };
+		2FEKPH012E38000200B69C71 /* EventKitPermissionPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventKitPermissionPlaceholder.swift; sourceTree = "<group>"; };
 		2FC6C7B42786434600D75568 /* MultiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTextField.swift; sourceTree = "<group>"; };
 		2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalTextField.swift; sourceTree = "<group>"; };
 		2FCLKGE02E38000100B69C71 /* ClockEventGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockEventGeometry.swift; sourceTree = "<group>"; };
@@ -395,6 +401,7 @@
 			isa = PBXGroup;
 			children = (
 				2F646BB0285038CF00D7445D /* README.md */,
+				2FSET0012E37000100B69C71 /* Settings.bundle */,
 				2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */,
 				2F39B84027823CF600FE72C3 /* Shared */,
 				5F654E2C27D3722F00D6F53C /* iOS */,
@@ -528,6 +535,7 @@
 		2F8AB305279EDFD600654FEF /* EventAndRemindersViews */ = {
 			isa = PBXGroup;
 			children = (
+				2FDEPH012E39000200B69C71 /* DismissableEventKitPermissionPlaceholder.swift */,
 				2FB41CB327DA5E220067F250 /* EventListCell.swift */,
 				2FB41CB027DA5DBE0067F250 /* ReminderListCell.swift */,
 			);
@@ -543,6 +551,7 @@
 				2FDEBUG012E37000100B69C71 /* DebugTestDataSeeder.swift */,
 				2FB41CD627DEDBB70067F250 /* SettingsControls.swift */,
 				2FB60E5427E48DFE004DA305 /* CalendarSelection.swift */,
+				2FEKPH012E38000200B69C71 /* EventKitPermissionPlaceholder.swift */,
 			);
 			path = "Settings Menus";
 			sourceTree = "<group>";
@@ -805,6 +814,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FSET0022E37000100B69C71 /* Settings.bundle in Resources */,
 				2F6505162791370D00AF90F7 /* Inter-Thin.ttf in Resources */,
 				2F471C3B2E24950800D37709 /* DateComponents-Extension.swift in Resources */,
 				2F65051A2791370D00AF90F7 /* Inter-ExtraLight.ttf in Resources */,
@@ -905,11 +915,13 @@
 				2F211134279A4F4E0041EE85 /* AddRecurrenceRule.swift in Sources */,
 				2F42C5A32784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
 				2FB41CB427DA5E220067F250 /* EventListCell.swift in Sources */,
+				2FDEPH022E39000200B69C71 /* DismissableEventKitPermissionPlaceholder.swift in Sources */,
 				2FD6BE452E2177C900AA7C5A /* Time.swift in Sources */,
 				2F8AB31027A229DA00654FEF /* Utils.swift in Sources */,
 				2F26FE5E28CE56E900A9A0AE /* OnboardingExperience.swift in Sources */,
 				2FONBP022E38000100B69C71 /* OnboardingPermissionPage.swift in Sources */,
 				2FB60E5527E48DFE004DA305 /* CalendarSelection.swift in Sources */,
+				2FEKPH022E38000200B69C71 /* EventKitPermissionPlaceholder.swift in Sources */,
 				2F65050027879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */,
 				2F81230F2798957C00458B1A /* DateTimePickerInputView.swift in Sources */,
 				2FB41CD027DE4A9D0067F250 /* ClockHands.swift in Sources */,
@@ -1096,7 +1108,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1155,7 +1167,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

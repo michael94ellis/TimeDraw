@@ -13,7 +13,16 @@ struct CalendarSelection: View {
 
     var selectedIds: [String] { appSettings.userSelectedCalendars.loadCalendarIds() }
     @EnvironmentObject var appSettings: AppSettings
+    @Environment(\.scenePhase) private var scenePhase
     @Dependency(\.eventKitManager) private var eventKitManager
+
+    @State private var eventAuthStatus: EKAuthorizationStatus = .notDetermined
+    @State private var reminderAuthStatus: EKAuthorizationStatus = .notDetermined
+
+    func refreshAuthStatuses() {
+        eventAuthStatus = eventKitManager.eventAuthorizationStatus()
+        reminderAuthStatus = eventKitManager.reminderAuthorizationStatus()
+    }
 
     func toggleCalendar(_ calendar: EKCalendar) {
         var newIds = appSettings.userSelectedCalendars.loadCalendarIds()
@@ -49,13 +58,37 @@ struct CalendarSelection: View {
     var body: some View {
         List {
             Section("Events") {
-                selectionList(of: eventKitManager.eventStore.calendars(for: .event))
+                if eventKitManager.isEventAccessGranted(eventAuthStatus) {
+                    selectionList(of: eventKitManager.eventStore.calendars(for: .event))
+                } else {
+                    EventKitPermissionPlaceholder(
+                        message: "Allow calendar access to choose which event calendars appear in TimeDraw.",
+                        authorizationStatus: eventAuthStatus,
+                        isAccessGranted: eventKitManager.isEventAccessGranted
+                    )
+                }
             }
             Section("Reminders") {
-                selectionList(of: eventKitManager.eventStore.calendars(for: .reminder))
+                if eventKitManager.isReminderAccessGranted(reminderAuthStatus) {
+                    selectionList(of: eventKitManager.eventStore.calendars(for: .reminder))
+                } else {
+                    EventKitPermissionPlaceholder(
+                        message: "Allow reminders access to choose which reminder lists appear in TimeDraw.",
+                        authorizationStatus: reminderAuthStatus,
+                        isAccessGranted: eventKitManager.isReminderAccessGranted
+                    )
+                }
             }
         }
         .navigationTitle("Calendars")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            refreshAuthStatuses()
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                refreshAuthStatuses()
+            }
+        }
     }
 }

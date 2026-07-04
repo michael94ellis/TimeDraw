@@ -37,7 +37,7 @@ struct SettingsControls: View {
             }
             .pickerStyle(.segmented)
             .listRowInsets(.init(top: 8, leading: 0, bottom: 8, trailing: 0))
-            .onChange(of: appSettings.showCalendarItemType) { _ in
+            .onChange(of: appSettings.showCalendarItemType) {
                 calendarItemListViewModel.updateData()
             }
 
@@ -48,7 +48,7 @@ struct SettingsControls: View {
             }
             .pickerStyle(.segmented)
             .listRowInsets(.init(top: 8, leading: 0, bottom: 8, trailing: 0))
-            .onChange(of: appSettings.showItemRecurrenceType) { _ in
+            .onChange(of: appSettings.showItemRecurrenceType) {
                 calendarItemListViewModel.updateData()
             }
         }

@@ -205,7 +205,7 @@ enum ClockEventLayoutEngine {
         let laneCount = active.count
         let lineWidth = max(baseWidth / CGFloat(laneCount), 2)
         // Pack parallel lanes just wider than the stroke itself.
-        let laneSpacing = lineWidth * 1.08
+        let laneSpacing = lineWidth * 1.1
         let totalSpread = laneSpacing * CGFloat(max(laneCount - 1, 0))
 
         for (laneIndex, item) in active.enumerated() {

@@ -40,16 +40,9 @@ enum DebugTestDataSeeder {
     // MARK: - Authorization
 
     private static func requestAccess(using eventStore: EKEventStore) async throws {
-        if #available(iOS 17.0, *) {
-            guard try await eventStore.requestFullAccessToEvents(),
-                  try await eventStore.requestFullAccessToReminders() else {
-                throw SeederError.accessDenied
-            }
-        } else {
-            guard try await eventStore.requestAccess(to: .event),
-                  try await eventStore.requestAccess(to: .reminder) else {
-                throw SeederError.accessDenied
-            }
+        guard try await eventStore.requestFullAccessToEvents(),
+              try await eventStore.requestFullAccessToReminders() else {
+            throw SeederError.accessDenied
         }
     }
 

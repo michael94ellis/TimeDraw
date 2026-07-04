@@ -124,7 +124,8 @@ struct MultilineTextField: View {
             .focused(self.isFocused)
             .frame(minHeight: self.dynamicHeight, maxHeight: self.dynamicHeight)
             .background(self.placeholderView)
-            .onChange(of: self.text, perform: { newString in
+            .onChange(of: self.text) {
+                let newString = self.text
                 // Count of newlines = split by newline count - 1
                 // No need to check every character for `Character.isNewline`
                 let stringComponents = newString.split(separator: "\n")
@@ -136,7 +137,7 @@ struct MultilineTextField: View {
                     // If theres 3 or more newline characters that is 4+ lines of text
                     self.performStringSearchByChar()
                 }
-            })
+            }
     }
     
     @ViewBuilder

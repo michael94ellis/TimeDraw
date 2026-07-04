@@ -35,7 +35,7 @@ class CalendarItemListViewModel: ObservableObject {
     
     @AppStorage(AppStorageKey.userSelectedCalendars) private var userSelectedCalendars: Data?
     @AppStorage(AppStorageKey.showCalendarItemType) private var showCalendarItemType: CalendarItemType = .all
-    @AppStorage(AppStorageKey.showRecurringItems) private var showRecurringItems = true
+    @AppStorage(AppStorageKey.showItemRecurrenceType) private var showItemRecurrenceType: ItemRecurrenceType = .all
     
     @Dependency(\.eventKitManager) private var eventKitManager
     
@@ -61,12 +61,12 @@ class CalendarItemListViewModel: ObservableObject {
     }
     
     public func updateData() {
-        self.events = []
-        self.reminders = []
         switch showCalendarItemType {
         case .scheduled:
+            self.reminders = []
             self.fetchEvents()
         case .unscheduled:
+            self.events = []
             self.fetchReminders()
         case .all:
             self.fetchEvents()
@@ -84,8 +84,13 @@ class CalendarItemListViewModel: ObservableObject {
     /// Returns: events for today
     private func fetchEventsForDisplayDate(filterCalendarIDs: [String] = []) async throws {
         var eventsResult = try await eventKitManager.fetchEvents(startDate: self.displayDate.startOfDay, endDate: self.displayDate.endOfDay, calendars: filterCalendarIDs)
-        if !showRecurringItems {
+        switch showItemRecurrenceType {
+        case .recurring:
+            eventsResult.removeAll(where: { !$0.hasRecurrenceRules })
+        case .nonRecurring:
             eventsResult.removeAll(where: { $0.hasRecurrenceRules })
+        case .all:
+            break
         }
         Task { @MainActor in
             self.events = eventsResult
@@ -99,10 +104,16 @@ class CalendarItemListViewModel: ObservableObject {
     @MainActor
     private func fetchRemindersForDisplayDate(filterCalendarIDs: [String] = []) async throws {
         let reminders = try await eventKitManager.fetchReminders(calendars: filterCalendarIDs)
-        if !self.showRecurringItems {
-            self.reminders.removeAll(where: { $0.hasRecurrenceRules })
+        var filteredReminders = reminders?.filter({ !$0.isCompleted }) ?? []
+        switch showItemRecurrenceType {
+        case .recurring:
+            filteredReminders.removeAll(where: { !$0.hasRecurrenceRules })
+        case .nonRecurring:
+            filteredReminders.removeAll(where: { $0.hasRecurrenceRules })
+        case .all:
+            break
         }
-        self.reminders = reminders?.filter({ !$0.isCompleted }) ?? []
+        self.reminders = filteredReminders
     }
     
     

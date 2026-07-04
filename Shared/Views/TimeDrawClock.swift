@@ -78,14 +78,16 @@ struct TimeDrawClock: View {
                 )
                 .fill(crossoverFill(for: segment))
             }
-
-            ForEach(ClockDrawableItem.allDayEvents(from: events), id: \.self) { event in
-                let radius = clockSize * 1.1
-                ClockEventLine(start: event.startDate,
-                               end: event.endDate,
-                               radius: radius,
-                               width: 2)
+            let allDayEvents = ClockDrawableItem.allDayEvents(from: events)
+            if !allDayEvents.isEmpty {
+                ForEach(ClockDrawableItem.allDayEvents(from: events), id: \.self) { event in
+                    let radius = clockSize * 0.75
+                    ClockEventLine(start: event.startDate,
+                                   end: event.endDate,
+                                   radius: radius,
+                                   width: 2)
                     .foregroundColor(Color(cgColor: event.calendar?.cgColor ?? UIColor.clear.cgColor))
+                }
             }
         }
         .allowsHitTesting(false)

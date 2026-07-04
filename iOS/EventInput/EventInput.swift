@@ -95,7 +95,9 @@ struct EventInput: View {
                 .focused($isFocused)
                 .submitLabel(.done)
                 .onSubmit { isFocused = false }
-                .onChange(of: viewModel.isAddEventTextFieldFocused) { isFocused = $0 }
+                .onChange(of: viewModel.isAddEventTextFieldFocused) {
+                    isFocused = viewModel.isAddEventTextFieldFocused
+                }
                 .onAppear { isFocused = true }
 
             Button {

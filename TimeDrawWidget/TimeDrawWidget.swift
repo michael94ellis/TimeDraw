@@ -94,14 +94,8 @@ struct TimeDrawWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            if #available(iOS 17.0, *) {
-                TimeDrawWidgetEntryView(entry: entry)
-                    .containerBackground(.fill.tertiary, for: .widget)
-            } else {
-                TimeDrawWidgetEntryView(entry: entry)
-                    .padding()
-                    .background()
-            }
+            TimeDrawWidgetEntryView(entry: entry)
+                .containerBackground(.fill.tertiary, for: .widget)
         }
         .configurationDisplayName("TimeDraw Widget")
         .description("Shows your calendar events and reminders on an analog clock face.")

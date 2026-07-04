@@ -147,56 +147,74 @@ public final class EventKitManager {
         }
     }
     
-    /// Request event store authorization for Events
-    /// - Returns: EKAuthorizationStatus enum
+    public func eventAuthorizationStatus() -> EKAuthorizationStatus {
+        EKEventStore.authorizationStatus(for: .event)
+    }
+
+    public func reminderAuthorizationStatus() -> EKAuthorizationStatus {
+        EKEventStore.authorizationStatus(for: .reminder)
+    }
+
+    public func isEventAccessGranted(_ status: EKAuthorizationStatus) -> Bool {
+        if #available(macOS 10.15, iOS 17.0, tvOS 13.0, watchOS 7.0, *) {
+            status == .fullAccess
+        } else {
+            status == .authorized
+        }
+    }
+
+    public func isReminderAccessGranted(_ status: EKAuthorizationStatus) -> Bool {
+        if #available(macOS 10.15, iOS 17.0, tvOS 13.0, watchOS 7.0, *) {
+            status == .fullAccess
+        } else {
+            status == .authorized
+        }
+    }
+
+    /// Check event store authorization for Events without prompting.
     public func determineEventStoreAuthorization() async throws -> EKAuthorizationStatus {
-        let currentAuthStatus = EKEventStore.authorizationStatus(for: .event)
-        if currentAuthStatus == .notDetermined || currentAuthStatus == .denied {
-            if try await requestEventAccess() {
-                self.eventStore = EKEventStore()
-                return EKEventStore.authorizationStatus(for: .event)
-            } else {
-                throw EventError.unableToAccessCalendar
-            }
-        } else if currentAuthStatus == .restricted {
-            throw EventError.unableToAccessCalendar
-        } else {
+        let currentAuthStatus = eventAuthorizationStatus()
+        if isEventAccessGranted(currentAuthStatus) {
             return currentAuthStatus
         }
+        throw EventError.eventAuthorizationStatus(currentAuthStatus)
     }
-    
-    /// Request event store authorization for Reminders
-    /// - Returns: EKAuthorizationStatus enum
+
+    /// Check reminder store authorization without prompting.
     public func determineReminderStoreAuthorization() async throws -> EKAuthorizationStatus {
-        let currentAuthStatus = EKEventStore.authorizationStatus(for: .reminder)
-        if currentAuthStatus == .notDetermined || currentAuthStatus == .denied {
-            if try await requestReminderAccess() {
-                self.eventStore = EKEventStore()
-                return EKEventStore.authorizationStatus(for: .reminder)
-            } else {
-                throw EventError.unableToAccessCalendar
-            }
-        } else if currentAuthStatus == .restricted {
-            throw EventError.unableToAccessCalendar
-        } else {
+        let currentAuthStatus = reminderAuthorizationStatus()
+        if isReminderAccessGranted(currentAuthStatus) {
             return currentAuthStatus
         }
+        throw EventError.eventAuthorizationStatus(currentAuthStatus)
     }
-    
-    private func requestEventAccess() async throws -> Bool {
+
+    @discardableResult
+    public func requestEventAccess() async throws -> Bool {
+        let granted: Bool
         if #available(iOS 17.0, *) {
-            try await eventStore.requestFullAccessToEvents()
+            granted = try await eventStore.requestFullAccessToEvents()
         } else {
-            try await eventStore.requestAccess(to: .event)
+            granted = try await eventStore.requestAccess(to: .event)
         }
+        if granted {
+            self.eventStore = EKEventStore()
+        }
+        return granted
     }
-    
-    private func requestReminderAccess() async throws -> Bool {
+
+    @discardableResult
+    public func requestReminderAccess() async throws -> Bool {
+        let granted: Bool
         if #available(iOS 17.0, *) {
-            try await eventStore.requestFullAccessToReminders()
+            granted = try await eventStore.requestFullAccessToReminders()
         } else {
-            try await eventStore.requestAccess(to: .reminder)
+            granted = try await eventStore.requestAccess(to: .reminder)
         }
+        if granted {
+            self.eventStore = EKEventStore()
+        }
+        return granted
     }
     
     // MARK: - Non Watch Functions

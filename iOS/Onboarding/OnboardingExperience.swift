@@ -5,23 +5,43 @@
 //  Created by Michael Ellis on 9/11/22.
 //
 
+import Dependencies
+import EventKit
 import SwiftUI
 
 struct OnboardingExperience: View {
     var itemViewModel: ModifyCalendarItemViewModel
     var listViewModel: CalendarItemListViewModel
-    
+
+    @Dependency(\.eventKitManager) private var eventKitManager
+
     @AppStorage(AppStorageKey.firstOpen) var isFirstAppOpen: Bool = true
     @State var currentPageIndex = 0
-    
-    func incrementOnboardingPage() {
-        currentPageIndex += 1
-        if currentPageIndex >= 6 {
-            isFirstAppOpen = false
-            listViewModel.updateData()
-        }
+    @State private var eventAuthStatus: EKAuthorizationStatus = .notDetermined
+    @State private var reminderAuthStatus: EKAuthorizationStatus = .notDetermined
+
+    private var usesTapToAdvance: Bool {
+        currentPageIndex < 6
     }
-    
+
+    func finishOnboarding() {
+        isFirstAppOpen = false
+        listViewModel.updateData()
+    }
+
+    func incrementOnboardingPage() {
+        guard usesTapToAdvance else { return }
+        currentPageIndex += 1
+    }
+
+    func refreshEventAuthStatus() {
+        eventAuthStatus = eventKitManager.eventAuthorizationStatus()
+    }
+
+    func refreshReminderAuthStatus() {
+        reminderAuthStatus = eventKitManager.reminderAuthorizationStatus()
+    }
+
     @ViewBuilder
     var demoScreenContent: some View {
         switch currentPageIndex {
@@ -29,7 +49,7 @@ struct OnboardingExperience: View {
             VStack {
                 MainHeader()
                     .environmentObject(listViewModel)
-                
+
                 Text("Here's a swipeable weekly calendar to quickly see and navigate through the weeks")
                 Spacer()
             }
@@ -57,11 +77,50 @@ struct OnboardingExperience: View {
             EmptyView()
         }
     }
-    
+
+    @ViewBuilder
+    var permissionScreenContent: some View {
+        switch currentPageIndex {
+        case 6:
+            OnboardingPermissionPage(
+                title: "Calendar Access",
+                message: "TimeDraw shows your scheduled events on the analog clock and in your daily list.",
+                systemImage: "calendar",
+                authorizationStatus: eventAuthStatus,
+                isAccessGranted: eventKitManager.isEventAccessGranted,
+                onRequestAccess: {
+                    _ = try? await eventKitManager.requestEventAccess()
+                    refreshEventAuthStatus()
+                },
+                onContinue: {
+                    currentPageIndex = 7
+                    refreshReminderAuthStatus()
+                }
+            )
+            .onAppear { refreshEventAuthStatus() }
+        case 7:
+            OnboardingPermissionPage(
+                title: "Reminders Access",
+                message: "TimeDraw displays your reminders alongside events so you can see your whole day at a glance.",
+                systemImage: "checklist",
+                authorizationStatus: reminderAuthStatus,
+                isAccessGranted: eventKitManager.isReminderAccessGranted,
+                onRequestAccess: {
+                    _ = try? await eventKitManager.requestReminderAccess()
+                    refreshReminderAuthStatus()
+                },
+                onContinue: finishOnboarding
+            )
+            .onAppear { refreshReminderAuthStatus() }
+        default:
+            EmptyView()
+        }
+    }
+
     var body: some View {
         ZStack {
             Color.systemBackground.ignoresSafeArea()
-            
+
             VStack {
                 switch currentPageIndex {
                 case 0:
@@ -86,6 +145,8 @@ struct OnboardingExperience: View {
                         }
                         Spacer()
                     }
+                case 6, 7:
+                    permissionScreenContent
                 default:
                     VStack(spacing: 0) {
                         Spacer()
@@ -101,6 +162,10 @@ struct OnboardingExperience: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .contentShape(Rectangle())
-        .onTapGesture { incrementOnboardingPage() }
+        .onTapGesture {
+            if usesTapToAdvance {
+                incrementOnboardingPage()
+            }
+        }
     }
 }

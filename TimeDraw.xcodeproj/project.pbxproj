@@ -161,6 +161,7 @@
 		2FDFFFD42E22C77B00B9D266 /* ItemRecurrenceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFD12E22C77B00B9D266 /* ItemRecurrenceType.swift */; };
 		2FDFFFD62E22C82A00B9D266 /* PopoverWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFD52E22C82A00B9D266 /* PopoverWrapper.swift */; };
 		2FDFFFD82E22C83F00B9D266 /* UIPopoverWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFD72E22C83F00B9D266 /* UIPopoverWrapperViewController.swift */; };
+		2FONBP022E38000100B69C71 /* OnboardingPermissionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FONBP012E38000100B69C71 /* OnboardingPermissionPage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -307,6 +308,7 @@
 		2FDFFFD12E22C77B00B9D266 /* ItemRecurrenceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRecurrenceType.swift; sourceTree = "<group>"; };
 		2FDFFFD52E22C82A00B9D266 /* PopoverWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverWrapper.swift; sourceTree = "<group>"; };
 		2FDFFFD72E22C83F00B9D266 /* UIPopoverWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPopoverWrapperViewController.swift; sourceTree = "<group>"; };
+		2FONBP012E38000100B69C71 /* OnboardingPermissionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPermissionPage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -383,6 +385,7 @@
 			isa = PBXGroup;
 			children = (
 				2F26FE5D28CE56E900A9A0AE /* OnboardingExperience.swift */,
+				2FONBP012E38000100B69C71 /* OnboardingPermissionPage.swift */,
 				2F5427EB28D753D600F08952 /* IntroView.swift */,
 			);
 			path = Onboarding;
@@ -905,6 +908,7 @@
 				2FD6BE452E2177C900AA7C5A /* Time.swift in Sources */,
 				2F8AB31027A229DA00654FEF /* Utils.swift in Sources */,
 				2F26FE5E28CE56E900A9A0AE /* OnboardingExperience.swift in Sources */,
+				2FONBP022E38000100B69C71 /* OnboardingPermissionPage.swift in Sources */,
 				2FB60E5527E48DFE004DA305 /* CalendarSelection.swift in Sources */,
 				2F65050027879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */,
 				2F81230F2798957C00458B1A /* DateTimePickerInputView.swift in Sources */,
@@ -1243,7 +1247,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 13;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.michaelrobertellis.Tests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1261,7 +1265,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 13;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.michaelrobertellis.Tests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1369,7 +1373,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.6;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Debug;
 		};
@@ -1405,7 +1409,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.6;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Release;
 		};
@@ -1424,7 +1428,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WatchFace WatchKit Extension.appex/WatchFace WatchKit Extension";
-				WATCHOS_DEPLOYMENT_TARGET = 8.3;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Debug;
 		};
@@ -1444,7 +1448,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WatchFace WatchKit Extension.appex/WatchFace WatchKit Extension";
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 8.3;
+				WATCHOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Release;
 		};

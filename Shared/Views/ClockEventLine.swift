@@ -175,11 +175,27 @@ struct ClockCrossoverBend: Shape {
     let endDegrees: Double
     let radius: CGFloat
     let width: Double
+    let radiusOffset: CGFloat
+
+    init(
+        startDegrees: Double,
+        endDegrees: Double,
+        radius: CGFloat,
+        width: Double,
+        radiusOffset: CGFloat = 0
+    ) {
+        self.startDegrees = startDegrees
+        self.endDegrees = endDegrees
+        self.radius = radius
+        self.width = width
+        self.radiusOffset = radiusOffset
+    }
 
     func path(in rect: CGRect) -> Path {
         let center = CGPoint(x: rect.midX, y: rect.midY)
-        let amRadius = radius * ClockEventGeometry.amRadiusMultiplier
-        let pmRadius = radius * ClockEventGeometry.pmRadiusMultiplier
+        let baseRadius = radius + radiusOffset
+        let amRadius = baseRadius * ClockEventGeometry.amRadiusMultiplier
+        let pmRadius = baseRadius * ClockEventGeometry.pmRadiusMultiplier
         var path = Path()
         Self.addBendSweep(
             to: &path,
@@ -190,7 +206,7 @@ struct ClockCrossoverBend: Shape {
             startDegrees: startDegrees,
             endDegrees: endDegrees
         )
-        return path.strokedPath(.init(lineWidth: width, lineCap: .round, lineJoin: .round))
+        return path
     }
 
     static func addNoonCrossover(

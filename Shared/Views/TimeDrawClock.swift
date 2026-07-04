@@ -28,54 +28,34 @@ struct TimeDrawClock: View {
         self.currentTime = Time(sec: second, min: minute, hour: hour)
     }
 
-    private func laneStyle(
-        for item: ClockDrawableItem,
-        in layout: ClockLayout,
-        fallbackWidth: CGFloat
-    ) -> (lineWidth: CGFloat, radiusOffset: CGFloat) {
-        let segments = layout.arcSegments.filter { $0.item.id == item.id }
-        guard !segments.isEmpty else {
-            return (fallbackWidth, 0)
-        }
-        let lineWidth = segments.map(\.lineWidth).min() ?? fallbackWidth
-        let radiusOffset = segments.first(where: { $0.ring == .am })?.radiusOffset
-            ?? segments.first?.radiusOffset
-            ?? 0
-        return (lineWidth, radiusOffset)
-    }
-
     @ViewBuilder
     private func eventLayers(clockSize: CGFloat) -> some View {
         let baseRadius = clockSize / 2
-        let baseWidth = clockSize / 24
         let drawableItems = ClockDrawableItem.from(events: events, reminders: reminders)
         let layout = ClockEventLayoutEngine.layout(items: drawableItems, clockWidth: clockSize)
-        let noonCrossers = drawableItems.filter { $0.eventType == .both }
-        let noonCrosserIDs = Set(noonCrossers.map(\.id))
 
         ZStack {
-            ForEach(noonCrossers) { item in
-                let style = laneStyle(for: item, in: layout, fallbackWidth: baseWidth)
+            ForEach(layout.arcSegments) { segment in
                 ClockEventLine(
-                    start: item.startDate,
-                    end: item.endDate,
+                    arcRing: segment.ring,
+                    startDegrees: segment.startDegrees,
+                    endDegrees: segment.endDegrees,
                     radius: baseRadius,
-                    width: Double(style.lineWidth),
-                    radiusOffset: style.radiusOffset
+                    width: Double(segment.lineWidth),
+                    radiusOffset: segment.radiusOffset
                 )
                 .stroke(
-                    item.color,
+                    segment.color,
                     style: StrokeStyle(
-                        lineWidth: style.lineWidth,
+                        lineWidth: segment.lineWidth,
                         lineCap: .round,
                         lineJoin: .round
                     )
                 )
             }
 
-            ForEach(layout.arcSegments.filter { !noonCrosserIDs.contains($0.item.id) }) { segment in
-                ClockEventLine(
-                    arcRing: segment.ring,
+            ForEach(layout.crossoverSegments) { segment in
+                ClockCrossoverBend(
                     startDegrees: segment.startDegrees,
                     endDegrees: segment.endDegrees,
                     radius: baseRadius,

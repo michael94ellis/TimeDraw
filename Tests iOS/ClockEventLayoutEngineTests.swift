@@ -56,13 +56,44 @@ final class ClockEventLayoutEngineTests: XCTestCase {
         XCTAssertTrue(layout.arcSegments.allSatisfy { $0.radiusOffset == 0 })
     }
 
-    func testOverlappingNoonCrossersProduceGradientCrossoverSegment() {
+    func testOverlappingNoonCrossersProduceSeparateCrossoverSegments() {
         let today = calendar.startOfDay(for: Date())
         let events = makeTimedItems(startHour: 11, endHour: 13, colors: [.red, .blue], on: today)
 
         let layout = ClockEventLayoutEngine.layout(items: events, clockWidth: 240, calendar: calendar)
-        let gradientCrossovers = layout.crossoverSegments.filter { $0.colors.count > 1 }
-        XCTAssertFalse(gradientCrossovers.isEmpty)
+        XCTAssertEqual(layout.crossoverSegments.count, 2)
+        XCTAssertTrue(layout.crossoverSegments.allSatisfy { $0.laneCount == 2 })
+    }
+
+    func testNoonCrosserAndAfternoonOverlapThinBothPMSegments() {
+        let today = calendar.startOfDay(for: Date())
+        let longCrosser = makeTimedItem(
+            startHour: 10, startMinute: 45, endHour: 14, endMinute: 45, color: .red, on: today
+        )
+        let shortOverlap = makeTimedItem(
+            startHour: 13, startMinute: 45, endHour: 14, endMinute: 45, color: .blue, on: today
+        )
+
+        let layout = ClockEventLayoutEngine.layout(
+            items: [longCrosser, shortOverlap],
+            clockWidth: 240,
+            calendar: calendar
+        )
+        let baseWidth: CGFloat = 10
+        let overlapSegments = layout.arcSegments.filter { segment in
+            segment.ring == .pm && segment.laneCount == 2
+        }
+
+        XCTAssertEqual(overlapSegments.count, 2)
+        XCTAssertTrue(overlapSegments.allSatisfy { $0.lineWidth < baseWidth })
+        XCTAssertTrue(overlapSegments.contains(where: { $0.item.id == longCrosser.id }))
+        XCTAssertTrue(overlapSegments.contains(where: { $0.item.id == shortOverlap.id }))
+
+        let nonOverlapPM = layout.arcSegments.filter {
+            $0.ring == .pm && $0.item.id == longCrosser.id && $0.laneCount == 1
+        }
+        XCTAssertFalse(nonOverlapPM.isEmpty)
+        XCTAssertTrue(nonOverlapPM.allSatisfy { abs($0.lineWidth - baseWidth) < 0.01 })
     }
 
     func testNormalizedEndAngleForAfternoonEvent() {
@@ -81,9 +112,17 @@ final class ClockEventLayoutEngineTests: XCTestCase {
         startHour: Int,
         endHour: Int,
         color: UIColor,
-        on day: Date
+        on day: Date,
+        startMinute: Int = 0,
+        endMinute: Int = 0
     ) -> ClockDrawableItem {
-        let event = EKEvent.mock(startHour: startHour, endHour: endHour, color: color)
+        let store = EKEventStore()
+        let event = EKEvent(eventStore: store)
+        event.startDate = day.addingTimeInterval(TimeInterval(startHour * 3600 + startMinute * 60))
+        event.endDate = day.addingTimeInterval(TimeInterval(endHour * 3600 + endMinute * 60))
+        let calendar = EKCalendar(for: .event, eventStore: store)
+        calendar.cgColor = color.cgColor
+        event.calendar = calendar
         return ClockDrawableItem.from(events: [event], reminders: []).first!
     }
 

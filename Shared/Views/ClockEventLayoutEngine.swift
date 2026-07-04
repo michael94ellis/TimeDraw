@@ -21,10 +21,15 @@ struct ClockArcSegment: Identifiable {
 
 struct ClockCrossoverSegment: Identifiable {
     let id: String
+    let item: ClockDrawableItem
     let startDegrees: Double
     let endDegrees: Double
-    let colors: [Color]
-    let items: [ClockDrawableItem]
+    let laneIndex: Int
+    let laneCount: Int
+    let lineWidth: CGFloat
+    let radiusOffset: CGFloat
+
+    var color: Color { item.color }
 }
 
 struct ClockLayout {
@@ -135,18 +140,30 @@ enum ClockEventLayoutEngine {
     private static func coalesceCrossoverSegments(_ segments: [ClockCrossoverSegment]) -> [ClockCrossoverSegment] {
         guard !segments.isEmpty else { return [] }
 
-        let sorted = segments.sorted { $0.startDegrees < $1.startDegrees }
+        let sorted = segments.sorted {
+            if $0.item.id != $1.item.id { return $0.item.id < $1.item.id }
+            if $0.laneIndex != $1.laneIndex { return $0.laneIndex < $1.laneIndex }
+            return $0.startDegrees < $1.startDegrees
+        }
+
         var merged: [ClockCrossoverSegment] = []
         for segment in sorted {
             if var last = merged.last,
-               Set(last.items.map(\.id)) == Set(segment.items.map(\.id)),
+               last.item.id == segment.item.id,
+               last.laneIndex == segment.laneIndex,
+               last.laneCount == segment.laneCount,
+               last.lineWidth == segment.lineWidth,
+               last.radiusOffset == segment.radiusOffset,
                abs(last.endDegrees - segment.startDegrees) < 0.5 {
                 last = ClockCrossoverSegment(
                     id: last.id,
+                    item: last.item,
                     startDegrees: last.startDegrees,
                     endDegrees: segment.endDegrees,
-                    colors: last.colors,
-                    items: last.items
+                    laneIndex: last.laneIndex,
+                    laneCount: last.laneCount,
+                    lineWidth: last.lineWidth,
+                    radiusOffset: last.radiusOffset
                 )
                 merged[merged.count - 1] = last
             } else {
@@ -272,38 +289,38 @@ enum ClockEventLayoutEngine {
 
         guard !active.isEmpty else { return }
 
-        guard let firstRange = ClockEventGeometry.crossoverTimeRange(for: active[0], noon: noon, calendar: calendar) else {
-            return
-        }
+        let laneCount = active.count
+        let lineWidth = max(baseWidth / CGFloat(laneCount), 2)
+        let laneSpacing = lineWidth * 1.1
+        let totalSpread = laneSpacing * CGFloat(max(laneCount - 1, 0))
 
-        var unionStart = firstRange.0
-        var unionEnd = firstRange.1
-        for item in active.dropFirst() {
+        for (laneIndex, item) in active.enumerated() {
             guard let range = ClockEventGeometry.crossoverTimeRange(for: item, noon: noon, calendar: calendar) else {
                 continue
             }
-            unionStart = min(unionStart, range.0)
-            unionEnd = max(unionEnd, range.1)
-        }
 
-        guard let clipped = ClockEventGeometry.clipRange(
-            (unionStart, unionEnd),
-            toIntervalStart: intervalStart,
-            intervalEnd: intervalEnd
-        ) else { return }
+            guard let clipped = ClockEventGeometry.clipRange(
+                range,
+                toIntervalStart: intervalStart,
+                intervalEnd: intervalEnd
+            ) else { continue }
 
-        let startDegrees = ClockEventGeometry.angle(for: clipped.0, calendar: calendar)
-        let endDegrees = ClockEventGeometry.angle(for: clipped.1, calendar: calendar)
-        guard endDegrees > startDegrees else { return }
+            let startDegrees = ClockEventGeometry.angle(for: clipped.0, calendar: calendar)
+            let endDegrees = ClockEventGeometry.angle(for: clipped.1, calendar: calendar)
+            guard endDegrees > startDegrees else { continue }
 
-        crossoverSegments.append(
-            ClockCrossoverSegment(
-                id: "crossover-\(segmentIndex)-\(active.map(\.id).joined(separator: "-"))",
-                startDegrees: startDegrees,
-                endDegrees: endDegrees,
-                colors: active.map(\.color),
-                items: active
+            crossoverSegments.append(
+                ClockCrossoverSegment(
+                    id: "crossover-\(item.id)-\(segmentIndex)-\(laneIndex)",
+                    item: item,
+                    startDegrees: startDegrees,
+                    endDegrees: endDegrees,
+                    laneIndex: laneIndex,
+                    laneCount: laneCount,
+                    lineWidth: lineWidth,
+                    radiusOffset: (CGFloat(laneIndex) * laneSpacing) - (totalSpread / 2)
+                )
             )
-        )
+        }
     }
 }

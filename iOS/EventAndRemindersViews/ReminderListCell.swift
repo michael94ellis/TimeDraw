@@ -63,9 +63,14 @@ struct ReminderListCell: View {
     var body: some View {
         HStack(spacing: 12) {
             
-            RoundedRectangle(cornerRadius: 2, style: .continuous)
-                .fill(Color(cgColor: item.calendar.cgColor))
-                .frame(width: 12)
+            UnevenRoundedRectangle(
+                topLeadingRadius: 12,
+                bottomLeadingRadius: 12,
+                bottomTrailingRadius: 0,
+                topTrailingRadius: 0
+            )
+            .fill(Color(cgColor: item.calendar.cgColor))
+            .frame(width: 12)
             
             cellContent
                 .padding(.vertical, 8)

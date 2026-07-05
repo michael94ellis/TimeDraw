@@ -24,6 +24,7 @@ struct MainScrollableContent: View {
 
     let clockHorizPadding: CGFloat = 16
     let clockVertPadding: CGFloat = 20
+    let standardRowInsets: EdgeInsets = .init(top: 4, leading: 8, bottom: 4, trailing: 8)
 
     private var showsEventsSection: Bool {
         switch appSettings.showCalendarItemType {
@@ -117,8 +118,6 @@ struct MainScrollableContent: View {
                         EventListCell(item: item)
                     }
                     .buttonStyle(.plain)
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(EmptyView())
                     .background(
                         RoundedRectangle(cornerRadius: 12, style: .continuous)
                             .fill(Color(uiColor: .secondarySystemGroupedBackground))
@@ -135,6 +134,10 @@ struct MainScrollableContent: View {
                     }
                 }
             }
+            .listRowInsets(standardRowInsets)
+            .listRowSpacing(0)
+            .listRowSeparator(.hidden)
+            .listRowBackground(EmptyView())
         }
     }
 
@@ -166,8 +169,6 @@ struct MainScrollableContent: View {
                         ReminderListCell(item: item)
                     }
                     .buttonStyle(.plain)
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(EmptyView())
                     .background(
                         RoundedRectangle(cornerRadius: 12, style: .continuous)
                             .fill(Color(uiColor: .secondarySystemGroupedBackground))
@@ -191,6 +192,10 @@ struct MainScrollableContent: View {
                     }
                 }
             }
+            .listRowInsets(standardRowInsets)
+            .listRowSpacing(0)
+            .listRowSeparator(.hidden)
+            .listRowBackground(EmptyView())
         }
     }
         
@@ -214,6 +219,9 @@ struct MainScrollableContent: View {
                 .listRowSeparator(.hidden)
                 .listRowBackground(EmptyView())
         }
+        .listSectionSpacing(0)
+        .listRowSpacing(0)
+        .environment(\.defaultMinListRowHeight, 0)
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(Color(uiColor: .systemGroupedBackground))

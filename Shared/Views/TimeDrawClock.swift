@@ -81,7 +81,7 @@ struct TimeDrawClock: View {
                 ClockAllDayEventLine(
                     startDegrees: allDaySegments[index].startDegrees,
                     endDegrees: allDaySegments[index].endDegrees,
-                    radius: (allDayRadius + (CGFloat(index + 1) * 2))
+                    radius: (allDayRadius + (CGFloat(index + 1) * 3))
                 )
                 .stroke(
                     allDaySegments[index].color,
@@ -92,9 +92,6 @@ struct TimeDrawClock: View {
                         dashPhase: allDaySegments[index].dashPhase
                     )
                 )
-                .onAppear {
-                    print((allDayRadius + (CGFloat(index + 1))))
-                }
             }
         }
         .allowsHitTesting(false)

@@ -19,9 +19,6 @@ struct SettingsView: View {
     @EnvironmentObject var appSettings: AppSettings
     @Binding var showSettingsPopover: Bool
 
-    private let vineetURL = "https://www.vineetk.com/"
-    private let michaelURL = "https://www.michaelrobertellis.com/"
-
     var body: some View {
         NavigationStack {
             Form {
@@ -42,12 +39,6 @@ struct SettingsView: View {
                 #endif
 
                 Section("About") {
-                    Link(destination: URL(string: michaelURL)!) {
-                        Text("iOS: Michael Robert Ellis")
-                    }
-                    Link(destination: URL(string: vineetURL)!) {
-                        Text("Design: Vineet Kapil")
-                    }
                     NavigationLink {
                         CalendlyInlineWidgetView()
                     } label: {

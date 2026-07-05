@@ -8,8 +8,8 @@ import SwiftUI
 struct InsetGroupedBackground: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .background(Color(uiColor: .secondarySystemGroupedBackground))
-            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .background(DesignToken.Colors.listRowBackground)
+            .clipShape(RoundedRectangle(cornerRadius: DesignToken.CornerRadius.insetGroupedRadius, style: .continuous))
     }
 }
 
@@ -53,7 +53,7 @@ struct SummaryRowLabel: View {
         HStack {
             Text(title)
                 .font(.interRegular)
-                .foregroundStyle(Color(uiColor: .label))
+                .foregroundStyle(DesignToken.Colors.primaryText)
             Spacer()
             if let value, !value.isEmpty {
                 Text(value)

@@ -20,7 +20,7 @@ struct MainViewContainer: View {
 
     @ViewBuilder var blurOverlay: some View {
         if self.itemViewModel.isAddEventTextFieldFocused {
-            Color.black.opacity(0.25)
+            DesignToken.Colors.modalScrim
                 .ignoresSafeArea()
                 .contentShape(Rectangle())
                 .onTapGesture {

@@ -47,9 +47,9 @@ struct ClockFace: View {
                 // Border Circle
                 Circle()
                 #if !os(watchOS)
-                    .strokeBorder(Color(uiColor: .systemGray3).opacity(0.5), lineWidth: outlineWidth)
+                    .strokeBorder(DesignToken.Colors.clockFaceTickStroke, lineWidth: outlineWidth)
                 #else
-                    .strokeBorder(Color(uiColor: .gray).opacity(0.5), lineWidth: outlineWidth)
+                    .strokeBorder(DesignToken.Colors.clockFaceAlternateStroke, lineWidth: outlineWidth)
                 #endif
                     .frame(width: size, height: size)
 

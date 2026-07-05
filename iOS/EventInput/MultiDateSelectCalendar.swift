@@ -44,7 +44,7 @@ struct CalendarMultiDateSelection: View {
                             .foregroundColor(.clear)
                             .background(display ? Color(uiColor: .systemGray2) : Color(uiColor: .systemGray6))
                             .frame(width: 40, height: 30)
-                            .cornerRadius(8)
+                            .cornerRadius(DesignToken.CornerRadius.calendarDayRadius)
                             .accessibilityHidden(true)
                             .overlay(
                                 Text(String(date))

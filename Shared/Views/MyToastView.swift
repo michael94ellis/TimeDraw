@@ -27,10 +27,10 @@ enum ToastStyle {
 
     var accentColor: Color {
         switch self {
-        case .success: return .green1
-        case .destructive: return .red1
-        case .error: return .red1
-        case .info: return .blue1
+        case .success: return DesignToken.Colors.success
+        case .destructive: return DesignToken.Colors.destructive
+        case .error: return DesignToken.Colors.destructive
+        case .info: return DesignToken.Colors.action
         }
     }
 
@@ -48,6 +48,7 @@ enum ToastStyle {
         return .info
     }
 
+    #if os(iOS)
     var hapticStyle: UINotificationFeedbackGenerator.FeedbackType? {
         switch self {
         case .success: return .success
@@ -55,6 +56,7 @@ enum ToastStyle {
         case .info: return nil
         }
     }
+    #endif
 }
 
 struct MyToastView: View {
@@ -85,7 +87,7 @@ struct MyToastView: View {
                 Text(message)
                     .font(.callout)
                     .fontWeight(.medium)
-                    .foregroundStyle(Color(uiColor: .label))
+                    .foregroundStyle(DesignToken.Colors.primaryText)
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
             }
@@ -117,7 +119,7 @@ struct MyToastView: View {
     }
 
     private func triggerHapticIfNeeded() {
-        #if canImport(UIKit)
+        #if os(iOS)
         guard let feedback = style.hapticStyle else { return }
         UINotificationFeedbackGenerator().notificationOccurred(feedback)
         #endif

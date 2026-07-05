@@ -28,7 +28,7 @@ struct EventListCell: View {
         VStack(alignment: .leading, spacing: 2) {
             Text(item.title.isEmpty ? "Untitled Event" : item.title)
                 .font(.interSemiBold)
-                .foregroundStyle(Color(uiColor: .label))
+                .foregroundStyle(DesignToken.Colors.primaryText)
                 .lineLimit(2)
             Text(subtitle)
                 .font(.interFine)
@@ -48,9 +48,14 @@ struct EventListCell: View {
     var body: some View {
         HStack(spacing: 8) {
             
-            RoundedRectangle(cornerRadius: 2, style: .continuous)
-                .fill(Color(cgColor: item.calendar.cgColor))
-                .frame(width: 12)
+            UnevenRoundedRectangle(
+                topLeadingRadius: DesignToken.CornerRadius.listRowRadius,
+                bottomLeadingRadius: DesignToken.CornerRadius.listRowRadius,
+                bottomTrailingRadius: 0,
+                topTrailingRadius: 0
+            )
+            .fill(Color(cgColor: item.calendar.cgColor))
+            .frame(width: 12)
             
             cellContent
                 .padding(.vertical, 8)

@@ -119,8 +119,8 @@ struct MainScrollableContent: View {
                     }
                     .buttonStyle(.plain)
                     .background(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .fill(Color(uiColor: .secondarySystemGroupedBackground))
+                        RoundedRectangle(cornerRadius: DesignToken.CornerRadius.listRowRadius, style: .continuous)
+                            .fill(DesignToken.Colors.listRowBackground)
                     )
                     .swipeActions(allowsFullSwipe: true) {
                         Button(action: {
@@ -129,7 +129,7 @@ struct MainScrollableContent: View {
                             self.itemList.updateData()
                         }) {
                             Image(systemName: "trash")
-                                .tint(Color.red1)
+                                .tint(DesignToken.Colors.destructive)
                         }
                     }
                 }
@@ -170,8 +170,8 @@ struct MainScrollableContent: View {
                     }
                     .buttonStyle(.plain)
                     .background(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .fill(Color(uiColor: .secondarySystemGroupedBackground))
+                        RoundedRectangle(cornerRadius: DesignToken.CornerRadius.listRowRadius, style: .continuous)
+                            .fill(DesignToken.Colors.listRowBackground)
                     )
                     .swipeActions(allowsFullSwipe: true) {
                         Button(action: {
@@ -179,7 +179,7 @@ struct MainScrollableContent: View {
                             self.itemList.updateData()
                         }) {
                             Image(systemName: "checkmark")
-                                .tint(Color.green1)
+                                .tint(DesignToken.Colors.success)
                         }
                         Button(action: {
                             self.itemList.delete(item)
@@ -187,7 +187,7 @@ struct MainScrollableContent: View {
                             self.itemList.updateData()
                         }) {
                             Image(systemName: "trash")
-                                .tint(Color.red1)
+                                .tint(DesignToken.Colors.destructive)
                         }
                     }
                 }
@@ -224,7 +224,7 @@ struct MainScrollableContent: View {
         .environment(\.defaultMinListRowHeight, 0)
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
-        .background(Color(uiColor: .systemGroupedBackground))
+        .background(DesignToken.Colors.groupedBackground)
         .refreshable(action: {
             self.itemList.updateData()
         })

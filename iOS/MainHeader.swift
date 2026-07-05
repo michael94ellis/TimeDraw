@@ -33,11 +33,11 @@ struct MainHeader: View {
         return VStack {
             Text(self.weekdayFormatter.string(from: date))
                 .font(today || display ? .interSemiBold : .interLight)
-                .foregroundColor(Color(uiColor: .label))
+                .foregroundColor(DesignToken.Colors.primaryText)
                 .frame(height: 30)
             Text(date.get(.day).formatted())
                 .font(today ? .interBold : display ? .interSemiBold : .interRegular)
-                .foregroundColor(today ? Color.red1 : display ? Color(uiColor: .label) : Color.gray2)
+                .foregroundColor(today ? DesignToken.Colors.today : display ? DesignToken.Colors.primaryText : DesignToken.Colors.mutedText)
         }
         .frame(width: 45)
         .padding(.vertical, 8)
@@ -68,14 +68,14 @@ struct MainHeader: View {
             Text(self.monthYearFormatter.string(from: self.itemList.displayDate))
                 .font(.interExtraBoldTitle)
                 .fontWeight(.semibold)
-                .foregroundColor(Color.red1)
+                .foregroundColor(DesignToken.Colors.today)
             Spacer()
             Button {
                 showSettingsPopover.toggle()
             } label: {
                 Image(systemName: "ellipsis.circle")
                     .font(.title2)
-                    .foregroundStyle(Color(uiColor: .label))
+                    .foregroundStyle(DesignToken.Colors.primaryText)
             }
             .buttonStyle(.plain)
             .sheet(isPresented: $showSettingsPopover) {
@@ -96,8 +96,8 @@ struct MainHeader: View {
                         weekDayHeader(for: date)
                             .background {
                                 if Calendar.current.isDate(date, inSameDayAs: itemList.displayDate) {
-                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                        .fill(Color.secondary.opacity(0.15))
+                                    RoundedRectangle(cornerRadius: DesignToken.CornerRadius.weekDaySelectionRadius, style: .continuous)
+                                        .fill(DesignToken.Colors.weekDaySelectionFill)
                                 }
                             }
                     }

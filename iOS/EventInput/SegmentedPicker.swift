@@ -26,7 +26,7 @@ public struct SegmentedPicker<T: Equatable, Content: View>: View {
     
     @ViewBuilder func overlay(for item: T) -> some View {
         if item == selectedItem {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: DesignToken.CornerRadius.segmentedPickerRadius)
                 .fill(Color.gray.opacity(0.4))
                 .padding(2)
                 .matchedGeometryEffect(id: "selectedSegmentHighlight", in: self.selectionAnimation)
@@ -57,7 +57,7 @@ public struct SegmentedPicker<T: Equatable, Content: View>: View {
                     .overlay(self.overlay(for: self.items[index]))
             }
         }
-        .background(RoundedRectangle(cornerRadius: 8).fill(Color(uiColor: .systemGray4))
+        .background(RoundedRectangle(cornerRadius: DesignToken.CornerRadius.segmentedPickerTrackRadius).fill(Color(uiColor: .systemGray4))
                         .shadow(radius: 4, x: 2, y: 4))
     }
 }

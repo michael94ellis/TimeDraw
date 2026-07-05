@@ -10,7 +10,7 @@ import SwiftUI
 struct ClockHands: View {
     
     @Binding var currentTime: Time
-    let cornerRounding: CGFloat = 24
+    let cornerRounding = DesignToken.CornerRadius.clockHandRadius
 
     var body: some View {
         GeometryReader { geo in
@@ -24,35 +24,35 @@ struct ClockHands: View {
                 let hourAngle = Double(currentTime.hour) * 30.0 + hourFraction * 30.0
 
                 RoundedRectangle(cornerRadius: cornerRounding)
-                    .fill(Color.darkGray)
+                    .fill(DesignToken.Colors.clockHand)
                     .frame(width: 8, height: hoursOffset)
                     .offset(y: -hoursOffset / 2)
                     .rotationEffect(.degrees(hourAngle))
 
                 // Minutes hand
                 RoundedRectangle(cornerRadius: cornerRounding)
-                    .fill(Color.darkGray)
+                    .fill(DesignToken.Colors.clockHand)
                     .frame(width: 4, height: size * 0.48)
                     .offset(y: -(size * 0.7) / 3)
                     .rotationEffect(.degrees(Double(currentTime.min) * 6))
 
                 // Center circles
                 Circle()
-                    .fill(Color.darkGray)
+                    .fill(DesignToken.Colors.clockHand)
                     .frame(width: size * 0.09, height: size * 0.09)
                 Circle()
-                    .fill(Color.red1)
+                    .fill(DesignToken.Colors.clockSecondHand)
                     .frame(width: size * 0.05, height: size * 0.05)
 
                 // Seconds hand
                 RoundedRectangle(cornerRadius: cornerRounding)
-                    .fill(Color.red1)
+                    .fill(DesignToken.Colors.clockSecondHand)
                     .frame(width: 2, height: secondsOffset)
                     .offset(y: -secondsOffset / 2)
                     .rotationEffect(.degrees(Double(currentTime.sec) * 6))
 
                 RoundedRectangle(cornerRadius: cornerRounding)
-                    .fill(Color.red1)
+                    .fill(DesignToken.Colors.clockSecondHand)
                     .frame(width: 2, height: size * 0.2)
                     .offset(y: 10)
                     .rotationEffect(.degrees(Double(currentTime.sec) * 6))

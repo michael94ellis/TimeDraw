@@ -26,6 +26,7 @@
 		2F39B87427823CF700FE72C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B84627823CF600FE72C3 /* Assets.xcassets */; };
 		2F39B88627823E1400FE72C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */; };
 		2F39B889278241B500FE72C3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B888278241B500FE72C3 /* Colors.swift */; };
+		2FDTK0012E40000100B69C71 /* DesignTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDTK0002E40000100B69C71 /* DesignTokens.swift */; };
 		2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59327848DF700F0BEB2 /* Date-Extension.swift */; };
 		2F42C59D2784E3DE00F0BEB2 /* EventKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59C2784E3DE00F0BEB2 /* EventKitManager.swift */; };
 		2F42C5A32784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */; };
@@ -85,6 +86,7 @@
 		2F7A0BF42E35C83C00B69C71 /* DateComponents-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F471C392E24950800D37709 /* DateComponents-Extension.swift */; };
 		2F7A0BF52E35C83C00B69C71 /* Date-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59327848DF700F0BEB2 /* Date-Extension.swift */; };
 		2F7A0BF62E35C84200B69C71 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B888278241B500FE72C3 /* Colors.swift */; };
+		2FDTK0022E40000100B69C71 /* DesignTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDTK0002E40000100B69C71 /* DesignTokens.swift */; };
 		2F7A0BF72E35C84200B69C71 /* Double-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */; };
 		2F7A0BF82E35C84200B69C71 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB30F27A229DA00654FEF /* Utils.swift */; };
 		2F7A0BF92E35C84200B69C71 /* SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458727D8BDD0005BF37D /* SwipeGesture.swift */; };
@@ -149,6 +151,7 @@
 		2FD407C3284FBC050022FC49 /* ClockHands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CCF27DE4A9D0067F250 /* ClockHands.swift */; };
 		2FD407C4284FBC260022FC49 /* Inter-Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505282791384500AF90F7 /* Inter-Font.swift */; };
 		2FD407C5284FBC600022FC49 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F39B888278241B500FE72C3 /* Colors.swift */; };
+		2FDTK0032E40000100B69C71 /* DesignTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDTK0002E40000100B69C71 /* DesignTokens.swift */; };
 		2FD407C6284FBC6C0022FC49 /* SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458727D8BDD0005BF37D /* SwipeGesture.swift */; };
 		2FD407C7284FBC760022FC49 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB30F27A229DA00654FEF /* Utils.swift */; };
 		2FD407C9284FBC7A0022FC49 /* Date-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F42C59327848DF700F0BEB2 /* Date-Extension.swift */; };
@@ -244,6 +247,7 @@
 		2F39B88427823DEC00FE72C3 /* TimeDraw (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TimeDraw (iOS).entitlements"; sourceTree = "<group>"; };
 		2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2F39B888278241B500FE72C3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		2FDTK0002E40000100B69C71 /* DesignTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTokens.swift; sourceTree = "<group>"; };
 		2F42C59327848DF700F0BEB2 /* Date-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date-Extension.swift"; sourceTree = "<group>"; };
 		2F42C59C2784E3DE00F0BEB2 /* EventKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventKitManager.swift; sourceTree = "<group>"; };
 		2F42C5A22784E6E000F0BEB2 /* EKEventStore-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKEventStore-Extension.swift"; sourceTree = "<group>"; };
@@ -482,6 +486,7 @@
 			children = (
 				2F24458727D8BDD0005BF37D /* SwipeGesture.swift */,
 				2F39B888278241B500FE72C3 /* Colors.swift */,
+				2FDTK0002E40000100B69C71 /* DesignTokens.swift */,
 				2F7A0C0A2E3649C000B69C71 /* OpenCalendarItemKey.swift */,
 				2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */,
 				2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */,
@@ -909,6 +914,7 @@
 				2F8AB2FD279BB4F000654FEF /* DateTimePickerTextField.swift in Sources */,
 				2F7A0C0D2E3649C000B69C71 /* OpenCalendarItemKey.swift in Sources */,
 				2F39B889278241B500FE72C3 /* Colors.swift in Sources */,
+				2FDTK0012E40000100B69C71 /* DesignTokens.swift in Sources */,
 				2FDFFFD82E22C83F00B9D266 /* UIPopoverWrapperViewController.swift in Sources */,
 				2F8AB30727A1025100654FEF /* UIPickerTextField.swift in Sources */,
 				2F6505292791384500AF90F7 /* Inter-Font.swift in Sources */,
@@ -987,6 +993,7 @@
 				2F7A0BE32E35C74C00B69C71 /* TimeDrawClock.swift in Sources */,
 				2F7A0BE72E35C76F00B69C71 /* Time.swift in Sources */,
 				2F7A0BF62E35C84200B69C71 /* Colors.swift in Sources */,
+				2FDTK0022E40000100B69C71 /* DesignTokens.swift in Sources */,
 				2F7A0BF72E35C84200B69C71 /* Double-Extension.swift in Sources */,
 				2F7A0BF82E35C84200B69C71 /* Utils.swift in Sources */,
 				2F7A0BF92E35C84200B69C71 /* SwipeGesture.swift in Sources */,
@@ -1015,6 +1022,7 @@
 				2F7A0C0B2E3649C000B69C71 /* OpenCalendarItemKey.swift in Sources */,
 				2FD4078D284FBB700022FC49 /* NotificationController.swift in Sources */,
 				2FD407C5284FBC600022FC49 /* Colors.swift in Sources */,
+				2FDTK0032E40000100B69C71 /* DesignTokens.swift in Sources */,
 				2FD407C4284FBC260022FC49 /* Inter-Font.swift in Sources */,
 				2FD407D6284FBD670022FC49 /* EKEventStore-Extension.swift in Sources */,
 				2FD407C3284FBC050022FC49 /* ClockHands.swift in Sources */,

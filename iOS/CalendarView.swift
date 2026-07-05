@@ -38,7 +38,7 @@ struct CalendarDateSelection: View {
                             .foregroundColor(.clear)
                             .background(display ? Color(uiColor: .systemGray3) : Color(uiColor: .systemBackground))
                             .frame(width: 36, height: 36)
-                            .cornerRadius(8)
+                            .cornerRadius(DesignToken.CornerRadius.calendarDayRadius)
                             .accessibilityHidden(true)
                             .overlay(
                                 Text(DateFormatter.dayFormatter.string(from: date))

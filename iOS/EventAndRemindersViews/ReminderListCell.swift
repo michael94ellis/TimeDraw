@@ -27,12 +27,12 @@ struct ReminderListCell: View {
     var cellContent: some View {
         Image(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
             .font(.title3)
-            .foregroundStyle(item.isCompleted ? Color.green1 : Color.gray2)
+                .foregroundStyle(item.isCompleted ? DesignToken.Colors.completed : DesignToken.Colors.mutedText)
 
         VStack(alignment: .leading, spacing: 2) {
             Text(item.title.isEmpty ? "Untitled Reminder" : item.title)
                 .font(.interSemiBold)
-                .foregroundStyle(Color(uiColor: .label))
+                .foregroundStyle(DesignToken.Colors.primaryText)
                 .strikethrough(item.isCompleted, color: .secondary)
                 .lineLimit(2)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -64,8 +64,8 @@ struct ReminderListCell: View {
         HStack(spacing: 12) {
             
             UnevenRoundedRectangle(
-                topLeadingRadius: 12,
-                bottomLeadingRadius: 12,
+                topLeadingRadius: DesignToken.CornerRadius.listRowRadius,
+                bottomLeadingRadius: DesignToken.CornerRadius.listRowRadius,
                 bottomTrailingRadius: 0,
                 topTrailingRadius: 0
             )

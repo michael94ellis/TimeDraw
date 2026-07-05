@@ -45,8 +45,8 @@ struct DismissableEventKitPermissionPlaceholder: View {
             }
             .padding(.horizontal, 12)
             .background(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color(uiColor: .secondarySystemGroupedBackground))
+                RoundedRectangle(cornerRadius: DesignToken.CornerRadius.listRowRadius, style: .continuous)
+                    .fill(DesignToken.Colors.listRowBackground)
             )
             .opacity(isVisible ? 1 : 0)
             .scaleEffect(isVisible ? 1 : 0.95, anchor: .top)

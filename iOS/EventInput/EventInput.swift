@@ -49,17 +49,17 @@ struct EventInput: View {
             HStack(spacing: 12) {
                 Text(viewModel.newItemTitle.isEmpty ? "New Event or Reminder" : viewModel.newItemTitle)
                     .font(.interRegular)
-                    .foregroundStyle(viewModel.newItemTitle.isEmpty ? .secondary : Color(uiColor: .label))
+                    .foregroundStyle(viewModel.newItemTitle.isEmpty ? .secondary : DesignToken.Colors.primaryText)
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 Image(systemName: submitIconName)
                     .font(.title2)
-                    .foregroundStyle(Color.blue1)
+                    .foregroundStyle(DesignToken.Colors.action)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 13, style: .continuous))
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignToken.CornerRadius.eventInputPanelRadius, style: .continuous))
             .overlay(alignment: .top) {
                 Divider()
             }
@@ -108,7 +108,7 @@ struct EventInput: View {
             } label: {
                 Image(systemName: submitIconName)
                     .font(.title2)
-                    .foregroundStyle(Color.blue1)
+                    .foregroundStyle(DesignToken.Colors.action)
             }
             .buttonStyle(.plain)
         }
@@ -162,7 +162,7 @@ struct EventInput: View {
                     .frame(width: 10, height: 10)
                 Text(calendarName)
                     .font(.interRegular)
-                    .foregroundStyle(Color(uiColor: .label))
+                    .foregroundStyle(DesignToken.Colors.primaryText)
                     .lineLimit(1)
                 Image(systemName: "chevron.up.chevron.down")
                     .font(.caption2)
@@ -170,7 +170,7 @@ struct EventInput: View {
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
-            .background(Color(uiColor: .tertiarySystemGroupedBackground), in: Capsule())
+            .background(DesignToken.Colors.chipBackground, in: Capsule())
         }
     }
 

@@ -87,6 +87,6 @@ private struct OnboardingPermissionPrimaryButtonStyle: ButtonStyle {
             .padding(.vertical, 14)
             .padding(.horizontal, 24)
             .background(Color.red1.opacity(configuration.isPressed ? 0.85 : 1))
-            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: DesignToken.CornerRadius.listRowRadius, style: .continuous))
     }
 }

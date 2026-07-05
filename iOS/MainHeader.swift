@@ -10,6 +10,7 @@ import SwiftUI
 
 struct MainHeader: View {
     
+    @Namespace private var weekdaySelection
     @State private var showSettingsPopover = false
     // TODO: Add a full month calendar feature somewhere
     @EnvironmentObject var itemList: CalendarItemListViewModel
@@ -35,9 +36,11 @@ struct MainHeader: View {
                 .font(today || display ? .interSemiBold : .interLight)
                 .foregroundColor(DesignToken.Colors.primaryText)
                 .frame(height: 30)
+                .animation(nil, value: itemList.displayDate)
             Text(date.get(.day).formatted())
                 .font(today ? .interBold : display ? .interSemiBold : .interRegular)
                 .foregroundColor(today ? DesignToken.Colors.today : display ? DesignToken.Colors.primaryText : DesignToken.Colors.mutedText)
+                .animation(nil, value: itemList.displayDate)
         }
         .frame(width: 45)
         .padding(.vertical, 8)
@@ -91,15 +94,19 @@ struct MainHeader: View {
             HStack(spacing: 4) {
                 ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.itemList.displayDate), id: \.self) { date in
                     Button {
-                        itemList.displayDate = date
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            itemList.displayDate = date
+                        }
                     } label: {
                         weekDayHeader(for: date)
                             .background {
                                 if Calendar.current.isDate(date, inSameDayAs: itemList.displayDate) {
                                     RoundedRectangle(cornerRadius: DesignToken.CornerRadius.weekDaySelectionRadius, style: .continuous)
                                         .fill(DesignToken.Colors.weekDaySelectionFill)
+                                        .matchedGeometryEffect(id: "weekDaySelection", in: weekdaySelection)
                                 }
                             }
+                            .id("WeekDayHeader\(date)")
                     }
                     .buttonStyle(.plain)
                 }

@@ -34,13 +34,15 @@ To make a contribution
 ## ✍️ Authors
 ### Please remember add your name and a link to this ReadMe if you contribute to the repo
 
-App Design, UX, and original creator: 
- - Vineet Kapil
 iOS Development:
- - Michael Ellis - https://www.michaelrobertellis.com/
+ - Michael Ellis 
+ 
+App Design, UX: 
+ - Vineet Kapil
+
 
 ---
 
 ## 📃 License
 
-TBD
+No License

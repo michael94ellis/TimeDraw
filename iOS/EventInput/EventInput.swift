@@ -24,67 +24,82 @@ struct EventInput: View {
     }
 
     private var submitIconName: String {
-        viewModel.editMode ? "checkmark.circle.fill" : "plus.circle.fill"
+        viewModel.editMode ? "checkmark" : "plus"
     }
 
     private var calendarName: String {
         viewModel.selectedCalendar?.title ?? "Calendar"
     }
 
-    var body: some View {
-        Group {
-            if viewModel.isAddEventTextFieldFocused {
-                expandedPanel
-            } else {
-                collapsedBar
-            }
-        }
-        .animation(.easeInOut(duration: 0.25), value: viewModel.isAddEventTextFieldFocused)
+    private var calendarTint: Color {
+        Color(cgColor: viewModel.selectedCalendar?.cgColor ?? defaultCalendarColor)
     }
 
-    private var collapsedBar: some View {
+    var body: some View {
+        panelContainer
+            .padding(.horizontal, 16)
+            .padding(.bottom, 12)
+            .animation(.spring(response: 0.35, dampingFraction: 0.86), value: viewModel.isAddEventTextFieldFocused)
+    }
+
+    @ViewBuilder
+    private var panelContainer: some View {
+        let content = panelContent
+            .glassPanel()
+
+        if #available(iOS 26, *) {
+            GlassEffectContainer {
+                content
+                    .glassEffectID("eventInput", in: animation)
+            }
+        } else {
+            content
+                .matchedGeometryEffect(id: "eventInput", in: animation)
+        }
+    }
+
+    @ViewBuilder
+    private var panelContent: some View {
+        if viewModel.isAddEventTextFieldFocused {
+            expandedContent
+        } else {
+            collapsedContent
+        }
+    }
+
+    private var collapsedContent: some View {
         Button {
             viewModel.isAddEventTextFieldFocused = true
         } label: {
             HStack(spacing: 12) {
                 Text(viewModel.newItemTitle.isEmpty ? "New Event or Reminder" : viewModel.newItemTitle)
                     .font(.interRegular)
-                    .foregroundStyle(viewModel.newItemTitle.isEmpty ? .secondary : DesignToken.Colors.primaryText)
+                    .foregroundStyle(viewModel.newItemTitle.isEmpty ? DesignToken.Colors.tertiaryText : DesignToken.Colors.primaryText)
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Image(systemName: submitIconName)
-                    .font(.title2)
-                    .foregroundStyle(DesignToken.Colors.action)
+                submitIcon
             }
             .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: DesignToken.CornerRadius.eventInputPanelRadius, style: .continuous))
-            .overlay(alignment: .top) {
-                Divider()
-            }
+            .padding(.vertical, 14)
         }
         .buttonStyle(.plain)
-        .matchedGeometryEffect(id: "textInput", in: animation)
-        .padding(.horizontal, 14)
-        .padding(.bottom, 8)
     }
 
-    private var expandedPanel: some View {
-        ScrollView {
-            VStack(spacing: 12) {
-                titleFieldRow
-                toolbarRow
+    private var expandedContent: some View {
+        VStack(spacing: 0) {
+            titleFieldRow
+
+            toolbarRow
+                .padding(.horizontal, 12)
+                .padding(.top, 4)
+                .padding(.bottom, 8)
+
+            ScrollView {
                 detailSections
             }
-            .padding(.horizontal, 14)
-            .padding(.bottom, 8)
-        }
-        .scrollDismissesKeyboard(.interactively)
-        .frame(maxHeight: 420)
-        .background(.ultraThinMaterial)
-        .overlay(alignment: .top) {
-            Divider()
+            .scrollDismissesKeyboard(.interactively)
+            .frame(maxHeight: 320)
         }
     }
 
@@ -100,22 +115,30 @@ struct EventInput: View {
                 }
                 .onAppear { isFocused = true }
 
-            Button {
+            submitButton {
                 Task {
                     await viewModel.submitEventOrReminder()
                     isFocused = false
                 }
-            } label: {
-                Image(systemName: submitIconName)
-                    .font(.title2)
-                    .foregroundStyle(DesignToken.Colors.action)
             }
-            .buttonStyle(.plain)
         }
         .padding(.horizontal, 16)
-        .padding(.vertical, 12)
-        .insetGroupedBackground()
-        .matchedGeometryEffect(id: "textInput", in: animation)
+        .padding(.vertical, 14)
+    }
+
+    private func submitButton(action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            submitIcon
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var submitIcon: some View {
+        Image(systemName: submitIconName)
+            .font(.body.weight(.semibold))
+            .foregroundStyle(.white)
+            .frame(width: 32, height: 32)
+            .glassSubmitButton(tint: DesignToken.Colors.action)
     }
 
     private var toolbarRow: some View {
@@ -141,7 +164,6 @@ struct EventInput: View {
                 }
             }
         }
-        .padding(.horizontal, 4)
     }
 
     private var calendarMenu: some View {
@@ -158,7 +180,7 @@ struct EventInput: View {
         } label: {
             HStack(spacing: 8) {
                 Circle()
-                    .fill(Color(cgColor: viewModel.selectedCalendar?.cgColor ?? defaultCalendarColor))
+                    .fill(calendarTint)
                     .frame(width: 10, height: 10)
                 Text(calendarName)
                     .font(.interRegular)
@@ -170,19 +192,19 @@ struct EventInput: View {
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
-            .background(DesignToken.Colors.chipBackground, in: Capsule())
+            .glassCapsuleChip(tint: calendarTint)
         }
     }
 
     @ViewBuilder
     private var detailSections: some View {
-        FormSection {
+        FormSection(useGroupedBackground: false) {
             AddEventDateTimePicker()
             if appSettings.showRecurringItems || viewModel.calendarItem?.hasRecurrenceRules ?? false {
-                FormDivider()
+                FormDivider(subtle: true)
                 AddRecurrenceRule()
             }
-            FormDivider()
+            FormDivider(subtle: true)
             AddNotesInput()
         }
     }

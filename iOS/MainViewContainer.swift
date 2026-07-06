@@ -20,14 +20,18 @@ struct MainViewContainer: View {
 
     @ViewBuilder var blurOverlay: some View {
         if self.itemViewModel.isAddEventTextFieldFocused {
-            DesignToken.Colors.modalScrim
-                .ignoresSafeArea()
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    withAnimation {
-                        self.itemViewModel.isAddEventTextFieldFocused = false
-                    }
+            ZStack {
+                Rectangle()
+                    .fill(.ultraThinMaterial)
+                Color.black.opacity(0.15)
+            }
+            .ignoresSafeArea()
+            .contentShape(Rectangle())
+            .onTapGesture {
+                withAnimation {
+                    self.itemViewModel.isAddEventTextFieldFocused = false
                 }
+            }
         }
     }
     

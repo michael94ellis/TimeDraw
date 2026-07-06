@@ -18,7 +18,7 @@ enum DesignToken {
         static let calendarDayRadius: CGFloat = 8
         static let textFieldRadius: CGFloat = 4
         static let calendarColorBarRadius: CGFloat = 2
-        static let eventInputPanelRadius: CGFloat = 13
+        static let eventInputPanelRadius: CGFloat = 20
         static let clockHandRadius: CGFloat = 24
     }
 
@@ -91,6 +91,8 @@ enum DesignToken {
 
         #if os(iOS)
         static let primaryText = Color(uiColor: .label)
+        static let secondaryText = Color(uiColor: .secondaryLabel)
+        static let tertiaryText = Color(uiColor: .tertiaryLabel)
         static let listRowBackground = Color(uiColor: .secondarySystemGroupedBackground)
         static let groupedBackground = Color(uiColor: .systemGroupedBackground)
         static let chipBackground = Color(uiColor: .tertiarySystemGroupedBackground)

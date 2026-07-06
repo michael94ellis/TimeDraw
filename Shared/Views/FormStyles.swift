@@ -19,12 +19,55 @@ extension View {
     }
 }
 
+struct GlassPanelModifier: ViewModifier {
+    var cornerRadius: CGFloat = DesignToken.CornerRadius.eventInputPanelRadius
+
+    private var shape: RoundedRectangle {
+        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+    }
+
+    func body(content: Content) -> some View {
+        if #available(iOS 26, *) {
+            content
+                .glassEffect(.regular.interactive(), in: shape)
+        } else {
+            content
+                .background(.ultraThinMaterial, in: shape)
+                .overlay(shape.strokeBorder(.white.opacity(0.2), lineWidth: 0.5))
+                .shadow(color: .black.opacity(0.1), radius: 16, y: 6)
+        }
+    }
+}
+
+extension View {
+    func glassPanel(cornerRadius: CGFloat = DesignToken.CornerRadius.eventInputPanelRadius) -> some View {
+        modifier(GlassPanelModifier(cornerRadius: cornerRadius))
+    }
+
+    @ViewBuilder
+    func glassCapsuleChip(tint: Color? = nil) -> some View {
+        if let tint {
+            background(tint.opacity(0.15), in: Capsule())
+                .overlay(Capsule().strokeBorder(tint.opacity(0.25), lineWidth: 0.5))
+        } else {
+            background(.thinMaterial, in: Capsule())
+        }
+    }
+
+    @ViewBuilder
+    func glassSubmitButton(tint: Color) -> some View {
+        background(tint, in: Circle())
+    }
+}
+
 struct FormSection<Content: View>: View {
     let title: String?
+    let useGroupedBackground: Bool
     let content: Content
 
-    init(_ title: String? = nil, @ViewBuilder content: () -> Content) {
+    init(_ title: String? = nil, useGroupedBackground: Bool = true, @ViewBuilder content: () -> Content) {
         self.title = title
+        self.useGroupedBackground = useGroupedBackground
         self.content = content()
     }
 
@@ -39,7 +82,19 @@ struct FormSection<Content: View>: View {
             VStack(spacing: 0) {
                 content
             }
-            .insetGroupedBackground()
+            .modifier(GroupedBackgroundIfNeeded(enabled: useGroupedBackground))
+        }
+    }
+}
+
+private struct GroupedBackgroundIfNeeded: ViewModifier {
+    let enabled: Bool
+
+    func body(content: Content) -> some View {
+        if enabled {
+            content.insetGroupedBackground()
+        } else {
+            content
         }
     }
 }
@@ -85,8 +140,11 @@ struct DestructiveTextButton: View {
 }
 
 struct FormDivider: View {
+    var subtle: Bool = false
+
     var body: some View {
         Divider()
+            .opacity(subtle ? 0.35 : 1)
             .padding(.leading, 16)
     }
 }

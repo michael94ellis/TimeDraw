@@ -59,7 +59,12 @@ class ModifyCalendarItemViewModel: ObservableObject {
     /// Used to determine if the event is being created or edited
     private(set) var editMode: Bool = false
     
+    /// Expands the floating reminder editor (custom UI). Events use EventKitUI instead.
     @Published var isAddEventTextFieldFocused: Bool = false
+    /// Presents `EKEventEditViewController` for creating or editing events.
+    @Published var isShowingEventEditView: Bool = false
+    /// Existing event to edit in EventKitUI; `nil` means create a new event.
+    @Published var eventBeingEdited: EKEvent?
     @Published var isDisplayingOptions: Bool = false
     @Published var isDateTimePickerOpen: Bool = false
     @Published var isNotesInputOpen: Bool = false
@@ -132,28 +137,21 @@ class ModifyCalendarItemViewModel: ObservableObject {
         }
     }
     
+    @MainActor func presentNewEventEditor() {
+        self.reset()
+        self.eventBeingEdited = nil
+        self.isShowingEventEditView = true
+    }
+
     @MainActor func open(event: EKEvent) {
         self.reset()
-        self.editMode = true
-        self.isAddEventTextFieldFocused = true
-        self.calendarItem = event
-        self.newItemTitle = event.title
-        self.selectedCalendar = event.calendar
-        if event.hasNotes {
-            self.notesInput = event.notes ?? ""
-            self.isNotesInputOpen = true
-        }
-        if let startDate = event.startDate {
-            self.isDateTimePickerOpen = true
-            self.newItemStartTime = startDate.get(.hour, .minute, .second)
-            self.newItemStartDate = startDate.get(.month, .day, .year)
-            self.extractRecurrenceRules(for: event, start: startDate)
-        }
-        if let endDate = event.endDate {
-            self.isDateTimePickerOpen = true
-            self.newItemEndTime = endDate.get(.hour, .minute, .second)
-            self.newItemEndDate = endDate.get(.month, .day, .year)
-        }
+        self.eventBeingEdited = event
+        self.isShowingEventEditView = true
+    }
+
+    @MainActor func dismissEventEditView() {
+        self.isShowingEventEditView = false
+        self.eventBeingEdited = nil
     }
     
     @MainActor func open(reminder: EKReminder) {
@@ -289,6 +287,8 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.calendarItem = nil
             self.newItemTitle = ""
             self.isAddEventTextFieldFocused = false
+            self.isShowingEventEditView = false
+            self.eventBeingEdited = nil
             self.isDisplayingOptions = false
             
             self.clearTimeInput()

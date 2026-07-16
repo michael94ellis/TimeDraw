@@ -52,6 +52,7 @@
 		2F65050027879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */; };
 		2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505022787A09900AF90F7 /* MainHeader.swift */; };
 		2F6505062787DA3C00AF90F7 /* EventInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505052787DA3C00AF90F7 /* EventInput.swift */; };
+		2FEVTED022E39000300B69C71 /* EventEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEVTED012E39000300B69C71 /* EventEditView.swift */; };
 		2F6505092787F87A00AF90F7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505082787F87A00AF90F7 /* SettingsView.swift */; };
 		2F6505142791370D00AF90F7 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050B2791370C00AF90F7 /* Inter-SemiBold.ttf */; };
 		2F6505162791370D00AF90F7 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F65050C2791370C00AF90F7 /* Inter-Thin.ttf */; };
@@ -261,6 +262,7 @@
 		2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBarButtonItem.swift; sourceTree = "<group>"; };
 		2F6505022787A09900AF90F7 /* MainHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeader.swift; sourceTree = "<group>"; };
 		2F6505052787DA3C00AF90F7 /* EventInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventInput.swift; sourceTree = "<group>"; };
+		2FEVTED012E39000300B69C71 /* EventEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditView.swift; sourceTree = "<group>"; };
 		2F6505082787F87A00AF90F7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2F65050B2791370C00AF90F7 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
 		2F65050C2791370C00AF90F7 /* Inter-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Thin.ttf"; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 			isa = PBXGroup;
 			children = (
 				2F6505052787DA3C00AF90F7 /* EventInput.swift */,
+				2FEVTED012E39000300B69C71 /* EventEditView.swift */,
 				2F81230B2797B59500458B1A /* AddEventDateTimePicker.swift */,
 				2FB41CB627DACB8E0067F250 /* AddNotesInput.swift */,
 				2F211133279A4F4E0041EE85 /* AddRecurrenceRule.swift */,
@@ -931,6 +934,7 @@
 				2FCLKGE32E38000200B69C71 /* ClockEventLayoutEngine.swift in Sources */,
 				2FADAY042E39100200B69C71 /* ClockAllDayLayoutEngine.swift in Sources */,
 				2F6505062787DA3C00AF90F7 /* EventInput.swift in Sources */,
+				2FEVTED022E39000300B69C71 /* EventEditView.swift in Sources */,
 				2F42C59D2784E3DE00F0BEB2 /* EventKitManager.swift in Sources */,
 				2F2343FC27D454BC0064B635 /* CalendarView.swift in Sources */,
 				2F211134279A4F4E0041EE85 /* AddRecurrenceRule.swift in Sources */,

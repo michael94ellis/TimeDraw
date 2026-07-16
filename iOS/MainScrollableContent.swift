@@ -243,5 +243,10 @@ struct MainScrollableContent: View {
                 self.itemList.updateData()
             }
         }
+        .onChange(of: modifyItemViewModel.isShowingEventEditView) {
+            if !modifyItemViewModel.isShowingEventEditView {
+                self.itemList.updateData()
+            }
+        }
     }
 }

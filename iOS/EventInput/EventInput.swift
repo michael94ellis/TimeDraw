@@ -60,6 +60,17 @@ struct EventInput: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 12)
             .animation(.spring(response: 0.35, dampingFraction: 0.86), value: viewModel.isAddEventTextFieldFocused)
+            .sheet(isPresented: $viewModel.isShowingEventEditView, onDismiss: {
+                viewModel.dismissEventEditView()
+            }) {
+                EventEditView(
+                    eventStore: eventKitManager.eventStore,
+                    event: viewModel.eventBeingEdited
+                ) { _ in
+                    viewModel.dismissEventEditView()
+                    viewModel.isShowingEventEditView = false
+                }
+            }
     }
 
     @ViewBuilder

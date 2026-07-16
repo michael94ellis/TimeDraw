@@ -55,6 +55,13 @@ extension EKCalendar {
     }
 }
 
+extension EKEventStore {
+    func selectedCalendars(ids: [String], entityType: EKEntityType) -> [EKCalendar] {
+        let idSet = Set(ids)
+        return calendars(for: entityType).filter { idSet.contains($0.calendarIdentifier) }
+    }
+}
+
 extension Array {
     func archiveCalendars() -> Data {
         do {

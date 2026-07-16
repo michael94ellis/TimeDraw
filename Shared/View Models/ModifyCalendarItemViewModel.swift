@@ -93,6 +93,10 @@ class ModifyCalendarItemViewModel: ObservableObject {
         return firstLine.count > 40 ? String(firstLine.prefix(37)) + "…" : firstLine
     }
 
+    var isSelectedCalendarForReminder: Bool {
+        selectedCalendar?.allowedEntityTypes == .reminder
+    }
+
     var recurrenceSummary: String? {
         guard isRecurrencePickerOpen else { return nil }
         switch selectedRule {
@@ -342,6 +346,13 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.isDateTimePickerOpen = true
         }
     }
+
+    @MainActor func selectCalendar(_ calendar: EKCalendar) {
+        self.selectedCalendar = calendar
+        if calendar.allowedEntityTypes != .reminder, !self.isDateTimePickerOpen {
+            self.addTimeToEvent()
+        }
+    }
     
     func removeTimeFromEvent() {
         withAnimation {
@@ -453,14 +464,28 @@ class ModifyCalendarItemViewModel: ObservableObject {
             }
             
             // Create New Events or Reminders
+        } else if self.isSelectedCalendarForReminder {
+            let startDate = mergedStartComponments
+            let endDate = mergedEndComponments
+            await self.createReminder(start: startDate, end: endDate)
+        } else if self.selectedCalendar != nil {
+            if let startComponents = mergedStartComponments,
+               let endComponents = mergedEndComponments,
+               let startDate = Calendar.current.date(from: startComponents),
+               let endDate = Calendar.current.date(from: endComponents) {
+                await self.createEvent(start: startDate, end: endDate)
+            } else {
+                self.displayToast("Date & Time Required", style: .error)
+                self.addTimeToEvent()
+            }
         } else if let startComponents = mergedStartComponments,
                   let endComponents = mergedEndComponments,
                   let startDate = Calendar.current.date(from: startComponents),
                   let endDate = Calendar.current.date(from: endComponents) {
             await self.createEvent(start: startDate, end: endDate)
         } else {
-            let startDate = mergedStartComponments != nil ? mergedStartComponments : nil
-            let endDate = mergedEndComponments != nil ? mergedEndComponments : nil
+            let startDate = mergedStartComponments
+            let endDate = mergedEndComponments
             await self.createReminder(start: startDate, end: endDate)
         }
     }

@@ -35,6 +35,26 @@ struct EventInput: View {
         Color(cgColor: viewModel.selectedCalendar?.cgColor ?? defaultCalendarColor)
     }
 
+    private var selectedCalendarIds: [String] {
+        appSettings.userSelectedCalendars.loadCalendarIds()
+    }
+
+    private var selectedEventCalendars: [EKCalendar] {
+        eventKitManager.eventStore.selectedCalendars(ids: selectedCalendarIds, entityType: .event)
+    }
+
+    private var selectedReminderCalendars: [EKCalendar] {
+        eventKitManager.eventStore.selectedCalendars(ids: selectedCalendarIds, entityType: .reminder)
+    }
+
+    private var showEventSection: Bool {
+        !(viewModel.calendarItem is EKReminder)
+    }
+
+    private var showReminderSection: Bool {
+        !(viewModel.calendarItem is EKEvent)
+    }
+
     var body: some View {
         panelContainer
             .padding(.horizontal, 16)
@@ -168,13 +188,18 @@ struct EventInput: View {
 
     private var calendarMenu: some View {
         Menu {
-            ForEach(appSettings.userSelectedCalendars.loadCalendarIds(), id: \.self) { calendarId in
-                if let calendar = eventKitManager.eventStore.calendar(withIdentifier: calendarId) {
-                    Button {
-                        viewModel.selectedCalendar = calendar
-                    } label: {
-                        Label(calendar.title, systemImage: viewModel.selectedCalendar?.calendarIdentifier == calendarId ? "checkmark" : "")
-                    }
+            if showEventSection,
+               eventKitManager.isEventAccessGranted(eventKitManager.eventAuthorizationStatus()),
+               !selectedEventCalendars.isEmpty {
+                Section("Events") {
+                    calendarButtons(for: selectedEventCalendars)
+                }
+            }
+            if showReminderSection,
+               eventKitManager.isReminderAccessGranted(eventKitManager.reminderAuthorizationStatus()),
+               !selectedReminderCalendars.isEmpty {
+                Section("Reminders") {
+                    calendarButtons(for: selectedReminderCalendars)
                 }
             }
         } label: {
@@ -193,6 +218,26 @@ struct EventInput: View {
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
             .glassCapsuleChip(tint: calendarTint)
+        }
+    }
+
+    @ViewBuilder
+    private func calendarButtons(for calendars: [EKCalendar]) -> some View {
+        ForEach(calendars, id: \.calendarIdentifier) { calendar in
+            Button {
+                viewModel.selectCalendar(calendar)
+            } label: {
+                HStack {
+                    Circle()
+                        .fill(Color(cgColor: calendar.cgColor))
+                        .frame(width: 10, height: 10)
+                    Text(calendar.title)
+                    Spacer()
+                    if viewModel.selectedCalendar?.calendarIdentifier == calendar.calendarIdentifier {
+                        Image(systemName: "checkmark")
+                    }
+                }
+            }
         }
     }
 

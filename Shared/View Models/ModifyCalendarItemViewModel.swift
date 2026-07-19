@@ -22,6 +22,12 @@ extension DependencyValues {
     }
 }
 
+enum EventInputDetailSection: Hashable {
+    case dateTime
+    case recurrence
+    case notes
+}
+
 /// Used for creating an EKCalendarItem Event/Reminder with the Input Views
 class ModifyCalendarItemViewModel: ObservableObject {
     
@@ -69,6 +75,8 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var isDateTimePickerOpen: Bool = false
     @Published var isNotesInputOpen: Bool = false
     @Published var isRecurrencePickerOpen: Bool = false
+    /// Which detail row's content is currently expanded in the floating editor.
+    @Published var expandedDetailSection: EventInputDetailSection? = nil
     
     let toastManager = ToastManager()
     @AppStorage(AppStorageKey.currentSelectedCalendar) private var currentSelectedCalendar: Data?
@@ -164,15 +172,18 @@ class ModifyCalendarItemViewModel: ObservableObject {
         if reminder.hasNotes {
             self.notesInput = reminder.notes ?? ""
             self.isNotesInputOpen = true
+            self.expandedDetailSection = .notes
         }
         if let startDate = reminder.startDateComponents?.date {
             self.isDateTimePickerOpen = true
+            self.expandedDetailSection = .dateTime
             self.newItemStartTime = startDate.get(.hour, .minute, .second)
             self.newItemStartDate = startDate.get(.month, .day, .year)
             self.extractRecurrenceRules(for: reminder, start: startDate)
         }
         if let endDate = reminder.dueDateComponents?.date {
             self.isDateTimePickerOpen = true
+            self.expandedDetailSection = .dateTime
             self.newItemEndTime = endDate.get(.hour, .minute, .second)
             self.newItemEndDate = endDate.get(.month, .day, .year)
         }
@@ -294,12 +305,16 @@ class ModifyCalendarItemViewModel: ObservableObject {
             self.clearTimeInput()
             self.clearNotesInput()
             self.clearRecurrence()
+            self.expandedDetailSection = nil
             self.selectedCalendar = nil
         }
     }
     
     private func clearTimeInput() {
         self.isDateTimePickerOpen = false
+        if self.expandedDetailSection == .dateTime {
+            self.expandedDetailSection = nil
+        }
         self.newItemStartTime = nil
         self.newItemEndTime = nil
         self.newItemStartDate = nil
@@ -312,11 +327,17 @@ class ModifyCalendarItemViewModel: ObservableObject {
     
     private func clearNotesInput() {
         self.isNotesInputOpen = false
+        if self.expandedDetailSection == .notes {
+            self.expandedDetailSection = nil
+        }
         self.notesInput = ""
     }
     
     private func clearRecurrence() {
         self.isRecurrencePickerOpen = false
+        if self.expandedDetailSection == .recurrence {
+            self.expandedDetailSection = nil
+        }
         self.isRecurrenceUsingOccurences = false
         self.recurrenceRule = nil
         self.recurrenceEnd = nil
@@ -344,6 +365,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     func addTimeToEvent() {
         withAnimation {
             self.isDateTimePickerOpen = true
+            self.expandedDetailSection = .dateTime
         }
     }
 
@@ -363,6 +385,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     func addNotesToEvent() {
         withAnimation {
             self.isNotesInputOpen = true
+            self.expandedDetailSection = .notes
         }
     }
     
@@ -375,6 +398,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     func openRecurrencePicker() {
         withAnimation {
             self.isRecurrencePickerOpen = true
+            self.expandedDetailSection = .recurrence
         }
     }
     
@@ -382,6 +406,29 @@ class ModifyCalendarItemViewModel: ObservableObject {
         withAnimation {
             self.clearRecurrence()
         }
+    }
+
+    /// Expands or collapses a detail section. Expanding a closed feature also enables it.
+    func toggleDetailSection(_ section: EventInputDetailSection) {
+        withAnimation {
+            if expandedDetailSection == section {
+                expandedDetailSection = nil
+                return
+            }
+            expandedDetailSection = section
+            switch section {
+            case .dateTime:
+                isDateTimePickerOpen = true
+            case .recurrence:
+                isRecurrencePickerOpen = true
+            case .notes:
+                isNotesInputOpen = true
+            }
+        }
+    }
+
+    func isDetailSectionExpanded(_ section: EventInputDetailSection) -> Bool {
+        expandedDetailSection == section
     }
     
 #if !os(watchOS)

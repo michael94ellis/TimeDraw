@@ -15,6 +15,10 @@ struct AddEventDateTimePicker: View {
     @EnvironmentObject var calendarItemListViewModel: CalendarItemListViewModel
     @Dependency(\.eventKitManager) private var eventKitManager
 
+    private var isExpanded: Bool {
+        viewModel.isDetailSectionExpanded(.dateTime)
+    }
+
     func setSuggestedTime() {
         let displayDate = calendarItemListViewModel.displayDate
         if viewModel.newItemStartTime == nil {
@@ -45,23 +49,21 @@ struct AddEventDateTimePicker: View {
     var body: some View {
         VStack(spacing: 0) {
             Button {
-                withAnimation {
-                    if viewModel.isDateTimePickerOpen {
-                        return
-                    }
-                    viewModel.addTimeToEvent()
+                let wasExpanded = isExpanded
+                viewModel.toggleDetailSection(.dateTime)
+                if !wasExpanded {
                     setSuggestedTime()
                 }
             } label: {
                 SummaryRowLabel(
                     title: "Date & Time",
                     value: viewModel.isDateTimePickerOpen ? viewModel.dateTimeSummary : nil,
-                    isExpanded: viewModel.isDateTimePickerOpen
+                    isExpanded: isExpanded
                 )
             }
             .buttonStyle(.plain)
 
-            if viewModel.isDateTimePickerOpen {
+            if isExpanded {
                 FormDivider()
                 VStack(spacing: 4) {
                     DatePicker("Starts", selection: startBinding, displayedComponents: [.date, .hourAndMinute])

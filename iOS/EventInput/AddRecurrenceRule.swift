@@ -12,25 +12,24 @@ struct AddRecurrenceRule: View {
 
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
 
+    private var isExpanded: Bool {
+        viewModel.isDetailSectionExpanded(.recurrence)
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             Button {
-                withAnimation {
-                    if viewModel.isRecurrencePickerOpen {
-                        return
-                    }
-                    viewModel.openRecurrencePicker()
-                }
+                viewModel.toggleDetailSection(.recurrence)
             } label: {
                 SummaryRowLabel(
                     title: "Repeat",
                     value: viewModel.isRecurrencePickerOpen ? viewModel.recurrenceSummary : nil,
-                    isExpanded: viewModel.isRecurrencePickerOpen
+                    isExpanded: isExpanded
                 )
             }
             .buttonStyle(.plain)
 
-            if viewModel.isRecurrencePickerOpen {
+            if isExpanded {
                 FormDivider()
                 recurrenceDetails
             }

@@ -12,27 +12,37 @@ struct AddNotesInput: View {
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
     @FocusState private var notesInputFocus: Bool
 
+    private var isExpanded: Bool {
+        viewModel.isDetailSectionExpanded(.notes)
+    }
+
+    private var notesRowValue: String? {
+        if isExpanded {
+            return viewModel.isNotesInputOpen ? (viewModel.notesSummary ?? "Add") : nil
+        }
+        return viewModel.notesSummary
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             Button {
-                withAnimation {
-                    if viewModel.isNotesInputOpen {
-                        notesInputFocus = true
-                    } else {
-                        viewModel.addNotesToEvent()
-                        notesInputFocus = true
-                    }
+                let wasExpanded = isExpanded
+                viewModel.toggleDetailSection(.notes)
+                if !wasExpanded {
+                    notesInputFocus = true
+                } else {
+                    notesInputFocus = false
                 }
             } label: {
                 SummaryRowLabel(
                     title: "Notes",
-                    value: viewModel.isNotesInputOpen ? (viewModel.notesSummary ?? "Add") : nil,
-                    isExpanded: viewModel.isNotesInputOpen
+                    value: notesRowValue,
+                    isExpanded: isExpanded
                 )
             }
             .buttonStyle(.plain)
 
-            if viewModel.isNotesInputOpen {
+            if isExpanded {
                 FormDivider()
                 VStack(alignment: .leading, spacing: 8) {
                     TextEditor(text: $viewModel.notesInput)
@@ -44,6 +54,7 @@ struct AddNotesInput: View {
                     HStack {
                         Spacer()
                         DestructiveTextButton(title: "Remove Notes") {
+                            notesInputFocus = false
                             viewModel.removeNotesFromEvent()
                         }
                     }

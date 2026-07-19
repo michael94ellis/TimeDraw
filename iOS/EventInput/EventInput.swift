@@ -39,12 +39,18 @@ struct EventInput: View {
         appSettings.userSelectedCalendars.loadCalendarIds()
     }
 
-    private var selectedEventCalendars: [EKCalendar] {
-        eventKitManager.eventStore.selectedCalendars(ids: selectedCalendarIds, entityType: .event)
+    private var selectableEventCalendars: [EKCalendar] {
+        eventKitManager
+            .eventStore
+            .selectedCalendars(ids: selectedCalendarIds, entityType: .event)
+            .filter { $0.allowsContentModifications }
     }
 
-    private var selectedReminderCalendars: [EKCalendar] {
-        eventKitManager.eventStore.selectedCalendars(ids: selectedCalendarIds, entityType: .reminder)
+    private var selectableReminderCalendars: [EKCalendar] {
+        eventKitManager
+            .eventStore
+            .selectedCalendars(ids: selectedCalendarIds, entityType: .reminder)
+            .filter { $0.allowsContentModifications }
     }
 
     private var showEventSection: Bool {
@@ -201,16 +207,16 @@ struct EventInput: View {
         Menu {
             if showEventSection,
                eventKitManager.isEventAccessGranted(eventKitManager.eventAuthorizationStatus()),
-               !selectedEventCalendars.isEmpty {
+               !selectableEventCalendars.isEmpty {
                 Section("Events") {
-                    calendarButtons(for: selectedEventCalendars)
+                    calendarButtons(for: selectableEventCalendars)
                 }
             }
             if showReminderSection,
                eventKitManager.isReminderAccessGranted(eventKitManager.reminderAuthorizationStatus()),
-               !selectedReminderCalendars.isEmpty {
+               !selectableReminderCalendars.isEmpty {
                 Section("Reminders") {
-                    calendarButtons(for: selectedReminderCalendars)
+                    calendarButtons(for: selectableReminderCalendars)
                 }
             }
         } label: {

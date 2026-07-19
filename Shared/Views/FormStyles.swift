@@ -108,12 +108,12 @@ struct SummaryRowLabel: View {
         HStack {
             Text(title)
                 .font(.interRegular)
-                .foregroundStyle(DesignToken.Colors.primaryText)
+                .foregroundStyle(isExpanded ? DesignToken.Colors.primaryText : DesignToken.Colors.tertiaryText)
             Spacer()
             if let value, !value.isEmpty {
                 Text(value)
                     .font(.interFine)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(isExpanded ? .secondary : .tertiary)
                     .lineLimit(1)
             }
             Image(systemName: "chevron.right")
@@ -124,6 +124,7 @@ struct SummaryRowLabel: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
         .contentShape(Rectangle())
+        .animation(.easeInOut(duration: 0.2), value: isExpanded)
     }
 }
 

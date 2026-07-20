@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct ClockEventLine: Shape {
-    enum SegmentMode {
+public struct ClockEventLine: Shape {
+    public enum SegmentMode: Sendable {
         case fullEvent
         case arc(ring: ClockRing, startDegrees: Double, endDegrees: Double)
     }
@@ -22,7 +22,7 @@ struct ClockEventLine: Shape {
     var startDegrees: Double = 0.0
     var endDegrees: Double = 0.0
 
-    init(start: Double, end: Double, radius: Double, width: Double) {
+    public init(start: Double, end: Double, radius: Double, width: Double) {
         self.startDegrees = start
         self.endDegrees = end
         self.radius = radius
@@ -33,7 +33,7 @@ struct ClockEventLine: Shape {
         self.endComponents = nil
     }
 
-    init(start: Date, end: Date, radius: Double, width: Double, radiusOffset: CGFloat = 0) {
+    public init(start: Date, end: Date, radius: Double, width: Double, radiusOffset: CGFloat = 0) {
         self.startComponents = Calendar.current.dateComponents([.hour, .minute], from: start)
         self.endComponents = Calendar.current.dateComponents([.hour, .minute], from: end)
         self.radius = radius
@@ -44,7 +44,7 @@ struct ClockEventLine: Shape {
         self.endDegrees = ClockEventGeometry.angle(for: end)
     }
 
-    init(startComponents: DateComponents,
+    public init(startComponents: DateComponents,
          endComponents: DateComponents,
          radius: Double,
          width: Double) {
@@ -58,7 +58,7 @@ struct ClockEventLine: Shape {
         self.endDegrees = ClockEventGeometry.angle(for: endComponents)
     }
 
-    init(
+    public init(
         arcRing: ClockRing,
         startDegrees: Double,
         endDegrees: Double,
@@ -89,7 +89,7 @@ struct ClockEventLine: Shape {
         }
     }
 
-    func path(in rect: CGRect) -> Path {
+    public func path(in rect: CGRect) -> Path {
         switch segmentMode {
         case .arc:
             return centerlinePath(in: rect)
@@ -170,14 +170,14 @@ struct ClockEventLine: Shape {
     }
 }
 
-struct ClockCrossoverBend: Shape {
+public struct ClockCrossoverBend: Shape {
     let startDegrees: Double
     let endDegrees: Double
     let radius: CGFloat
     let width: Double
     let radiusOffset: CGFloat
 
-    init(
+    public init(
         startDegrees: Double,
         endDegrees: Double,
         radius: CGFloat,
@@ -191,7 +191,7 @@ struct ClockCrossoverBend: Shape {
         self.radiusOffset = radiusOffset
     }
 
-    func path(in rect: CGRect) -> Path {
+    public func path(in rect: CGRect) -> Path {
         let center = CGPoint(x: rect.midX, y: rect.midY)
         let baseRadius = radius + radiusOffset
         let amRadius = baseRadius * ClockEventGeometry.amRadiusMultiplier

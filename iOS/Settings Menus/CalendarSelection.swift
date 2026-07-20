@@ -7,6 +7,7 @@
 
 import Dependencies
 import EventKit
+import EventUIComponents
 import SwiftUI
 
 struct CalendarSelection: View {

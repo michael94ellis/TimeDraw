@@ -3,13 +3,14 @@
 //  TimeDraw
 //
 
+import DesignToken
 import SwiftUI
 
 struct InsetGroupedBackground: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .background(DesignToken.Colors.listRowBackground)
-            .clipShape(RoundedRectangle(cornerRadius: DesignToken.CornerRadius.insetGroupedRadius, style: .continuous))
+            .background(Colors.listRowBackground)
+            .clipShape(RoundedRectangle(cornerRadius: CornerRadius.insetGroupedRadius, style: .continuous))
     }
 }
 
@@ -20,7 +21,7 @@ extension View {
 }
 
 struct GlassPanelModifier: ViewModifier {
-    var cornerRadius: CGFloat = DesignToken.CornerRadius.eventInputPanelRadius
+    var cornerRadius: CGFloat = CornerRadius.eventInputPanelRadius
 
     private var shape: RoundedRectangle {
         RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
@@ -40,7 +41,7 @@ struct GlassPanelModifier: ViewModifier {
 }
 
 extension View {
-    func glassPanel(cornerRadius: CGFloat = DesignToken.CornerRadius.eventInputPanelRadius) -> some View {
+    func glassPanel(cornerRadius: CGFloat = CornerRadius.eventInputPanelRadius) -> some View {
         modifier(GlassPanelModifier(cornerRadius: cornerRadius))
     }
 
@@ -108,7 +109,7 @@ struct SummaryRowLabel: View {
         HStack {
             Text(title)
                 .font(.interRegular)
-                .foregroundStyle(isExpanded ? DesignToken.Colors.primaryText : DesignToken.Colors.tertiaryText)
+                .foregroundStyle(isExpanded ? Colors.primaryText : Colors.tertiaryText)
             Spacer()
             if let value, !value.isEmpty {
                 Text(value)

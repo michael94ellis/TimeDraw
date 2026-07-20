@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import DesignToken
 
-struct ClockFace: View {
+public struct ClockFace: View {
+    
+    public init() { }
     
     @ViewBuilder
     func hands(markOffset: CGFloat) -> some View {
@@ -37,7 +40,7 @@ struct ClockFace: View {
         }
     }
     
-    var body: some View {
+    public var body: some View {
         GeometryReader { geo in
             let size = min(geo.size.width, geo.size.height)
             let outlineWidth: CGFloat = size / 12
@@ -47,9 +50,9 @@ struct ClockFace: View {
                 // Border Circle
                 Circle()
                 #if !os(watchOS)
-                    .strokeBorder(DesignToken.Colors.clockFaceTickStroke, lineWidth: outlineWidth)
+                    .strokeBorder(Colors.clockFaceTickStroke, lineWidth: outlineWidth)
                 #else
-                    .strokeBorder(DesignToken.Colors.clockFaceAlternateStroke, lineWidth: outlineWidth)
+                    .strokeBorder(Colors.clockFaceAlternateStroke, lineWidth: outlineWidth)
                 #endif
                     .frame(width: size, height: size)
 

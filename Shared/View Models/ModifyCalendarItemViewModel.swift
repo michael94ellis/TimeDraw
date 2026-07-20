@@ -10,6 +10,7 @@ import EventKit
 import Foundation
 import SwiftUI
 import ToastWindow
+import EventUIComponents
 
 struct ModifyCalendarItemViewModelKey: DependencyKey {
     static var liveValue: ModifyCalendarItemViewModel = .init()

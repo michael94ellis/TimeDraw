@@ -101,39 +101,3 @@ extension Optional where Wrapped == Data {
         }
     }
 }
-
-extension EKEvent {
-    static func mock(startHour: Int, endHour: Int, color: UIColor) -> EKEvent {
-        let store = EKEventStore()
-        let event = EKEvent(eventStore: store)
-        let today = Calendar.current.startOfDay(for: Date())
-        event.startDate = today.addingTimeInterval(TimeInterval(startHour * 3600))
-        event.endDate = today.addingTimeInterval(TimeInterval(endHour * 3600))
-        let calendar = EKCalendar(for: .event, eventStore: store)
-        calendar.cgColor = color.cgColor
-        event.calendar = calendar
-        return event
-    }
-}
-extension EKReminder {
-    static func mock(startHour: Int?, endHour: Int?, color: UIColor) -> EKReminder {
-        let store = EKEventStore()
-        let reminder = EKReminder(eventStore: store)
-
-        let calendar = EKCalendar(for: .reminder, eventStore: store)
-        calendar.cgColor = color.cgColor
-        reminder.calendar = calendar
-
-        let today = Calendar.current.startOfDay(for: Date())
-        if let startHour {
-            reminder.startDateComponents = Calendar.current.dateComponents([.hour, .minute, .day, .month, .year], from: today.addingTimeInterval(TimeInterval(startHour * 3600)))
-        }
-        if let endHour {
-            reminder.dueDateComponents = Calendar.current.dateComponents([.hour, .minute, .day, .month, .year], from: today.addingTimeInterval(TimeInterval(endHour * 3600)))
-        }
-
-        reminder.title = "Mock Reminder from \(startHour ?? -1)–\(endHour ?? -2)"
-
-        return reminder
-    }
-}

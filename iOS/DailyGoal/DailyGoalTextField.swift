@@ -5,8 +5,9 @@
 //  Created by Michael Ellis on 1/5/22.
 //
 
-import SwiftUI
 import EventKit
+import DesignToken
+import SwiftUI
 
 struct DailyGoalTextField: View {
     
@@ -16,13 +17,13 @@ struct DailyGoalTextField: View {
     var body: some View {
         MultilineTextField("What is your goal today?", text: self.$dailyGoal, focus: self.isDailyGoalFocused)
             .font(.callout)
-            .foregroundColor(DesignToken.Colors.placeholderText)
+            .foregroundColor(Colors.placeholderText)
             .multilineTextAlignment(.center)
             .submitLabel(.done)
             .focused(self.isDailyGoalFocused)
             .frame(maxHeight: 70)
             .clipped()
-            .background(RoundedRectangle(cornerRadius: DesignToken.CornerRadius.textFieldRadius).stroke(self.isDailyGoalFocused.wrappedValue ? Color.lightGray : Color.clear).fill(Color(uiColor: .secondarySystemGroupedBackground)))
+            .background(RoundedRectangle(cornerRadius: CornerRadius.textFieldRadius).stroke(self.isDailyGoalFocused.wrappedValue ? Color.lightGray : Color.clear).fill(Color(uiColor: .secondarySystemGroupedBackground)))
             .padding(.horizontal, 30)
             .padding(.vertical, 8)
             .fixedSize(horizontal: false, vertical: true)
@@ -34,11 +35,11 @@ struct OnboardingDailyGoalTextField: View {
     var body: some View {
         Text("What is your goal today?")
             .font(.callout)
-            .foregroundColor(DesignToken.Colors.placeholderText)
+            .foregroundColor(Colors.placeholderText)
             .multilineTextAlignment(.center)
             .frame(maxHeight: 70)
             .clipped()
-            .background(RoundedRectangle(cornerRadius: DesignToken.CornerRadius.textFieldRadius).stroke(Color.clear))
+            .background(RoundedRectangle(cornerRadius: CornerRadius.textFieldRadius).stroke(Color.clear))
             .padding(.horizontal, 30)
             .padding(.vertical, 8)
             .fixedSize(horizontal: false, vertical: true)

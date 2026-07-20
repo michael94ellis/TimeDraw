@@ -12,7 +12,7 @@ enum ClockEventType {
     case both
 }
 
-enum ClockRing {
+public enum ClockRing: Sendable {
     case am
     case pm
 }
@@ -152,13 +152,13 @@ enum ClockEventGeometry {
     }
 }
 
-struct ClockDrawableItem: Identifiable, Hashable {
+public struct ClockDrawableItem: Identifiable, Hashable {
     enum Kind: Hashable {
         case event
         case reminder
     }
 
-    let id: String
+    public let id: String
     let kind: Kind
     let startDate: Date
     let endDate: Date
@@ -173,7 +173,7 @@ struct ClockDrawableItem: Identifiable, Hashable {
         return reminder!
     }
 
-    static func from(events: [EKEvent], reminders: [EKReminder]) -> [ClockDrawableItem] {
+    public static func from(events: [EKEvent], reminders: [EKReminder]) -> [ClockDrawableItem] {
         var items: [ClockDrawableItem] = []
         items.reserveCapacity(events.count + reminders.count)
 
@@ -188,7 +188,7 @@ struct ClockDrawableItem: Identifiable, Hashable {
         return items
     }
 
-    static func allDayEvents(from events: [EKEvent]) -> [EKEvent] {
+    public static func allDayEvents(from events: [EKEvent]) -> [EKEvent] {
         events.filter(\.isAllDay)
     }
 
@@ -233,11 +233,11 @@ struct ClockDrawableItem: Identifiable, Hashable {
         return calendar.date(from: components)
     }
 
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 
-    static func == (lhs: ClockDrawableItem, rhs: ClockDrawableItem) -> Bool {
+    public static func == (lhs: ClockDrawableItem, rhs: ClockDrawableItem) -> Bool {
         lhs.id == rhs.id
     }
 }

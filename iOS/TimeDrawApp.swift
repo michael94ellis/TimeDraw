@@ -5,6 +5,7 @@
 //  Created by Michael Ellis on 1/2/22.
 //
 
+import DesignToken
 import SwiftUI
 import EventKit
 
@@ -17,6 +18,7 @@ struct TimeDrawApp: App {
     @StateObject private var itemViewModel: ModifyCalendarItemViewModel = .init()
     
     init() {
+        DesignTokenFonts.register()
         UIFont.overrideInitialize()
         UserDefaults.standard.register(defaults: [
             AppStorageKey.isDailyGoalEnabled: false,

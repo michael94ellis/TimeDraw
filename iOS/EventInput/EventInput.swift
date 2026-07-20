@@ -6,6 +6,7 @@
 //
 
 import Dependencies
+import DesignToken
 import EventKit
 import SwiftUI
 
@@ -111,7 +112,7 @@ struct EventInput: View {
             HStack(spacing: 12) {
                 Text(viewModel.newItemTitle.isEmpty ? "New Event or Reminder" : viewModel.newItemTitle)
                     .font(.interRegular)
-                    .foregroundStyle(viewModel.newItemTitle.isEmpty ? DesignToken.Colors.tertiaryText : DesignToken.Colors.primaryText)
+                    .foregroundStyle(viewModel.newItemTitle.isEmpty ? Colors.tertiaryText : Colors.primaryText)
                     .lineLimit(1)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -175,7 +176,7 @@ struct EventInput: View {
             .font(.body.weight(.semibold))
             .foregroundStyle(.white)
             .frame(width: 32, height: 32)
-            .glassSubmitButton(tint: DesignToken.Colors.action)
+            .glassSubmitButton(tint: Colors.action)
     }
 
     private var toolbarRow: some View {
@@ -226,7 +227,7 @@ struct EventInput: View {
                     .frame(width: 10, height: 10)
                 Text(calendarName)
                     .font(.interRegular)
-                    .foregroundStyle(DesignToken.Colors.primaryText)
+                    .foregroundStyle(Colors.primaryText)
                     .lineLimit(1)
                 Image(systemName: "chevron.up.chevron.down")
                     .font(.caption2)

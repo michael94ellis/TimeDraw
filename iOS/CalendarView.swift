@@ -5,6 +5,7 @@
 //  Created by Michael Ellis on 3/5/22.
 //
 
+import DesignToken
 import SwiftUI
 
 struct CalendarDateSelection: View {
@@ -38,7 +39,7 @@ struct CalendarDateSelection: View {
                             .foregroundColor(.clear)
                             .background(display ? Color(uiColor: .systemGray3) : Color(uiColor: .systemBackground))
                             .frame(width: 36, height: 36)
-                            .cornerRadius(DesignToken.CornerRadius.calendarDayRadius)
+                            .cornerRadius(CornerRadius.calendarDayRadius)
                             .accessibilityHidden(true)
                             .overlay(
                                 Text(DateFormatter.dayFormatter.string(from: date))

@@ -5,14 +5,18 @@
 //  Created by Michael Ellis on 3/13/22.
 //
 
+import DesignToken
 import SwiftUI
 
-struct ClockHands: View {
+public struct ClockHands: View {
     
     @Binding var currentTime: Time
-    let cornerRounding = DesignToken.CornerRadius.clockHandRadius
+    
+    public init(currentTime: Binding<Time>) {
+        self._currentTime = currentTime
+    }
 
-    var body: some View {
+    public var body: some View {
         GeometryReader { geo in
             let size = min(geo.size.width, geo.size.height)
             let secondsOffset = size * 0.48
@@ -23,36 +27,36 @@ struct ClockHands: View {
                 let hourFraction = Double(currentTime.min) / 60.0
                 let hourAngle = Double(currentTime.hour) * 30.0 + hourFraction * 30.0
 
-                RoundedRectangle(cornerRadius: cornerRounding)
-                    .fill(DesignToken.Colors.clockHand)
+                RoundedRectangle(cornerRadius: CornerRadius.clockHandRadius)
+                    .fill(Colors.clockHand)
                     .frame(width: 8, height: hoursOffset)
                     .offset(y: -hoursOffset / 2)
                     .rotationEffect(.degrees(hourAngle))
 
                 // Minutes hand
-                RoundedRectangle(cornerRadius: cornerRounding)
-                    .fill(DesignToken.Colors.clockHand)
+                RoundedRectangle(cornerRadius: CornerRadius.clockHandRadius)
+                    .fill(Colors.clockHand)
                     .frame(width: 4, height: size * 0.48)
                     .offset(y: -(size * 0.7) / 3)
                     .rotationEffect(.degrees(Double(currentTime.min) * 6))
 
                 // Center circles
                 Circle()
-                    .fill(DesignToken.Colors.clockHand)
+                    .fill(Colors.clockHand)
                     .frame(width: size * 0.09, height: size * 0.09)
                 Circle()
-                    .fill(DesignToken.Colors.clockSecondHand)
+                    .fill(Colors.clockSecondHand)
                     .frame(width: size * 0.05, height: size * 0.05)
 
                 // Seconds hand
-                RoundedRectangle(cornerRadius: cornerRounding)
-                    .fill(DesignToken.Colors.clockSecondHand)
+                RoundedRectangle(cornerRadius: CornerRadius.clockHandRadius)
+                    .fill(Colors.clockSecondHand)
                     .frame(width: 2, height: secondsOffset)
                     .offset(y: -secondsOffset / 2)
                     .rotationEffect(.degrees(Double(currentTime.sec) * 6))
 
-                RoundedRectangle(cornerRadius: cornerRounding)
-                    .fill(DesignToken.Colors.clockSecondHand)
+                RoundedRectangle(cornerRadius: CornerRadius.clockHandRadius)
+                    .fill(Colors.clockSecondHand)
                     .frame(width: 2, height: size * 0.2)
                     .offset(y: 10)
                     .rotationEffect(.degrees(Double(currentTime.sec) * 6))

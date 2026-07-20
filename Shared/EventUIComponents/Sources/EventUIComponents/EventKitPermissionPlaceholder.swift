@@ -6,10 +6,20 @@
 import EventKit
 import SwiftUI
 
-struct EventKitPermissionPlaceholder: View {
-    let message: String
-    let authorizationStatus: EKAuthorizationStatus
-    let isAccessGranted: (EKAuthorizationStatus) -> Bool
+public struct EventKitPermissionPlaceholder: View {
+    private let message: String
+    private let authorizationStatus: EKAuthorizationStatus
+    private let isAccessGranted: (EKAuthorizationStatus) -> Bool
+    
+    public init(
+        message: String,
+        authorizationStatus: EKAuthorizationStatus,
+        isAccessGranted: @escaping (EKAuthorizationStatus) -> Bool
+    ) {
+        self.message = message
+        self.authorizationStatus = authorizationStatus
+        self.isAccessGranted = isAccessGranted
+    }
 
     private var actionTitle: String {
         switch authorizationStatus {
@@ -24,7 +34,7 @@ struct EventKitPermissionPlaceholder: View {
         }
     }
 
-    var body: some View {
+    public var body: some View {
         if isAccessGranted(authorizationStatus) {
             EmptyView()
         } else {
@@ -33,7 +43,7 @@ struct EventKitPermissionPlaceholder: View {
                     .font(.interRegular)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
-
+                #if os(iOS)
                 Button(action: openSettings) {
                     Text(actionTitle)
                         .frame(maxWidth: .infinity)
@@ -41,11 +51,13 @@ struct EventKitPermissionPlaceholder: View {
                 .font(.interSemiBold)
                 .foregroundStyle(Color.blue1)
                 .buttonStyle(.bordered)
+                #endif
             }
             .padding(.vertical, 4)
         }
     }
-
+    
+    #if os(iOS)
     private func openSettings() {
         if #available(iOS 18.3, *) {
             guard let url = URL(string: UIApplication.openDefaultApplicationsSettingsURLString) else {
@@ -69,4 +81,5 @@ struct EventKitPermissionPlaceholder: View {
             }
         }
     }
+    #endif
 }

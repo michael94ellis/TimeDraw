@@ -6,8 +6,10 @@
 //
 
 import Dependencies
-import SwiftUI
+import DesignToken
 import EventKit
+import EventUIComponents
+import SwiftUI
 
 struct MainScrollableContent: View {
     
@@ -119,8 +121,8 @@ struct MainScrollableContent: View {
                     }
                     .buttonStyle(.plain)
                     .background(
-                        RoundedRectangle(cornerRadius: DesignToken.CornerRadius.listRowRadius, style: .continuous)
-                            .fill(DesignToken.Colors.listRowBackground)
+                        RoundedRectangle(cornerRadius: CornerRadius.listRowRadius, style: .continuous)
+                            .fill(Colors.listRowBackground)
                     )
                     .swipeActions(allowsFullSwipe: true) {
                         Button(action: {
@@ -129,7 +131,7 @@ struct MainScrollableContent: View {
                             self.itemList.updateData()
                         }) {
                             Image(systemName: "trash")
-                                .tint(DesignToken.Colors.destructive)
+                                .tint(Colors.destructive)
                         }
                     }
                 }
@@ -170,8 +172,8 @@ struct MainScrollableContent: View {
                     }
                     .buttonStyle(.plain)
                     .background(
-                        RoundedRectangle(cornerRadius: DesignToken.CornerRadius.listRowRadius, style: .continuous)
-                            .fill(DesignToken.Colors.listRowBackground)
+                        RoundedRectangle(cornerRadius: CornerRadius.listRowRadius, style: .continuous)
+                            .fill(Colors.listRowBackground)
                     )
                     .swipeActions(allowsFullSwipe: true) {
                         Button(action: {
@@ -179,7 +181,7 @@ struct MainScrollableContent: View {
                             self.itemList.updateData()
                         }) {
                             Image(systemName: "checkmark")
-                                .tint(DesignToken.Colors.success)
+                                .tint(Colors.success)
                         }
                         Button(action: {
                             self.itemList.delete(item)
@@ -187,7 +189,7 @@ struct MainScrollableContent: View {
                             self.itemList.updateData()
                         }) {
                             Image(systemName: "trash")
-                                .tint(DesignToken.Colors.destructive)
+                                .tint(Colors.destructive)
                         }
                     }
                 }
@@ -224,7 +226,7 @@ struct MainScrollableContent: View {
         .environment(\.defaultMinListRowHeight, 0)
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
-        .background(DesignToken.Colors.groupedBackground)
+        .background(Colors.groupedBackground)
         .refreshable(action: {
             self.itemList.updateData()
         })

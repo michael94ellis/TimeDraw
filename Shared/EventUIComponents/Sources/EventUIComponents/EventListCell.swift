@@ -5,14 +5,15 @@
 //  Created by Michael Ellis on 3/10/22.
 //
 
-import SwiftUI
+import DesignToken
 import EventKit
+import SwiftUI
 
-struct EventListCell: View {
+public struct EventListCell: View {
 
     private var item: EKEvent
 
-    init(item: EKEvent) {
+    public init(item: EKEvent) {
         self.item = item
     }
 
@@ -28,7 +29,7 @@ struct EventListCell: View {
         VStack(alignment: .leading, spacing: 2) {
             Text(item.title.isEmpty ? "Untitled Event" : item.title)
                 .font(.interSemiBold)
-                .foregroundStyle(DesignToken.Colors.primaryText)
+                .foregroundStyle(Colors.primaryText)
                 .lineLimit(2)
             Text(subtitle)
                 .font(.interFine)
@@ -45,12 +46,12 @@ struct EventListCell: View {
         }
     }
     
-    var body: some View {
+    public var body: some View {
         HStack(spacing: 8) {
             
             UnevenRoundedRectangle(
-                topLeadingRadius: DesignToken.CornerRadius.listRowRadius,
-                bottomLeadingRadius: DesignToken.CornerRadius.listRowRadius,
+                topLeadingRadius: CornerRadius.listRowRadius,
+                bottomLeadingRadius: CornerRadius.listRowRadius,
                 bottomTrailingRadius: 0,
                 topTrailingRadius: 0
             )

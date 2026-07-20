@@ -5,12 +5,20 @@
 
 import SwiftUI
 
-struct ClockAllDayEventLine: Shape {
+public struct ClockAllDayEventLine: Shape {
     let startDegrees: Double
     let endDegrees: Double
     let radius: CGFloat
+    
+    public init(startDegrees: Double,
+                endDegrees: Double,
+                radius: CGFloat) {
+        self.startDegrees = startDegrees
+        self.endDegrees = endDegrees
+        self.radius = radius
+    }
 
-    func path(in rect: CGRect) -> Path {
+    public func path(in rect: CGRect) -> Path {
         let center = CGPoint(x: rect.midX, y: rect.midY)
         var path = Path()
         

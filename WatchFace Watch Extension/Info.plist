@@ -16,17 +16,5 @@
 	<string>TimeDraw Watch needs access to your calendars to display your events and reminders.</string>
 	<key>NSRemindersUsageDescription</key>
 	<string>TimeDraw Watch needs access to your reminders to display them on the clock face.</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Inter-Black.ttf</string>
-		<string>Inter-Bold.ttf</string>
-		<string>Inter-ExtraBold.ttf</string>
-		<string>Inter-Regular.ttf</string>
-		<string>Inter-SemiBold.ttf</string>
-		<string>Inter-Thin.ttf</string>
-		<string>Inter-ExtraLight.ttf</string>
-		<string>Inter-Medium.ttf</string>
-		<string>Inter-Light.ttf</string>
-	</array>
 </dict>
 </plist>

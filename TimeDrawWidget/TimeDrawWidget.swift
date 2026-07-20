@@ -5,9 +5,10 @@
 //  Created by Michael Ellis on 7/26/25.
 //
 
-import WidgetKit
-import SwiftUI
+import ClockFace
 import EventKit
+import SwiftUI
+import WidgetKit
 
 struct WidgetEntry: TimelineEntry {
     var date: Date

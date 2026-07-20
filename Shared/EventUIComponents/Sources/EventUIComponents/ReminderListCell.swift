@@ -5,12 +5,18 @@
 //  Created by Michael Ellis on 3/10/22.
 //
 
-import SwiftUI
+import DesignToken
 import EventKit
+import Foundation
+import SwiftUI
 
-struct ReminderListCell: View {
+public struct ReminderListCell: View {
 
     var item: EKReminder
+    
+    public init(item: EKReminder) {
+        self.item = item
+    }
 
     private var timeSummary: String? {
         if item.isCompleted, let completionDate = item.completionDate {
@@ -27,12 +33,12 @@ struct ReminderListCell: View {
     var cellContent: some View {
         Image(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
             .font(.title3)
-                .foregroundStyle(item.isCompleted ? DesignToken.Colors.completed : DesignToken.Colors.mutedText)
+                .foregroundStyle(item.isCompleted ? Colors.completed : Colors.mutedText)
 
         VStack(alignment: .leading, spacing: 2) {
             Text(item.title.isEmpty ? "Untitled Reminder" : item.title)
                 .font(.interSemiBold)
-                .foregroundStyle(DesignToken.Colors.primaryText)
+                .foregroundStyle(Colors.primaryText)
                 .strikethrough(item.isCompleted, color: .secondary)
                 .lineLimit(2)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -60,12 +66,12 @@ struct ReminderListCell: View {
         }
     }
 
-    var body: some View {
+    public var body: some View {
         HStack(spacing: 12) {
             
             UnevenRoundedRectangle(
-                topLeadingRadius: DesignToken.CornerRadius.listRowRadius,
-                bottomLeadingRadius: DesignToken.CornerRadius.listRowRadius,
+                topLeadingRadius: CornerRadius.listRowRadius,
+                bottomLeadingRadius: CornerRadius.listRowRadius,
                 bottomTrailingRadius: 0,
                 topTrailingRadius: 0
             )

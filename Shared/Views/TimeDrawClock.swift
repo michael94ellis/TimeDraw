@@ -5,8 +5,9 @@
 //  Created by Michael Ellis on 3/9/22.
 //
 
-import SwiftUI
+import ClockFace
 import EventKit
+import SwiftUI
 
 struct TimeDrawClock: View {
     
@@ -15,7 +16,7 @@ struct TimeDrawClock: View {
     var events: [EKEvent]
     var reminders: [EKReminder]
     
-    @Environment(\.openCalendarItem) var open
+//    @Environment(\.openCalendarItem) var open
     
     func setCurrentTime()  {
         let timeZone = TimeZone.autoupdatingCurrent

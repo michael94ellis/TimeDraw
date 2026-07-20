@@ -8,6 +8,7 @@
 import SwiftUI
 #if canImport(UIKit)
 import UIKit
+import DesignToken
 #endif
 
 enum ToastStyle {
@@ -27,10 +28,10 @@ enum ToastStyle {
 
     var accentColor: Color {
         switch self {
-        case .success: return DesignToken.Colors.success
-        case .destructive: return DesignToken.Colors.destructive
-        case .error: return DesignToken.Colors.destructive
-        case .info: return DesignToken.Colors.action
+        case .success: return Colors.success
+        case .destructive: return Colors.destructive
+        case .error: return Colors.destructive
+        case .info: return Colors.action
         }
     }
 
@@ -87,7 +88,7 @@ struct MyToastView: View {
                 Text(message)
                     .font(.callout)
                     .fontWeight(.medium)
-                    .foregroundStyle(DesignToken.Colors.primaryText)
+                    .foregroundStyle(Colors.primaryText)
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
             }

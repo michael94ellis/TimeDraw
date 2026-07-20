@@ -5,41 +5,41 @@
 
 import SwiftUI
 
-struct ClockArcSegment: Identifiable {
-    let id: String
-    let item: ClockDrawableItem
-    let ring: ClockRing
-    let startDegrees: Double
-    let endDegrees: Double
-    let laneIndex: Int
-    let laneCount: Int
-    let lineWidth: CGFloat
-    let radiusOffset: CGFloat
+public struct ClockArcSegment: Identifiable {
+    public let id: String
+    public let item: ClockDrawableItem
+    public let ring: ClockRing
+    public let startDegrees: Double
+    public let endDegrees: Double
+    public let laneIndex: Int
+    public let laneCount: Int
+    public let lineWidth: CGFloat
+    public let radiusOffset: CGFloat
 
-    var color: Color { item.color }
+    public var color: Color { item.color }
 }
 
-struct ClockCrossoverSegment: Identifiable {
-    let id: String
-    let item: ClockDrawableItem
-    let startDegrees: Double
-    let endDegrees: Double
-    let laneIndex: Int
-    let laneCount: Int
-    let lineWidth: CGFloat
-    let radiusOffset: CGFloat
+public struct ClockCrossoverSegment: Identifiable {
+    public let id: String
+    public let item: ClockDrawableItem
+    public let startDegrees: Double
+    public let endDegrees: Double
+    public let laneIndex: Int
+    public let laneCount: Int
+    public let lineWidth: CGFloat
+    public let radiusOffset: CGFloat
 
-    var color: Color { item.color }
+    public var color: Color { item.color }
 }
 
-struct ClockLayout {
-    let arcSegments: [ClockArcSegment]
-    let crossoverSegments: [ClockCrossoverSegment]
+public struct ClockLayout {
+    public let arcSegments: [ClockArcSegment]
+    public let crossoverSegments: [ClockCrossoverSegment]
 }
 
-enum ClockEventLayoutEngine {
+public enum ClockEventLayoutEngine {
 
-    static func layout(items: [ClockDrawableItem], clockWidth: CGFloat, calendar: Calendar = .current) -> ClockLayout {
+    public static func layout(items: [ClockDrawableItem], clockWidth: CGFloat, calendar: Calendar = .current) -> ClockLayout {
         let timed = items.filter { !$0.isAllDay }
         guard !timed.isEmpty else {
             return ClockLayout(arcSegments: [], crossoverSegments: [])

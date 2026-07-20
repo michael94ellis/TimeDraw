@@ -5,8 +5,9 @@
 //  Created by Michael Ellis on 3/8/22.
 //
 
-import SwiftUI
+import DesignToken
 import EventKit
+import SwiftUI
 
 struct CalendarMultiDateSelection: View {
     
@@ -44,7 +45,7 @@ struct CalendarMultiDateSelection: View {
                             .foregroundColor(.clear)
                             .background(display ? Color(uiColor: .systemGray2) : Color(uiColor: .systemGray6))
                             .frame(width: 40, height: 30)
-                            .cornerRadius(DesignToken.CornerRadius.calendarDayRadius)
+                            .cornerRadius(CornerRadius.calendarDayRadius)
                             .accessibilityHidden(true)
                             .overlay(
                                 Text(String(date))

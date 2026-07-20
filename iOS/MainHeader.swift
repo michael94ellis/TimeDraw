@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import DesignToken
 
 struct MainHeader: View {
     
@@ -34,12 +34,12 @@ struct MainHeader: View {
         return VStack {
             Text(self.weekdayFormatter.string(from: date))
                 .font(today || display ? .interSemiBold : .interLight)
-                .foregroundColor(DesignToken.Colors.primaryText)
+                .foregroundColor(Colors.primaryText)
                 .frame(height: 30)
                 .animation(nil, value: itemList.displayDate)
             Text(date.get(.day).formatted())
                 .font(today ? .interBold : display ? .interSemiBold : .interRegular)
-                .foregroundColor(today ? DesignToken.Colors.today : display ? DesignToken.Colors.primaryText : DesignToken.Colors.mutedText)
+                .foregroundColor(today ? Colors.today : display ? Colors.primaryText : Colors.mutedText)
                 .animation(nil, value: itemList.displayDate)
         }
         .frame(width: 45)
@@ -71,14 +71,14 @@ struct MainHeader: View {
             Text(self.monthYearFormatter.string(from: self.itemList.displayDate))
                 .font(.interExtraBoldTitle)
                 .fontWeight(.semibold)
-                .foregroundColor(DesignToken.Colors.today)
+                .foregroundColor(Colors.today)
             Spacer()
             Button {
                 showSettingsPopover.toggle()
             } label: {
                 Image(systemName: "ellipsis.circle")
                     .font(.title2)
-                    .foregroundStyle(DesignToken.Colors.primaryText)
+                    .foregroundStyle(Colors.primaryText)
             }
             .buttonStyle(.plain)
             .sheet(isPresented: $showSettingsPopover) {
@@ -101,8 +101,8 @@ struct MainHeader: View {
                         weekDayHeader(for: date)
                             .background {
                                 if Calendar.current.isDate(date, inSameDayAs: itemList.displayDate) {
-                                    RoundedRectangle(cornerRadius: DesignToken.CornerRadius.weekDaySelectionRadius, style: .continuous)
-                                        .fill(DesignToken.Colors.weekDaySelectionFill)
+                                    RoundedRectangle(cornerRadius: CornerRadius.weekDaySelectionRadius, style: .continuous)
+                                        .fill(Colors.weekDaySelectionFill)
                                         .matchedGeometryEffect(id: "weekDaySelection", in: weekdaySelection)
                                 }
                             }

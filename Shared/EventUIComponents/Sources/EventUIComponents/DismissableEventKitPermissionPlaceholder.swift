@@ -3,10 +3,12 @@
 //  TimeDraw
 //
 
+
 import EventKit
+import DesignToken
 import SwiftUI
 
-struct DismissableEventKitPermissionPlaceholder: View {
+public struct DismissableEventKitPermissionPlaceholder: View {
     let message: String
     let authorizationStatus: EKAuthorizationStatus
     let isAccessGranted: (EKAuthorizationStatus) -> Bool
@@ -15,8 +17,20 @@ struct DismissableEventKitPermissionPlaceholder: View {
     @State private var isVisible = true
 
     private let dismissAnimation = Animation.easeInOut(duration: 0.25)
+    
+    public init(message: String,
+                authorizationStatus: EKAuthorizationStatus,
+                isAccessGranted: @escaping (EKAuthorizationStatus) -> Bool,
+                onDismiss: @escaping () -> Void,
+                isVisible: Bool = true) {
+        self.message = message
+        self.authorizationStatus = authorizationStatus
+        self.isAccessGranted = isAccessGranted
+        self.onDismiss = onDismiss
+        self.isVisible = isVisible
+    }
 
-    var body: some View {
+    public var body: some View {
         if isAccessGranted(authorizationStatus) {
             EmptyView()
         } else {
@@ -45,13 +59,15 @@ struct DismissableEventKitPermissionPlaceholder: View {
             }
             .padding(.horizontal, 12)
             .background(
-                RoundedRectangle(cornerRadius: DesignToken.CornerRadius.listRowRadius, style: .continuous)
-                    .fill(DesignToken.Colors.listRowBackground)
+                RoundedRectangle(cornerRadius: CornerRadius.listRowRadius, style: .continuous)
+                    .fill(Colors.listRowBackground)
             )
             .opacity(isVisible ? 1 : 0)
             .scaleEffect(isVisible ? 1 : 0.95, anchor: .top)
             .offset(y: isVisible ? 0 : -8)
+            #if !os(watchOS)
             .listRowSeparator(.hidden)
+            #endif
             .listRowBackground(EmptyView())
         }
     }

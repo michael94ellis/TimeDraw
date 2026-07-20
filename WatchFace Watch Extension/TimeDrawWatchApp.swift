@@ -5,6 +5,7 @@
 //  Created by Michael Ellis on 6/7/22.
 //
 
+import DesignToken
 import EventKit
 import SwiftUI
 
@@ -14,6 +15,7 @@ struct TimeDrawWatchApp: App {
     @StateObject private var listViewModel: CalendarItemListViewModel = .init()
     
     init() {
+        DesignTokenFonts.register()
         UIFont.overrideInitialize()
     }
     

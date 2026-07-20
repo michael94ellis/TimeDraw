@@ -6,19 +6,25 @@ import PackageDescription
 let package = Package(
     name: "EventUIComponents",
     platforms: [
-        .iOS(.v16) // Restricts the package to iOS 16 and later
+        .iOS(.v16),
+        .watchOS(.v9),
     ],
     products: [
         .library(
             name: "EventUIComponents",
-            targets: ["EventUIComponents"]
+            targets: ["EventUIComponents"],
         ),
+    ],
+    dependencies: [
+        .package(path: "../DesignToken"),
     ],
     targets: [
         .target(
-            name: "EventUIComponents"
+            name: "EventUIComponents",
+            dependencies: [
+                .product(name: "DesignToken", package: "DesignToken"),
+            ]
         ),
-
     ],
     swiftLanguageModes: [.v6]
 )

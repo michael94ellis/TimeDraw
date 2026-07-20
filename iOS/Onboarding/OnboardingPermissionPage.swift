@@ -3,6 +3,7 @@
 //  TimeDraw
 //
 
+import DesignToken
 import EventKit
 import SwiftUI
 
@@ -87,6 +88,6 @@ private struct OnboardingPermissionPrimaryButtonStyle: ButtonStyle {
             .padding(.vertical, 14)
             .padding(.horizontal, 24)
             .background(Color.red1.opacity(configuration.isPressed ? 0.85 : 1))
-            .clipShape(RoundedRectangle(cornerRadius: DesignToken.CornerRadius.listRowRadius, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: CornerRadius.listRowRadius, style: .continuous))
     }
 }

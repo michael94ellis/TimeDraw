@@ -6,19 +6,19 @@
 import EventKit
 import SwiftUI
 
-struct ClockAllDaySegment: Identifiable {
-    let id: String
-    let color: Color
-    let startDegrees: Double
-    let endDegrees: Double
-    let isFullCircle: Bool
-    let dashPhase: CGFloat
+public struct ClockAllDaySegment: Identifiable {
+    public let id: String
+    public let color: Color
+    public let startDegrees: Double
+    public let endDegrees: Double
+    public let isFullCircle: Bool
+    public let dashPhase: CGFloat
 }
 
-enum ClockAllDayLayoutEngine {
-    static let gapDegrees: Double = 2
+public enum ClockAllDayLayoutEngine {
+    public static let gapDegrees: Double = 2
 
-    static func layout(events: [EKEvent]) -> [ClockAllDaySegment] {
+    public static func layout(events: [EKEvent]) -> [ClockAllDaySegment] {
         let sorted = events.sorted {
             ($0.title, $0.eventIdentifier ?? "") < ($1.title, $1.eventIdentifier ?? "")
         }

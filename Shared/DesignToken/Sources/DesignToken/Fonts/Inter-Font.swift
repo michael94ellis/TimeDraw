@@ -1,6 +1,6 @@
 //
 //  Inter-Font.swift
-//  TimeDraw
+//  DesignToken
 //
 //  Created by Michael Ellis on 1/13/22.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 
-extension Font {
+public extension Font {
     static let interExtraLight = Font.custom("Inter-ExtraLight", size: 18, relativeTo: .body)
     static let interLight = Font.custom("Inter-Light", size: 18, relativeTo: .body)
     static let interThin = Font.custom("Inter-Thin", size: 18, relativeTo: .body)
@@ -18,7 +18,7 @@ extension Font {
     static let interBlack = Font.custom("Inter-Black", size: 18, relativeTo: .body)
     static let interSemiBold = Font.custom("Inter-SemiBold", size: 18, relativeTo: .body)
     static let interExtraBold = Font.custom("Inter-ExtraBold", size: 18, relativeTo: .body)
-    
+
     // Custom Use Font styles
     static let interClock = Font.custom("Inter-Regular", size: 12, relativeTo: .caption)
     static let interFine = Font.custom("Inter-Light", size: 16, relativeTo: .callout)
@@ -28,30 +28,30 @@ extension Font {
     static let interBoldTitle2 = Font.custom("Inter-Bold", size: 24, relativeTo: .title)
 }
 
-struct AppFontName {
-    static let regular = "Inter-Regular"
-    static let bold = "Inter-Bold"
-    static let lightAlt = "Inter-Light"
+public enum AppFontName {
+    public static let regular = "Inter-Regular"
+    public static let bold = "Inter-Bold"
+    public static let lightAlt = "Inter-Light"
 }
-//customise font
+
 extension UIFontDescriptor.AttributeName {
     static let nsctFontUIUsage = UIFontDescriptor.AttributeName(rawValue: "NSCTFontUIUsageAttribute")
 }
 
 extension UIFont {
-    
+
     @objc class func mySystemFont(ofSize size: CGFloat) -> UIFont {
         return UIFont(name: AppFontName.regular, size: size)!
     }
-    
+
     @objc class func myBoldSystemFont(ofSize size: CGFloat) -> UIFont {
         return UIFont(name: AppFontName.bold, size: size)!
     }
-    
+
     @objc class func myItalicSystemFont(ofSize size: CGFloat) -> UIFont {
         return UIFont(name: AppFontName.lightAlt, size: size)!
     }
-    
+
     @objc convenience init(myCoder aDecoder: NSCoder) {
         guard
             let fontDescriptor = aDecoder.decodeObject(forKey: "UIFontDescriptor") as? UIFontDescriptor,
@@ -72,26 +72,26 @@ extension UIFont {
         }
         self.init(name: fontName, size: fontDescriptor.pointSize)!
     }
-    
-    class func overrideInitialize() {
+
+    public class func overrideInitialize() {
         guard self == UIFont.self else { return }
-        
+
         if let systemFontMethod = class_getClassMethod(self, #selector(systemFont(ofSize:))),
            let mySystemFontMethod = class_getClassMethod(self, #selector(mySystemFont(ofSize:))) {
             method_exchangeImplementations(systemFontMethod, mySystemFontMethod)
         }
-        
+
         if let boldSystemFontMethod = class_getClassMethod(self, #selector(boldSystemFont(ofSize:))),
            let myBoldSystemFontMethod = class_getClassMethod(self, #selector(myBoldSystemFont(ofSize:))) {
             method_exchangeImplementations(boldSystemFontMethod, myBoldSystemFontMethod)
         }
-        
+
         if let italicSystemFontMethod = class_getClassMethod(self, #selector(italicSystemFont(ofSize:))),
            let myItalicSystemFontMethod = class_getClassMethod(self, #selector(myItalicSystemFont(ofSize:))) {
             method_exchangeImplementations(italicSystemFontMethod, myItalicSystemFontMethod)
         }
-        
-        if let initCoderMethod = class_getInstanceMethod(self, #selector(UIFontDescriptor.init(coder:))), // Trick to get over the lack of UIFont.init(coder:))
+
+        if let initCoderMethod = class_getInstanceMethod(self, #selector(UIFontDescriptor.init(coder:))),
            let myInitCoderMethod = class_getInstanceMethod(self, #selector(UIFont.init(myCoder:))) {
             method_exchangeImplementations(initCoderMethod, myInitCoderMethod)
         }

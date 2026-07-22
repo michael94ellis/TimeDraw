@@ -58,7 +58,7 @@ struct OnboardingExperience: View {
         case 3:
             VStack {
                 OnboardingDailyGoalTextField()
-                Text("A space to write something about your day that doesn't fit as an Event or Reminder\n\nYou can hide this in settings")
+                Text("A space to write something about your day that doesn't fit as an Event or Reminder\n\nYou can hide this in settings") // swiftlint:disable:this line_length
                 Spacer()
             }
         case 4:

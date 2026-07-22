@@ -84,7 +84,9 @@ enum ClockEventGeometry {
         )
     }
 
-    static func amArcTimeRange(for item: ClockDrawableItem, noon: Date, calendar: Calendar = .current) -> (Date, Date)? {
+    static func amArcTimeRange(for item: ClockDrawableItem,
+                               noon: Date,
+                               calendar: Calendar = .current) -> (Date, Date)? {
         switch item.eventType {
         case .morning:
             guard item.startDate < item.endDate else { return nil }
@@ -99,7 +101,9 @@ enum ClockEventGeometry {
         }
     }
 
-    static func pmArcTimeRange(for item: ClockDrawableItem, noon: Date, calendar: Calendar = .current) -> (Date, Date)? {
+    static func pmArcTimeRange(for item: ClockDrawableItem,
+                               noon: Date,
+                               calendar: Calendar = .current) -> (Date, Date)? {
         switch item.eventType {
         case .evening:
             guard item.startDate < item.endDate else { return nil }
@@ -114,7 +118,9 @@ enum ClockEventGeometry {
         }
     }
 
-    static func crossoverTimeRange(for item: ClockDrawableItem, noon: Date, calendar: Calendar = .current) -> (Date, Date)? {
+    static func crossoverTimeRange(for item: ClockDrawableItem,
+                                   noon: Date,
+                                   calendar: Calendar = .current) -> (Date, Date)? {
         guard item.eventType == .both else { return nil }
         let window = crossoverWindow(on: noon, calendar: calendar)
         let start = max(item.startDate, window.start)
@@ -123,7 +129,10 @@ enum ClockEventGeometry {
         return (start, end)
     }
 
-    static func intersectsInterval(itemStart: Date, itemEnd: Date, intervalStart: Date, intervalEnd: Date) -> Bool {
+    static func intersectsInterval(itemStart: Date,
+                                   itemEnd: Date,
+                                   intervalStart: Date,
+                                   intervalEnd: Date) -> Bool {
         itemStart < intervalEnd && itemEnd > intervalStart
     }
 
@@ -217,7 +226,8 @@ public struct ClockDrawableItem: Identifiable, Hashable {
         self.reminder = reminder
     }
 
-    static func reminderInterval(for reminder: EKReminder, calendar: Calendar = .current) -> (start: Date, end: Date)? {
+    static func reminderInterval(for reminder: EKReminder,
+                                 calendar: Calendar = .current) -> (start: Date, end: Date)? {
         if let start = timedDate(from: reminder.startDateComponents, calendar: calendar) {
             return (start, start.addingTimeInterval(ClockEventGeometry.reminderDuration))
         }

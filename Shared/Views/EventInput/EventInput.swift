@@ -64,10 +64,20 @@ struct EventInput: View {
         !(viewModel.calendarItem is EKEvent)
     }
 
+    private var panelShape: RoundedRectangle {
+        RoundedRectangle(cornerRadius: CornerRadius.eventInputPanelRadius, style: .continuous)
+    }
+
     var body: some View {
-        panelContainer
+        panelContent
+            .background(panelShape.fill(.ultraThinMaterial))
+            .clipShape(panelShape)
+            .overlay(panelShape.strokeBorder(Colors.textFieldBorder.opacity(0.5), lineWidth: 0.5))
+            .shadow(color: .black.opacity(0.12), radius: 12, y: 4)
+            .matchedGeometryEffect(id: "eventInput", in: animation)
             .padding(.horizontal, 16)
             .padding(.bottom, 12)
+            .contentShape(panelShape)
             .animation(.spring(response: 0.35, dampingFraction: 0.86), value: viewModel.isAddEventTextFieldFocused)
             .sheet(isPresented: $viewModel.isShowingEventEditView, onDismiss: {
                 viewModel.dismissEventEditView()
@@ -83,21 +93,6 @@ struct EventInput: View {
     }
 
     @ViewBuilder
-    private var panelContainer: some View {
-        let content = panelContent
-
-        if #available(iOS 26, *) {
-            GlassEffectContainer {
-                content
-                    .glassEffectID("eventInput", in: animation)
-            }
-        } else {
-            content
-                .matchedGeometryEffect(id: "eventInput", in: animation)
-        }
-    }
-
-    @ViewBuilder
     private var panelContent: some View {
         if viewModel.isAddEventTextFieldFocused {
             expandedContent
@@ -107,22 +102,24 @@ struct EventInput: View {
     }
 
     private var collapsedContent: some View {
-        Button {
-            viewModel.isAddEventTextFieldFocused = true
-        } label: {
-            HStack(spacing: 12) {
-                Text(viewModel.newItemTitle.isEmpty ? "New Event or Reminder" : viewModel.newItemTitle)
-                    .font(.interRegular)
-                    .foregroundStyle(viewModel.newItemTitle.isEmpty ? Colors.tertiaryText : Colors.primaryText)
-                    .lineLimit(1)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+        HStack(spacing: 12) {
+            Text(viewModel.newItemTitle.isEmpty ? "New Event or Reminder" : viewModel.newItemTitle)
+                .font(.interRegular)
+                .foregroundStyle(viewModel.newItemTitle.isEmpty
+                                 ? Colors.tertiaryText
+                                 : Colors.primaryText)
+                .lineLimit(1)
+                .frame(maxWidth: .infinity, alignment: .leading)
 
-                submitIcon
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 14)
+            submitIcon
         }
-        .buttonStyle(.plain)
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .contentShape(panelShape)
+        .onTapGesture {
+            viewModel.isAddEventTextFieldFocused = true
+        }
     }
 
     private var expandedContent: some View {
@@ -175,8 +172,9 @@ struct EventInput: View {
     private var submitIcon: some View {
         Image(systemName: submitIconName)
             .font(.body.weight(.semibold))
-            .foregroundStyle(.white)
+            .foregroundStyle(Colors.onAccentBackground)
             .frame(width: 32, height: 32)
+            .background(Circle().fill(Colors.action))
     }
 
     private var toolbarRow: some View {
@@ -187,7 +185,7 @@ struct EventInput: View {
                 } label: {
                     Label("Cancel", systemImage: "xmark")
                         .font(.interRegular)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(.primary)
                 }
                 .buttonStyle(.plain)
             }

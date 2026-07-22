@@ -13,11 +13,11 @@ import UIKit
 struct SettingsView: View {
 
     public init(display: Binding<Bool>) {
-        self._showSettingsPopover = display
+        self._showSettingsSheet = display
     }
 
     @EnvironmentObject var appSettings: AppSettings
-    @Binding var showSettingsPopover: Bool
+    @Binding var showSettingsSheet: Bool
 
     var body: some View {
         NavigationStack {
@@ -63,7 +63,7 @@ struct SettingsView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
-                        showSettingsPopover = false
+                        showSettingsSheet = false
                     }
                 }
             }

@@ -11,7 +11,7 @@ import DesignToken
 struct MainHeader: View {
     
     @Namespace private var weekdaySelection
-    @State private var showSettingsPopover = false
+    @State private var showSettingsSheet = false
     // TODO: Add a full month calendar feature somewhere
     @EnvironmentObject var itemList: CalendarItemListViewModel
     @State var swipeDirection: SwipeDirection = .left
@@ -74,15 +74,15 @@ struct MainHeader: View {
                 .foregroundColor(Colors.today)
             Spacer()
             Button {
-                showSettingsPopover.toggle()
+                showSettingsSheet = true
             } label: {
                 Image(systemName: "ellipsis.circle")
                     .font(.title2)
                     .foregroundStyle(Colors.primaryText)
             }
             .buttonStyle(.plain)
-            .sheet(isPresented: $showSettingsPopover) {
-                SettingsView(display: $showSettingsPopover)
+            .sheet(isPresented: $showSettingsSheet) {
+                SettingsView(display: $showSettingsSheet)
             }
         }
         .padding(.horizontal)

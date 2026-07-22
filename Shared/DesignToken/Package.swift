@@ -19,15 +19,15 @@ let package = Package(
         .target(
             name: "DesignToken",
             resources: [
-                .copy("Fonts/Inter-Black.ttf"),
-                .copy("Fonts/Inter-Bold.ttf"),
-                .copy("Fonts/Inter-ExtraBold.ttf"),
-                .copy("Fonts/Inter-ExtraLight.ttf"),
-                .copy("Fonts/Inter-Light.ttf"),
-                .copy("Fonts/Inter-Medium.ttf"),
-                .copy("Fonts/Inter-Regular.ttf"),
-                .copy("Fonts/Inter-SemiBold.ttf"),
-                .copy("Fonts/Inter-Thin.ttf"),
+                .copy("Default/Fonts/Inter-Black.ttf"),
+                .copy("Default/Fonts/Inter-Bold.ttf"),
+                .copy("Default/Fonts/Inter-ExtraBold.ttf"),
+                .copy("Default/Fonts/Inter-ExtraLight.ttf"),
+                .copy("Default/Fonts/Inter-Light.ttf"),
+                .copy("Default/Fonts/Inter-Medium.ttf"),
+                .copy("Default/Fonts/Inter-Regular.ttf"),
+                .copy("Default/Fonts/Inter-SemiBold.ttf"),
+                .copy("Default/Fonts/Inter-Thin.ttf"),
             ]
         ),
     ]

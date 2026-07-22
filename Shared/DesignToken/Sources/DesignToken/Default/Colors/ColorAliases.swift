@@ -1,8 +1,10 @@
 //
-//  Colors.swift
+//  ColorAliases.swift
 //  TimeDraw
 //
 //  Created by Michael Ellis on 1/2/22.
+//
+//  Convenience `Color.*` aliases mapping onto the raw `Palette`.
 //
 
 import SwiftUI

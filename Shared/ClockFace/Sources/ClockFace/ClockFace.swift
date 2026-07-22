@@ -17,7 +17,14 @@ public struct ClockFace: View {
         let hours: [Int] = (0..<60).filter({ $0 % 5 == 0 })
         let quarterHours: [Double] = {
             var calculatedQuarterHourDegrees: [Double] = []
-            hours.forEach({ calculatedQuarterHourDegrees.append(contentsOf: [Double($0) + 1, Double($0) + 2, Double($0) + 3, Double($0) + 4])})
+            hours.forEach({
+                calculatedQuarterHourDegrees.append(contentsOf: [
+                    Double($0) + 1,
+                    Double($0) + 2,
+                    Double($0) + 3,
+                    Double($0) + 4
+                ])
+            })
             return calculatedQuarterHourDegrees
         }()
         // Hour numbers
@@ -49,11 +56,7 @@ public struct ClockFace: View {
             ZStack {
                 // Border Circle
                 Circle()
-                #if !os(watchOS)
                     .strokeBorder(Colors.clockFaceTickStroke, lineWidth: outlineWidth)
-                #else
-                    .strokeBorder(Colors.clockFaceAlternateStroke, lineWidth: outlineWidth)
-                #endif
                     .frame(width: size, height: size)
 
                 hands(markOffset: markOffset)

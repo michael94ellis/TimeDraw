@@ -13,6 +13,8 @@ disabled_rules:
   - redundant_type_annotation
   - explicit_type_interface
   - identifier_name
+  - vertical_whitespace
+  - trailing_comma
 
 # Rules that have both warning and error levels can set just the warning level implicitly.
 line_length: 110

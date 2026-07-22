@@ -5,11 +5,8 @@
 //  Created by Michael Ellis on 7/26/25.
 //
 
-import SwiftUI
-#if canImport(UIKit)
-import UIKit
 import DesignToken
-#endif
+import SwiftUI
 
 enum ToastStyle {
     case success
@@ -49,7 +46,6 @@ enum ToastStyle {
         return .info
     }
 
-    #if os(iOS)
     var hapticStyle: UINotificationFeedbackGenerator.FeedbackType? {
         switch self {
         case .success: return .success
@@ -57,7 +53,6 @@ enum ToastStyle {
         case .info: return nil
         }
     }
-    #endif
 }
 
 struct MyToastView: View {
@@ -65,10 +60,10 @@ struct MyToastView: View {
     let style: ToastStyle
     let duration: TimeInterval
     let animationDuration: TimeInterval
-
+    
     @State private var isVisible = false
     @State private var offsetY: CGFloat = 20
-
+    
     init(message: String,
          style: ToastStyle = .info,
          duration: TimeInterval = 2.4,
@@ -78,7 +73,7 @@ struct MyToastView: View {
         self.duration = duration
         self.animationDuration = animationDuration
     }
-
+    
     var body: some View {
         VStack {
             Spacer()
@@ -118,11 +113,9 @@ struct MyToastView: View {
             }
         }
     }
-
+    
     private func triggerHapticIfNeeded() {
-        #if os(iOS)
         guard let feedback = style.hapticStyle else { return }
         UINotificationFeedbackGenerator().notificationOccurred(feedback)
-        #endif
     }
 }

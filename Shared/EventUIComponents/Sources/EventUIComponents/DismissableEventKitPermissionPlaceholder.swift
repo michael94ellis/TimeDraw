@@ -3,7 +3,6 @@
 //  TimeDraw
 //
 
-
 import EventKit
 import DesignToken
 import SwiftUI
@@ -65,7 +64,7 @@ public struct DismissableEventKitPermissionPlaceholder: View {
             .opacity(isVisible ? 1 : 0)
             .scaleEffect(isVisible ? 1 : 0.95, anchor: .top)
             .offset(y: isVisible ? 0 : -8)
-            #if !os(watchOS)
+            #if os(iOS)
             .listRowSeparator(.hidden)
             #endif
             .listRowBackground(EmptyView())

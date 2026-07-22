@@ -5,8 +5,9 @@
 //  Created by Michael Ellis on 1/20/22.
 //
 
-import SwiftUI
 import EventKit
+import SwiftUI
+import UIComponents
 
 struct AddRecurrenceRule: View {
 

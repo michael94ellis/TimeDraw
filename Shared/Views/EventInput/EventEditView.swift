@@ -9,13 +9,21 @@ import EventKit
 import EventKitUI
 import SwiftUI
 
-struct EventEditView: UIViewControllerRepresentable {
+public struct EventEditView: UIViewControllerRepresentable {
     let eventStore: EKEventStore
     /// Pass an existing event to edit, or `nil` to create a new one.
     var event: EKEvent?
     var onComplete: (EKEventEditViewAction) -> Void
+    
+    public init(eventStore: EKEventStore,
+                event: EKEvent? = nil,
+                onComplete: @escaping (EKEventEditViewAction) -> Void) {
+        self.eventStore = eventStore
+        self.event = event
+        self.onComplete = onComplete
+    }
 
-    func makeUIViewController(context: Context) -> EKEventEditViewController {
+    public func makeUIViewController(context: Context) -> EKEventEditViewController {
         let controller = EKEventEditViewController()
         controller.eventStore = eventStore
         controller.event = event ?? EKEvent(eventStore: eventStore)
@@ -23,20 +31,20 @@ struct EventEditView: UIViewControllerRepresentable {
         return controller
     }
 
-    func updateUIViewController(_ uiViewController: EKEventEditViewController, context: Context) {}
+    public func updateUIViewController(_ uiViewController: EKEventEditViewController, context: Context) {}
 
-    func makeCoordinator() -> Coordinator {
+    public func makeCoordinator() -> Coordinator {
         Coordinator(onComplete: onComplete)
     }
 
-    final class Coordinator: NSObject, EKEventEditViewDelegate {
+    final public class Coordinator: NSObject, EKEventEditViewDelegate {
         let onComplete: (EKEventEditViewAction) -> Void
 
         init(onComplete: @escaping (EKEventEditViewAction) -> Void) {
             self.onComplete = onComplete
         }
 
-        func eventEditViewController(
+        public func eventEditViewController(
             _ controller: EKEventEditViewController,
             didCompleteWith action: EKEventEditViewAction
         ) {

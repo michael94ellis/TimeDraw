@@ -8,7 +8,9 @@
 import Dependencies
 import DesignToken
 import EventKit
+import EventUIComponents
 import SwiftUI
+import UIComponents
 
 struct EventInput: View {
 
@@ -83,7 +85,6 @@ struct EventInput: View {
     @ViewBuilder
     private var panelContainer: some View {
         let content = panelContent
-            .glassPanel()
 
         if #available(iOS 26, *) {
             GlassEffectContainer {
@@ -176,7 +177,6 @@ struct EventInput: View {
             .font(.body.weight(.semibold))
             .foregroundStyle(.white)
             .frame(width: 32, height: 32)
-            .glassSubmitButton(tint: Colors.action)
     }
 
     private var toolbarRow: some View {
@@ -235,7 +235,6 @@ struct EventInput: View {
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
-            .glassCapsuleChip(tint: calendarTint)
         }
     }
 
@@ -264,10 +263,10 @@ struct EventInput: View {
         FormSection(useGroupedBackground: false) {
             AddEventDateTimePicker()
             if appSettings.showRecurringItems || viewModel.calendarItem?.hasRecurrenceRules ?? false {
-                FormDivider(subtle: true)
+                FormDivider(config: .subtle)
                 AddRecurrenceRule()
             }
-            FormDivider(subtle: true)
+            FormDivider(config: .subtle)
             AddNotesInput()
         }
     }

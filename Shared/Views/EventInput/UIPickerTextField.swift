@@ -27,9 +27,18 @@ class UIPickerTextField: UITextField, UIPickerViewDelegate, UIPickerViewDataSour
         toolBar.barTintColor = .systemGray4
         toolBar.sizeToFit()
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let clearButton = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(self.clearTextField))
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.dismissTextField))
-        toolBar.setItems([clearButton, flexibleSpace, doneButton], animated: false)
+        let clearButton = UIBarButtonItem(title: "Clear",
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(self.clearTextField))
+        let doneButton = UIBarButtonItem(title: "Done",
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(self.dismissTextField))
+        toolBar.setItems([clearButton,
+                          flexibleSpace,
+                          doneButton],
+                         animated: false)
         inputAccessoryView = toolBar
     }
 
@@ -68,7 +77,9 @@ class UIPickerTextField: UITextField, UIPickerViewDelegate, UIPickerViewDataSour
         return self.data.count
     }
 
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView,
+                    titleForRow row: Int,
+                    forComponent component: Int) -> String? {
         return self.data[row]
     }
 

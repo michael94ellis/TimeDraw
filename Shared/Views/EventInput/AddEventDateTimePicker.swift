@@ -10,8 +10,9 @@ import DesignToken
 import EventKit
 import EventUIComponents
 import SwiftUI
+import UIComponents
 
-struct AddEventDateTimePicker: View {
+public struct AddEventDateTimePicker: View {
 
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
     @EnvironmentObject var calendarItemListViewModel: CalendarItemListViewModel
@@ -48,7 +49,7 @@ struct AddEventDateTimePicker: View {
         dateBinding(date: $viewModel.newItemEndDate, time: $viewModel.newItemEndTime)
     }
 
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 0) {
             Button {
                 let wasExpanded = isExpanded

@@ -139,7 +139,7 @@ extension CalendarView: Equatable {
 
 // MARK: - Helpers
 
-private extension CalendarView {
+extension CalendarView {
     func makeDays() -> [Date] {
         guard let monthInterval = Calendar.current.dateInterval(of: .month, for: self.date),
               let monthFirstWeek = Calendar.current.dateInterval(of: .weekOfMonth, for: monthInterval.start),

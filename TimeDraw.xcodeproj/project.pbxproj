@@ -35,7 +35,6 @@
 		2F542010279B4AE90046696B /* ModifyCalendarItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */; };
 		2F5427EC28D753D700F08952 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5427EB28D753D600F08952 /* IntroView.swift */; };
 		2F646BB1285038CF00D7445D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2F646BB0285038CF00D7445D /* README.md */; };
-		2F65050027879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */; };
 		2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505022787A09900AF90F7 /* MainHeader.swift */; };
 		2F6505092787F87A00AF90F7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6505082787F87A00AF90F7 /* SettingsView.swift */; };
 		2F7A0BC52E35C25300B69C71 /* MyToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7A0BC32E35C25300B69C71 /* MyToastView.swift */; };
@@ -58,7 +57,6 @@
 		2F7A0BF72E35C84200B69C71 /* Double-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */; };
 		2F7A0BF82E35C84200B69C71 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8AB30F27A229DA00654FEF /* Utils.swift */; };
 		2F7A0BF92E35C84200B69C71 /* SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458727D8BDD0005BF37D /* SwipeGesture.swift */; };
-		2F7A0BFA2E35C84200B69C71 /* SwiftBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */; };
 		2F7A0BFB2E35C85800B69C71 /* MyToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7A0BC32E35C25300B69C71 /* MyToastView.swift */; };
 		2F7A0BFE2E35C8EF00B69C71 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 2F7A0BFD2E35C8EF00B69C71 /* Dependencies */; };
 		2F7A0C002E35C90600B69C71 /* ToastWindow in Frameworks */ = {isa = PBXBuildFile; productRef = 2F7A0BFF2E35C90600B69C71 /* ToastWindow */; };
@@ -75,7 +73,6 @@
 		2FB41CD727DEDBB70067F250 /* SettingsControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD627DEDBB70067F250 /* SettingsControls.swift */; };
 		2FB60E5527E48DFE004DA305 /* CalendarSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB60E5427E48DFE004DA305 /* CalendarSelection.swift */; };
 		2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B42786434600D75568 /* MultiLineTextField.swift */; };
-		2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */; };
 		2FCLKGE92E38000500B69C71 /* ClockEventLayoutEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCLKGE82E38000500B69C71 /* ClockEventLayoutEngineTests.swift */; };
 		2FD40789284FBB700022FC49 /* TimeDrawWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */; };
 		2FD4078D284FBB700022FC49 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4078C284FBB700022FC49 /* NotificationController.swift */; };
@@ -105,19 +102,6 @@
 		2FDFFFD82E22C83F00B9D266 /* UIPopoverWrapperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFFFD72E22C83F00B9D266 /* UIPopoverWrapperViewController.swift */; };
 		2FONBP022E38000100B69C71 /* OnboardingPermissionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FONBP012E38000100B69C71 /* OnboardingPermissionPage.swift */; };
 		2FSET0022E37000100B69C71 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2FSET0012E37000100B69C71 /* Settings.bundle */; };
-		8193FC88300EBD6E0002D9C6 /* MultiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FC80300EBD6E0002D9C6 /* MultiPicker.swift */; };
-		8193FC89300EBD6E0002D9C6 /* EventInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FC7A300EBD6E0002D9C6 /* EventInput.swift */; };
-		8193FC8A300EBD6E0002D9C6 /* AddEventDateTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FC7C300EBD6E0002D9C6 /* AddEventDateTimePicker.swift */; };
-		8193FC8B300EBD6E0002D9C6 /* PickerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FC85300EBD6E0002D9C6 /* PickerField.swift */; };
-		8193FC8C300EBD6E0002D9C6 /* DateTimePickerInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FC83300EBD6E0002D9C6 /* DateTimePickerInputView.swift */; };
-		8193FC8D300EBD6E0002D9C6 /* MultiDateSelectCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FC81300EBD6E0002D9C6 /* MultiDateSelectCalendar.swift */; };
-		8193FC8E300EBD6E0002D9C6 /* DateTimePickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FC84300EBD6E0002D9C6 /* DateTimePickerTextField.swift */; };
-		8193FC8F300EBD6E0002D9C6 /* UIPickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FC86300EBD6E0002D9C6 /* UIPickerTextField.swift */; };
-		8193FC91300EBD6E0002D9C6 /* SegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FC7F300EBD6E0002D9C6 /* SegmentedPicker.swift */; };
-		8193FC92300EBD6E0002D9C6 /* DateAndTimePickers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FC82300EBD6E0002D9C6 /* DateAndTimePickers.swift */; };
-		8193FC94300EBD6E0002D9C6 /* AddNotesInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FC7D300EBD6E0002D9C6 /* AddNotesInput.swift */; };
-		8193FC96300EBD6E0002D9C6 /* EventEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FC7B300EBD6E0002D9C6 /* EventEditView.swift */; };
-		8193FC97300EBD6E0002D9C6 /* AddRecurrenceRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FC7E300EBD6E0002D9C6 /* AddRecurrenceRule.swift */; };
 		8193FC9A300ED8AE0002D9C6 /* EventUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 8193FC99300ED8AE0002D9C6 /* EventUIComponents */; };
 		8193FC9E300EDB590002D9C6 /* DesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 8193FC9D300EDB590002D9C6 /* DesignToken */; };
 		8193FCA0300F00010002D9C6 /* DesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 8193FCA1300F00010002D9C6 /* DesignToken */; };
@@ -128,15 +112,35 @@
 		8193FCCA300EE7450002D9C6 /* ClockFace in Frameworks */ = {isa = PBXBuildFile; productRef = 8193FCC9300EE7450002D9C6 /* ClockFace */; };
 		8193FCCC300EE74B0002D9C6 /* ClockFace in Frameworks */ = {isa = PBXBuildFile; productRef = 8193FCCB300EE74B0002D9C6 /* ClockFace */; };
 		8193FCCE300EE7500002D9C6 /* ClockFace in Frameworks */ = {isa = PBXBuildFile; productRef = 8193FCCD300EE7500002D9C6 /* ClockFace */; };
-		8193FCD1300EE84F0002D9C6 /* EKReminder+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FCD0300EE84F0002D9C6 /* EKReminder+Extensions.swift */; };
-		8193FCD2300EE84F0002D9C6 /* EKEvent+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FCCF300EE84F0002D9C6 /* EKEvent+Extensions.swift */; };
-		8193FCD3300EE84F0002D9C6 /* EKReminder+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FCD0300EE84F0002D9C6 /* EKReminder+Extensions.swift */; };
-		8193FCD4300EE84F0002D9C6 /* EKEvent+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FCCF300EE84F0002D9C6 /* EKEvent+Extensions.swift */; };
-		8193FCD5300EE84F0002D9C6 /* EKReminder+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FCD0300EE84F0002D9C6 /* EKReminder+Extensions.swift */; };
-		8193FCD6300EE84F0002D9C6 /* EKEvent+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FCCF300EE84F0002D9C6 /* EKEvent+Extensions.swift */; };
+		8193FCD1300EE84F0002D9C6 /* EKReminder+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FCD0300EE84F0002D9C6 /* EKReminder+Extension.swift */; };
+		8193FCD2300EE84F0002D9C6 /* EKEvent+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FCCF300EE84F0002D9C6 /* EKEvent+Extension.swift */; };
+		8193FCD3300EE84F0002D9C6 /* EKReminder+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FCD0300EE84F0002D9C6 /* EKReminder+Extension.swift */; };
+		8193FCD4300EE84F0002D9C6 /* EKEvent+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FCCF300EE84F0002D9C6 /* EKEvent+Extension.swift */; };
+		8193FCD5300EE84F0002D9C6 /* EKReminder+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FCD0300EE84F0002D9C6 /* EKReminder+Extension.swift */; };
+		8193FCD6300EE84F0002D9C6 /* EKEvent+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FCCF300EE84F0002D9C6 /* EKEvent+Extension.swift */; };
 		8193FCD8300EE8610002D9C6 /* TimeDrawClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FCD7300EE8610002D9C6 /* TimeDrawClock.swift */; };
 		8193FCD9300EE8610002D9C6 /* TimeDrawClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FCD7300EE8610002D9C6 /* TimeDrawClock.swift */; };
 		8193FCDF300EE90F0002D9C6 /* TimeDrawClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FCD7300EE8610002D9C6 /* TimeDrawClock.swift */; };
+		8193FD38300F7C770002D9C6 /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 8193FD37300F7C770002D9C6 /* UIComponents */; };
+		8193FD3A300F7C850002D9C6 /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 8193FD39300F7C850002D9C6 /* UIComponents */; };
+		8193FD3C300F7C8B0002D9C6 /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 8193FD3B300F7C8B0002D9C6 /* UIComponents */; };
+		8193FD47300F889A0002D9C6 /* EventInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FD46300F889A0002D9C6 /* EventInput.swift */; };
+		8193FD57300F89E90002D9C6 /* UIPickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FD55300F89E90002D9C6 /* UIPickerTextField.swift */; };
+		8193FD58300F89E90002D9C6 /* SegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FD4E300F89E90002D9C6 /* SegmentedPicker.swift */; };
+		8193FD59300F89E90002D9C6 /* DateTimePickerInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FD52300F89E90002D9C6 /* DateTimePickerInputView.swift */; };
+		8193FD5A300F89E90002D9C6 /* AddRecurrenceRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FD4D300F89E90002D9C6 /* AddRecurrenceRule.swift */; };
+		8193FD5B300F89E90002D9C6 /* PickerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FD54300F89E90002D9C6 /* PickerField.swift */; };
+		8193FD5C300F89E90002D9C6 /* MultiDateSelectCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FD50300F89E90002D9C6 /* MultiDateSelectCalendar.swift */; };
+		8193FD5D300F89E90002D9C6 /* AddNotesInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FD4C300F89E90002D9C6 /* AddNotesInput.swift */; };
+		8193FD5E300F89E90002D9C6 /* DateTimePickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FD53300F89E90002D9C6 /* DateTimePickerTextField.swift */; };
+		8193FD5F300F89E90002D9C6 /* EventEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FD4A300F89E90002D9C6 /* EventEditView.swift */; };
+		8193FD60300F89E90002D9C6 /* MultiPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FD4F300F89E90002D9C6 /* MultiPicker.swift */; };
+		8193FD61300F89E90002D9C6 /* AddEventDateTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FD4B300F89E90002D9C6 /* AddEventDateTimePicker.swift */; };
+		8193FD62300F89E90002D9C6 /* DateAndTimePickers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8193FD51300F89E90002D9C6 /* DateAndTimePickers.swift */; };
+		81BF7D12301016BD004B06F8 /* FormStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAPP0002E36000100B69C71 /* FormStyles.swift */; };
+		81BF7D13301016BD004B06F8 /* FormStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FAPP0002E36000100B69C71 /* FormStyles.swift */; };
+		81BF7D27301017C9004B06F8 /* GlassPanelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BF7D25301017C9004B06F8 /* GlassPanelModifier.swift */; };
+		81BF7D2C30104FF5004B06F8 /* DailyGoalTextfield in Frameworks */ = {isa = PBXBuildFile; productRef = 81BF7D2B30104FF5004B06F8 /* DailyGoalTextfield */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -214,7 +218,6 @@
 		2F54200F279B4AE90046696B /* ModifyCalendarItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyCalendarItemViewModel.swift; sourceTree = "<group>"; };
 		2F5427EB28D753D600F08952 /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
 		2F646BB0285038CF00D7445D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftBarButtonItem.swift; sourceTree = "<group>"; };
 		2F6505022787A09900AF90F7 /* MainHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeader.swift; sourceTree = "<group>"; };
 		2F6505082787F87A00AF90F7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2F6505272791373800AF90F7 /* TimeDraw--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TimeDraw--iOS--Info.plist"; sourceTree = "<group>"; };
@@ -233,7 +236,6 @@
 		2FB41CD627DEDBB70067F250 /* SettingsControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsControls.swift; sourceTree = "<group>"; };
 		2FB60E5427E48DFE004DA305 /* CalendarSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarSelection.swift; sourceTree = "<group>"; };
 		2FC6C7B42786434600D75568 /* MultiLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTextField.swift; sourceTree = "<group>"; };
-		2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGoalTextField.swift; sourceTree = "<group>"; };
 		2FCLKGE82E38000500B69C71 /* ClockEventLayoutEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockEventLayoutEngineTests.swift; sourceTree = "<group>"; };
 		2FD4077B284FBB6F0022FC49 /* WatchFace App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchFace App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawWatchApp.swift; sourceTree = "<group>"; };
@@ -252,26 +254,30 @@
 		2FDFFFD72E22C83F00B9D266 /* UIPopoverWrapperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPopoverWrapperViewController.swift; sourceTree = "<group>"; };
 		2FONBP012E38000100B69C71 /* OnboardingPermissionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPermissionPage.swift; sourceTree = "<group>"; };
 		2FSET0012E37000100B69C71 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = wrapper.cfbundle; path = Settings.bundle; sourceTree = "<group>"; };
-		8193FC7A300EBD6E0002D9C6 /* EventInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventInput.swift; sourceTree = "<group>"; };
-		8193FC7B300EBD6E0002D9C6 /* EventEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditView.swift; sourceTree = "<group>"; };
-		8193FC7C300EBD6E0002D9C6 /* AddEventDateTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventDateTimePicker.swift; sourceTree = "<group>"; };
-		8193FC7D300EBD6E0002D9C6 /* AddNotesInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNotesInput.swift; sourceTree = "<group>"; };
-		8193FC7E300EBD6E0002D9C6 /* AddRecurrenceRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecurrenceRule.swift; sourceTree = "<group>"; };
-		8193FC7F300EBD6E0002D9C6 /* SegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedPicker.swift; sourceTree = "<group>"; };
-		8193FC80300EBD6E0002D9C6 /* MultiPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPicker.swift; sourceTree = "<group>"; };
-		8193FC81300EBD6E0002D9C6 /* MultiDateSelectCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiDateSelectCalendar.swift; sourceTree = "<group>"; };
-		8193FC82300EBD6E0002D9C6 /* DateAndTimePickers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndTimePickers.swift; sourceTree = "<group>"; };
-		8193FC83300EBD6E0002D9C6 /* DateTimePickerInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerInputView.swift; sourceTree = "<group>"; };
-		8193FC84300EBD6E0002D9C6 /* DateTimePickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerTextField.swift; sourceTree = "<group>"; };
-		8193FC85300EBD6E0002D9C6 /* PickerField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerField.swift; sourceTree = "<group>"; };
-		8193FC86300EBD6E0002D9C6 /* UIPickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPickerTextField.swift; sourceTree = "<group>"; };
 		8193FC98300EBDA60002D9C6 /* EventUIComponents */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = EventUIComponents; sourceTree = "<group>"; };
 		8193FC9C300EDA860002D9C6 /* DesignToken */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignToken; sourceTree = "<group>"; };
 		8193FCC1300EE4A50002D9C6 /* WatchFace-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WatchFace-App-Info.plist"; sourceTree = "<group>"; };
 		8193FCC8300EE6DD0002D9C6 /* ClockFace */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ClockFace; sourceTree = "<group>"; };
-		8193FCCF300EE84F0002D9C6 /* EKEvent+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKEvent+Extensions.swift"; sourceTree = "<group>"; };
-		8193FCD0300EE84F0002D9C6 /* EKReminder+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKReminder+Extensions.swift"; sourceTree = "<group>"; };
+		8193FCCF300EE84F0002D9C6 /* EKEvent+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKEvent+Extension.swift"; sourceTree = "<group>"; };
+		8193FCD0300EE84F0002D9C6 /* EKReminder+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKReminder+Extension.swift"; sourceTree = "<group>"; };
 		8193FCD7300EE8610002D9C6 /* TimeDrawClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawClock.swift; sourceTree = "<group>"; };
+		8193FD36300F7BEA0002D9C6 /* UIComponents */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UIComponents; sourceTree = "<group>"; };
+		8193FD41300F84A10002D9C6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		8193FD46300F889A0002D9C6 /* EventInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventInput.swift; sourceTree = "<group>"; };
+		8193FD4A300F89E90002D9C6 /* EventEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditView.swift; sourceTree = "<group>"; };
+		8193FD4B300F89E90002D9C6 /* AddEventDateTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventDateTimePicker.swift; sourceTree = "<group>"; };
+		8193FD4C300F89E90002D9C6 /* AddNotesInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNotesInput.swift; sourceTree = "<group>"; };
+		8193FD4D300F89E90002D9C6 /* AddRecurrenceRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecurrenceRule.swift; sourceTree = "<group>"; };
+		8193FD4E300F89E90002D9C6 /* SegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedPicker.swift; sourceTree = "<group>"; };
+		8193FD4F300F89E90002D9C6 /* MultiPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPicker.swift; sourceTree = "<group>"; };
+		8193FD50300F89E90002D9C6 /* MultiDateSelectCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiDateSelectCalendar.swift; sourceTree = "<group>"; };
+		8193FD51300F89E90002D9C6 /* DateAndTimePickers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndTimePickers.swift; sourceTree = "<group>"; };
+		8193FD52300F89E90002D9C6 /* DateTimePickerInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerInputView.swift; sourceTree = "<group>"; };
+		8193FD53300F89E90002D9C6 /* DateTimePickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerTextField.swift; sourceTree = "<group>"; };
+		8193FD54300F89E90002D9C6 /* PickerField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerField.swift; sourceTree = "<group>"; };
+		8193FD55300F89E90002D9C6 /* UIPickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPickerTextField.swift; sourceTree = "<group>"; };
+		81BF7D1130100BD1004B06F8 /* DailyGoalTextfield */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DailyGoalTextfield; sourceTree = "<group>"; };
+		81BF7D25301017C9004B06F8 /* GlassPanelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassPanelModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -286,6 +292,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2F7A0BD32E35C5F100B69C71 /* TimeDrawWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (2F7A0BDE2E35C5F200B69C71 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = TimeDrawWidget; sourceTree = "<group>"; };
+		8193FD34300F7AF30002D9C6 /* Onboarding */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Onboarding; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -293,9 +300,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8193FD38300F7C770002D9C6 /* UIComponents in Frameworks */,
 				2F7A0BC72E35C2EA00B69C71 /* ToastWindow in Frameworks */,
 				2F471C412E27403D00D37709 /* Dependencies in Frameworks */,
 				8193FCCA300EE7450002D9C6 /* ClockFace in Frameworks */,
+				81BF7D2C30104FF5004B06F8 /* DailyGoalTextfield in Frameworks */,
 				8193FC9E300EDB590002D9C6 /* DesignToken in Frameworks */,
 				8193FC9A300ED8AE0002D9C6 /* EventUIComponents in Frameworks */,
 			);
@@ -312,6 +321,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8193FD3C300F7C8B0002D9C6 /* UIComponents in Frameworks */,
 				2F7A0BFE2E35C8EF00B69C71 /* Dependencies in Frameworks */,
 				2F7A0BD22E35C5F100B69C71 /* SwiftUI.framework in Frameworks */,
 				2F7A0C002E35C90600B69C71 /* ToastWindow in Frameworks */,
@@ -330,6 +340,7 @@
 				2F471C432E27420D00D37709 /* Dependencies in Frameworks */,
 				8193FCA0300F00010002D9C6 /* DesignToken in Frameworks */,
 				8193FCC0300EE1C60002D9C6 /* EventUIComponents in Frameworks */,
+				8193FD3A300F7C850002D9C6 /* UIComponents in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,14 +364,14 @@
 			path = "View Models";
 			sourceTree = "<group>";
 		};
-		2F26FE6028CE56F500A9A0AE /* Onboarding */ = {
+		2F26FE6028CE56F500A9A0AE /* OnboardingViews */ = {
 			isa = PBXGroup;
 			children = (
 				2F26FE5D28CE56E900A9A0AE /* OnboardingExperience.swift */,
 				2FONBP012E38000100B69C71 /* OnboardingPermissionPage.swift */,
 				2F5427EB28D753D600F08952 /* IntroView.swift */,
 			);
-			path = Onboarding;
+			path = OnboardingViews;
 			sourceTree = "<group>";
 		};
 		2F39B83B27823CF600FE72C3 = {
@@ -368,6 +379,7 @@
 			children = (
 				2F646BB0285038CF00D7445D /* README.md */,
 				8193FCC1300EE4A50002D9C6 /* WatchFace-App-Info.plist */,
+				8193FD41300F84A10002D9C6 /* .swiftlint.yml */,
 				2FSET0012E37000100B69C71 /* Settings.bundle */,
 				2F39B88527823E1400FE72C3 /* LaunchScreen.storyboard */,
 				2F39B84027823CF600FE72C3 /* Shared */,
@@ -386,7 +398,10 @@
 				8193FCC8300EE6DD0002D9C6 /* ClockFace */,
 				8193FC9C300EDA860002D9C6 /* DesignToken */,
 				8193FC98300EBDA60002D9C6 /* EventUIComponents */,
+				8193FD36300F7BEA0002D9C6 /* UIComponents */,
+				81BF7D1130100BD1004B06F8 /* DailyGoalTextfield */,
 				2FB41CD327DEDB3E0067F250 /* AppSettings.swift */,
+				2FC6C7B42786434600D75568 /* MultiLineTextField.swift */,
 				2FD6BE462E2177CC00AA7C5A /* Models */,
 				2FB41CD227DE890E0067F250 /* Views */,
 				2F2111322799EE370041EE85 /* View Models */,
@@ -426,8 +441,8 @@
 				2F42C59C2784E3DE00F0BEB2 /* EventKitManager.swift */,
 				2F42C5A52784E6FC00F0BEB2 /* EventError.swift */,
 				2F24458A27D8BE37005BF37D /* Calendar-Extension.swift */,
-				8193FCCF300EE84F0002D9C6 /* EKEvent+Extensions.swift */,
-				8193FCD0300EE84F0002D9C6 /* EKReminder+Extensions.swift */,
+				8193FCCF300EE84F0002D9C6 /* EKEvent+Extension.swift */,
+				8193FCD0300EE84F0002D9C6 /* EKReminder+Extension.swift */,
 				2F24457E27D797C9005BF37D /* EventKit-Extension.swift */,
 				2F42C59327848DF700F0BEB2 /* Date-Extension.swift */,
 				2F471C392E24950800D37709 /* DateComponents-Extension.swift */,
@@ -441,7 +456,6 @@
 			children = (
 				2F24458727D8BDD0005BF37D /* SwipeGesture.swift */,
 				2F7A0C0A2E3649C000B69C71 /* OpenCalendarItemKey.swift */,
-				2F6504FF27879FED00AF90F7 /* SwiftBarButtonItem.swift */,
 				2FD6BE472E2177ED00AA7C5A /* Double-Extension.swift */,
 				2F8AB30F27A229DA00654FEF /* Utils.swift */,
 			);
@@ -451,8 +465,6 @@
 		2F6504FE27879B8900AF90F7 /* DailyGoal */ = {
 			isa = PBXGroup;
 			children = (
-				2FC6C7B42786434600D75568 /* MultiLineTextField.swift */,
-				2FC6C7B72786A26900D75568 /* DailyGoalTextField.swift */,
 			);
 			path = DailyGoal;
 			sourceTree = "<group>";
@@ -474,8 +486,10 @@
 			isa = PBXGroup;
 			children = (
 				2F7A0BC32E35C25300B69C71 /* MyToastView.swift */,
+				81BF7D25301017C9004B06F8 /* GlassPanelModifier.swift */,
 				2FAPP0002E36000100B69C71 /* FormStyles.swift */,
 				8193FCD7300EE8610002D9C6 /* TimeDrawClock.swift */,
+				8193FD56300F89E90002D9C6 /* EventInput */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -536,12 +550,12 @@
 			children = (
 				2F6505272791373800AF90F7 /* TimeDraw--iOS--Info.plist */,
 				2F39B88427823DEC00FE72C3 /* TimeDraw (iOS).entitlements */,
+				8193FD34300F7AF30002D9C6 /* Onboarding */,
 				2F39B84327823CF600FE72C3 /* TimeDrawApp.swift */,
 				2F39B84427823CF600FE72C3 /* MainViewContainer.swift */,
 				2F6505022787A09900AF90F7 /* MainHeader.swift */,
-				8193FC87300EBD6E0002D9C6 /* EventInput */,
 				2F21112F2799B62D0041EE85 /* MainScrollableContent.swift */,
-				2F26FE6028CE56F500A9A0AE /* Onboarding */,
+				2F26FE6028CE56F500A9A0AE /* OnboardingViews */,
 				2F2343FB27D454BC0064B635 /* CalendarView.swift */,
 				2F8AB31227A25D9F00654FEF /* Settings Menus */,
 				2F6504FE27879B8900AF90F7 /* DailyGoal */,
@@ -549,22 +563,22 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
-		8193FC87300EBD6E0002D9C6 /* EventInput */ = {
+		8193FD56300F89E90002D9C6 /* EventInput */ = {
 			isa = PBXGroup;
 			children = (
-				8193FC7A300EBD6E0002D9C6 /* EventInput.swift */,
-				8193FC7B300EBD6E0002D9C6 /* EventEditView.swift */,
-				8193FC7C300EBD6E0002D9C6 /* AddEventDateTimePicker.swift */,
-				8193FC7D300EBD6E0002D9C6 /* AddNotesInput.swift */,
-				8193FC7E300EBD6E0002D9C6 /* AddRecurrenceRule.swift */,
-				8193FC7F300EBD6E0002D9C6 /* SegmentedPicker.swift */,
-				8193FC80300EBD6E0002D9C6 /* MultiPicker.swift */,
-				8193FC81300EBD6E0002D9C6 /* MultiDateSelectCalendar.swift */,
-				8193FC82300EBD6E0002D9C6 /* DateAndTimePickers.swift */,
-				8193FC83300EBD6E0002D9C6 /* DateTimePickerInputView.swift */,
-				8193FC84300EBD6E0002D9C6 /* DateTimePickerTextField.swift */,
-				8193FC85300EBD6E0002D9C6 /* PickerField.swift */,
-				8193FC86300EBD6E0002D9C6 /* UIPickerTextField.swift */,
+				8193FD4A300F89E90002D9C6 /* EventEditView.swift */,
+				8193FD4B300F89E90002D9C6 /* AddEventDateTimePicker.swift */,
+				8193FD4C300F89E90002D9C6 /* AddNotesInput.swift */,
+				8193FD4D300F89E90002D9C6 /* AddRecurrenceRule.swift */,
+				8193FD4E300F89E90002D9C6 /* SegmentedPicker.swift */,
+				8193FD4F300F89E90002D9C6 /* MultiPicker.swift */,
+				8193FD50300F89E90002D9C6 /* MultiDateSelectCalendar.swift */,
+				8193FD51300F89E90002D9C6 /* DateAndTimePickers.swift */,
+				8193FD52300F89E90002D9C6 /* DateTimePickerInputView.swift */,
+				8193FD53300F89E90002D9C6 /* DateTimePickerTextField.swift */,
+				8193FD54300F89E90002D9C6 /* PickerField.swift */,
+				8193FD55300F89E90002D9C6 /* UIPickerTextField.swift */,
+				8193FD46300F889A0002D9C6 /* EventInput.swift */,
 			);
 			path = EventInput;
 			sourceTree = "<group>";
@@ -576,6 +590,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2F39B87827823CF700FE72C3 /* Build configuration list for PBXNativeTarget "TimeDraw (iOS)" */;
 			buildPhases = (
+				8193FD3E300F7DAF0002D9C6 /* Swiftlint */,
 				2F39B84727823CF600FE72C3 /* Sources */,
 				2F39B84827823CF600FE72C3 /* Frameworks */,
 				2F39B84927823CF600FE72C3 /* Resources */,
@@ -597,6 +612,8 @@
 				8193FC99300ED8AE0002D9C6 /* EventUIComponents */,
 				8193FC9D300EDB590002D9C6 /* DesignToken */,
 				8193FCC9300EE7450002D9C6 /* ClockFace */,
+				8193FD37300F7C770002D9C6 /* UIComponents */,
+				81BF7D2B30104FF5004B06F8 /* DailyGoalTextfield */,
 			);
 			productName = "TimeDraw (iOS)";
 			productReference = 2F39B84B27823CF600FE72C3 /* TimeDraw.app */;
@@ -642,6 +659,7 @@
 				8193FCC3300EE5030002D9C6 /* DesignToken */,
 				8193FCC5300EE5030002D9C6 /* EventUIComponents */,
 				8193FCCD300EE7500002D9C6 /* ClockFace */,
+				8193FD3B300F7C8B0002D9C6 /* UIComponents */,
 			);
 			productName = TimeDrawWidgetExtension;
 			productReference = 2F7A0BCE2E35C5F100B69C71 /* TimeDrawWidgetExtension.appex */;
@@ -665,6 +683,7 @@
 				8193FCA1300F00010002D9C6 /* DesignToken */,
 				8193FCBF300EE1C60002D9C6 /* EventUIComponents */,
 				8193FCCB300EE74B0002D9C6 /* ClockFace */,
+				8193FD39300F7C850002D9C6 /* UIComponents */,
 			);
 			productName = WatchFace;
 			productReference = 2FD4077B284FBB6F0022FC49 /* WatchFace App.app */;
@@ -791,35 +810,43 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8193FD3E300F7DAF0002D9C6 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2F39B84727823CF600FE72C3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81BF7D27301017C9004B06F8 /* GlassPanelModifier.swift in Sources */,
 				2F39B86E27823CF700FE72C3 /* TimeDrawApp.swift in Sources */,
 				2FC6C7B52786434600D75568 /* MultiLineTextField.swift in Sources */,
 				2FDFFFD42E22C77B00B9D266 /* ItemRecurrenceType.swift in Sources */,
 				2FDFFFD62E22C82A00B9D266 /* PopoverWrapper.swift in Sources */,
 				2F542010279B4AE90046696B /* ModifyCalendarItemViewModel.swift in Sources */,
-				2FC6C7B82786A26900D75568 /* DailyGoalTextField.swift in Sources */,
 				2F8AB303279D140E00654FEF /* PopoverButton.swift in Sources */,
 				2F7A0C0D2E3649C000B69C71 /* OpenCalendarItemKey.swift in Sources */,
-				8193FC88300EBD6E0002D9C6 /* MultiPicker.swift in Sources */,
-				8193FC89300EBD6E0002D9C6 /* EventInput.swift in Sources */,
-				8193FCD3300EE84F0002D9C6 /* EKReminder+Extensions.swift in Sources */,
-				8193FCD4300EE84F0002D9C6 /* EKEvent+Extensions.swift in Sources */,
-				8193FC8A300EBD6E0002D9C6 /* AddEventDateTimePicker.swift in Sources */,
-				8193FC8B300EBD6E0002D9C6 /* PickerField.swift in Sources */,
-				8193FC8C300EBD6E0002D9C6 /* DateTimePickerInputView.swift in Sources */,
-				8193FC8D300EBD6E0002D9C6 /* MultiDateSelectCalendar.swift in Sources */,
-				8193FC8E300EBD6E0002D9C6 /* DateTimePickerTextField.swift in Sources */,
-				8193FC8F300EBD6E0002D9C6 /* UIPickerTextField.swift in Sources */,
-				8193FC91300EBD6E0002D9C6 /* SegmentedPicker.swift in Sources */,
-				8193FC92300EBD6E0002D9C6 /* DateAndTimePickers.swift in Sources */,
-				8193FC94300EBD6E0002D9C6 /* AddNotesInput.swift in Sources */,
+				8193FCD3300EE84F0002D9C6 /* EKReminder+Extension.swift in Sources */,
+				8193FCD4300EE84F0002D9C6 /* EKEvent+Extension.swift in Sources */,
 				8193FCD9300EE8610002D9C6 /* TimeDrawClock.swift in Sources */,
-				8193FC96300EBD6E0002D9C6 /* EventEditView.swift in Sources */,
-				8193FC97300EBD6E0002D9C6 /* AddRecurrenceRule.swift in Sources */,
 				2FDFFFD82E22C83F00B9D266 /* UIPopoverWrapperViewController.swift in Sources */,
 				2F471C462E35B95C00D37709 /* ReviewRequestManager.swift in Sources */,
 				2F5427EC28D753D700F08952 /* IntroView.swift in Sources */,
@@ -832,9 +859,9 @@
 				2F42C5A32784E6E000F0BEB2 /* EKEventStore-Extension.swift in Sources */,
 				2F8AB31027A229DA00654FEF /* Utils.swift in Sources */,
 				2F26FE5E28CE56E900A9A0AE /* OnboardingExperience.swift in Sources */,
+				8193FD47300F889A0002D9C6 /* EventInput.swift in Sources */,
 				2FONBP022E38000100B69C71 /* OnboardingPermissionPage.swift in Sources */,
 				2FB60E5527E48DFE004DA305 /* CalendarSelection.swift in Sources */,
-				2F65050027879FED00AF90F7 /* SwiftBarButtonItem.swift in Sources */,
 				2F7A0BC52E35C25300B69C71 /* MyToastView.swift in Sources */,
 				2FAPP0012E36000100B69C71 /* FormStyles.swift in Sources */,
 				2FAPP0032E36000200B69C71 /* CalendlyInlineWidgetView.swift in Sources */,
@@ -846,6 +873,18 @@
 				2F6505032787A09900AF90F7 /* MainHeader.swift in Sources */,
 				2FB41CD727DEDBB70067F250 /* SettingsControls.swift in Sources */,
 				2F1F8FA427D3AAEF00648234 /* CalendarItemListViewModel.swift in Sources */,
+				8193FD57300F89E90002D9C6 /* UIPickerTextField.swift in Sources */,
+				8193FD58300F89E90002D9C6 /* SegmentedPicker.swift in Sources */,
+				8193FD59300F89E90002D9C6 /* DateTimePickerInputView.swift in Sources */,
+				8193FD5A300F89E90002D9C6 /* AddRecurrenceRule.swift in Sources */,
+				8193FD5B300F89E90002D9C6 /* PickerField.swift in Sources */,
+				8193FD5C300F89E90002D9C6 /* MultiDateSelectCalendar.swift in Sources */,
+				8193FD5D300F89E90002D9C6 /* AddNotesInput.swift in Sources */,
+				8193FD5E300F89E90002D9C6 /* DateTimePickerTextField.swift in Sources */,
+				8193FD5F300F89E90002D9C6 /* EventEditView.swift in Sources */,
+				8193FD60300F89E90002D9C6 /* MultiPicker.swift in Sources */,
+				8193FD61300F89E90002D9C6 /* AddEventDateTimePicker.swift in Sources */,
+				8193FD62300F89E90002D9C6 /* DateAndTimePickers.swift in Sources */,
 				2FD6BE482E2177ED00AA7C5A /* Double-Extension.swift in Sources */,
 				2F42C59427848DF700F0BEB2 /* Date-Extension.swift in Sources */,
 				2FDFFFCF2E22C77200B9D266 /* CalendarItemType.swift in Sources */,
@@ -878,12 +917,12 @@
 				2F7A0BF52E35C83C00B69C71 /* Date-Extension.swift in Sources */,
 				2F7A0BF72E35C84200B69C71 /* Double-Extension.swift in Sources */,
 				2F7A0BF82E35C84200B69C71 /* Utils.swift in Sources */,
-				8193FCD5300EE84F0002D9C6 /* EKReminder+Extensions.swift in Sources */,
-				8193FCD6300EE84F0002D9C6 /* EKEvent+Extensions.swift in Sources */,
+				8193FCD5300EE84F0002D9C6 /* EKReminder+Extension.swift in Sources */,
+				8193FCD6300EE84F0002D9C6 /* EKEvent+Extension.swift in Sources */,
 				2F7A0BF92E35C84200B69C71 /* SwipeGesture.swift in Sources */,
-				2F7A0BFA2E35C84200B69C71 /* SwiftBarButtonItem.swift in Sources */,
 				2F7A0BE82E35C77B00B69C71 /* CalendarItemListViewModel.swift in Sources */,
 				2F7A0BFB2E35C85800B69C71 /* MyToastView.swift in Sources */,
+				81BF7D13301016BD004B06F8 /* FormStyles.swift in Sources */,
 				2F7A0BEC2E35C81C00B69C71 /* CalendarItemType.swift in Sources */,
 				2F7A0BEB2E35C81300B69C71 /* ItemRecurrenceType.swift in Sources */,
 				2F7A0BEA2E35C80600B69C71 /* AppSettings.swift in Sources */,
@@ -896,10 +935,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FDFFFCE2E22C77200B9D266 /* CalendarItemType.swift in Sources */,
+				81BF7D12301016BD004B06F8 /* FormStyles.swift in Sources */,
 				2FD407D4284FBCF70022FC49 /* AppSettings.swift in Sources */,
 				2F7A0C0B2E3649C000B69C71 /* OpenCalendarItemKey.swift in Sources */,
-				8193FCD1300EE84F0002D9C6 /* EKReminder+Extensions.swift in Sources */,
-				8193FCD2300EE84F0002D9C6 /* EKEvent+Extensions.swift in Sources */,
+				8193FCD1300EE84F0002D9C6 /* EKReminder+Extension.swift in Sources */,
+				8193FCD2300EE84F0002D9C6 /* EKEvent+Extension.swift in Sources */,
 				2FD4078D284FBB700022FC49 /* NotificationController.swift in Sources */,
 				2FD407D6284FBD670022FC49 /* EKEventStore-Extension.swift in Sources */,
 				2FD407D7284FBDD70022FC49 /* CalendarItemListViewModel.swift in Sources */,
@@ -1089,6 +1129,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS/TimeDraw--iOS--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Time Draw";
@@ -1127,6 +1168,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS/TimeDraw--iOS--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Time Draw";
@@ -1267,6 +1309,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WatchFace-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = WatchFace;
@@ -1302,6 +1345,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "WatchFace-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = WatchFace;
@@ -1515,6 +1559,22 @@
 		8193FCCD300EE7500002D9C6 /* ClockFace */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ClockFace;
+		};
+		8193FD37300F7C770002D9C6 /* UIComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UIComponents;
+		};
+		8193FD39300F7C850002D9C6 /* UIComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UIComponents;
+		};
+		8193FD3B300F7C8B0002D9C6 /* UIComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UIComponents;
+		};
+		81BF7D2B30104FF5004B06F8 /* DailyGoalTextfield */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DailyGoalTextfield;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

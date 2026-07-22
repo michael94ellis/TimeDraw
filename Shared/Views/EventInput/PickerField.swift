@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct PickerField: UIViewRepresentable {
     // MARK: - Public properties

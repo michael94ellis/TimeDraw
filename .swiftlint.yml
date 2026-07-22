@@ -1,0 +1,42 @@
+excluded:
+  - fastlane
+  - .build
+  - build
+  - Packages
+  - Carthage
+  - Pods
+
+disabled_rules:
+  - trailing_whitespace
+  - contrasted_opening_brace
+  - missing_docs
+  - redundant_type_annotation
+  - explicit_type_interface
+  - identifier_name
+
+# Rules that have both warning and error levels can set just the warning level implicitly.
+line_length: 110
+
+# To set both levels implicitly, use an array.
+type_body_length:
+  - 500 # warning
+  - 1000 # error
+
+# To set both levels explicitly, use a dictionary.
+file_length:
+  warning: 500
+  error: 1200
+  
+# Naming rules can set warnings/errors for `min_length` and `max_length`. Additionally, they can
+# set excluded names and allowed symbols.
+type_name:
+  min_length: 4 # warning
+  max_length: # warning and error
+    warning: 40
+    error: 50
+  excluded: i(Phone|Pad|Pod) # regex pattern
+  allowed_symbols: ["_"]
+
+function_parameter_count:
+  warning: 10
+  error: 12

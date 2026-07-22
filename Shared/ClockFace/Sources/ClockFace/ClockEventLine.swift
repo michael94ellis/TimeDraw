@@ -13,14 +13,14 @@ public struct ClockEventLine: Shape {
         case arc(ring: ClockRing, startDegrees: Double, endDegrees: Double)
     }
 
-    let startComponents: DateComponents?
-    let endComponents: DateComponents?
-    let radius: CGFloat
-    let width: Double
-    let radiusOffset: CGFloat
-    let segmentMode: SegmentMode
-    var startDegrees: Double = 0.0
-    var endDegrees: Double = 0.0
+    private let startComponents: DateComponents?
+    private let endComponents: DateComponents?
+    private let radius: CGFloat
+    private let width: Double
+    private let radiusOffset: CGFloat
+    private let segmentMode: SegmentMode
+    private var startDegrees: Double = 0.0
+    private var endDegrees: Double = 0.0
 
     public init(start: Double, end: Double, radius: Double, width: Double) {
         self.startDegrees = start
@@ -33,7 +33,11 @@ public struct ClockEventLine: Shape {
         self.endComponents = nil
     }
 
-    public init(start: Date, end: Date, radius: Double, width: Double, radiusOffset: CGFloat = 0) {
+    public init(start: Date,
+                end: Date,
+                radius: Double,
+                width: Double,
+                radiusOffset: CGFloat = 0) {
         self.startComponents = Calendar.current.dateComponents([.hour, .minute], from: start)
         self.endComponents = Calendar.current.dateComponents([.hour, .minute], from: end)
         self.radius = radius
@@ -45,9 +49,9 @@ public struct ClockEventLine: Shape {
     }
 
     public init(startComponents: DateComponents,
-         endComponents: DateComponents,
-         radius: Double,
-         width: Double) {
+                endComponents: DateComponents,
+                radius: Double,
+                width: Double) {
         self.startComponents = startComponents
         self.endComponents = endComponents
         self.radius = radius

@@ -146,8 +146,8 @@ enum ClockEventGeometry {
         )
     }
 
-    static func smoothstep(_ t: Double) -> Double {
-        let clamped = min(max(t, 0), 1)
+    static func smoothstep(_ value: Double) -> Double {
+        let clamped = min(max(value, 0), 1)
         return clamped * clamped * (3 - 2 * clamped)
     }
 }

@@ -12,7 +12,11 @@ final class DateTimePickerTextField: UITextField {
     @Binding var date: Date?
     private let datePicker = UIDatePicker()
     
-    init(placeholderText: String, date: Binding<Date?>, frame: CGRect, mode: UIDatePicker.Mode, minuteInterval: Int) {
+    init(placeholderText: String,
+         date: Binding<Date?>,
+         frame: CGRect,
+         mode: UIDatePicker.Mode,
+         minuteInterval: Int) {
         self._date = date
         super.init(frame: frame)
         self.placeholder = placeholderText
@@ -25,9 +29,17 @@ final class DateTimePickerTextField: UITextField {
         let toolBar = UIToolbar()
         toolBar.barTintColor = .systemGray4
         toolBar.sizeToFit()
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let clearButton = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(self.clearTextField))
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.dismissTextField))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
+                                            target: nil,
+                                            action: nil)
+        let clearButton = UIBarButtonItem(title: "Clear",
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(self.clearTextField))
+        let doneButton = UIBarButtonItem(title: "Done",
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(self.dismissTextField))
         toolBar.setItems([clearButton, flexibleSpace, doneButton], animated: false)
         inputAccessoryView = toolBar
     }

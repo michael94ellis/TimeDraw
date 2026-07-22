@@ -6,7 +6,9 @@
 //
 
 import CoreData
+import DailyGoalTextfield
 import EventKit
+import EventUIComponents
 import SwiftUI
 
 struct MainViewContainer: View {

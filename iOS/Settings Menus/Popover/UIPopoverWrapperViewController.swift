@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-class UIPopoverWrapperViewController<PopoverContent: View>: UIViewController, UIPopoverPresentationControllerDelegate {
+class UIPopoverWrapperViewController<PopoverContent: View>: UIViewController,
+                                                            UIPopoverPresentationControllerDelegate {
     
     var popoverSize: CGSize?
     let permittedArrowDirections: UIPopoverArrowDirection
@@ -20,16 +21,12 @@ class UIPopoverWrapperViewController<PopoverContent: View>: UIViewController, UI
     init(popoverSize: CGSize?,
          permittedArrowDirections: UIPopoverArrowDirection,
          popoverContent: @escaping () -> PopoverContent,
-         onDismiss: @escaping() -> Void) {
+         onDismiss: @escaping () -> Void) {
         self.popoverSize = popoverSize
         self.permittedArrowDirections = permittedArrowDirections
         self.popoverContent = popoverContent
         self.onDismiss = onDismiss
         super.init(nibName: nil, bundle: nil)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {

@@ -43,7 +43,7 @@ struct CalendarMultiDateSelection: View {
                         Text("00")
                             .padding(10)
                             .foregroundColor(.clear)
-                            .background(display ? Color(uiColor: .systemGray2) : Color(uiColor: .systemGray6))
+                            .background(display ? Color(uiColor: .lightGray) : Color(uiColor: .darkGray))
                             .frame(width: 40, height: 30)
                             .cornerRadius(CornerRadius.calendarDayRadius)
                             .accessibilityHidden(true)

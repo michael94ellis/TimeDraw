@@ -5,6 +5,7 @@
 //  Created by Michael Ellis on 1/5/22.
 //
 
+import UIComponents
 import SwiftUI
 import UIKit
 
@@ -34,7 +35,9 @@ fileprivate struct UITextViewWrapper: UIViewRepresentable {
         textField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: textField.frame.size.width, height: 44))
-        let done = SwiftBarButtonItem(title: "Done", style: .done, actionHandler: { _ in
+        let done = SwiftBarButtonItem(title: "Done",
+                                      style: .done,
+                                      actionHandler: { _ in
             self.isFocused.wrappedValue.toggle()
         })
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)

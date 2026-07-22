@@ -134,7 +134,9 @@ enum DebugTestDataSeeder {
 
     // MARK: - Reminders
 
-    private static func seedReminders(using eventStore: EKEventStore, calendar: EKCalendar) throws -> Int {
+    // swiftlint:disable:next function_body_length
+    private static func seedReminders(using eventStore: EKEventStore,
+                                      calendar: EKCalendar) throws -> Int {
         let cal = Calendar.current
         let today = cal.startOfDay(for: Date())
 

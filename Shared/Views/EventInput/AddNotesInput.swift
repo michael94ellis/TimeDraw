@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIComponents
 
 struct AddNotesInput: View {
 

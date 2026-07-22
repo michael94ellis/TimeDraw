@@ -7,7 +7,9 @@
 
 import Dependencies
 import EventKit
+import EventUIComponents
 import SwiftUI
+import DailyGoalTextfield
 
 struct OnboardingExperience: View {
     var itemViewModel: ModifyCalendarItemViewModel

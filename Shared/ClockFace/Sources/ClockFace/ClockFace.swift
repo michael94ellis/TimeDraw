@@ -21,22 +21,22 @@ public struct ClockFace: View {
             return calculatedQuarterHourDegrees
         }()
         // Hour numbers
-        ForEach(hours, id: \.self) { i in
-            let num = (i / 5) + 6
+        ForEach(hours, id: \.self) { index in
+            let num = (index / 5) + 6
             Text("\(num > 12 ? num - 12 : num)")
                 .bold()
                 .rotationEffect(.degrees(Double((num - 12) * -30) - 180))
                 .offset(y: markOffset)
-                .rotationEffect(Angle(degrees: Double(i) * 6))
+                .rotationEffect(Angle(degrees: Double(index) * 6))
         }
         
         // Tick marks
-        ForEach(quarterHours, id: \.self) { i in
+        ForEach(quarterHours, id: \.self) { index in
             Circle()
                 .fill(Color.primary)
                 .frame(width: 2, height: 2)
                 .offset(y: markOffset)
-                .rotationEffect(.degrees(Double(i) * 6))
+                .rotationEffect(.degrees(Double(index) * 6))
         }
     }
     

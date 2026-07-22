@@ -9,12 +9,16 @@ import EventKit
 import DesignToken
 import SwiftUI
 
-struct DailyGoalTextField: View {
+public struct DailyGoalTextField: View {
     
     @AppStorage("DailyGoal") private var dailyGoal: String = "What is your goal today?"
     var isDailyGoalFocused: FocusState<Bool>.Binding
+    
+    public init(isDailyGoalFocused: FocusState<Bool>.Binding) {
+        self.isDailyGoalFocused = isDailyGoalFocused
+    }
 
-    var body: some View {
+    public var body: some View {
         MultilineTextField("What is your goal today?", text: self.$dailyGoal, focus: self.isDailyGoalFocused)
             .font(.callout)
             .foregroundColor(Colors.placeholderText)
@@ -30,18 +34,3 @@ struct DailyGoalTextField: View {
     }
 }
 
-
-struct OnboardingDailyGoalTextField: View {
-    var body: some View {
-        Text("What is your goal today?")
-            .font(.callout)
-            .foregroundColor(Colors.placeholderText)
-            .multilineTextAlignment(.center)
-            .frame(maxHeight: 70)
-            .clipped()
-            .background(RoundedRectangle(cornerRadius: CornerRadius.textFieldRadius).stroke(Color.clear))
-            .padding(.horizontal, 30)
-            .padding(.vertical, 8)
-            .fixedSize(horizontal: false, vertical: true)
-    }
-}

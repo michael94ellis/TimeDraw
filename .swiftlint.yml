@@ -5,6 +5,8 @@ excluded:
   - Packages
   - Carthage
   - Pods
+  - Shared/**/.build
+  - Shared/**/.swiftpm
 
 disabled_rules:
   - trailing_whitespace
@@ -16,11 +18,18 @@ disabled_rules:
   - vertical_whitespace
   - trailing_comma
   - line_length
+  - multiple_closures_with_trailing_closure
+  
+opt-in_rules:
+ - sorted_imports
 
 # To set both levels implicitly, use an array.
 type_body_length:
   - 500 # warning
   - 1000 # error
+  
+function_body_length:
+  - 100
 
 # To set both levels explicitly, use a dictionary.
 file_length:

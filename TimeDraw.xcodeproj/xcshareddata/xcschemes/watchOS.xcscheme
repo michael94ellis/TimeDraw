@@ -74,7 +74,7 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
-      notificationPayloadFile = "WatchFace Watch Extension/PushNotificationPayload.apns">
+      notificationPayloadFile = "watchOS/PushNotificationPayload.apns">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference

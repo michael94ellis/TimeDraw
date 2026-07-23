@@ -11,6 +11,7 @@ import AppCore
 import DailyGoalTextfield
 import EventKit
 import EventUIComponents
+import Onboarding
 import SwiftUI
 
 struct MainViewContainer: View {
@@ -56,7 +57,12 @@ struct MainViewContainer: View {
         ZStack {
 
             if appSettings.isFirstAppOpen {
-                OnboardingExperience(itemViewModel: itemViewModel, listViewModel: listViewModel)
+                OnboardingExperience(
+                    itemViewModel: itemViewModel,
+                    listViewModel: listViewModel,
+                    headerDemo: { MainHeader() },
+                    clockDemo: { TimeDrawClock(events: [], reminders: []) }
+                )
                     .environmentObject(appSettings)
                     .zIndex(1)
             } else {

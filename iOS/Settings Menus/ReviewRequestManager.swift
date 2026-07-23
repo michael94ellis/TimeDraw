@@ -5,10 +5,10 @@
 //  Created by Michael Ellis on 7/26/25.
 //
 
+#if os(iOS)
 import Foundation
 import StoreKit
 import SwiftUI
-
 import UIKit
 
 @MainActor
@@ -42,12 +42,11 @@ final class ReviewRequestManager {
     }
     
     func requestReview() {
-#if !os(watchOS)
         guard let window = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
             assertionFailure()
             return
         }
         AppStore.requestReview(in: window)
-#endif
     }
 }
+#endif

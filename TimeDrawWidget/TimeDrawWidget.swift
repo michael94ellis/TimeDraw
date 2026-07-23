@@ -35,7 +35,7 @@ struct Provider: TimelineProvider {
     typealias Entry = WidgetEntry
     
     func getTimeline(in context: Context,
-                     completion: @escaping (Timeline<Entry>) -> ()) {
+                     completion: @escaping (Timeline<Entry>) -> Void) {
         Task {
             let currentDate = Date()
             let entry = await fetchData(for: currentDate)

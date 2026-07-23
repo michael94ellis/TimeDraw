@@ -1,16 +1,20 @@
 //
 //  IntroView.swift
-//  TimeDraw
+//  Onboarding
 //
 //  Created by Michael Ellis on 9/18/22.
 //
 
 import SwiftUI
 
-struct IntroView<Content: View>: View {
+public struct IntroView<Content: View>: View {
     @ViewBuilder var content: Content
-        
-    var body: some View {
+
+    public init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+
+    public var body: some View {
         HStack {
             Spacer()
             VStack {

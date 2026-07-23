@@ -1,6 +1,6 @@
 //
 //  OnboardingExperience.swift
-//  TimeDraw
+//  Onboarding
 //
 //  Created by Michael Ellis on 9/11/22.
 //
@@ -8,14 +8,16 @@
 import Dependencies
 import EventInput
 import AppCore
+import DesignToken
 import EventKit
-import EventUIComponents
 import SwiftUI
 import DailyGoalTextfield
 
-struct OnboardingExperience: View {
+public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
     var itemViewModel: ModifyCalendarItemViewModel
     var listViewModel: CalendarItemListViewModel
+    private let headerDemo: HeaderDemo
+    private let clockDemo: ClockDemo
 
     @Dependency(\.eventKitManager) private var eventKitManager
 
@@ -26,6 +28,18 @@ struct OnboardingExperience: View {
 
     private var usesTapToAdvance: Bool {
         currentPageIndex < 6
+    }
+
+    public init(
+        itemViewModel: ModifyCalendarItemViewModel,
+        listViewModel: CalendarItemListViewModel,
+        @ViewBuilder headerDemo: () -> HeaderDemo,
+        @ViewBuilder clockDemo: () -> ClockDemo
+    ) {
+        self.itemViewModel = itemViewModel
+        self.listViewModel = listViewModel
+        self.headerDemo = headerDemo()
+        self.clockDemo = clockDemo()
     }
 
     func finishOnboarding() {
@@ -51,7 +65,7 @@ struct OnboardingExperience: View {
         switch currentPageIndex {
         case 2:
             VStack {
-                MainHeader()
+                headerDemo
                     .environmentObject(listViewModel)
 
                 Text("Here's a swipeable weekly calendar to quickly see and navigate through the weeks")
@@ -65,7 +79,7 @@ struct OnboardingExperience: View {
             }
         case 4:
             VStack(spacing: 16) {
-                TimeDrawClock(events: [], reminders: [])
+                clockDemo
                 Text("The Analog Clock - visualize your events and reminders from any calendars")
                     .multilineTextAlignment(.center)
             }
@@ -121,7 +135,7 @@ struct OnboardingExperience: View {
         }
     }
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             Color.systemBackground.ignoresSafeArea()
 

@@ -210,7 +210,6 @@ struct MainScrollableContent: View {
                 .padding(.horizontal, clockHorizPadding)
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
-                .environment(\.openCalendarItem, modifyItemViewModel.open)
             if showsEventsSection {
                 eventsSectionContent()
             }

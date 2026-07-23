@@ -1,13 +1,13 @@
 //
 //  OnboardingPermissionPage.swift
-//  TimeDraw
+//  Onboarding
 //
 
 import DesignToken
 import EventKit
 import SwiftUI
 
-struct OnboardingPermissionPage: View {
+public struct OnboardingPermissionPage: View {
     let title: String
     let message: String
     let systemImage: String
@@ -18,11 +18,29 @@ struct OnboardingPermissionPage: View {
 
     @State private var isRequestingAccess = false
 
+    public init(
+        title: String,
+        message: String,
+        systemImage: String,
+        authorizationStatus: EKAuthorizationStatus,
+        isAccessGranted: @escaping (EKAuthorizationStatus) -> Bool,
+        onRequestAccess: @escaping () async -> Void,
+        onContinue: @escaping () -> Void
+    ) {
+        self.title = title
+        self.message = message
+        self.systemImage = systemImage
+        self.authorizationStatus = authorizationStatus
+        self.isAccessGranted = isAccessGranted
+        self.onRequestAccess = onRequestAccess
+        self.onContinue = onContinue
+    }
+
     private var accessGranted: Bool {
         isAccessGranted(authorizationStatus)
     }
 
-    var body: some View {
+    public var body: some View {
         IntroView {
             VStack(spacing: 24) {
                 Image(systemName: accessGranted ? "checkmark.circle.fill" : systemImage)

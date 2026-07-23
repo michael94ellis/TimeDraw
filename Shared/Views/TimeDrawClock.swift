@@ -5,13 +5,10 @@
 //  Created by Michael Ellis on 3/9/22.
 //
 
-import ClockFace
 import AppCore
+import ClockFace
 import EventKit
 import SwiftUI
-#if os(iOS)
-import EventInput
-#endif
 
 struct TimeDrawClock: View {
     
@@ -19,8 +16,6 @@ struct TimeDrawClock: View {
     @State var timer = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
     var events: [EKEvent]
     var reminders: [EKReminder]
-    
-//    @Environment(\.openCalendarItem) var open
     
     func setCurrentTime() {
         let timeZone = TimeZone.autoupdatingCurrent
@@ -148,21 +143,6 @@ struct TimeDrawClock: View {
                 EKReminder.mock(startHour: 10, endHour: nil, color: .yellow),
                 EKReminder.mock(startHour: nil, endHour: 14, color: .magenta)
             ]
-            
-            #if os(iOS)
-            let modifyViewModel = ModifyCalendarItemViewModel()
-            
-            return List {
-                TimeDrawClock(events: mockEvents, reminders: mockReminders)
-                    .padding(.horizontal, 16)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(.init())
-                    .environmentObject(modifyViewModel)
-                ForEach(0..<20, id: \.self) { i in
-                    Text("Row \(i)")
-                }
-            }
-            #else
                 
             return List {
                 TimeDrawClock(events: mockEvents, reminders: mockReminders)
@@ -172,7 +152,6 @@ struct TimeDrawClock: View {
                     Text("Row \(i)")
                 }
             }
-            #endif
         }
     }
     
@@ -193,22 +172,11 @@ struct TimeDrawClock: View {
                 EKReminder.mock(startHour: 1, endHour: nil, color: .purple)
             ]
             
-            #if os(iOS)
-            let modifyViewModel = ModifyCalendarItemViewModel()
-            
             return VStack(spacing: 0) {
                 Spacer()
                 TimeDrawClock(events: mockEvents, reminders: mockReminders)
                 Spacer()
             }
-            .environmentObject(modifyViewModel)
-            #else
-            return VStack(spacing: 0) {
-                Spacer()
-                TimeDrawClock(events: mockEvents, reminders: mockReminders)
-                Spacer()
-            }
-            #endif
         }
     }
     

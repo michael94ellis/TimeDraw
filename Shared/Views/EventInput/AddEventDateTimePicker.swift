@@ -69,14 +69,20 @@ public struct AddEventDateTimePicker: View {
             if isExpanded {
                 FormDivider()
                 VStack(spacing: 4) {
-                    DatePicker("Starts", selection: startBinding, displayedComponents: [.date, .hourAndMinute])
+                    DatePicker("Starts",
+                               selection: startBinding,
+                               displayedComponents: [.date, .hourAndMinute])
                         .font(.interRegular)
                         .padding(.horizontal, 12)
-                    DatePicker("Ends", selection: endBinding, displayedComponents: [.date, .hourAndMinute])
+                    DatePicker("Ends",
+                               selection: endBinding,
+                               displayedComponents: [.date, .hourAndMinute])
                         .font(.interRegular)
                         .padding(.horizontal, 12)
-
-                    if !viewModel.editMode || viewModel.calendarItem as? EKReminder != nil {
+                    
+                    if let calendarItem = viewModel.calendarItem,
+                       calendarItem is EKReminder
+                        || !viewModel.editMode {
                         HStack {
                             Spacer()
                             DestructiveTextButton(title: "Remove Time") {

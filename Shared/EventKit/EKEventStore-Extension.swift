@@ -66,10 +66,38 @@ extension EKEventStore {
         self.fetchReminders(matching: reminderPredicate, completion: completion)
     }
     
+    // MARK: - Fetch
+    /// Event Calendar for current AppName
+    /// - Returns: App calendar for EKEvents
+    /// - Parameter calendarColor: default new calendar color
+    public func calendarForEvents(calendarColor: CGColor = .init(red: 1, green: 0, blue: 0, alpha: 1)) -> EKCalendar? {
+        let appName = EventKitManager.appName
+        let calendars = self.calendars(for: .event)
+        
+        if let appCalendar = calendars.first(where: { $0.title == appName }) {
+            return appCalendar
+        } else {
+            return nil
+        }
+    }
+    /// Reminder Calendar for current AppName
+    /// - Returns: App calendar for EKReminders
+    /// - Parameter calendarColor: default new calendar color
+    public func calendarForReminders(calendarColor: CGColor = .init(red: 12, green: 22, blue: 0, alpha: 1)) -> EKCalendar? {
+        let appName = EventKitManager.appName
+        let calendars = self.calendars(for: .reminder)
+        
+        if let appCalendar = calendars.first(where: { $0.title == appName }) {
+            return appCalendar
+        } else {
+            return nil
+        }
+    }
+    
     // MARK: - Non Watch Functions
     // Watch OS does not support these actions
     // https://developer.apple.com/forums/thread/42293
-#if !os(watchOS)
+    #if os(iOS)
     // MARK: - Create
     
     /// Create an event
@@ -150,47 +178,5 @@ extension EKEventStore {
         }
         try? self.remove(reminder, commit: true)
     }
-#endif
-    
-    // MARK: - Fetch
-    /// Event Calendar for current AppName
-    /// - Returns: App calendar for EKEvents
-    /// - Parameter calendarColor: default new calendar color
-    public func calendarForEvents(calendarColor: CGColor = .init(red: 1, green: 0, blue: 0, alpha: 1)) -> EKCalendar? {
-        let appName = EventKitManager.appName
-        let calendars = self.calendars(for: .event)
-        
-        if let appCalendar = calendars.first(where: { $0.title == appName }) {
-            return appCalendar
-        } else {
-            let newCalendar = EKCalendar(for: .event, eventStore: self)
-            newCalendar.title = appName
-            newCalendar.source = defaultCalendarForNewEvents?.source
-            newCalendar.cgColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
-#if !os(watchOS)
-            try? saveCalendar(newCalendar, commit: true)
-#endif
-            return newCalendar
-        }
-    }
-    /// Reminder Calendar for current AppName
-    /// - Returns: App calendar for EKReminders
-    /// - Parameter calendarColor: default new calendar color
-    public func calendarForReminders(calendarColor: CGColor = .init(red: 12, green: 22, blue: 0, alpha: 1)) -> EKCalendar? {
-        let appName = EventKitManager.appName
-        let calendars = self.calendars(for: .reminder)
-        
-        if let appCalendar = calendars.first(where: { $0.title == appName }) {
-            return appCalendar
-        } else {
-            let newCalendar = EKCalendar(for: .reminder, eventStore: self)
-            newCalendar.title = appName
-            newCalendar.source = self.defaultCalendarForNewEvents?.source
-            newCalendar.cgColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
-#if !os(watchOS)
-            try? saveCalendar(newCalendar, commit: true)
-#endif
-            return newCalendar
-        }
-    }
+    #endif
 }

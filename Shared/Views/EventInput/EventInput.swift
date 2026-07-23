@@ -124,18 +124,18 @@ struct EventInput: View {
 
     private var expandedContent: some View {
         VStack(spacing: 0) {
-            titleFieldRow
-
-            toolbarRow
-                .padding(.horizontal, 12)
-                .padding(.top, 4)
-                .padding(.bottom, 8)
-
-            ScrollView {
-                detailSections
+            FormSection(useGroupedBackground: true) {
+                VStack(spacing: 0) {
+                    titleFieldRow
+                    
+                    toolbarRow
+                        .padding(.horizontal, 12)
+                        .padding(.top, 4)
+                        .padding(.bottom, 8)
+                    
+                    detailSections
+                }
             }
-            .scrollDismissesKeyboard(.interactively)
-            .frame(maxHeight: 320)
         }
     }
 
@@ -160,6 +160,7 @@ struct EventInput: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 14)
+        .id("title")
     }
 
     private func submitButton(action: @escaping () -> Void) -> some View {
@@ -200,6 +201,7 @@ struct EventInput: View {
                 }
             }
         }
+        .id("tools")
     }
 
     private var calendarMenu: some View {
@@ -258,15 +260,18 @@ struct EventInput: View {
 
     @ViewBuilder
     private var detailSections: some View {
-        FormSection(useGroupedBackground: false) {
-            AddEventDateTimePicker()
-            if appSettings.showRecurringItems || viewModel.calendarItem?.hasRecurrenceRules ?? false {
-                FormDivider(config: .subtle)
-                AddRecurrenceRule()
-            }
+        AddEventDateTimePicker()
+            .id("AddDateTime")
+        if appSettings.showRecurringItems || viewModel.calendarItem?.hasRecurrenceRules ?? false {
             FormDivider(config: .subtle)
-            AddNotesInput()
+                .id("Divider1")
+            AddRecurrenceRule()
+                .id("Recurrence")
         }
+        FormDivider(config: .subtle)
+            .id("Divider2")
+        AddNotesInput()
+            .id("Notes")
     }
 }
 

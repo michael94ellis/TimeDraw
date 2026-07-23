@@ -24,7 +24,7 @@ public final class EventKitManager {
     
     public static var appName: String = "TimeDraw"
 
-    /// Event store: An object that accesses the user’s calendar and reminder events and supports the scheduling of new events.
+    /// Access, edit, create, delete events and reminders
     public private(set) var eventStore = EKEventStore()
 
     public func configureWithAppName(_ appName: String) {
@@ -64,8 +64,11 @@ public final class EventKitManager {
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
     @discardableResult
-    public func fetchEvents(for date: Date, calendars filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
-        try await fetchEvents(startDate: date.startOfDay, endDate: date.endOfDay, calendars: filterCalendarIDs)
+    public func fetchEvents(for date: Date,
+                            calendars filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
+        try await fetchEvents(startDate: date.startOfDay,
+                              endDate: date.endOfDay,
+                              calendars: filterCalendarIDs)
     }
 
     /// Fetch events for a specific day
@@ -75,8 +78,11 @@ public final class EventKitManager {
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
     @discardableResult
-    public func fetchEventsRangeUntilEndOfDay(from startDate: Date, calendars filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
-        try await fetchEvents(startDate: startDate, endDate: startDate.endOfDay, calendars: filterCalendarIDs)
+    public func fetchEventsRangeUntilEndOfDay(from startDate: Date,
+                                              calendars filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
+        try await fetchEvents(startDate: startDate,
+                              endDate: startDate.endOfDay,
+                              calendars: filterCalendarIDs)
     }
     
     /// Fetch events from date range
@@ -86,13 +92,17 @@ public final class EventKitManager {
     ///   - filterCalendarIDs: filterable Calendar IDs
     /// Returns: events
     @discardableResult
-    public func fetchEvents(startDate: Date, endDate: Date, calendars filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
+    public func fetchEvents(startDate: Date,
+                            endDate: Date,
+                            calendars filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
         try await eventsAvailabilityCheck()
         let calendars = self.eventStore.calendars(for: .event).filter { calendar in
             if filterCalendarIDs.isEmpty { return true }
             return filterCalendarIDs.contains(calendar.calendarIdentifier)
         }
-        let predicate = self.eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: calendars)
+        let predicate = self.eventStore.predicateForEvents(withStart: startDate,
+                                                           end: endDate,
+                                                           calendars: calendars)
         let events = self.eventStore.events(matching: predicate)
         return events
     }
@@ -121,7 +131,9 @@ public final class EventKitManager {
     ///   - startDate: start date range
     ///   - endDate: end date range
     ///   - filterCalendarIDs: filterable Calendar IDs
-    public func fetchReminders(start: Date, end: Date, calendars filterCalendarIDs: [String] = []) async throws -> [EKReminder]? {
+    public func fetchReminders(start: Date,
+                               end: Date,
+                               calendars filterCalendarIDs: [String] = []) async throws -> [EKReminder]? {
         try await remindersAvailabilityCheck()
         let calendars = self.eventStore.calendars(for: .reminder).filter { calendar in
             if filterCalendarIDs.isEmpty { return true }
@@ -187,10 +199,33 @@ public final class EventKitManager {
         return granted
     }
     
+    // MARK: Access Calendars
+    
+    /// Request access to Events calendar
+    /// - Returns: calendar object
+    @discardableResult
+    func accessEventsCalendar() async throws -> EKCalendar {
+        try await eventsAvailabilityCheck()
+        guard let calendar = eventStore.calendarForEvents() else {
+            throw EventError.unableToAccessCalendar
+        }
+        return calendar
+    }
+    /// Request access to Reminders calendar
+    /// - Returns: calendar object
+    @discardableResult
+    func accessRemindersCalendar() async throws -> EKCalendar {
+        try await remindersAvailabilityCheck()
+        guard let calendar = eventStore.calendarForReminders() else {
+            throw EventError.unableToAccessCalendar
+        }
+        return calendar
+    }
+    
     // MARK: - Non Watch Functions
     // Watch OS does not support these actions
     // https://developer.apple.com/forums/thread/42293
-    #if !os(watchOS)
+    #if os(iOS)
     // MARK: - CRUD
     /// Create an event
     /// - Parameters:
@@ -208,7 +243,12 @@ public final class EventKitManager {
         span: EKSpan = .thisEvent,
         isAllDay: Bool = false
     ) async throws -> EKEvent {
-        let createdEvent = try self.eventStore.createEvent(title: title, startDate: startDate, endDate: endDate, calendar: calendar, span: span, isAllDay: isAllDay)
+        let createdEvent = try self.eventStore.createEvent(title: title,
+                                                           startDate: startDate,
+                                                           endDate: endDate,
+                                                           calendar: calendar,
+                                                           span: span,
+                                                           isAllDay: isAllDay)
         return createdEvent
     }
     
@@ -223,7 +263,10 @@ public final class EventKitManager {
         dueDate: DateComponents?
     ) async throws -> EKReminder {
         self.eventStore.calendars(for: .reminder)
-        let newReminder = try self.eventStore.createReminder(title: title, startDate: startDate, dueDate: dueDate, calendar: calendar)
+        let newReminder = try self.eventStore.createReminder(title: title,
+                                                             startDate: startDate,
+                                                             dueDate: dueDate,
+                                                             calendar: calendar)
         return newReminder
     }
     
@@ -249,27 +292,4 @@ public final class EventKitManager {
         try self.eventStore.deleteReminder(identifier: identifier)
     }
     #endif
-    
-    // MARK: Access Calendars
-    
-    /// Request access to Events calendar
-    /// - Returns: calendar object
-    @discardableResult
-    func accessEventsCalendar() async throws -> EKCalendar {
-        try await eventsAvailabilityCheck()
-        guard let calendar = eventStore.calendarForEvents() else {
-            throw EventError.unableToAccessCalendar
-        }
-        return calendar
-    }
-    /// Request access to Reminders calendar
-    /// - Returns: calendar object
-    @discardableResult
-    func accessRemindersCalendar() async throws -> EKCalendar {
-        try await remindersAvailabilityCheck()
-        guard let calendar = eventStore.calendarForReminders() else {
-            throw EventError.unableToAccessCalendar
-        }
-        return calendar
-    }
 }

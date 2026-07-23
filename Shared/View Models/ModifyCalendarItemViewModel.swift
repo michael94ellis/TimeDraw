@@ -77,7 +77,7 @@ class ModifyCalendarItemViewModel: ObservableObject {
     @Published var isNotesInputOpen: Bool = false
     @Published var isRecurrencePickerOpen: Bool = false
     /// Which detail row's content is currently expanded in the floating editor.
-    @Published var expandedDetailSection: EventInputDetailSection? = nil
+    @Published var expandedDetailSection: EventInputDetailSection?
     
     let toastManager = ToastManager()
     @AppStorage(AppStorageKey.currentSelectedCalendar) private var currentSelectedCalendar: Data?
@@ -87,7 +87,9 @@ class ModifyCalendarItemViewModel: ObservableObject {
         self.frequencyMonthDate = Date().get(.month) - 1
         self.editMode = false
         let daysInThisWeek = Calendar.current.daysWithSameWeekOfYear(as: Date())
-        self.daysOfTheWeek = daysInThisWeek.compactMap { DateFormatter.weekdayLetterFormatter.string(from: $0) }
+        self.daysOfTheWeek = daysInThisWeek.compactMap {
+            DateFormatter.weekdayLetterFormatter.string(from: $0)
+        }
         self.selectedCalendar = currentSelectedCalendar.loadEKCalendar()
     }
 
@@ -102,7 +104,10 @@ class ModifyCalendarItemViewModel: ObservableObject {
     }
 
     var notesSummary: String? {
-        guard isNotesInputOpen, !notesInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
+        guard isNotesInputOpen,
+              !notesInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return nil
+        }
         let firstLine = notesInput.split(separator: "\n", maxSplits: 1).first.map(String.init) ?? notesInput
         return firstLine.count > 40 ? String(firstLine.prefix(37)) + "…" : firstLine
     }
@@ -121,7 +126,9 @@ class ModifyCalendarItemViewModel: ObservableObject {
             if frequencyWeekdayValues.isEmpty {
                 return "Weekly"
             }
-            let names = frequencyWeekdayValues.map { String($0.description.prefix(3)) }.joined(separator: ", ")
+            let names = frequencyWeekdayValues.map {
+                String($0.description.prefix(3))
+            }.joined(separator: ", ")
             return "Weekly · \(names)"
         case .monthly:
             if selectedMonthDays.isEmpty { return "Monthly" }

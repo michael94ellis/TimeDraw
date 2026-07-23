@@ -88,8 +88,10 @@ struct AddRecurrenceRule: View {
                     Text("Month")
                         .font(.interRegular)
                     Spacer()
-                    PickerField("Month", data: Calendar.current.monthSymbols, selectionIndex: $viewModel.frequencyMonthDate)
-                        .frame(width: 140, height: 34)
+                    PickerField("Month",
+                                data: Calendar.current.monthSymbols,
+                                selectionIndex: $viewModel.frequencyMonthDate)
+                    .frame(width: 140, height: 34)
                 }
                 CalendarMultiDateSelection(selectedDates: $viewModel.selectedMonthDays)
             }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AppCore
 import DesignToken
 
 struct MainHeader: View {

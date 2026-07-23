@@ -3,6 +3,7 @@
 //  Tests iOS
 //
 
+import AppCore
 import EventKit
 import XCTest
 @testable import TimeDraw

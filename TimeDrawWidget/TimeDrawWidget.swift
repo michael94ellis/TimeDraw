@@ -6,6 +6,7 @@
 //
 
 import ClockFace
+import AppCore
 import EventKit
 import SwiftUI
 import WidgetKit
@@ -33,7 +34,8 @@ struct Provider: TimelineProvider {
     
     typealias Entry = WidgetEntry
     
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+    func getTimeline(in context: Context,
+                     completion: @escaping (Timeline<Entry>) -> ()) {
         Task {
             let currentDate = Date()
             let entry = await fetchData(for: currentDate)

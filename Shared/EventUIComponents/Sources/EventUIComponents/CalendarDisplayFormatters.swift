@@ -26,9 +26,11 @@ public enum CalendarDisplayFormatters {
         merged.second = time?.second ?? date?.second
         return Calendar.current.date(from: merged)
     }
-
-    public static func inputDateTimeSummary(startDate: DateComponents?, startTime: DateComponents?,
-                                     endDate: DateComponents?, endTime: DateComponents?) -> String? {
+    
+    public static func inputDateTimeSummary(startDate: DateComponents?,
+                                            startTime: DateComponents?,
+                                            endDate: DateComponents?,
+                                            endTime: DateComponents?) -> String? {
         guard let start = mergedDate(date: startDate, time: startTime) else { return nil }
         let formatter = DateFormatter.inputDateTimeFormatter
         if let end = mergedDate(date: endDate, time: endTime) {

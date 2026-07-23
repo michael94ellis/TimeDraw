@@ -6,6 +6,8 @@
 //
 
 import Dependencies
+import EventInput
+import AppCore
 import EventKit
 import EventUIComponents
 import SwiftUI

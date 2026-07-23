@@ -39,7 +39,9 @@ public struct ClockLayout {
 
 public enum ClockEventLayoutEngine {
 
-    public static func layout(items: [ClockDrawableItem], clockWidth: CGFloat, calendar: Calendar = .current) -> ClockLayout {
+    public static func layout(items: [ClockDrawableItem],
+                              clockWidth: CGFloat,
+                              calendar: Calendar = .current) -> ClockLayout {
         let timed = items.filter { !$0.isAllDay }
         guard !timed.isEmpty else {
             return ClockLayout(arcSegments: [], crossoverSegments: [])

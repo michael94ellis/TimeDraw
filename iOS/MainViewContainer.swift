@@ -6,6 +6,8 @@
 //
 
 import CoreData
+import EventInput
+import AppCore
 import DailyGoalTextfield
 import EventKit
 import EventUIComponents

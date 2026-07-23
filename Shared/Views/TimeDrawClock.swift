@@ -6,8 +6,12 @@
 //
 
 import ClockFace
+import AppCore
 import EventKit
 import SwiftUI
+#if os(iOS)
+import EventInput
+#endif
 
 struct TimeDrawClock: View {
     
@@ -18,7 +22,7 @@ struct TimeDrawClock: View {
     
 //    @Environment(\.openCalendarItem) var open
     
-    func setCurrentTime()  {
+    func setCurrentTime() {
         let timeZone = TimeZone.autoupdatingCurrent
         let components = Calendar.current.dateComponents(in: timeZone, from: .now)
         
@@ -34,7 +38,6 @@ struct TimeDrawClock: View {
         let baseRadius = clockSize / 2
         let drawableItems = ClockDrawableItem.from(events: events, reminders: reminders)
         let layout = ClockEventLayoutEngine.layout(items: drawableItems, clockWidth: clockSize)
-
         ZStack {
             ForEach(layout.arcSegments) { segment in
                 ClockEventLine(

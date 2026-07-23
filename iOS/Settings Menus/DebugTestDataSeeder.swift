@@ -5,6 +5,7 @@
 
 #if DEBUG
 import Dependencies
+import AppCore
 import EventKit
 import SwiftUI
 

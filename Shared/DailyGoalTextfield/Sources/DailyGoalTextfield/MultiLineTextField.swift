@@ -9,7 +9,7 @@ import UIComponents
 import SwiftUI
 import UIKit
 
-fileprivate struct UITextViewWrapper: UIViewRepresentable {
+private struct UITextViewWrapper: UIViewRepresentable {
     typealias UIViewType = UITextView
 
     @Binding var text: String
@@ -54,7 +54,8 @@ fileprivate struct UITextViewWrapper: UIViewRepresentable {
     }
 
     fileprivate static func recalculateHeight(view: UIView, result: Binding<CGFloat>) {
-        let newSize = view.sizeThatFits(CGSize(width: view.frame.size.width, height: CGFloat.greatestFiniteMagnitude))
+        let newSize = view.sizeThatFits(CGSize(width: view.frame.size.width,
+                                               height: CGFloat.greatestFiniteMagnitude))
         if result.wrappedValue != newSize.height {
             DispatchQueue.main.async {
                 result.wrappedValue = newSize.height // !! must be called asynchronously
@@ -94,7 +95,10 @@ struct MultilineTextField: View {
     @State private var showingPlaceholder = false
     var isFocused: FocusState<Bool>.Binding
 
-    init (_ placeholder: String = "", text: Binding<String>, focus: FocusState<Bool>.Binding, onCommit: (() -> Void)? = nil) {
+    init (_ placeholder: String = "",
+          text: Binding<String>,
+          focus: FocusState<Bool>.Binding,
+          onCommit: (() -> Void)? = nil) {
         self.placeholder = placeholder
         self.isFocused = focus
         self.onCommit = onCommit
@@ -123,7 +127,10 @@ struct MultilineTextField: View {
     }
 
     var body: some View {
-        UITextViewWrapper(text: self.$text, calculatedHeight: self.$dynamicHeight, isFocused: self.isFocused, onCommit: self.onCommit)
+        UITextViewWrapper(text: self.$text,
+                          calculatedHeight: self.$dynamicHeight,
+                          isFocused: self.isFocused,
+                          onCommit: self.onCommit)
             .focused(self.isFocused)
             .frame(minHeight: self.dynamicHeight, maxHeight: self.dynamicHeight)
             .background(self.placeholderView)
@@ -152,4 +159,3 @@ struct MultilineTextField: View {
         }
     }
 }
-

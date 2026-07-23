@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AppCore
 import EventKit
 import StoreKit
 import UIKit

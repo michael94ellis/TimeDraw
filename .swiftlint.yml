@@ -15,9 +15,7 @@ disabled_rules:
   - identifier_name
   - vertical_whitespace
   - trailing_comma
-
-# Rules that have both warning and error levels can set just the warning level implicitly.
-line_length: 110
+  - line_length
 
 # To set both levels implicitly, use an array.
 type_body_length:

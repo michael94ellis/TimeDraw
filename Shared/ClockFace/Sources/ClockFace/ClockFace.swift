@@ -69,7 +69,7 @@ public struct ClockFace: View {
 
 #Preview {
     Group {
-        GeometryReader { geo in
+        GeometryReader { _ in
             ClockFace()
                 .padding(24)
         }

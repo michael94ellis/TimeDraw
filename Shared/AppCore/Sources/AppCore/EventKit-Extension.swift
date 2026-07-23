@@ -1,0 +1,103 @@
+//
+//  EKWeekday-Extension.swift
+//  TimeDraw
+//
+//  Created by Michael Ellis on 3/8/22.
+//
+
+import EventKit
+import UIKit
+
+extension EKWeekday: @retroactive CustomStringConvertible {
+    public static var allCases: [EKWeekday] {
+        return [.sunday, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday]
+    }
+    public var description: String {
+        switch self {
+        case .sunday: return "Sunday"
+        case .monday: return "Monday"
+        case .tuesday: return "Tuesday"
+        case .wednesday: return "Wednesday"
+        case .thursday: return "Thursday"
+        case .friday: return "Friday"
+        case .saturday: return "Saturday"
+        }
+    }
+    public var shortDescription: String {
+        switch self {
+        case .sunday: return "Sun"
+        case .monday: return "Mon"
+        case .tuesday: return "Tue"
+        case .wednesday: return "Wed"
+        case .thursday: return "Thu"
+        case .friday: return "Fri"
+        case .saturday: return "Sat"
+        }
+    }
+    public static func getSelectedWeekDays(for values: [EKWeekday]) -> [EKRecurrenceDayOfWeek] {
+        return EKWeekday.allCases.compactMap {
+            guard values.contains($0) else {
+                return nil
+            }
+            return EKRecurrenceDayOfWeek($0)
+        }
+    }
+}
+
+extension EKCalendar {
+    public func archive() -> Data {
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
+            return data
+        } catch {
+            fatalError("Can't encode data: \(error)")
+        }
+    }
+}
+
+extension EKEventStore {
+    public func selectedCalendars(ids: [String], entityType: EKEntityType) -> [EKCalendar] {
+        let idSet = Set(ids)
+        return calendars(for: entityType).filter { idSet.contains($0.calendarIdentifier) }
+    }
+}
+
+extension Array {
+    public func archiveCalendars() -> Data {
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
+            return data
+        } catch {
+            fatalError("Can't encode data: \(error)")
+        }
+    }
+}
+extension Optional where Wrapped == Data {
+    public func loadCalendarIds() -> [String] {
+        do {
+            guard let data = self,
+                  let array = try NSKeyedUnarchiver.unarchivedObject(
+                      ofClasses: [NSArray.self, NSString.self],
+                      from: data
+                  ) as? [String] else {
+                return []
+            }
+            return array
+        } catch {
+            fatalError("loadWStringArray - Can't encode data: \(error)")
+        }
+    }
+    public func loadEKCalendar() -> EKCalendar? {
+        do {
+            guard let data = self else {
+                return nil
+            }
+            let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
+            unarchiver.requiresSecureCoding = false
+            let calendar = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as? EKCalendar
+            return calendar
+        } catch {
+            fatalError("loadEKCalendar - Can't decode data: \(error)")
+        }
+    }
+}

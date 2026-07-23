@@ -27,10 +27,10 @@ public struct DailyGoalTextField: View {
             .focused(self.isDailyGoalFocused)
             .frame(maxHeight: 70)
             .clipped()
-            .background(RoundedRectangle(cornerRadius: CornerRadius.textFieldRadius).stroke(self.isDailyGoalFocused.wrappedValue ? Color.lightGray : Color.clear).fill(Color(uiColor: .secondarySystemGroupedBackground)))
+            .background(RoundedRectangle(cornerRadius: CornerRadius.textFieldRadius)
+                .stroke(self.isDailyGoalFocused.wrappedValue ? Color.lightGray : Color.clear).fill(Color(uiColor: .secondarySystemGroupedBackground)))
             .padding(.horizontal, 30)
             .padding(.vertical, 8)
             .fixedSize(horizontal: false, vertical: true)
     }
 }
-

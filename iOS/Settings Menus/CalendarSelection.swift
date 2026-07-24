@@ -12,18 +12,41 @@ import EventUIComponents
 import SwiftUI
 
 struct CalendarSelection: View {
+    
+    enum EntityTypeState {
+        case loading
+        case notDetermined
+        case authorized(calendars: [EKCalendar])
+        case denied
+    }
 
     var selectedIds: [String] { appSettings.userSelectedCalendars.loadCalendarIds() }
     @EnvironmentObject var appSettings: AppSettings
     @Environment(\.scenePhase) private var scenePhase
     @Dependency(\.eventKitManager) private var eventKitManager
 
-    @State private var eventAuthStatus: EKAuthorizationStatus = .notDetermined
-    @State private var reminderAuthStatus: EKAuthorizationStatus = .notDetermined
-
-    func refreshAuthStatuses() {
-        eventAuthStatus = eventKitManager.eventAuthorizationStatus()
-        reminderAuthStatus = eventKitManager.reminderAuthorizationStatus()
+    @State private var eventAuthStatus: EntityTypeState = .loading
+    @State private var reminderAuthStatus: EntityTypeState = .loading
+    
+    func loadCalendars() async {
+        switch eventKitManager.eventAuthorizationStatus() {
+        case .denied, .writeOnly, .restricted:
+            eventAuthStatus = .denied
+        case .fullAccess:
+            let calendars = await eventKitManager.eventStore.calendars(for: .event)
+            eventAuthStatus = .authorized(calendars: calendars)
+        default:
+            eventAuthStatus = .notDetermined
+        }
+        switch eventKitManager.reminderAuthorizationStatus() {
+        case .denied, .writeOnly, .restricted:
+            reminderAuthStatus = .denied
+        case .fullAccess:
+            let calendars = await eventKitManager.eventStore.calendars(for: .reminder)
+            reminderAuthStatus = .authorized(calendars: calendars)
+        default:
+            reminderAuthStatus = .notDetermined
+        }
     }
 
     func toggleCalendar(_ calendar: EKCalendar) {
@@ -60,24 +83,32 @@ struct CalendarSelection: View {
     var body: some View {
         List {
             Section("Events") {
-                if eventKitManager.isEventAccessGranted(eventAuthStatus) {
-                    selectionList(of: eventKitManager.eventStore.calendars(for: .event))
-                } else {
+                switch eventAuthStatus {
+                case .loading:
+                    ProgressView()
+                case .authorized(let calendars):
+                    selectionList(of: calendars)
+                case .denied, .notDetermined:
                     EventKitPermissionPlaceholder(
                         message: "Allow calendar access to choose which event calendars appear in TimeDraw.",
-                        authorizationStatus: eventAuthStatus,
-                        isAccessGranted: eventKitManager.isEventAccessGranted
+                        authorizationStatus: eventKitManager.eventAuthorizationStatus(),
+                        requestAccess: {
+                            (try? await eventKitManager.requestEventAccess()) ?? false                        }
                     )
                 }
             }
             Section("Reminders") {
-                if eventKitManager.isReminderAccessGranted(reminderAuthStatus) {
-                    selectionList(of: eventKitManager.eventStore.calendars(for: .reminder))
-                } else {
+                switch reminderAuthStatus {
+                case .loading:
+                    ProgressView()
+                case .authorized(let calendars):
+                    selectionList(of: calendars)
+                case .denied, .notDetermined:
                     EventKitPermissionPlaceholder(
                         message: "Allow reminders access to choose which reminder lists appear in TimeDraw.",
-                        authorizationStatus: reminderAuthStatus,
-                        isAccessGranted: eventKitManager.isReminderAccessGranted
+                        authorizationStatus: eventKitManager.reminderAuthorizationStatus(),
+                        requestAccess: {
+                            (try? await eventKitManager.requestReminderAccess()) ?? false                        }
                     )
                 }
             }
@@ -85,11 +116,8 @@ struct CalendarSelection: View {
         .navigationTitle("Calendars")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            refreshAuthStatuses()
-        }
-        .onChange(of: scenePhase) { _, newPhase in
-            if newPhase == .active {
-                refreshAuthStatuses()
+            Task {
+                await loadCalendars()
             }
         }
     }

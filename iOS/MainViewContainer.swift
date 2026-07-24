@@ -76,6 +76,11 @@ struct MainViewContainer: View {
                     })
                     .environmentObject(appSettings)
                 }
+                .onAppear {
+                    if isFirstAppOpen {
+                        navPath.append(NavLocation.onboarding)
+                    }
+                }
             }
             .navigationDestination(for: NavLocation.self) { navLocation in
                 switch navLocation {
@@ -83,6 +88,7 @@ struct MainViewContainer: View {
                     OnboardingExperience(
                         itemViewModel: itemViewModel,
                         listViewModel: listViewModel,
+                        navPath: $navPath,
                         headerDemo: { MainHeaderView(navPath: $navPath) },
                         clockDemo: { TimeDrawClock(events: [], reminders: []) }
                     )

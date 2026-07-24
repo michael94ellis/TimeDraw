@@ -10,18 +10,18 @@ import SwiftUI
 public struct EventKitPermissionPlaceholder: View {
     private let message: String
     private let authorizationStatus: EKAuthorizationStatus
-    private let isAccessGranted: (EKAuthorizationStatus) -> Bool
+    private let requestAccess: () async -> Bool
     
     public init(
         message: String,
         authorizationStatus: EKAuthorizationStatus,
-        isAccessGranted: @escaping (EKAuthorizationStatus) -> Bool
+        requestAccess: @escaping () async -> Bool
     ) {
         self.message = message
         self.authorizationStatus = authorizationStatus
-        self.isAccessGranted = isAccessGranted
+        self.requestAccess = requestAccess
     }
-
+    
     private var actionTitle: String {
         switch authorizationStatus {
         case .notDetermined:
@@ -31,34 +31,38 @@ public struct EventKitPermissionPlaceholder: View {
         case .denied, .restricted:
             return "Open Settings"
         default:
-            return "Allow Access"
-        }
-    }
-
-    public var body: some View {
-        if isAccessGranted(authorizationStatus) {
-            EmptyView()
-        } else {
-            VStack(alignment: .leading, spacing: 12) {
-                Text(message)
-                    .font(.app(.body))
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                #if os(iOS)
-                Button(action: openSettings) {
-                    Text(actionTitle)
-                        .frame(maxWidth: .infinity)
-                }
-                .font(.app(.button))
-                .foregroundStyle(Color.blue1)
-                .buttonStyle(.bordered)
-                #endif
-            }
-            .padding(.vertical, 4)
+            return "Access Level Unknown"
         }
     }
     
-    #if os(iOS)
+    public var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(message)
+                .font(.app(.body))
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+#if os(iOS)
+            Button(action: allowAccessAction) {
+                Text(actionTitle)
+                    .frame(maxWidth: .infinity)
+            }
+            .font(.app(.button))
+            .foregroundStyle(Color.blue1)
+            .buttonStyle(.bordered)
+#endif
+        }
+        .padding(.vertical, 4)
+    }
+    
+#if os(iOS)
+    private func allowAccessAction() {
+        Task {
+            if await !requestAccess() {
+                openSettings()
+            }
+        }
+    }
+    
     private func openSettings() {
         if #available(iOS 18.3, *) {
             guard let url = URL(string: UIApplication.openDefaultApplicationsSettingsURLString) else {
@@ -82,5 +86,5 @@ public struct EventKitPermissionPlaceholder: View {
             }
         }
     }
-    #endif
+#endif
 }

@@ -66,13 +66,21 @@ public final class CalendarItemListViewModel: ObservableObject {
         switch showCalendarItemType {
         case .scheduled:
             self.reminders = []
-            self.fetchEvents()
+            if eventKitManager.eventAuthorizationStatus() == .fullAccess {
+                self.fetchEvents()
+            }
         case .unscheduled:
             self.events = []
-            self.fetchReminders()
+            if eventKitManager.eventAuthorizationStatus() == .fullAccess {
+                self.fetchReminders()
+            }
         case .all:
-            self.fetchEvents()
-            self.fetchReminders()
+            if eventKitManager.eventAuthorizationStatus() == .fullAccess {
+                self.fetchEvents()
+            }
+            if eventKitManager.eventAuthorizationStatus() == .fullAccess {
+                self.fetchReminders()
+            }
         }
     }
     

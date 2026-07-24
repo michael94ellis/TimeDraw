@@ -14,29 +14,61 @@ import SwiftUI
 import DailyGoalTextfield
 
 public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
+    enum Card {
+        case welcome
+        case intro
+        case weeklyCalendar
+        case dailyGoal
+        case analogClock
+        case eventCreation
+        case calendarPermission
+        case remindersPermission
+
+        var advancesOnTap: Bool {
+            switch self {
+            case .calendarPermission, .remindersPermission:
+                false
+            default:
+                true
+            }
+        }
+    }
+
     var itemViewModel: ModifyCalendarItemViewModel
     var listViewModel: CalendarItemListViewModel
+    @Binding var navPath: NavigationPath
     private let headerDemo: HeaderDemo
     private let clockDemo: ClockDemo
 
     @Dependency(\.eventKitManager) private var eventKitManager
 
-    @State var currentPageIndex = 0
+    @State private var cards: [Card] = [
+        .welcome,
+        .intro,
+        .weeklyCalendar,
+        .dailyGoal,
+        .analogClock,
+        .eventCreation,
+        .calendarPermission,
+        .remindersPermission,
+    ]
     @State private var eventAuthStatus: EKAuthorizationStatus = .notDetermined
     @State private var reminderAuthStatus: EKAuthorizationStatus = .notDetermined
-    
-    private var usesTapToAdvance: Bool {
-        currentPageIndex < 6
+
+    private var currentCard: Card? {
+        cards.first
     }
 
     public init(
         itemViewModel: ModifyCalendarItemViewModel,
         listViewModel: CalendarItemListViewModel,
+        navPath: Binding<NavigationPath>,
         @ViewBuilder headerDemo: () -> HeaderDemo,
         @ViewBuilder clockDemo: () -> ClockDemo
     ) {
         self.itemViewModel = itemViewModel
         self.listViewModel = listViewModel
+        self._navPath = navPath
         self.headerDemo = headerDemo()
         self.clockDemo = clockDemo()
     }
@@ -44,11 +76,15 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
     func finishOnboarding() {
         AppSettings().isFirstAppOpen = false
         listViewModel.updateData()
+        navPath.removeLast()
     }
 
-    func incrementOnboardingPage() {
-        guard usesTapToAdvance else { return }
-        currentPageIndex += 1
+    func advanceOnboarding() {
+        guard !cards.isEmpty else { return }
+        cards.removeFirst()
+        if cards.isEmpty {
+            finishOnboarding()
+        }
     }
 
     func refreshEventAuthStatus() {
@@ -60,9 +96,19 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
     }
 
     @ViewBuilder
-    var demoScreenContent: some View {
-        switch currentPageIndex {
-        case 2:
+    func cardContent(_ card: Card) -> some View {
+        switch card {
+        case .welcome:
+            IntroView {
+                Text("Hey There 👋\nWelcome to TimeDraw!\n\n\n\nTap anywhere")
+                    .multilineTextAlignment(.center)
+            }
+        case .intro:
+            IntroView {
+                Text("Here's a quick intro to the app\n\n\n\n\n\nTap anywhere")
+                    .multilineTextAlignment(.center)
+            }
+        case .weeklyCalendar:
             VStack {
                 headerDemo
                     .environmentObject(listViewModel)
@@ -70,20 +116,26 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
                 Text("Here's a swipeable weekly calendar to quickly see and navigate through the weeks")
                 Spacer()
             }
-        case 3:
+            .padding(24)
+            .allowsHitTesting(false)
+        case .dailyGoal:
             VStack {
                 OnboardingDailyGoalTextField()
                 Text("A space to write something about your day that doesn't fit as an Event or Reminder\n\nYou can hide this in settings") // swiftlint:disable:this line_length
                 Spacer()
             }
-        case 4:
+            .padding(24)
+            .allowsHitTesting(false)
+        case .analogClock:
             VStack(spacing: 16) {
                 clockDemo
                 Text("The Analog Clock - visualize your events and reminders from any calendars")
                     .multilineTextAlignment(.center)
             }
             .frame(maxWidth: .infinity)
-        case 5:
+            .padding(24)
+            .allowsHitTesting(false)
+        case .eventCreation:
             VStack {
                 Spacer()
                 Text("You can create events and reminders from TimeDraw as well")
@@ -92,15 +144,9 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
                 })
                     .environmentObject(itemViewModel)
             }
-        default:
-            EmptyView()
-        }
-    }
-
-    @ViewBuilder
-    var permissionScreenContent: some View {
-        switch currentPageIndex {
-        case 6:
+            .padding(24)
+            .allowsHitTesting(false)
+        case .calendarPermission:
             OnboardingPermissionPage(
                 title: "Calendar Access",
                 message: "TimeDraw shows your scheduled events on the analog clock and in your daily list.",
@@ -109,12 +155,12 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
                 eventKitManager: eventKitManager,
                 type: .event,
                 onContinue: {
-                    currentPageIndex = 7
+                    advanceOnboarding()
                     refreshReminderAuthStatus()
                 }
             )
             .onAppear { refreshEventAuthStatus() }
-        case 7:
+        case .remindersPermission:
             OnboardingPermissionPage(
                 title: "Reminders Access",
                 message: "TimeDraw displays your reminders alongside events so you can see your whole day at a glance.",
@@ -122,11 +168,9 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
                 authorizationStatus: $reminderAuthStatus,
                 eventKitManager: eventKitManager,
                 type: .reminder,
-                onContinue: finishOnboarding
+                onContinue: advanceOnboarding
             )
             .onAppear { refreshReminderAuthStatus() }
-        default:
-            EmptyView()
         }
     }
 
@@ -135,39 +179,8 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
             Color.systemBackground.ignoresSafeArea()
 
             VStack {
-                switch currentPageIndex {
-                case 0:
-                    HStack {
-                        Spacer()
-                        VStack {
-                            Spacer()
-                            Text("Hey There 👋\nWelcome to TimeDraw!\n\n\n\nTap anywhere")
-                                .multilineTextAlignment(.center)
-                            Spacer()
-                        }
-                        Spacer()
-                    }
-                case 1:
-                    HStack {
-                        Spacer()
-                        VStack {
-                            Spacer()
-                            Text("Here's a quick intro to the app\n\n\n\n\n\nTap anywhere")
-                                .multilineTextAlignment(.center)
-                            Spacer()
-                        }
-                        Spacer()
-                    }
-                case 6, 7:
-                    permissionScreenContent
-                default:
-                    VStack(spacing: 0) {
-                        Spacer()
-                        demoScreenContent
-                            .allowsHitTesting(false)
-                        Spacer()
-                    }
-                    .padding(24)
+                if let currentCard {
+                    cardContent(currentCard)
                 }
             }
             .environmentObject(listViewModel)
@@ -176,9 +189,8 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .contentShape(Rectangle())
         .onTapGesture {
-            if usesTapToAdvance {
-                incrementOnboardingPage()
-            }
+            guard let currentCard, currentCard.advancesOnTap else { return }
+            advanceOnboarding()
         }
     }
 }

@@ -106,6 +106,9 @@ struct MainScrollableContent: View {
                         withAnimation(.easeInOut(duration: 0.25)) {
                             isEventsPermissionPlaceholderDismissed = true
                         }
+                    },
+                    requestAccess: {
+                        (try? await eventKitManager.requestEventAccess()) ?? false
                     }
                 )
                 .listRowInsets(layoutMetrics.listContentRowInsets)
@@ -160,6 +163,8 @@ struct MainScrollableContent: View {
                         withAnimation(.easeInOut(duration: 0.25)) {
                             isRemindersPermissionPlaceholderDismissed = true
                         }
+                    }, requestAccess: {
+                        (try? await eventKitManager.requestReminderAccess()) ?? false
                     }
                 )
                 .listRowInsets(layoutMetrics.listContentRowInsets)

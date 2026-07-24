@@ -33,6 +33,10 @@ public final actor EventKitManager {
     
     public init() { }
     
+    public func calendars(for type: EKEntityType) async -> [EKCalendar] {
+        eventStore.calendars(for: type)
+    }
+    
     /// Returns calendar object from event kit
     public var defaultEventCalendar: EKCalendar? {
         self.eventStore.calendarForEvents()

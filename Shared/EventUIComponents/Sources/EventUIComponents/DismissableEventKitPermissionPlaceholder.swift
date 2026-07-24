@@ -11,6 +11,7 @@ public struct DismissableEventKitPermissionPlaceholder: View {
     let message: String
     let authorizationStatus: EKAuthorizationStatus
     let isAccessGranted: (EKAuthorizationStatus) -> Bool
+    let requestAccess: () async -> Bool
     let onDismiss: () -> Void
 
     @State private var isVisible = true
@@ -21,11 +22,13 @@ public struct DismissableEventKitPermissionPlaceholder: View {
                 authorizationStatus: EKAuthorizationStatus,
                 isAccessGranted: @escaping (EKAuthorizationStatus) -> Bool,
                 onDismiss: @escaping () -> Void,
+                requestAccess: @escaping () async -> Bool,
                 isVisible: Bool = true) {
         self.message = message
         self.authorizationStatus = authorizationStatus
         self.isAccessGranted = isAccessGranted
         self.onDismiss = onDismiss
+        self.requestAccess = requestAccess
         self.isVisible = isVisible
     }
 
@@ -51,7 +54,7 @@ public struct DismissableEventKitPermissionPlaceholder: View {
                 EventKitPermissionPlaceholder(
                     message: message,
                     authorizationStatus: authorizationStatus,
-                    isAccessGranted: isAccessGranted
+                    requestAccess: requestAccess
                 )
                 .padding(.trailing, 44)
                 .padding(.vertical, 8)

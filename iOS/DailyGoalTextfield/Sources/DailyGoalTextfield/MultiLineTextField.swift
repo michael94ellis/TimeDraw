@@ -6,6 +6,7 @@
 //
 
 import UIComponents
+import DesignToken
 import SwiftUI
 import UIKit
 
@@ -20,10 +21,9 @@ private struct UITextViewWrapper: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<UITextViewWrapper>) -> UITextView {
         let textField = UITextView()
         textField.delegate = context.coordinator
-        textField.font = .preferredFont(forTextStyle: .callout)
+        textField.font = UIFont.app(.body)
         textField.isEditable = true
         textField.textAlignment = .center
-        textField.font = UIFont.preferredFont(forTextStyle: .body)
         textField.isSelectable = true
         textField.isUserInteractionEnabled = true
         textField.isScrollEnabled = false
@@ -114,7 +114,7 @@ struct MultilineTextField: View {
         self.text.forEach {
             if $0.isNewline {
                 totalNewLines += 1
-                if totalNewLines <= 3 {
+                if totalNewLines < 3 {
                     newDailyGoalWithoutLastNewlines.append($0)
                 } else {
                     return

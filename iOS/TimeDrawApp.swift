@@ -33,6 +33,7 @@ struct TimeDrawApp: App {
     var body: some Scene {
         WindowGroup {
             MainViewContainer()
+                .adaptiveLayoutMetrics()
                 .environmentObject(itemViewModel)
                 .environmentObject(listViewModel)
                 .environmentObject(appSettings)

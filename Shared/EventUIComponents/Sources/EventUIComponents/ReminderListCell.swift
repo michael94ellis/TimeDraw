@@ -32,12 +32,12 @@ public struct ReminderListCell: View {
     @ViewBuilder
     var cellContent: some View {
         Image(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
-            .font(.title3)
+            .font(.app(.icon))
                 .foregroundStyle(item.isCompleted ? Colors.completed : Colors.mutedText)
 
         VStack(alignment: .leading, spacing: 2) {
             Text(item.title.isEmpty ? "Untitled Reminder" : item.title)
-                .font(.interSemiBold)
+                .font(.app(.listTitle))
                 .foregroundStyle(Colors.primaryText)
                 .strikethrough(item.isCompleted, color: .secondary)
                 .lineLimit(2)
@@ -46,13 +46,13 @@ public struct ReminderListCell: View {
             HStack(spacing: 6) {
                 if let timeSummary {
                     Text(timeSummary)
-                        .font(.interFine)
+                        .font(.app(.listSubtitle))
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
                 }
                 if let priorityLabel {
                     Text(priorityLabel)
-                        .font(.caption)
+                        .font(.app(.listCaption))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -60,7 +60,7 @@ public struct ReminderListCell: View {
 
         if let rules = item.recurrenceRules, !rules.isEmpty {
             Image(systemName: "repeat")
-                .font(.subheadline)
+                .font(.app(.icon))
                 .foregroundStyle(.secondary)
                 .padding(.horizontal, 8)
         }

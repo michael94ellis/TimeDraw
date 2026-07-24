@@ -23,6 +23,7 @@ struct MainHeaderView: View {
     @State private var showSettingsSheet = false
     // TODO: Add a full month calendar feature somewhere
     @EnvironmentObject var itemList: CalendarItemListViewModel
+    @Environment(\.layoutMetrics) private var layoutMetrics
     @State var swipeDirection: SwipeDirection = .left
     
     func transitionDirection(direction: SwipeDirection) -> AnyTransition {
@@ -39,18 +40,22 @@ struct MainHeaderView: View {
         let display = Calendar.current.isDate(date, inSameDayAs: self.itemList.displayDate)
         return VStack {
             Text(self.weekdayFormatter.string(from: date))
-                .font(today || display ? .interSemiBold : .interLight)
+                .font(today || display ? .app(.weekdayEmphasized) : .app(.weekday))
                 .foregroundColor(Colors.primaryText)
-                .frame(height: 30)
+                .frame(height: layoutMetrics.weekDayLabelHeight)
                 .animation(nil, value: itemList.displayDate)
             Text(date.get(.day).formatted())
-                .font(today ? .interBold : display ? .interSemiBold : .interRegular)
+                .font(
+                    today ? .app(.dayNumberToday)
+                        : display ? .app(.dayNumberSelected)
+                        : .app(.dayNumber)
+                )
                 .foregroundColor(today ? Colors.today : display ? Colors.primaryText : Colors.mutedText)
                 .animation(nil, value: itemList.displayDate)
         }
-        .frame(width: 45)
-        .padding(.vertical, 8)
-        .padding(.horizontal, 1)
+        .frame(width: layoutMetrics.weekDayCellWidth)
+        .padding(.vertical, layoutMetrics.weekDayCellVerticalPadding)
+        .padding(.horizontal, layoutMetrics.weekDayCellHorizontalPadding)
     }
     
     func handleGesture(value: SwipeDirection) {
@@ -70,39 +75,39 @@ struct MainHeaderView: View {
     var headerNav: some View {
         HStack {
             Text(self.monthYearFormatter.string(from: self.itemList.displayDate))
-                .font(.interExtraBoldTitle)
-                .fontWeight(.semibold)
+                .font(.app(.headerTitle))
                 .foregroundColor(Colors.today)
             Spacer()
             Button {
                 showSettingsSheet = true
             } label: {
                 Image(systemName: "ellipsis.circle")
-                    .font(.title2)
+                    .font(.app(.icon))
                     .foregroundStyle(Colors.primaryText)
+                    .frame(minWidth: 44, minHeight: 44)
             }
             .buttonStyle(.plain)
             .sheet(isPresented: $showSettingsSheet) {
                 SettingsView(display: $showSettingsSheet)
             }
         }
-        .padding(.horizontal)
+        .padding(.horizontal, layoutMetrics.headerNavHorizontalPadding)
     }
     
     var body: some View {
         VStack(spacing: 0) {
             self.headerNav
-            HStack(spacing: 4) {
+            HStack(spacing: layoutMetrics.weekStripSpacing) {
                 ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.itemList.displayDate), id: \.self) { date in
                     Button {
-                        withAnimation(.easeInOut(duration: 0.25)) {
+                        withAnimation(.easeInOut(duration: layoutMetrics.daySelectionAnimationDuration)) {
                             itemList.displayDate = date
                         }
                     } label: {
                         weekDayHeader(for: date)
                             .background {
                                 if Calendar.current.isDate(date, inSameDayAs: itemList.displayDate) {
-                                    RoundedRectangle(cornerRadius: CornerRadius.weekDaySelectionRadius, style: .continuous)
+                                    RoundedRectangle(cornerRadius: layoutMetrics.weekDaySelectionRadius, style: .continuous)
                                         .fill(Colors.weekDaySelectionFill)
                                         .matchedGeometryEffect(id: "weekDaySelection", in: weekdaySelection)
                                 }
@@ -113,7 +118,7 @@ struct MainHeaderView: View {
                 }
                 .transition(self.transitionDirection(direction: self.swipeDirection))
             }
-            .padding(.bottom, 6)
+            .padding(.bottom, layoutMetrics.weekStripBottomPadding)
         }
         .transition(self.switchTransition(direction: self.swipeDirection))
         .gesture(DragGesture()

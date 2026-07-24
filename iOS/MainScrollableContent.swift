@@ -18,6 +18,7 @@ struct MainScrollableContent: View {
     @EnvironmentObject private var modifyItemViewModel: ModifyCalendarItemViewModel
     @EnvironmentObject private var itemList: CalendarItemListViewModel
     @EnvironmentObject private var appSettings: AppSettings
+    @Environment(\.layoutMetrics) private var layoutMetrics
     @Environment(\.scenePhase) private var scenePhase
     @Dependency(\.eventKitManager) private var eventKitManager
 
@@ -25,10 +26,6 @@ struct MainScrollableContent: View {
     @State private var reminderAuthStatus: EKAuthorizationStatus = .notDetermined
     @State private var isEventsPermissionPlaceholderDismissed = false
     @State private var isRemindersPermissionPlaceholderDismissed = false
-
-    let clockHorizPadding: CGFloat = 16
-    let clockVertPadding: CGFloat = 20
-    let standardRowInsets: EdgeInsets = .init(top: 4, leading: 8, bottom: 4, trailing: 8)
 
     private var showsEventsSection: Bool {
         switch appSettings.showCalendarItemType {
@@ -89,9 +86,10 @@ struct MainScrollableContent: View {
     @ViewBuilder
     private func emptyStateText(_ message: String) -> some View {
         Text(message)
-            .font(.interRegular)
+            .font(.app(.listEmpty))
             .foregroundStyle(.secondary)
             .frame(maxWidth: .infinity, alignment: .leading)
+            .listRowInsets(layoutMetrics.listContentRowInsets)
             .listRowSeparator(.hidden)
             .listRowBackground(EmptyView())
     }
@@ -110,6 +108,7 @@ struct MainScrollableContent: View {
                         }
                     }
                 )
+                .listRowInsets(layoutMetrics.listContentRowInsets)
             }
         } else if itemList.events.isEmpty {
             emptyStateText(emptyEventsMessage())
@@ -142,7 +141,7 @@ struct MainScrollableContent: View {
                     }
                 }
             }
-            .listRowInsets(standardRowInsets)
+            .listRowInsets(layoutMetrics.listContentRowInsets)
             .listRowSpacing(0)
             .listRowSeparator(.hidden)
             .listRowBackground(EmptyView())
@@ -163,6 +162,7 @@ struct MainScrollableContent: View {
                         }
                     }
                 )
+                .listRowInsets(layoutMetrics.listContentRowInsets)
             }
         } else if itemList.reminders.isEmpty {
             emptyStateText(emptyRemindersMessage())
@@ -202,7 +202,7 @@ struct MainScrollableContent: View {
                     }
                 }
             }
-            .listRowInsets(standardRowInsets)
+            .listRowInsets(layoutMetrics.listContentRowInsets)
             .listRowSpacing(0)
             .listRowSeparator(.hidden)
             .listRowBackground(EmptyView())
@@ -212,8 +212,8 @@ struct MainScrollableContent: View {
     var body: some View {
         List {
             TimeDrawClock(events: itemList.events, reminders: itemList.reminders)
-                .padding(.vertical, clockVertPadding)
-                .padding(.horizontal, clockHorizPadding)
+                .padding(.vertical, layoutMetrics.clockVerticalPadding)
+                .padding(.horizontal, layoutMetrics.clockHorizontalPadding)
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
             if showsEventsSection {

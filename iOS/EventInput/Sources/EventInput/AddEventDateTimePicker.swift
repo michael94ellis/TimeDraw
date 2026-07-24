@@ -79,12 +79,12 @@ public struct AddEventDateTimePicker: View {
                     DatePicker("Starts",
                                selection: startBinding,
                                displayedComponents: [.date, .hourAndMinute])
-                        .font(.interRegular)
+                        .font(.app(.body))
                         .padding(.horizontal, 16)
                     DatePicker("Ends",
                                selection: endBinding,
                                displayedComponents: [.date, .hourAndMinute])
-                        .font(.interRegular)
+                        .font(.app(.body))
                         .padding(.horizontal, 16)
                     
                     if let calendarItem = viewModel.calendarItem,

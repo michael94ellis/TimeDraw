@@ -6,6 +6,7 @@
 #if DEBUG
 import Dependencies
 import AppCore
+import DesignToken
 import EventKit
 import SwiftUI
 
@@ -295,7 +296,7 @@ struct DebugSeedTestDataButton: View {
                 ProgressView()
             } else if let statusMessage {
                 Text(statusMessage)
-                    .font(.footnote)
+                    .font(.app(.fine))
                     .foregroundStyle(.secondary)
             }
         }

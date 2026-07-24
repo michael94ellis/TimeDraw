@@ -111,7 +111,7 @@ public struct EventInput: View {
     private var collapsedContent: some View {
         HStack(spacing: 12) {
             Text(viewModel.newItemTitle.isEmpty ? "New Event or Reminder" : viewModel.newItemTitle)
-                .font(.interRegular)
+                .font(.app(.body))
                 .foregroundStyle(viewModel.newItemTitle.isEmpty
                                  ? Colors.tertiaryText
                                  : Colors.primaryText)
@@ -149,7 +149,7 @@ public struct EventInput: View {
     private var titleFieldRow: some View {
         HStack(spacing: 12) {
             TextField("New Event or Reminder", text: $viewModel.newItemTitle)
-                .font(.interRegular)
+                .font(.app(.body))
                 .focused($isFocused)
                 .submitLabel(.done)
                 .onSubmit { isFocused = false }
@@ -180,7 +180,7 @@ public struct EventInput: View {
 
     private var submitIcon: some View {
         Image(systemName: submitIconName)
-            .font(.body.weight(.semibold))
+            .font(.app(.icon))
             .foregroundStyle(Colors.onAccentBackground)
             .frame(width: 32, height: 32)
             .background(Circle().fill(Colors.action))
@@ -193,7 +193,7 @@ public struct EventInput: View {
                     viewModel.reset()
                 } label: {
                     Label("Cancel", systemImage: "xmark")
-                        .font(.interRegular)
+                        .font(.app(.body))
                         .foregroundStyle(.primary)
                 }
                 .buttonStyle(.plain)
@@ -236,11 +236,11 @@ public struct EventInput: View {
                     .fill(calendarTint)
                     .frame(width: 10, height: 10)
                 Text(calendarName)
-                    .font(.interRegular)
+                    .font(.app(.body))
                     .foregroundStyle(Colors.primaryText)
                     .lineLimit(1)
                 Image(systemName: "chevron.up.chevron.down")
-                    .font(.caption2)
+                    .font(.app(.listCaption))
                     .foregroundStyle(.tertiary)
             }
             .padding(.horizontal, 12)

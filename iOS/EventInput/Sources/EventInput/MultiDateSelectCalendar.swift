@@ -43,7 +43,7 @@ struct CalendarMultiDateSelection: View {
             }
         } label: {
             Text(String(day))
-                .font(isSelected ? .interBold : .interRegular)
+                .font(isSelected ? .app(.dayNumberToday) : .app(.dayNumber))
                 .foregroundStyle(isSelected ? Colors.onAccentBackground : Colors.primaryText)
                 .frame(maxWidth: .infinity, minHeight: 34)
                 .background(

@@ -36,7 +36,7 @@ struct FormSection<Content: View>: View {
         VStack(alignment: .leading, spacing: 8) {
             if let title {
                 Text(title)
-                    .font(.interSemiBold)
+                    .font(.app(.button))
                     .foregroundStyle(.secondary)
                     .padding(.horizontal, 4)
             }
@@ -68,17 +68,17 @@ struct SummaryRowLabel: View {
     var body: some View {
         HStack {
             Text(title)
-                .font(.interRegular)
+                .font(.app(.body))
                 .foregroundStyle(isExpanded ? Colors.primaryText : Colors.tertiaryText)
             Spacer()
             if let value, !value.isEmpty {
                 Text(value)
-                    .font(.interFine)
+                    .font(.app(.fine))
                     .foregroundStyle(isExpanded ? .secondary : .tertiary)
                     .lineLimit(1)
             }
             Image(systemName: "chevron.right")
-                .font(.caption.weight(.semibold))
+                .font(.app(.listCaption))
                 .foregroundStyle(.tertiary)
                 .rotationEffect(.degrees(isExpanded ? 90 : 0))
         }
@@ -96,7 +96,7 @@ struct DestructiveTextButton: View {
     var body: some View {
         Button(role: .destructive, action: action) {
             Text(title)
-                .font(.interRegular)
+                .font(.app(.body))
         }
     }
 }

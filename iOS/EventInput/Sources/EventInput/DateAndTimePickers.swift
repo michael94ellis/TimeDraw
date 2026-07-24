@@ -29,7 +29,7 @@ struct DateAndTimePickers: View {
 
     var body: some View {
         DatePicker("End", selection: combinedBinding, displayedComponents: [.date, .hourAndMinute])
-            .font(.interRegular)
+            .font(.app(.body))
             .onAppear(perform: onTap)
     }
 }

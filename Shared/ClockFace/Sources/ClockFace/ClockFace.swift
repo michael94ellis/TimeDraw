@@ -9,9 +9,9 @@ import SwiftUI
 import DesignToken
 
 public struct ClockFace: View {
-    
+
     public init() { }
-    
+
     @ViewBuilder
     func hands(markOffset: CGFloat) -> some View {
         let hours: [Int] = (0..<60).filter({ $0 % 5 == 0 })
@@ -31,12 +31,12 @@ public struct ClockFace: View {
         ForEach(hours, id: \.self) { index in
             let num = (index / 5) + 6
             Text("\(num > 12 ? num - 12 : num)")
-                .bold()
+                .font(.app(.clockHour))
                 .rotationEffect(.degrees(Double((num - 12) * -30) - 180))
                 .offset(y: markOffset)
                 .rotationEffect(Angle(degrees: Double(index) * 6))
         }
-        
+
         // Tick marks
         ForEach(quarterHours, id: \.self) { index in
             Circle()
@@ -46,7 +46,7 @@ public struct ClockFace: View {
                 .rotationEffect(.degrees(Double(index) * 6))
         }
     }
-    
+
     public var body: some View {
         GeometryReader { geo in
             let size = min(geo.size.width, geo.size.height)

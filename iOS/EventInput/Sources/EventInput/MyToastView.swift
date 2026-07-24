@@ -81,7 +81,7 @@ struct MyToastView: View {
                 Image(systemName: style.iconName)
                     .foregroundStyle(style.accentColor)
                 Text(message)
-                    .font(.callout)
+                    .font(.app(.body))
                     .fontWeight(.medium)
                     .foregroundStyle(Colors.primaryText)
                     .lineLimit(2)

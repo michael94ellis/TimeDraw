@@ -76,7 +76,7 @@ struct AddRecurrenceRule: View {
                 set: { viewModel.frequencyDayValueInt = $0; viewModel.endRecurrenceDate = nil }
             ), in: 1...365) {
                 Text("Every \(viewModel.frequencyDayValueInt ?? 1) day(s)")
-                    .font(.interRegular)
+                    .font(.app(.body))
             }
         case .weekly:
             labeledSection("Repeat on") {
@@ -90,7 +90,7 @@ struct AddRecurrenceRule: View {
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
                     Text("Month")
-                        .font(.interRegular)
+                        .font(.app(.body))
                     Spacer()
                     PickerField("Month",
                                 data: Calendar.current.monthSymbols,
@@ -113,7 +113,7 @@ struct AddRecurrenceRule: View {
     ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
-                .font(.interFine)
+                .font(.app(.fine))
                 .foregroundStyle(.secondary)
             content()
         }
@@ -134,7 +134,7 @@ struct AddRecurrenceRule: View {
                     set: { viewModel.numberOfOccurences = $0; viewModel.endRecurrenceDate = nil }
                 ), in: 1...999) {
                     Text("\(viewModel.numberOfOccurences ?? 1) occurrence(s)")
-                        .font(.interRegular)
+                        .font(.app(.body))
                 }
             } else {
                 DateAndTimePickers(

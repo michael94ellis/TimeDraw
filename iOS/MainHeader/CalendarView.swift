@@ -15,6 +15,7 @@ public struct CalendarView<Day: View, Header: View, ExcessDay: View>: View {
     private let content: (Date) -> Day
     private let excessDays: (Date) -> ExcessDay
     private let header: (Date) -> Header
+    @Environment(\.layoutMetrics) private var layoutMetrics
     
     // Constants
     private let daysInWeek = 7
@@ -43,17 +44,17 @@ public struct CalendarView<Day: View, Header: View, ExcessDay: View>: View {
         VStack {
             HStack {
                 ForEach(self.days.prefix(self.daysInWeek), id: \.self, content: self.header)
-                    .frame(width: 45)
+                    .frame(width: layoutMetrics.monthColumnWidth)
             }
             ForEach(self.weeks, id: \.self) { week in
                 HStack {
                     ForEach(week, id: \.self) { day in
                         if Calendar.current.isDate(day, equalTo: month, toGranularity: .month) {
                             self.content(day)
-                                .frame(width: 45)
+                                .frame(width: layoutMetrics.monthColumnWidth)
                         } else {
                             self.excessDays(day)
-                                .frame(width: 45)
+                                .frame(width: layoutMetrics.monthColumnWidth)
                         }
                     }
                 }

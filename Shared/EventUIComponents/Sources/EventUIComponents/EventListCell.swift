@@ -28,11 +28,11 @@ public struct EventListCell: View {
     var cellContent: some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(item.title.isEmpty ? "Untitled Event" : item.title)
-                .font(.interSemiBold)
+                .font(.app(.listTitle))
                 .foregroundStyle(Colors.primaryText)
                 .lineLimit(2)
             Text(subtitle)
-                .font(.interFine)
+                .font(.app(.listSubtitle))
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
         }
@@ -40,7 +40,7 @@ public struct EventListCell: View {
 
         if item.hasRecurrenceRules {
             Image(systemName: "repeat")
-                .font(.subheadline)
+                .font(.app(.icon))
                 .foregroundStyle(.secondary)
                 .padding(.trailing, 8)
         }

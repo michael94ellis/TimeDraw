@@ -39,7 +39,7 @@ public struct DismissableEventKitPermissionPlaceholder: View {
                         Spacer()
                         Button(action: dismissPlaceholder) {
                             Image(systemName: "xmark")
-                                .font(.headline)
+                                .font(.app(.icon))
                                 .foregroundStyle(.secondary)
                         }
                         .buttonStyle(.plain)

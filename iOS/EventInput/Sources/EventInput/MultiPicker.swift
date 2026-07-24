@@ -62,7 +62,7 @@ struct MultipleSelectionItem: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.interRegular)
+                .font(.app(.body))
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
                 .frame(maxWidth: .infinity, minHeight: 34)

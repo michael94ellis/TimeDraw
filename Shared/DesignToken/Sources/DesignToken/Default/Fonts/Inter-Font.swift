@@ -5,28 +5,7 @@
 //  Created by Michael Ellis on 1/13/22.
 //
 
-import SwiftUI
 import UIKit
-
-public extension Font {
-    static let interExtraLight = Font.custom("Inter-ExtraLight", size: 18, relativeTo: .body)
-    static let interLight = Font.custom("Inter-Light", size: 18, relativeTo: .body)
-    static let interThin = Font.custom("Inter-Thin", size: 18, relativeTo: .body)
-    static let interMedium = Font.custom("Inter-Medium", size: 18, relativeTo: .body)
-    static let interRegular = Font.custom("Inter-Regular", size: 18, relativeTo: .body)
-    static let interBold = Font.custom("Inter-Bold", size: 18, relativeTo: .body)
-    static let interBlack = Font.custom("Inter-Black", size: 18, relativeTo: .body)
-    static let interSemiBold = Font.custom("Inter-SemiBold", size: 18, relativeTo: .body)
-    static let interExtraBold = Font.custom("Inter-ExtraBold", size: 18, relativeTo: .body)
-
-    // Custom Use Font styles
-    static let interClock = Font.custom("Inter-Regular", size: 12, relativeTo: .caption)
-    static let interFine = Font.custom("Inter-Light", size: 16, relativeTo: .callout)
-    static let interExtraBoldTitle = Font.custom("Inter-ExtraBold", size: 22, relativeTo: .title3)
-    static let interTitle = Font.custom("Inter-Regular", size: 28, relativeTo: .title)
-    static let interTitle2 = Font.custom("Inter-Regular", size: 24, relativeTo: .title)
-    static let interBoldTitle2 = Font.custom("Inter-Bold", size: 24, relativeTo: .title)
-}
 
 public enum AppFontName {
     public static let regular = "Inter-Regular"

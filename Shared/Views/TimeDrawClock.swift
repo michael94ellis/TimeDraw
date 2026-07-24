@@ -7,11 +7,13 @@
 
 import AppCore
 import ClockFace
+import DesignToken
 import EventKit
 import SwiftUI
 
 struct TimeDrawClock: View {
     
+    @Environment(\.layoutMetrics) private var layoutMetrics
     @State var currentTime = Time(sec: 0, min: 0, hour: 0)
     @State var timer = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
     var events: [EKEvent]
@@ -71,8 +73,7 @@ struct TimeDrawClock: View {
                 )
             }
 
-            let allDayRadius = clockSize * 0.55
-            let allDayLineWidth: CGFloat = 2
+            let allDayRadius = clockSize * ClockMetrics.allDayRadiusFactor
             let allDaySegments = ClockAllDayLayoutEngine.layout(
                 events: ClockDrawableItem.allDayEvents(from: events)
             )
@@ -80,14 +81,14 @@ struct TimeDrawClock: View {
                 ClockAllDayEventLine(
                     startDegrees: allDaySegments[index].startDegrees,
                     endDegrees: allDaySegments[index].endDegrees,
-                    radius: (allDayRadius + (CGFloat(index + 1) * 3))
+                    radius: allDayRadius + (CGFloat(index + 1) * ClockMetrics.allDayRingSpacing)
                 )
                 .stroke(
                     allDaySegments[index].color,
                     style: StrokeStyle(
-                        lineWidth: allDayLineWidth,
+                        lineWidth: ClockMetrics.allDayLineWidth,
                         lineCap: .round,
-                        dash: [6, 4],
+                        dash: ClockMetrics.allDayDash,
                         dashPhase: allDaySegments[index].dashPhase
                     )
                 )
@@ -108,6 +109,8 @@ struct TimeDrawClock: View {
                 }
             ClockHands(currentTime: $currentTime)
         }
+        // Inset face/events so all-day rings (radius > half the face) stay inside bounds.
+        .padding(layoutMetrics.clockDrawingInset)
         .aspectRatio(1, contentMode: .fit)
         .frame(maxWidth: .infinity)
         .onAppear {
@@ -146,7 +149,7 @@ struct TimeDrawClock: View {
                 
             return List {
                 TimeDrawClock(events: mockEvents, reminders: mockReminders)
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, LayoutMetrics.phone.clockHorizontalPadding)
                     .listRowInsets(.init())
                 ForEach(0..<20, id: \.self) { i in
                     Text("Row \(i)")

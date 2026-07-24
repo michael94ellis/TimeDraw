@@ -7,6 +7,7 @@
 
 import AppCore
 import DesignToken
+import EventUIComponents
 import SwiftUI
 
 struct CalendarDateSelection: View {
@@ -14,6 +15,8 @@ struct CalendarDateSelection: View {
     @Binding var showCompactCalendar: Bool
     @Binding private var selectedDate: Date
     @EnvironmentObject var itemList: CalendarItemListViewModel
+    @Environment(\.layoutMetrics) private var layoutMetrics
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     init(date: Binding<Date>, showCompactCalendar: Binding<Bool>) {
         self._showCompactCalendar = showCompactCalendar
@@ -28,7 +31,7 @@ struct CalendarDateSelection: View {
                     Button(action: {
                         withAnimation {
                             self.selectedDate = date
-                            if UIDevice.current.userInterfaceIdiom == .phone {
+                            if horizontalSizeClass != .regular {
                                 self.showCompactCalendar.toggle()
                             }
                         }
@@ -36,19 +39,27 @@ struct CalendarDateSelection: View {
                         let today = Calendar.current.isDateInToday(date)
                         let display = Calendar.current.isDate(date, inSameDayAs: self.itemList.displayDate)
                         Text("00")
-                            .padding(10)
+                            .padding(layoutMetrics.monthDayHitPadding)
                             .foregroundColor(.clear)
-                            .background(display ? Color(uiColor: .systemGray3) : Color(uiColor: .systemBackground))
-                            .frame(width: 36, height: 36)
-                            .cornerRadius(CornerRadius.calendarDayRadius)
+                            .background(
+                                display
+                                    ? Colors.calendarDaySelectedBackground
+                                    : Colors.systemBackground
+                            )
+                            .frame(width: layoutMetrics.monthDayHitSize, height: layoutMetrics.monthDayHitSize)
+                            .cornerRadius(layoutMetrics.calendarDayRadius)
                             .accessibilityHidden(true)
                             .overlay(
                                 Text(DateFormatter.dayFormatter.string(from: date))
-                                    .font((today || display) ? .interBold : .body)
+                                    .font(
+                                        (today || display)
+                                            ? .app(.dayNumberToday)
+                                            : .app(.dayNumber)
+                                    )
                                     .foregroundColor(
-                                        today ? .red1 :
-                                            display ? .white :
-                                                .darkGray
+                                        today ? Colors.today :
+                                            display ? Colors.onAccentBackground :
+                                                Colors.calendarDayText
                                     )
                             )
                     }
@@ -60,14 +71,14 @@ struct CalendarDateSelection: View {
                         }
                     }) {
                         Text(DateFormatter.dayFormatter.string(from: date))
-                            .foregroundColor(Color.gray)
-                            .frame(width: 45, height: 30)
+                            .foregroundColor(Colors.calendarExcessDayText)
+                            .frame(width: layoutMetrics.monthColumnWidth, height: layoutMetrics.monthColumnHeight)
                     }
                 },
                 header: { date in
                     Text(DateFormatter.weekDayFormatter.string(from: date))
-                        .font(.interLight)
-                        .frame(width: 45, height: 30)
+                        .font(.app(.weekday))
+                        .frame(width: layoutMetrics.monthColumnWidth, height: layoutMetrics.monthColumnHeight)
                 }
             )
                 .equatable()

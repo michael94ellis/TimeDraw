@@ -20,7 +20,7 @@ public struct DailyGoalTextField: View {
 
     public var body: some View {
         MultilineTextField("What is your goal today?", text: self.$dailyGoal, focus: self.isDailyGoalFocused)
-            .font(.callout)
+            .font(.app(.body))
             .foregroundColor(Colors.placeholderText)
             .multilineTextAlignment(.center)
             .submitLabel(.done)

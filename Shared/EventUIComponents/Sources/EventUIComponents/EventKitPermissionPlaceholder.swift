@@ -4,6 +4,7 @@
 //
 
 import EventKit
+import DesignToken
 import SwiftUI
 
 public struct EventKitPermissionPlaceholder: View {
@@ -40,7 +41,7 @@ public struct EventKitPermissionPlaceholder: View {
         } else {
             VStack(alignment: .leading, spacing: 12) {
                 Text(message)
-                    .font(.interRegular)
+                    .font(.app(.body))
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 #if os(iOS)
@@ -48,7 +49,7 @@ public struct EventKitPermissionPlaceholder: View {
                     Text(actionTitle)
                         .frame(maxWidth: .infinity)
                 }
-                .font(.interSemiBold)
+                .font(.app(.button))
                 .foregroundStyle(Color.blue1)
                 .buttonStyle(.bordered)
                 #endif

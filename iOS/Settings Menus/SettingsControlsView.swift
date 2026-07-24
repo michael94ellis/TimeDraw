@@ -1,5 +1,5 @@
 //
-//  SettingsControls.swift
+//  SettingsControlsView.swift
 //  TimeDraw
 //
 //  Created by Michael Ellis on 3/13/22.
@@ -8,7 +8,7 @@
 import AppCore
 import SwiftUI
 
-struct SettingsControls: View {
+struct SettingsControlsView: View {
 
     @EnvironmentObject var appSettings: AppSettings
     @EnvironmentObject var calendarItemListViewModel: CalendarItemListViewModel
@@ -41,6 +41,8 @@ struct SettingsControls: View {
             .onChange(of: appSettings.showCalendarItemType) {
                 calendarItemListViewModel.updateData()
             }
+            .listRowBackground(EmptyView())
+            .listRowSeparator(.hidden)
 
             Picker("Recurrence", selection: appSettings.$showItemRecurrenceType) {
                 ForEach(ItemRecurrenceType.allCases, id: \.self) { item in
@@ -52,6 +54,8 @@ struct SettingsControls: View {
             .onChange(of: appSettings.showItemRecurrenceType) {
                 calendarItemListViewModel.updateData()
             }
+            .listRowBackground(EmptyView())
+            .listRowSeparator(.hidden)
         }
     }
 }

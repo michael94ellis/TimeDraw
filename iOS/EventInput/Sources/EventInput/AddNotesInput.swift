@@ -48,7 +48,7 @@ struct AddNotesInput: View {
                 FormDivider()
                 VStack(alignment: .leading, spacing: 8) {
                     TextEditor(text: $viewModel.notesInput)
-                        .font(.interRegular)
+                        .font(.app(.body))
                         .frame(minHeight: 80, maxHeight: 120)
                         .focused($notesInputFocus)
                         .scrollContentBackground(.hidden)

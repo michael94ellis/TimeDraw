@@ -14,7 +14,7 @@ public struct OnboardingDailyGoalTextField: View {
     
     public var body: some View {
         Text("What is your goal today?")
-            .font(.callout)
+            .font(.app(.body))
             .foregroundColor(Colors.placeholderText)
             .multilineTextAlignment(.center)
             .frame(maxHeight: 70)

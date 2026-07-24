@@ -56,21 +56,21 @@ public struct OnboardingPermissionPage: View {
         IntroView {
             VStack(spacing: 24) {
                 Image(systemName: accessGranted ? "checkmark.circle.fill" : systemImage)
-                    .font(.system(size: 56))
+                    .font(.app(.iconLarge))
                     .foregroundStyle(accessGranted ? Color.green1 : Color.red1)
 
                 Text(title)
-                    .font(.interSemiBold)
+                    .font(.app(.button))
                     .multilineTextAlignment(.center)
 
                 Text(message)
-                    .font(.interRegular)
+                    .font(.app(.body))
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
 
                 if accessGranted {
                     Text("Access granted")
-                        .font(.interFine)
+                        .font(.app(.fine))
                         .foregroundStyle(Color.green1)
                 }
 
@@ -105,7 +105,7 @@ public struct OnboardingPermissionPage: View {
                         .disabled(isRequestingAccess)
 
                         Button("Not Now", action: onContinue)
-                            .font(.interRegular)
+                            .font(.app(.body))
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -119,7 +119,7 @@ public struct OnboardingPermissionPage: View {
 private struct OnboardingPermissionPrimaryButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.interSemiBold)
+            .font(.app(.button))
             .foregroundStyle(.white)
             .padding(.vertical, 14)
             .padding(.horizontal, 24)

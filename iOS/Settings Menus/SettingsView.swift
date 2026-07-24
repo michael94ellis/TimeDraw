@@ -24,10 +24,10 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
-                SettingsControls()
+                SettingsControlsView()
 
-                Section {
-                    Button("Open in Settings App") {
+                Section("Device Settings") {
+                    Button("Open Device Settings App") {
                         if let url = URL(string: UIApplication.openSettingsURLString) {
                             UIApplication.shared.open(url)
                         }

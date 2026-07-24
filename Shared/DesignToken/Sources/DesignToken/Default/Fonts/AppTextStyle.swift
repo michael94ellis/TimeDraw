@@ -23,6 +23,7 @@ public enum AppTextStyle: Sendable {
     case fine
     case button
     case icon
+    case iconMedium
     case iconLarge
 }
 
@@ -67,6 +68,7 @@ extension AppTextStyle {
         case .fine: FontSpec(weight: .light, phoneSize: 16, padSize: 18, relativeTo: .callout)
         case .button: FontSpec(weight: .semiBold, phoneSize: 18, padSize: 20, relativeTo: .body)
         case .icon: FontSpec(weight: .medium, phoneSize: 17, padSize: 20, relativeTo: .body)
+        case .iconMedium: FontSpec(weight: .medium, phoneSize: 22, padSize: 30, relativeTo: .title3)
         case .iconLarge: FontSpec(weight: .regular, phoneSize: 56, padSize: 56, relativeTo: .largeTitle)
         }
     }

@@ -20,10 +20,10 @@ struct MainHeaderView: View {
     private let monthYearFormatter = DateFormatter(format: "LLLL YYYY")
     
     @Namespace private var weekdaySelection
-    @State private var showSettingsSheet = false
     // TODO: Add a full month calendar feature somewhere
     @EnvironmentObject var itemList: CalendarItemListViewModel
     @Environment(\.layoutMetrics) private var layoutMetrics
+    @Binding var navPath: NavigationPath
     @State var swipeDirection: SwipeDirection = .left
     
     func transitionDirection(direction: SwipeDirection) -> AnyTransition {
@@ -79,17 +79,14 @@ struct MainHeaderView: View {
                 .foregroundColor(Colors.today)
             Spacer()
             Button {
-                showSettingsSheet = true
+                navPath.append(MainViewContainer.NavLocation.appSettings)
             } label: {
                 Image(systemName: "ellipsis.circle")
-                    .font(.app(.icon))
+                    .font(.app(.iconMedium))
                     .foregroundStyle(Colors.primaryText)
                     .frame(minWidth: 44, minHeight: 44)
             }
             .buttonStyle(.plain)
-            .sheet(isPresented: $showSettingsSheet) {
-                SettingsView(display: $showSettingsSheet)
-            }
         }
         .padding(.horizontal, layoutMetrics.headerNavHorizontalPadding)
     }

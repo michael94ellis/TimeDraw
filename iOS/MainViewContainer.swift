@@ -18,6 +18,12 @@ import SwiftUI
 
 struct MainViewContainer: View {
     
+    enum NavLocation: Hashable {
+        case onboarding
+        case appSettings
+    }
+    
+    @State private var navPath: NavigationPath = .init()
     @EnvironmentObject private var appSettings: AppSettings
     @EnvironmentObject private var itemViewModel: ModifyCalendarItemViewModel
     @EnvironmentObject private var listViewModel: CalendarItemListViewModel
@@ -46,7 +52,7 @@ struct MainViewContainer: View {
     
     @ViewBuilder var mainContent: some View {
         VStack(spacing: 0) {
-            MainHeaderView()
+            MainHeaderView(navPath: $navPath)
                 .overlay(Divider(), alignment: .bottom)
             if self.appSettings.isDailyGoalEnabled {
                 DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
@@ -58,19 +64,8 @@ struct MainViewContainer: View {
     }
     
     var body: some View {
-        ZStack {
-
-            if isFirstAppOpen {
-                OnboardingExperience(
-                    itemViewModel: itemViewModel,
-                    listViewModel: listViewModel,
-                    headerDemo: { MainHeaderView() },
-                    clockDemo: { TimeDrawClock(events: [], reminders: []) }
-                )
-                    .environmentObject(appSettings)
-                    .zIndex(1)
-            } else {
-                
+        NavigationStack(path: $navPath) {
+            ZStack {
                 mainContent
                     .transition(.opacity)
                     .overlay(self.blurOverlay)
@@ -79,7 +74,21 @@ struct MainViewContainer: View {
                     EventInput(eventCreationAction: {
                         ReviewRequestManager().requestReviewIfAppropriate(for: UserDefaults.standard)
                     })
+                    .environmentObject(appSettings)
+                }
+            }
+            .navigationDestination(for: NavLocation.self) { navLocation in
+                switch navLocation {
+                case .onboarding:
+                    OnboardingExperience(
+                        itemViewModel: itemViewModel,
+                        listViewModel: listViewModel,
+                        headerDemo: { MainHeaderView(navPath: $navPath) },
+                        clockDemo: { TimeDrawClock(events: [], reminders: []) }
+                    )
                         .environmentObject(appSettings)
+                case .appSettings:
+                    SettingsView(navPath: $navPath)
                 }
             }
         }

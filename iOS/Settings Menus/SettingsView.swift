@@ -14,15 +14,15 @@ import AppStoreReviewRequest
 
 struct SettingsView: View {
 
-    public init(display: Binding<Bool>) {
-        self._showSettingsSheet = display
+    public init(navPath: Binding<NavigationPath>) {
+        self._navPath = navPath
     }
 
     @EnvironmentObject var appSettings: AppSettings
-    @Binding var showSettingsSheet: Bool
+    @Binding var navPath: NavigationPath
 
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
             Form {
                 SettingsControlsView()
 
@@ -47,7 +47,7 @@ struct SettingsView: View {
                         Text("Contact")
                     }
                     Button("Show Onboarding Info") {
-                        appSettings.isFirstAppOpen = true
+                        navPath.append(MainViewContainer.NavLocation.onboarding)
                     }
                     Button("Share Feedback!") {
                         ReviewRequestManager().requestReviewIfAppropriate(for: .standard)
@@ -62,13 +62,6 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
-                        showSettingsSheet = false
-                    }
-                }
-            }
-        }
+//        }
     }
 }

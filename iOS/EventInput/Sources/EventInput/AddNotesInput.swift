@@ -20,7 +20,7 @@ struct AddNotesInput: View {
 
     private var notesRowValue: String? {
         if isExpanded {
-            return viewModel.isNotesInputOpen ? (viewModel.notesSummary ?? "Add") : nil
+            return viewModel.notesSummary ?? "Add"
         }
         return viewModel.notesSummary
     }

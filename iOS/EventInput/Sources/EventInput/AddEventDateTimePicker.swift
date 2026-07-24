@@ -67,7 +67,7 @@ public struct AddEventDateTimePicker: View {
             } label: {
                 SummaryRowLabel(
                     title: "Date & Time",
-                    value: viewModel.isDateTimePickerOpen ? viewModel.dateTimeSummary : nil,
+                    value: viewModel.dateTimeSummary,
                     isExpanded: isExpanded
                 )
             }

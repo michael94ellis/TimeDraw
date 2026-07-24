@@ -10,6 +10,7 @@ import AppCore
 import EventKit
 import StoreKit
 import UIKit
+import AppStoreReviewRequest
 
 struct SettingsView: View {
 
@@ -49,7 +50,7 @@ struct SettingsView: View {
                         appSettings.isFirstAppOpen = true
                     }
                     Button("Share Feedback!") {
-                        ReviewRequestManager.shared.requestReview()
+                        ReviewRequestManager().requestReviewIfAppropriate(for: .standard)
                     }
                     HStack {
                         Text("Version")

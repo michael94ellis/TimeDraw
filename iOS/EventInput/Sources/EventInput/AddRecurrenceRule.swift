@@ -25,7 +25,7 @@ struct AddRecurrenceRule: View {
             } label: {
                 SummaryRowLabel(
                     title: "Repeat",
-                    value: viewModel.isRecurrencePickerOpen ? viewModel.recurrenceSummary : nil,
+                    value: viewModel.recurrenceSummary,
                     isExpanded: isExpanded
                 )
             }

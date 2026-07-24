@@ -58,7 +58,9 @@ struct MainScrollableContent: View {
 
     func performComplete(for item: EKReminder) {
         self.itemList.completeReminder(item)
-        self.modifyItemViewModel.saveAndDisplayToast(reminder: item, "Reminder Completed")
+        Task {
+            await self.modifyItemViewModel.saveAndDisplayToast(reminder: item, "Reminder Completed")
+        }
     }
 
     func refreshAuthStatuses() {
@@ -128,9 +130,11 @@ struct MainScrollableContent: View {
                     )
                     .swipeActions(allowsFullSwipe: true) {
                         Button(action: {
-                            self.itemList.delete(item)
-                            self.modifyItemViewModel.displayToast("Event Deleted", style: .destructive)
-                            self.itemList.updateData()
+                            Task {
+                                await self.itemList.delete(item)
+                                self.modifyItemViewModel.displayToast("Event Deleted", style: .destructive)
+                                self.itemList.updateData()
+                            }
                         }) {
                             Image(systemName: "trash")
                                 .tint(Colors.destructive)
@@ -186,9 +190,11 @@ struct MainScrollableContent: View {
                                 .tint(Colors.success)
                         }
                         Button(action: {
-                            self.itemList.delete(item)
-                            self.modifyItemViewModel.displayToast("Reminder Deleted", style: .destructive)
-                            self.itemList.updateData()
+                            Task {
+                                await self.itemList.delete(item)
+                                self.modifyItemViewModel.displayToast("Reminder Deleted", style: .destructive)
+                                self.itemList.updateData()
+                            }
                         }) {
                             Image(systemName: "trash")
                                 .tint(Colors.destructive)

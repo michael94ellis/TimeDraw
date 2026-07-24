@@ -21,11 +21,10 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
 
     @Dependency(\.eventKitManager) private var eventKitManager
 
-    @AppStorage(AppStorageKey.firstOpen) var isFirstAppOpen: Bool = true
     @State var currentPageIndex = 0
     @State private var eventAuthStatus: EKAuthorizationStatus = .notDetermined
     @State private var reminderAuthStatus: EKAuthorizationStatus = .notDetermined
-
+    
     private var usesTapToAdvance: Bool {
         currentPageIndex < 6
     }
@@ -43,7 +42,7 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
     }
 
     func finishOnboarding() {
-        isFirstAppOpen = false
+        AppSettings().isFirstAppOpen = false
         listViewModel.updateData()
     }
 
@@ -88,7 +87,9 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
             VStack {
                 Spacer()
                 Text("You can create events and reminders from TimeDraw as well")
-                EventInput()
+                EventInput(eventCreationAction: {
+                    // TODO: Add create event demo experienc with confetti
+                })
                     .environmentObject(itemViewModel)
             }
         default:
@@ -104,12 +105,9 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
                 title: "Calendar Access",
                 message: "TimeDraw shows your scheduled events on the analog clock and in your daily list.",
                 systemImage: "calendar",
-                authorizationStatus: eventAuthStatus,
-                isAccessGranted: eventKitManager.isEventAccessGranted,
-                onRequestAccess: {
-                    _ = try? await eventKitManager.requestEventAccess()
-                    refreshEventAuthStatus()
-                },
+                authorizationStatus: $eventAuthStatus,
+                eventKitManager: eventKitManager,
+                type: .event,
                 onContinue: {
                     currentPageIndex = 7
                     refreshReminderAuthStatus()
@@ -121,12 +119,9 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
                 title: "Reminders Access",
                 message: "TimeDraw displays your reminders alongside events so you can see your whole day at a glance.",
                 systemImage: "checklist",
-                authorizationStatus: reminderAuthStatus,
-                isAccessGranted: eventKitManager.isReminderAccessGranted,
-                onRequestAccess: {
-                    _ = try? await eventKitManager.requestReminderAccess()
-                    refreshReminderAuthStatus()
-                },
+                authorizationStatus: $reminderAuthStatus,
+                eventKitManager: eventKitManager,
+                type: .reminder,
                 onContinue: finishOnboarding
             )
             .onAppear { refreshReminderAuthStatus() }

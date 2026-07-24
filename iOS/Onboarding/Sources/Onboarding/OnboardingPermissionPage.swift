@@ -6,38 +6,50 @@
 import DesignToken
 import EventKit
 import SwiftUI
+import AppCore
 
 public struct OnboardingPermissionPage: View {
+    
+    public enum Kind {
+        case event
+        case reminder
+    }
+    
     let title: String
     let message: String
     let systemImage: String
-    let authorizationStatus: EKAuthorizationStatus
-    let isAccessGranted: (EKAuthorizationStatus) -> Bool
-    let onRequestAccess: () async -> Void
+    let eventKitManager: EventKitManager
     let onContinue: () -> Void
+    let permissionKind: Kind
 
     @State private var isRequestingAccess = false
+    @Binding private var  authorizationStatus: EKAuthorizationStatus
 
     public init(
         title: String,
         message: String,
         systemImage: String,
-        authorizationStatus: EKAuthorizationStatus,
-        isAccessGranted: @escaping (EKAuthorizationStatus) -> Bool,
-        onRequestAccess: @escaping () async -> Void,
+        authorizationStatus: Binding<EKAuthorizationStatus>,
+        eventKitManager: EventKitManager,
+        type: Kind,
         onContinue: @escaping () -> Void
     ) {
         self.title = title
         self.message = message
         self.systemImage = systemImage
-        self.authorizationStatus = authorizationStatus
-        self.isAccessGranted = isAccessGranted
-        self.onRequestAccess = onRequestAccess
+        self._authorizationStatus = authorizationStatus
+        self.eventKitManager = eventKitManager
+        self.permissionKind = type
         self.onContinue = onContinue
     }
 
     private var accessGranted: Bool {
-        isAccessGranted(authorizationStatus)
+        switch permissionKind {
+        case .event:
+            eventKitManager.isEventAccessGranted(authorizationStatus)
+        case .reminder:
+            eventKitManager.isEventAccessGranted(authorizationStatus)
+        }
     }
 
     public var body: some View {
@@ -70,7 +82,13 @@ public struct OnboardingPermissionPage: View {
                         Button {
                             Task {
                                 isRequestingAccess = true
-                                await onRequestAccess()
+                                switch permissionKind {
+                                case .event:
+                                    _ = try? await eventKitManager.requestEventAccess()
+                                case .reminder:
+                                    _ = try? await eventKitManager.requestReminderAccess()
+                                }
+                                authorizationStatus = eventKitManager.eventAuthorizationStatus()
                                 isRequestingAccess = false
                                 onContinue()
                             }

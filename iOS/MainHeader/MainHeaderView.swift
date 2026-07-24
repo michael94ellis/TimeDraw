@@ -1,5 +1,5 @@
 //
-//  MainHeader.swift
+//  MainHeaderView.swift
 //  TimeDraw
 //
 //  Created by Michael Ellis on 1/6/22.
@@ -9,7 +9,15 @@ import SwiftUI
 import AppCore
 import DesignToken
 
-struct MainHeader: View {
+struct MainHeaderView: View {
+    
+    enum SettingsScreen {
+        case main
+        case calendars
+    }
+    
+    private let weekdayFormatter = DateFormatter(format: "EEE")
+    private let monthYearFormatter = DateFormatter(format: "LLLL YYYY")
     
     @Namespace private var weekdaySelection
     @State private var showSettingsSheet = false
@@ -25,9 +33,6 @@ struct MainHeader: View {
     func switchTransition(direction: SwipeDirection) -> AnyTransition {
         return .asymmetric(insertion: .move(edge: .top), removal: .move(edge: .top))
     }
-    
-    private let weekdayFormatter = DateFormatter(format: "EEE")
-    private let monthYearFormatter = DateFormatter(format: "LLLL YYYY")
     
     func weekDayHeader(for date: Date) -> some View {
         let today = Calendar.current.isDateInToday(date)
@@ -60,11 +65,6 @@ struct MainHeader: View {
         default:
             break
         }
-    }
-    
-    enum SettingsScreen {
-        case main
-        case calendars
     }
     
     var headerNav: some View {

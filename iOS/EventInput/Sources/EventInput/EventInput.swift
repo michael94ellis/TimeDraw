@@ -22,8 +22,12 @@ public struct EventInput: View {
 
     @Dependency(\.eventKitManager) private var eventKitManager
     @FocusState private var isFocused: Bool
+    
+    private var eventCreationAction: () -> Void
 
-    public init() {}
+    public init(eventCreationAction: @escaping () -> Void) {
+        self.eventCreationAction = eventCreationAction
+    }
 
     private var defaultCalendarColor: CGColor {
         eventKitManager.defaultReminderCalendar?.cgColor ?? .init(red: 55, green: 91, blue: 190, alpha: 1)
@@ -158,6 +162,7 @@ public struct EventInput: View {
                 Task {
                     await viewModel.submitEventOrReminder()
                     isFocused = false
+                    eventCreationAction()
                 }
             }
         }
@@ -200,7 +205,9 @@ public struct EventInput: View {
 
             if viewModel.editMode {
                 DestructiveTextButton(title: "Delete") {
-                    viewModel.delete()
+                    Task {
+                        await viewModel.delete()
+                    }
                 }
             }
         }

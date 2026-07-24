@@ -36,10 +36,6 @@ struct TimeDrawApp: App {
                 .environmentObject(itemViewModel)
                 .environmentObject(listViewModel)
                 .environmentObject(appSettings)
-                .onAppear {
-                    // FIXME: This should go after adding an event
-                    ReviewRequestManager.shared.requestReviewIfAppropriate()
-                }
                 .onChange(of: scenePhase) { _, phase in
                     if phase == .active {
                         listViewModel.updateData()

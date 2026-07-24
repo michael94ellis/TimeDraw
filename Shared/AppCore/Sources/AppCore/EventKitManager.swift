@@ -20,7 +20,7 @@ extension DependencyValues {
     }
 }
 
-public final class EventKitManager {
+public final actor EventKitManager {
     
     public static var appName: String = "TimeDraw"
 
@@ -147,19 +147,19 @@ public final class EventKitManager {
         }
     }
     
-    public func eventAuthorizationStatus() -> EKAuthorizationStatus {
+    nonisolated public func eventAuthorizationStatus() -> EKAuthorizationStatus {
         EKEventStore.authorizationStatus(for: .event)
     }
 
-    public func reminderAuthorizationStatus() -> EKAuthorizationStatus {
+    nonisolated public func reminderAuthorizationStatus() -> EKAuthorizationStatus {
         EKEventStore.authorizationStatus(for: .reminder)
     }
 
-    public func isEventAccessGranted(_ status: EKAuthorizationStatus) -> Bool {
+    nonisolated public func isEventAccessGranted(_ status: EKAuthorizationStatus) -> Bool {
         status == .fullAccess
     }
 
-    public func isReminderAccessGranted(_ status: EKAuthorizationStatus) -> Bool {
+    nonisolated public func isReminderAccessGranted(_ status: EKAuthorizationStatus) -> Bool {
         status == .fullAccess
     }
 

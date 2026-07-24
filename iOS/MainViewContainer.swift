@@ -5,10 +5,12 @@
 //  Created by Michael Ellis on 1/2/22.
 //
 
-import CoreData
-import EventInput
 import AppCore
+import AppStoreReviewRequest
+import CoreData
 import DailyGoalTextfield
+
+import EventInput
 import EventKit
 import EventUIComponents
 import Onboarding
@@ -19,6 +21,8 @@ struct MainViewContainer: View {
     @EnvironmentObject private var appSettings: AppSettings
     @EnvironmentObject private var itemViewModel: ModifyCalendarItemViewModel
     @EnvironmentObject private var listViewModel: CalendarItemListViewModel
+    /// Observable user default
+    @AppStorage(AppStorageKey.firstOpen) public var isFirstAppOpen = true
     
     /// The secondary textfield that can be edited
     @FocusState private var isDailyGoalFocused: Bool
@@ -42,7 +46,7 @@ struct MainViewContainer: View {
     
     @ViewBuilder var mainContent: some View {
         VStack(spacing: 0) {
-            MainHeader()
+            MainHeaderView()
                 .overlay(Divider(), alignment: .bottom)
             if self.appSettings.isDailyGoalEnabled {
                 DailyGoalTextField(isDailyGoalFocused: self.$isDailyGoalFocused)
@@ -56,11 +60,11 @@ struct MainViewContainer: View {
     var body: some View {
         ZStack {
 
-            if appSettings.isFirstAppOpen {
+            if isFirstAppOpen {
                 OnboardingExperience(
                     itemViewModel: itemViewModel,
                     listViewModel: listViewModel,
-                    headerDemo: { MainHeader() },
+                    headerDemo: { MainHeaderView() },
                     clockDemo: { TimeDrawClock(events: [], reminders: []) }
                 )
                     .environmentObject(appSettings)
@@ -72,7 +76,9 @@ struct MainViewContainer: View {
                     .overlay(self.blurOverlay)
                 VStack {
                     Spacer()
-                    EventInput()
+                    EventInput(eventCreationAction: {
+                        ReviewRequestManager().requestReviewIfAppropriate(for: UserDefaults.standard)
+                    })
                         .environmentObject(appSettings)
                 }
             }

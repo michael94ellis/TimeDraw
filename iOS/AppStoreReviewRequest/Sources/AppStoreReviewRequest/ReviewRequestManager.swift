@@ -5,31 +5,28 @@
 //  Created by Michael Ellis on 7/26/25.
 //
 
-#if os(iOS)
 import Foundation
 import StoreKit
 import SwiftUI
 import UIKit
 
-@MainActor
-final class ReviewRequestManager {
-    
-    static let shared = ReviewRequestManager()
-    
+final public class ReviewRequestManager: ReviewRequestManageable {
+        
     private let firstLaunchKey = "timedraw.firstLaunchDate"
     private let triggerDays: Double = 30
     
-    func requestReviewIfAppropriate() {
+    public init() { }
+    
+    public func requestReviewIfAppropriate(for userDefaults: UserDefaults) {
         let now = Date()
-        let defaults = UserDefaults.standard
         
         // Save first launch date if not already stored
-        if defaults.object(forKey: firstLaunchKey) == nil {
-            defaults.set(now, forKey: firstLaunchKey)
+        if userDefaults.object(forKey: firstLaunchKey) == nil {
+            userDefaults.set(now, forKey: firstLaunchKey)
             return
         }
         
-        guard let launchDate = defaults.object(forKey: firstLaunchKey) as? Date else {
+        guard let launchDate = userDefaults.object(forKey: firstLaunchKey) as? Date else {
             return
         }
         
@@ -42,11 +39,12 @@ final class ReviewRequestManager {
     }
     
     func requestReview() {
-        guard let window = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
-            assertionFailure()
-            return
+        Task { @MainActor in
+            guard let window = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+                assertionFailure()
+                return
+            }
+            AppStore.requestReview(in: window)
         }
-        AppStore.requestReview(in: window)
     }
 }
-#endif

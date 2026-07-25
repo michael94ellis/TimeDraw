@@ -851,7 +851,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.7.0;
+				MARKETING_VERSION = 0.8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw;
 				PRODUCT_NAME = TimeDraw;
 				SDKROOT = iphoneos;
@@ -892,7 +892,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.7.0;
+				MARKETING_VERSION = 0.8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelrobertellis.TimeDraw;
 				PRODUCT_NAME = TimeDraw;
 				SDKROOT = iphoneos;

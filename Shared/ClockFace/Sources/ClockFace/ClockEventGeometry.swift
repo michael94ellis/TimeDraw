@@ -206,7 +206,7 @@ public struct ClockDrawableItem: Identifiable, Hashable {
         kind = .event
         startDate = event.startDate
         endDate = event.endDate
-        color = Color(cgColor: event.calendar?.cgColor ?? UIColor.clear.cgColor)
+        color = Self.color(from: event.calendar?.cgColor)
         isAllDay = false
         eventType = ClockEventGeometry.eventType(start: event.startDate, end: event.endDate)
         self.event = event
@@ -219,11 +219,18 @@ public struct ClockDrawableItem: Identifiable, Hashable {
         kind = .reminder
         startDate = interval.start
         endDate = interval.end
-        color = Color(cgColor: reminder.calendar?.cgColor ?? UIColor.clear.cgColor)
+        color = Self.color(from: reminder.calendar?.cgColor)
         isAllDay = false
         eventType = ClockEventGeometry.eventType(start: interval.start, end: interval.end)
         event = nil
         self.reminder = reminder
+    }
+    
+    private static func color(from cgColor: CGColor?) -> Color {
+        guard let cgColor, cgColor.alpha > 0.05 else {
+            return .accentColor
+        }
+        return Color(cgColor: cgColor)
     }
 
     static func reminderInterval(for reminder: EKReminder,

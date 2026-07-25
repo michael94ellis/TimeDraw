@@ -105,6 +105,7 @@ struct TimeDrawClock: View {
                         let size = min(geo.size.width, geo.size.height)
                         eventLayers(clockSize: size)
                             .frame(width: size, height: size)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                 }
             ClockHands(currentTime: $currentTime)

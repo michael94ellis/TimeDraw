@@ -10,3 +10,6 @@ TimeDraw.ipa
 TimeDraw.xcodeproj/project.xcworkspace/xcuserdata/*
 /build/XCBuildData
 /build
+/iOS/*/build
+/Shared/*/build
+/TimeDraw.xcodeproj/xcuserdata

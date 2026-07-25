@@ -13,8 +13,10 @@
 		<string>com.apple.watchkit</string>
 	</dict>
 	<key>NSCalendarsUsageDescription</key>
-	<string>TimeDraw Watch needs access to your calendars to display your events and reminders.</string>
+	<string>TimeDraw needs calendar access to draw your events on the watch face.</string>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>TimeDraw needs full calendar access to read and display your events on the watch face.</string>
 	<key>NSRemindersUsageDescription</key>
-	<string>TimeDraw Watch needs access to your reminders to display them on the clock face.</string>
+	<string>TimeDraw needs reminders access to draw your reminders on the watch face.</string>
 </dict>
 </plist>

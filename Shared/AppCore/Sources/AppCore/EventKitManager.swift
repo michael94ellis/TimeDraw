@@ -100,15 +100,11 @@ public final actor EventKitManager {
                             endDate: Date,
                             calendars filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
         try await eventsAvailabilityCheck()
-        let calendars = self.eventStore.calendars(for: .event).filter { calendar in
-            if filterCalendarIDs.isEmpty { return true }
-            return filterCalendarIDs.contains(calendar.calendarIdentifier)
-        }
+        let calendars = resolvedCalendars(for: .event, filterCalendarIDs: filterCalendarIDs)
         let predicate = self.eventStore.predicateForEvents(withStart: startDate,
                                                            end: endDate,
                                                            calendars: calendars)
-        let events = self.eventStore.events(matching: predicate)
-        return events
+        return self.eventStore.events(matching: predicate)
     }
     
     /// Fetch all reminders
@@ -116,12 +112,7 @@ public final actor EventKitManager {
     ///   - filterCalendarIDs: filterable Calendar IDs
     public func fetchReminders(calendars filterCalendarIDs: [String] = []) async throws -> [EKReminder]? {
         try await remindersAvailabilityCheck()
-        let calendars = self.eventStore.calendars(for: .reminder).filter { calendar in
-            if filterCalendarIDs.isEmpty {
-                return true
-            }
-            return filterCalendarIDs.contains(calendar.calendarIdentifier)
-        }
+        let calendars = resolvedCalendars(for: .reminder, filterCalendarIDs: filterCalendarIDs)
         let predicate = self.eventStore.predicateForReminders(in: calendars)
         return await withCheckedContinuation { continuation in
             self.eventStore.fetchReminders(matching: predicate, completion: {
@@ -139,16 +130,24 @@ public final actor EventKitManager {
                                end: Date,
                                calendars filterCalendarIDs: [String] = []) async throws -> [EKReminder]? {
         try await remindersAvailabilityCheck()
-        let calendars = self.eventStore.calendars(for: .reminder).filter { calendar in
-            if filterCalendarIDs.isEmpty { return true }
-            return filterCalendarIDs.contains(calendar.calendarIdentifier)
-        }
+        let calendars = resolvedCalendars(for: .reminder, filterCalendarIDs: filterCalendarIDs)
         let predicate = self.eventStore.predicateForReminders(in: calendars)
         return await withCheckedContinuation { continuation in
             self.eventStore.fetchReminders(matching: predicate, completion: {
                 continuation.resume(returning: $0)
             })
         }
+    }
+    
+    /// `nil` means “all calendars”. An empty array means “search nothing”, which
+    /// is a common watchOS failure when `calendars(for:)` is briefly empty after grant.
+    private func resolvedCalendars(for entityType: EKEntityType,
+                                   filterCalendarIDs: [String]) -> [EKCalendar]? {
+        guard !filterCalendarIDs.isEmpty else { return nil }
+        let filtered = eventStore.calendars(for: entityType).filter {
+            filterCalendarIDs.contains($0.calendarIdentifier)
+        }
+        return filtered.isEmpty ? nil : filtered
     }
     
     nonisolated public func eventAuthorizationStatus() -> EKAuthorizationStatus {
@@ -201,6 +200,11 @@ public final actor EventKitManager {
             self.eventStore = EKEventStore()
         }
         return granted
+    }
+    
+    /// Fresh store after permission changes or when calendar sources finish syncing.
+    public func resetEventStore() {
+        eventStore = EKEventStore()
     }
     
     // MARK: Access Calendars

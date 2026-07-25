@@ -26,22 +26,14 @@ struct TimeDrawWatchApp: App {
             VStack(spacing: 4) {
                 Spacer(minLength: 0)
                 TimeDrawClock(
-                    events: calendarModel.isEventAccessGranted ? calendarModel.events : [],
-                    reminders: calendarModel.isReminderAccessGranted ? calendarModel.todaysReminders : []
+                    events: calendarModel.events,
+                    reminders: calendarModel.todaysReminders
                 )
                 .adaptiveLayoutMetrics()
                 .id(
                     calendarModel.events.compactMap(\.eventIdentifier).joined(separator: "|")
                     + "|\(calendarModel.todaysReminders.count)"
                 )
-                
-                if !calendarModel.statusMessage.isEmpty {
-                    Text(calendarModel.statusMessage)
-                        .font(.system(size: 9, weight: .medium))
-                        .foregroundStyle(.secondary)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.7)
-                }
                 
                 WatchEventKitAccessIndicators(
                     isEventAccessGranted: calendarModel.isEventAccessGranted,

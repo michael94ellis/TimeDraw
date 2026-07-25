@@ -12,14 +12,16 @@ import SwiftUI
 @Observable
 final class WatchCalendarModel {
     
-    private(set) var events: [EKEvent] = []
-    private(set) var reminders: [EKReminder] = []
-    private var eventStatus: EKAuthorizationStatus { EKEventStore.authorizationStatus(for: .event) }
-    private var reminderStatus: EKAuthorizationStatus { EKEventStore.authorizationStatus(for: .reminder) }
-    private(set) var statusMessage: String = ""
-    
     @ObservationIgnored
     private var store = EKEventStore()
+    
+    private(set) var events: [EKEvent] = []
+    private(set) var reminders: [EKReminder] = []
+    
+    @ObservationIgnored
+    private var eventStatus: EKAuthorizationStatus { EKEventStore.authorizationStatus(for: .event) }
+    @ObservationIgnored
+    private var reminderStatus: EKAuthorizationStatus { EKEventStore.authorizationStatus(for: .reminder) }
     
     @ObservationIgnored
     var isEventAccessGranted: Bool { eventStatus == .fullAccess }
@@ -51,12 +53,9 @@ final class WatchCalendarModel {
             }
             if granted {
                 await load()
-            } else {
-                statusMessage = "Events denied"
             }
             return granted
         } catch {
-            statusMessage = "Events error: \(error.localizedDescription)"
             return false
         }
     }
@@ -70,12 +69,9 @@ final class WatchCalendarModel {
             }
             if granted {
                 await load()
-            } else {
-                statusMessage = "Reminders denied"
             }
             return granted
         } catch {
-            statusMessage = "Reminders error: \(error.localizedDescription)"
             return false
         }
     }
@@ -113,22 +109,5 @@ final class WatchCalendarModel {
                 }
             }
         }
-        
-        #if DEBUG
-        func authLabel(_ status: EKAuthorizationStatus) -> String {
-            switch status {
-            case .fullAccess: return "ok"
-            case .writeOnly: return "write"
-            case .denied: return "denied"
-            case .restricted: return "restrict"
-            case .notDetermined: return "ask"
-            @unknown default: return "\(status.rawValue)"
-            }
-        }
-        
-        let eventLabel = authLabel(eventStatus)
-        let reminderLabel = authLabel(reminderStatus)
-        statusMessage = "E:\(events.count) (\(eventLabel))  R:\(todaysReminders.count) (\(reminderLabel))"
-        #endif
     }
 }

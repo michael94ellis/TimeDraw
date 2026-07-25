@@ -115,17 +115,16 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
                     .environmentObject(listViewModel)
 
                 Text("Here's a swipeable weekly calendar to quickly see and navigate through the weeks")
+                    .padding(24)
                 Spacer()
             }
-            .padding(24)
             .allowsHitTesting(false)
         case .dailyGoal:
             VStack {
                 OnboardingDailyGoalTextField()
-                Text("A space to write something about your day that doesn't fit as an Event or Reminder\n\nYou can hide this in settings") // swiftlint:disable:this line_length
+                Text("A space to write something about your day that doesn't fit as an Event or Reminder\n\nYou can show or hide this in settings")
                 Spacer()
             }
-            .padding(24)
             .allowsHitTesting(false)
         case .analogClock:
             VStack(spacing: 16) {
@@ -134,7 +133,6 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
                     .multilineTextAlignment(.center)
             }
             .frame(maxWidth: .infinity)
-            .padding(24)
             .allowsHitTesting(false)
         case .eventCreation:
             VStack {
@@ -145,7 +143,6 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
                 })
                     .environmentObject(itemViewModel)
             }
-            .padding(24)
             .allowsHitTesting(false)
         case .calendarPermission:
             OnboardingPermissionPage(

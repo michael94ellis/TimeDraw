@@ -12,6 +12,7 @@ import DailyGoalTextfield
 
 import EventInput
 import EventKit
+import EventManagement
 import EventUIComponents
 import Onboarding
 import SwiftUI

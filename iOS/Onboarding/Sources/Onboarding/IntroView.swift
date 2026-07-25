@@ -22,6 +22,7 @@ public struct IntroView<Content: View>: View {
                 Spacer()
                 content
                 Spacer()
+                Spacer()
             }
             Spacer()
         }

@@ -56,7 +56,7 @@ enum EventInputDetailSection: Hashable {
     @Published var endRecurrenceTime: DateComponents?
     private var recurrenceRule: EKRecurrenceRule?
     private var recurrenceEnd: EKRecurrenceEnd?
-    @Published var selectedRule: EKRecurrenceFrequency = .weekly
+    @Published var selectedRule: EKRecurrenceFrequency?
     
     @Published var isRecurrenceUsingOccurences: Bool = false
     @Published var numberOfOccurences: Int?
@@ -136,7 +136,7 @@ enum EventInputDetailSection: Hashable {
         case .yearly:
             return "Yearly"
         @unknown default:
-            return selectedRule.description
+            return nil
         }
     }
     
@@ -258,22 +258,25 @@ enum EventInputDetailSection: Hashable {
             self.recurrenceEnd = nil
             return
         }
+        guard let selectedRule else {
+            return
+        }
         switch self.selectedRule {
         case .daily:
             let interval = self.frequencyDayValueInt ?? 1
             self.recurrenceRule = EKRecurrenceRule(recurrenceWith: selectedRule, interval: interval, end: self.recurrenceEnd)
         case .weekly:
             let recurrenceDays = EKWeekday.getSelectedWeekDays(for: self.frequencyWeekdayValues)
-            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: recurrenceDays, daysOfTheMonth: nil, monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: selectedRule, interval: 1, daysOfTheWeek: recurrenceDays, daysOfTheMonth: nil, monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
         case .monthly:
             let recurrenceDays = self.selectedMonthDays.compactMap({ $0 }) as [NSNumber]
-            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: recurrenceDays, monthsOfTheYear: (1...12).compactMap { NSNumber(value: $0) }, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: recurrenceDays, monthsOfTheYear: (1...12).compactMap { NSNumber(value: $0) }, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
         case .yearly:
             let recurrenceDays = self.selectedMonthDays.compactMap({ $0 }) as [NSNumber]
             let month: NSNumber = NSNumber(value: self.frequencyMonthDate ?? 0 + 2)
-            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: self.selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: recurrenceDays, monthsOfTheYear: [month], weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
+            self.recurrenceRule = EKRecurrenceRule(recurrenceWith: selectedRule, interval: 1, daysOfTheWeek: nil, daysOfTheMonth: recurrenceDays, monthsOfTheYear: [month], weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: self.recurrenceEnd)
         default:
-            print("Error unsupported recurrence selected: \(self.selectedRule)")
+            print("Error unsupported recurrence selected: \(selectedRule)")
         }
     }
     
@@ -341,6 +344,7 @@ enum EventInputDetailSection: Hashable {
         self.isRecurrenceUsingOccurences = false
         self.recurrenceRule = nil
         self.recurrenceEnd = nil
+        self.selectedRule = nil
         self.endRecurrenceDate = nil
         self.endRecurrenceTime = nil
         self.numberOfOccurences = nil

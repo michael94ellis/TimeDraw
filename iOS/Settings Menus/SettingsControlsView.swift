@@ -6,6 +6,7 @@
 //
 
 import AppCore
+import EventManagement
 import SwiftUI
 
 struct SettingsControlsView: View {

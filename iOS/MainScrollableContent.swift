@@ -10,6 +10,7 @@ import EventInput
 import AppCore
 import DesignToken
 import EventKit
+import EventManagement
 import EventUIComponents
 import SwiftUI
 

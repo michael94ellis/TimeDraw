@@ -8,6 +8,7 @@ import Dependencies
 import AppCore
 import DesignToken
 import EventKit
+import EventManagement
 import SwiftUI
 
 enum DebugTestDataSeeder {

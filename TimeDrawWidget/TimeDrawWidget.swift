@@ -5,9 +5,10 @@
 //  Created by Michael Ellis on 7/26/25.
 //
 
-import ClockFace
 import AppCore
+import ClockFace
 import EventKit
+import EventManagement
 import SwiftUI
 import WidgetKit
 

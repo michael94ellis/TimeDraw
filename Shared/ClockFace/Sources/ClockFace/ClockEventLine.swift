@@ -223,21 +223,19 @@ public struct ClockCrossoverBend: Shape {
         startDegrees: Double,
         endDegrees: Double
     ) {
-        let normalizedEnd = ClockEventGeometry.normalizedEndAngle(startDegrees: startDegrees, endDegrees: endDegrees)
-        let (bendStart, bendEnd) = ClockEventGeometry.bendRange(startDegrees: startDegrees, endDegrees: endDegrees)
+        let sweepEnd = ClockEventGeometry.crossingSweepEnd(
+            startDegrees: startDegrees,
+            endDegrees: endDegrees
+        )
+        let (bendStart, bendEnd) = ClockEventGeometry.bendRange(
+            startDegrees: startDegrees,
+            endDegrees: endDegrees
+        )
 
-        if bendStart >= bendEnd {
-            addBendSweep(
-                to: &path,
-                in: rect,
-                center: center,
-                amRadius: amRadius,
-                pmRadius: pmRadius,
-                startDegrees: startDegrees,
-                endDegrees: normalizedEnd
-            )
-            return
-        }
+        guard sweepEnd > startDegrees else { return }
+
+        // Valid `.both` events always cover some of the noon bend after unwrapping.
+        guard bendStart < bendEnd else { return }
 
         if startDegrees < bendStart {
             path.addArc(
@@ -260,15 +258,12 @@ public struct ClockCrossoverBend: Shape {
             moveToStart: startDegrees >= bendStart
         )
 
-        if bendEnd < normalizedEnd {
-            let pmEnd = endDegrees < bendEnd
-                ? ClockEventGeometry.normalizedEndAngle(startDegrees: bendEnd, endDegrees: endDegrees)
-                : endDegrees
+        if bendEnd < sweepEnd {
             path.addArc(
                 center: center,
                 radius: pmRadius,
                 startAngle: .degrees(bendEnd),
-                endAngle: .degrees(pmEnd),
+                endAngle: .degrees(sweepEnd),
                 clockwise: false
             )
         }

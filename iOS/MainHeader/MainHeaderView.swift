@@ -8,6 +8,7 @@
 import SwiftUI
 import AppCore
 import DesignToken
+import EventManagement
 
 struct MainHeaderView: View {
     

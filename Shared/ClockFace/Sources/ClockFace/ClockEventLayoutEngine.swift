@@ -143,6 +143,8 @@ public enum ClockEventLayoutEngine {
         into arcSegments: inout [ClockArcSegment],
         calendar: Calendar
     ) {
+        guard item.startDate < item.endDate else { return }
+
         let startDegrees = ClockEventGeometry.angle(for: item.startDate, calendar: calendar)
         let endDegrees = ClockEventGeometry.angle(for: item.endDate, calendar: calendar)
         let normalizedEnd = ClockEventGeometry.normalizedEndAngle(
@@ -172,13 +174,15 @@ public enum ClockEventLayoutEngine {
         into crossoverSegments: inout [ClockCrossoverSegment],
         calendar: Calendar
     ) {
+        guard item.startDate < item.endDate else { return }
+
         let startDegrees = ClockEventGeometry.angle(for: item.startDate, calendar: calendar)
         let endDegrees = ClockEventGeometry.angle(for: item.endDate, calendar: calendar)
-        let normalizedEnd = ClockEventGeometry.normalizedEndAngle(
+        let sweepEnd = ClockEventGeometry.crossingSweepEnd(
             startDegrees: startDegrees,
             endDegrees: endDegrees
         )
-        guard normalizedEnd > startDegrees else { return }
+        guard sweepEnd > startDegrees else { return }
 
         crossoverSegments.append(
             ClockCrossoverSegment(

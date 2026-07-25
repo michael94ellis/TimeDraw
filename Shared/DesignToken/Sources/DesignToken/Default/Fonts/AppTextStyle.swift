@@ -63,7 +63,8 @@ extension AppTextStyle {
         case .listSubtitle: FontSpec(weight: .light, phoneSize: 16, padSize: 18, relativeTo: .callout)
         case .listCaption: FontSpec(weight: .regular, phoneSize: 12, padSize: 13, relativeTo: .caption)
         case .listEmpty: FontSpec(weight: .regular, phoneSize: 18, padSize: 20, relativeTo: .body)
-        case .clockHour: FontSpec(weight: .bold, phoneSize: 16, padSize: 26, relativeTo: .caption)
+        case .clockHour: FontSpec(weight: .semiBold, phoneSize: 18
+                                  , padSize: 26, relativeTo: .body)
         case .body: FontSpec(weight: .regular, phoneSize: 18, padSize: 20, relativeTo: .body)
         case .fine: FontSpec(weight: .light, phoneSize: 16, padSize: 18, relativeTo: .callout)
         case .button: FontSpec(weight: .semiBold, phoneSize: 18, padSize: 20, relativeTo: .body)

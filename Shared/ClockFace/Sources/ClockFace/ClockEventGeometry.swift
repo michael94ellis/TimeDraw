@@ -60,14 +60,40 @@ enum ClockEventGeometry {
 
     static func normalizedEndAngle(startDegrees: Double, endDegrees: Double) -> Double {
         var normalized = endDegrees
-        if normalized < startDegrees { normalized += 360 }
+        // `<=` so a true 12-hour same-ring span (identical face angle) still sweeps a full turn.
+        if normalized <= startDegrees { normalized += 360 }
         return normalized
     }
 
+    /// Unwraps the end angle for a noon-crossing event so the swept path
+    /// `start → noon → end` is monotonic on the 12-hour face.
+    ///
+    /// Needed because 9:15am and 9:15pm share the same face angle, and many
+    /// PM ends sit numerically "before" the AM start (e.g. 9am→10pm).
+    static func crossingSweepEnd(startDegrees: Double, endDegrees: Double) -> Double {
+        var end = endDegrees
+        if end <= startDegrees {
+            end += 360
+        }
+        // Keep unwrapping until the open-closed interval contains noon.
+        while !angleSweep(from: startDegrees, to: end, contains: noonDegrees),
+              end < startDegrees + 720 {
+            end += 360
+        }
+        return end
+    }
+
+    private static func angleSweep(from start: Double, to end: Double, contains angle: Double) -> Bool {
+        var marker = angle
+        while marker < start { marker += 360 }
+        while marker > end { marker -= 360 }
+        return marker > start && marker <= end
+    }
+
     static func bendRange(startDegrees: Double, endDegrees: Double) -> (bendStart: Double, bendEnd: Double) {
-        let normalizedEnd = normalizedEndAngle(startDegrees: startDegrees, endDegrees: endDegrees)
+        let sweepEnd = crossingSweepEnd(startDegrees: startDegrees, endDegrees: endDegrees)
         let bendStart = max(startDegrees, noonDegrees - bendHalf)
-        let bendEnd = min(normalizedEnd, noonDegrees + bendHalf)
+        let bendEnd = min(sweepEnd, noonDegrees + bendHalf)
         return (bendStart, bendEnd)
     }
 

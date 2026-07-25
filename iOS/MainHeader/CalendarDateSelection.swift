@@ -7,6 +7,7 @@
 
 import AppCore
 import DesignToken
+import EventManagement
 import EventUIComponents
 import SwiftUI
 

@@ -31,6 +31,7 @@ public struct ClockFace: View {
         ForEach(hours, id: \.self) { index in
             let num = (index / 5) + 6
             Text("\(num > 12 ? num - 12 : num)")
+                .frame(maxWidth: .infinity)
                 .font(.app(.clockHour))
                 .rotationEffect(.degrees(Double((num - 12) * -30) - 180))
                 .offset(y: markOffset)

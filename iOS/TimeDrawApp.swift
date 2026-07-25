@@ -10,6 +10,7 @@ import EventInput
 import AppCore
 import SwiftUI
 import EventKit
+import EventManagement
 
 @main
 struct TimeDrawApp: App {

@@ -11,7 +11,7 @@ import SwiftUI
 struct SettingsControlsView: View {
 
     @EnvironmentObject var appSettings: AppSettings
-    @EnvironmentObject var calendarItemListViewModel: CalendarItemListViewModel
+    @EnvironmentObject var calendarItemListViewModel: CalendarListViewModel
 
     var body: some View {
         Section("Customize") {

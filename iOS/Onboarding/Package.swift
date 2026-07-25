@@ -16,6 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../AppCore"),
+        .package(path: "../../Shared/EventManagement"),
         .package(path: "../DesignToken"),
         .package(path: "../DailyGoalTextfield"),
         .package(path: "../EventInput"),
@@ -26,6 +27,7 @@ let package = Package(
             name: "Onboarding",
             dependencies: [
                 .product(name: "AppCore", package: "AppCore"),
+                .product(name: "EventManagement", package: "EventManagement"),
                 .product(name: "DailyGoalTextfield", package: "DailyGoalTextfield"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DesignToken", package: "DesignToken"),

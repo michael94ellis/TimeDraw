@@ -5,13 +5,14 @@
 //  Created by Michael Ellis on 9/11/22.
 //
 
-import Dependencies
-import EventInput
 import AppCore
-import DesignToken
-import EventKit
-import SwiftUI
 import DailyGoalTextfield
+import Dependencies
+import DesignToken
+import EventInput
+import EventKit
+import EventManagement
+import SwiftUI
 
 public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
     enum Card {
@@ -35,7 +36,7 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
     }
 
     var itemViewModel: ModifyCalendarItemViewModel
-    var listViewModel: CalendarItemListViewModel
+    var listViewModel: CalendarListViewModel
     @Binding var navPath: NavigationPath
     private let headerDemo: HeaderDemo
     private let clockDemo: ClockDemo
@@ -61,7 +62,7 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
 
     public init(
         itemViewModel: ModifyCalendarItemViewModel,
-        listViewModel: CalendarItemListViewModel,
+        listViewModel: CalendarListViewModel,
         navPath: Binding<NavigationPath>,
         @ViewBuilder headerDemo: () -> HeaderDemo,
         @ViewBuilder clockDemo: () -> ClockDemo

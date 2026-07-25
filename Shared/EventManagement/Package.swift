@@ -4,25 +4,25 @@
 import PackageDescription
 
 let package = Package(
-    name: "AppCore",
+    name: "EventManagement",
     platforms: [
         .iOS(.v17),
         .watchOS(.v10),
     ],
     products: [
         .library(
-            name: "AppCore",
-            targets: ["AppCore"]
+            name: "EventManagement",
+            targets: ["EventManagement"]
         ),
     ],
     dependencies: [
-        .package(path: "../EventManagement"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.9.2"),
     ],
     targets: [
         .target(
-            name: "AppCore",
+            name: "EventManagement",
             dependencies: [
-                .product(name: "EventManagement", package: "EventManagement"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),
     ],

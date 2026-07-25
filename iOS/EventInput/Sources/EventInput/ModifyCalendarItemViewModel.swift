@@ -8,6 +8,7 @@
 import Dependencies
 import AppCore
 import EventKit
+import EventManagement
 import Foundation
 import SwiftUI
 import ToastWindow

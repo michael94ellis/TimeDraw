@@ -5,8 +5,8 @@
 //  Created by Michael Ellis on 3/13/22.
 //
 
+import EventManagement
 import SwiftUI
-import EventKit
 
 public enum AppStorageKey {
     /// Bool
@@ -14,17 +14,17 @@ public enum AppStorageKey {
     /// Bool
     public static let isDailyGoalEnabled = "isDailyGoalEnabled"
     /// ItemRecurrenceType
-    public static let showItemRecurrenceType = "showItemRecurrenceType"
+    public static let showItemRecurrenceType = EventStorageKey.showItemRecurrenceType
     /// CalendarItemType
-    public static let showCalendarItemType = "showCalendarItemType"
+    public static let showCalendarItemType = EventStorageKey.showCalendarItemType
     /// Data?
-    public static let userSelectedCalendars = "userSelectedCalendars"
+    public static let userSelectedCalendars = EventStorageKey.userSelectedCalendars
     /// Data?
-    public static let currentSelectedCalendar = "currentSelectedCalendar"
+    public static let currentSelectedCalendar = EventStorageKey.currentSelectedCalendar
     /// Int
     public static let timePickerGranularity = "timePickerGranularity"
     /// Bool
-    public static let showRecurringItems = "showRecurringItems"
+    public static let showRecurringItems = EventStorageKey.showRecurringItems
 }
 
 public class AppSettings: ObservableObject {

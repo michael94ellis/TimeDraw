@@ -14,7 +14,7 @@ struct CalendarDateSelection: View {
     
     @Binding var showCompactCalendar: Bool
     @Binding private var selectedDate: Date
-    @EnvironmentObject var itemList: CalendarItemListViewModel
+    @EnvironmentObject var itemList: CalendarListViewModel
     @Environment(\.layoutMetrics) private var layoutMetrics
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     

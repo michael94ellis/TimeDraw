@@ -1,5 +1,5 @@
 //
-//  CalendarItemListViewModel.swift
+//  CalendarListViewModel.swift
 //  TimeDraw
 //
 //  Created by Michael Ellis on 3/5/22.
@@ -10,17 +10,17 @@ import EventKit
 import SwiftUI
 
 struct CalendarListViewModelKey: DependencyKey {
-    static var liveValue: CalendarItemListViewModel = .init()
+    static var liveValue: CalendarListViewModel = .init()
 }
 
 extension DependencyValues {
-    public var calendarListViewModel: CalendarItemListViewModel {
+    public var calendarListViewModel: CalendarListViewModel {
       get { self[CalendarListViewModelKey.self] }
       set { self[CalendarListViewModelKey.self] = newValue }
     }
 }
 
-public final class CalendarItemListViewModel: ObservableObject {
+public final class CalendarListViewModel: ObservableObject {
     
     @Published public var displayDate: Date = Date() {
         didSet {
@@ -31,14 +31,14 @@ public final class CalendarItemListViewModel: ObservableObject {
     
     @Published public var events: [EKEvent] = []
     @Published public var reminders: [EKReminder] = []
+    @Published public var error: (any Error)?
     
-    @AppStorage(AppStorageKey.userSelectedCalendars) private var userSelectedCalendars: Data?
-    @AppStorage(AppStorageKey.showCalendarItemType) private var showCalendarItemType: CalendarItemType = .all
-    @AppStorage(AppStorageKey.showItemRecurrenceType) private var showItemRecurrenceType: ItemRecurrenceType = .all
+    @AppStorage(EventStorageKey.userSelectedCalendars) private var userSelectedCalendars: Data?
+    @AppStorage(EventStorageKey.showCalendarItemType) private var showCalendarItemType: CalendarItemType = .all
+    @AppStorage(EventStorageKey.showItemRecurrenceType) private var showItemRecurrenceType: ItemRecurrenceType = .all
     
     @Dependency(\.eventKitManager) private var eventKitManager
     private var isApplyingDisplayDateSilently = false
-    private var loadTask: Task<Void, Never>?
     
     public init() { }
     
@@ -48,49 +48,54 @@ public final class CalendarItemListViewModel: ObservableObject {
     }
     
     /// Ensures `displayDate` is today, then reloads events/reminders.
-    public func refreshForToday() {
-        Task { await refreshForTodayAsync() }
+    public func refreshForToday() async throws {
+        try await refreshForTodayAsync()
     }
     
     /// Async variant so watchOS can wait for fetches (and retry if needed).
     @discardableResult
-    public func refreshForTodayAsync() async -> (events: Int, reminders: Int) {
+    public func refreshForTodayAsync() async throws -> (events: Int, reminders: Int) {
         let today = Date()
         if !Calendar.current.isDate(displayDate, inSameDayAs: today) {
             isApplyingDisplayDateSilently = true
             displayDate = today
             isApplyingDisplayDateSilently = false
         }
-        await updateDataAsync()
+        try await updateDataAsync()
         return (events.count, reminders.count)
     }
     
     public func updateData() {
-        loadTask?.cancel()
-        loadTask = Task { await updateDataAsync() }
+        Task {
+            do {
+                try await updateDataAsync()
+            } catch let error {
+                self.error = error
+            }
+        }
     }
     
-    private func updateDataAsync() async {
+    private func updateDataAsync() async throws {
         let canReadEvents = eventKitManager.eventAuthorizationStatus() == .fullAccess
         let canReadReminders = eventKitManager.reminderAuthorizationStatus() == .fullAccess
         
         switch showCalendarItemType {
         case .scheduled:
             reminders = []
-            events = canReadEvents ? await fetchEvents() : []
+            events = canReadEvents ? try await fetchEvents() : []
         case .unscheduled:
             events = []
-            reminders = canReadReminders ? await fetchReminders() : []
+            reminders = canReadReminders ? try await fetchReminders() : []
         case .all:
-            await withTaskGroup { group in
+            await withThrowingTaskGroup { group in
                 group.addTask {
-                    let loadedEvents = await self.fetchEvents()
+                    let loadedEvents = try await self.fetchEvents()
                     await MainActor.run {
                         self.events = loadedEvents
                     }
                 }
                 group.addTask {
-                    let loadedReminders = await self.fetchReminders()
+                    let loadedReminders = try await self.fetchReminders()
                     await MainActor.run {
                         self.reminders = loadedReminders
                     }
@@ -99,22 +104,12 @@ public final class CalendarItemListViewModel: ObservableObject {
         }
     }
     
-    public func fetchEvents() async -> [EKEvent] {
-        do {
-            return try await fetchEventsForDisplayDate(filterCalendarIDs: calendarFilterIDs)
-        } catch {
-            print(error)
-            return []
-        }
+    public func fetchEvents() async throws -> [EKEvent] {
+        try await fetchEventsForDisplayDate(filterCalendarIDs: calendarFilterIDs)
     }
     
-    public func fetchReminders() async -> [EKReminder] {
-        do {
-            return try await fetchRemindersForDisplayDate(filterCalendarIDs: calendarFilterIDs)
-        } catch {
-            print(error)
-            return []
-        }
+    public func fetchReminders() async throws -> [EKReminder] {
+        try await fetchRemindersForDisplayDate(filterCalendarIDs: calendarFilterIDs)
     }
     
     public func completeReminder(_ reminder: EKReminder) {
@@ -158,22 +153,16 @@ public final class CalendarItemListViewModel: ObservableObject {
     // Watch OS does not support these actions
     // https://developer.apple.com/forums/thread/42293
     #if !os(watchOS)
-    public func delete(_ item: EKCalendarItem) async {
+    @MainActor
+    public func delete(_ item: EKCalendarItem) async throws {
         if let reminder = item as? EKReminder {
             reminders.removeAll(where: { $0 == reminder })
-            do {
-                try await eventKitManager.eventStore.remove(reminder, commit: true)
-            } catch {
-                print("Error could not delete reminder: \(error)")
-            }
-        }
-        if let event = item as? EKEvent {
+            try await eventKitManager.eventStore.remove(reminder, commit: true)
+        } else if let event = item as? EKEvent {
             events.removeAll(where: { $0 == event })
-            do {
-                try await eventKitManager.eventStore.remove(event, span: .futureEvents, commit: true)
-            } catch {
-                print("Error could not delete event: \(error)")
-            }
+            try await eventKitManager.eventStore.remove(event, span: .futureEvents, commit: true)
+        } else {
+            assertionFailure("Unexpected Delete Type: \(item.self)")
         }
         updateData()
     }

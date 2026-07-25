@@ -9,6 +9,7 @@ import Dependencies
 import AppCore
 import DesignToken
 import EventKit
+import EventManagement
 import EventUIComponents
 import SwiftUI
 import UIComponents
@@ -16,7 +17,7 @@ import UIComponents
 public struct AddEventDateTimePicker: View {
 
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
-    @EnvironmentObject var calendarItemListViewModel: CalendarItemListViewModel
+    @EnvironmentObject var calendarListViewModel: CalendarListViewModel
     @Dependency(\.eventKitManager) private var eventKitManager
 
     private var isExpanded: Bool {
@@ -24,7 +25,7 @@ public struct AddEventDateTimePicker: View {
     }
 
     func setSuggestedTime() {
-        let displayDate = calendarItemListViewModel.displayDate
+        let displayDate = calendarListViewModel.displayDate
         if viewModel.newItemStartTime == nil {
             viewModel.newItemStartTime = displayDate.get(.hour, .minute, .second)
         }

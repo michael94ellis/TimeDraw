@@ -16,7 +16,7 @@ import SwiftUI
 struct MainScrollableContent: View {
     
     @EnvironmentObject private var modifyItemViewModel: ModifyCalendarItemViewModel
-    @EnvironmentObject private var itemList: CalendarItemListViewModel
+    @EnvironmentObject private var itemList: CalendarListViewModel
     @EnvironmentObject private var appSettings: AppSettings
     @Environment(\.layoutMetrics) private var layoutMetrics
     @Environment(\.scenePhase) private var scenePhase
@@ -53,11 +53,9 @@ struct MainScrollableContent: View {
         eventKitManager.isReminderAccessGranted(reminderAuthStatus)
     }
 
-    func performComplete(for item: EKReminder) {
+    func performComplete(for item: EKReminder) async {
         self.itemList.completeReminder(item)
-        Task {
-            await self.modifyItemViewModel.saveAndDisplayToast(reminder: item, "Reminder Completed")
-        }
+        await self.modifyItemViewModel.saveAndDisplayToast(reminder: item, "Reminder Completed")
     }
 
     func refreshAuthStatuses() {
@@ -132,9 +130,13 @@ struct MainScrollableContent: View {
                     )
                     .swipeActions(allowsFullSwipe: true) {
                         Button(action: {
-                            Task {
-                                await self.itemList.delete(item)
-                                self.modifyItemViewModel.displayToast("Event Deleted", style: .destructive)
+                            Task { @MainActor in
+                                do {
+                                    try await self.itemList.delete(item)
+                                    self.modifyItemViewModel.displayToast("Event Deleted", style: .destructive)
+                                } catch {
+                                    self.itemList.error = error
+                                }
                                 self.itemList.updateData()
                             }
                         }) {
@@ -188,16 +190,22 @@ struct MainScrollableContent: View {
                     )
                     .swipeActions(allowsFullSwipe: true) {
                         Button(action: {
-                            self.performComplete(for: item)
-                            self.itemList.updateData()
+                            Task {
+                                await self.performComplete(for: item)
+                                self.itemList.updateData()
+                            }
                         }) {
                             Image(systemName: "checkmark")
                                 .tint(Colors.success)
                         }
                         Button(action: {
-                            Task {
-                                await self.itemList.delete(item)
-                                self.modifyItemViewModel.displayToast("Reminder Deleted", style: .destructive)
+                            Task { @MainActor in
+                                do {
+                                    try await self.itemList.delete(item)
+                                    self.modifyItemViewModel.displayToast("Reminder Deleted", style: .destructive)
+                                } catch {
+                                    self.itemList.error = error
+                                }
                                 self.itemList.updateData()
                             }
                         }) {
@@ -239,6 +247,11 @@ struct MainScrollableContent: View {
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(Colors.groupedBackground)
+        .alert("Error", isPresented: .init(get: { itemList.error != nil }, set: { _ in itemList.error = nil }), actions: {
+            Button("OK") { itemList.error = nil }
+        }, message: {
+            Text(itemList.error?.localizedDescription ?? "Unhandled error")
+        })
         .refreshable(action: {
             self.itemList.updateData()
         })

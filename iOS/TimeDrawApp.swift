@@ -16,7 +16,7 @@ struct TimeDrawApp: App {
     
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var appSettings: AppSettings = .init()
-    @StateObject private var listViewModel: CalendarItemListViewModel = .init()
+    @StateObject private var listViewModel: CalendarListViewModel = .init()
     @StateObject private var itemViewModel: ModifyCalendarItemViewModel = .init()
     
     init() {

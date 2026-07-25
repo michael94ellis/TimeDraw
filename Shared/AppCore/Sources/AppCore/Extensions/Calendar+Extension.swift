@@ -27,6 +27,7 @@ extension Calendar {
         }
         .compactMap { $0 }
     }
+    
     public func generateDates(
         for dateInterval: DateInterval,
         matching components: DateComponents

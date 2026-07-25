@@ -35,8 +35,6 @@
 		2FB41CD727DEDBB70067F250 /* SettingsControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB41CD627DEDBB70067F250 /* SettingsControlsView.swift */; };
 		2FB60E5527E48DFE004DA305 /* CalendarSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB60E5427E48DFE004DA305 /* CalendarSelection.swift */; };
 		2FD40789284FBB700022FC49 /* TimeDrawWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */; };
-		2FWATCH012E37000200B69C71 /* WatchEventKitAccessIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FWATCH002E37000200B69C71 /* WatchEventKitAccessIndicators.swift */; };
-		2FWATCH032E37000300B69C71 /* WatchCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FWATCH022E37000300B69C71 /* WatchCalendarModel.swift */; };
 		2FD4078D284FBB700022FC49 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4078C284FBB700022FC49 /* NotificationController.swift */; };
 		2FD4078F284FBB700022FC49 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FD4078E284FBB700022FC49 /* NotificationView.swift */; };
 		2FD40793284FBB700022FC49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FD40792284FBB700022FC49 /* Assets.xcassets */; };
@@ -45,6 +43,8 @@
 		2FD407C6284FBC6C0022FC49 /* SwipeGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F24458727D8BDD0005BF37D /* SwipeGesture.swift */; };
 		2FDEBUG022E37000100B69C71 /* DebugTestDataSeeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDEBUG012E37000100B69C71 /* DebugTestDataSeeder.swift */; };
 		2FSET0022E37000100B69C71 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2FSET0012E37000100B69C71 /* Settings.bundle */; };
+		2FWATCH012E37000200B69C71 /* WatchEventKitAccessIndicators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FWATCH002E37000200B69C71 /* WatchEventKitAccessIndicators.swift */; };
+		2FWATCH032E37000300B69C71 /* WatchCalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FWATCH022E37000300B69C71 /* WatchCalendarModel.swift */; };
 		816FDFE530126B31002D82E3 /* CalendarDateSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816FDFE430126B31002D82E3 /* CalendarDateSelection.swift */; };
 		816FDFF930127903002D82E3 /* AppStoreReviewRequest in Frameworks */ = {isa = PBXBuildFile; productRef = 816FDFF830127903002D82E3 /* AppStoreReviewRequest */; };
 		8193FC9A300ED8AE0002D9C6 /* EventUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 8193FC99300ED8AE0002D9C6 /* EventUIComponents */; };
@@ -82,6 +82,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2FD4077A284FBB6F0022FC49;
 			remoteInfo = WatchFace;
+		};
+		816FE98D3014F326002D82E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 816FE16E3014F325002D82E3 /* Integration.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CAF21DCC29B66D7500368A47;
+			remoteInfo = Integration;
+		};
+		816FE98F3014F326002D82E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 816FE16E3014F325002D82E3 /* Integration.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CAF21DE629B66D7700368A47;
+			remoteInfo = IntegrationUITests;
+		};
+		816FE9933014F326002D82E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 816FE1F73014F325002D82E3 /* SwiftRefactorExtension.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25F743FB1DA97E9000CCD5AD;
+			remoteInfo = Host;
+		};
+		816FE9953014F326002D82E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 816FE1F73014F325002D82E3 /* SwiftRefactorExtension.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25F744111DA97ED800CCD5AD;
+			remoteInfo = SwiftRefactorExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -133,8 +161,6 @@
 		2FB60E5427E48DFE004DA305 /* CalendarSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarSelection.swift; sourceTree = "<group>"; };
 		2FD4077B284FBB6F0022FC49 /* WatchFace App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WatchFace App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FD40788284FBB700022FC49 /* TimeDrawWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDrawWatchApp.swift; sourceTree = "<group>"; };
-		2FWATCH002E37000200B69C71 /* WatchEventKitAccessIndicators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchEventKitAccessIndicators.swift; sourceTree = "<group>"; };
-		2FWATCH022E37000300B69C71 /* WatchCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchCalendarModel.swift; sourceTree = "<group>"; };
 		2FD4078C284FBB700022FC49 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		2FD4078E284FBB700022FC49 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		2FD40792284FBB700022FC49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -143,11 +169,16 @@
 		2FD40798284FBB700022FC49 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		2FDEBUG012E37000100B69C71 /* DebugTestDataSeeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTestDataSeeder.swift; sourceTree = "<group>"; };
 		2FSET0012E37000100B69C71 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		2FWATCH002E37000200B69C71 /* WatchEventKitAccessIndicators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchEventKitAccessIndicators.swift; sourceTree = "<group>"; };
+		2FWATCH022E37000300B69C71 /* WatchCalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchCalendarModel.swift; sourceTree = "<group>"; };
 		6F0FAB150415892D2EFB758D /* AppCore */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper; path = AppCore; sourceTree = "<group>"; };
 		816FDFBE301248C5002D82E3 /* EventInput */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = EventInput; sourceTree = "<group>"; };
 		816FDFBF30125BB2002D82E3 /* Onboarding */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Onboarding; sourceTree = "<group>"; };
 		816FDFE430126B31002D82E3 /* CalendarDateSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDateSelection.swift; sourceTree = "<group>"; };
 		816FDFE730126D93002D82E3 /* AppStoreReviewRequest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AppStoreReviewRequest; sourceTree = "<group>"; };
+		816FE16E3014F325002D82E3 /* Integration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Integration.xcodeproj; sourceTree = "<group>"; };
+		816FE1F73014F325002D82E3 /* SwiftRefactorExtension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = SwiftRefactorExtension.xcodeproj; sourceTree = "<group>"; };
+		81808CCD3014F3A80064A962 /* EventManagement */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = EventManagement; sourceTree = "<group>"; };
 		8193FC98300EBDA60002D9C6 /* EventUIComponents */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = EventUIComponents; sourceTree = "<group>"; };
 		8193FC9C300EDA860002D9C6 /* DesignToken */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignToken; sourceTree = "<group>"; };
 		8193FCC8300EE6DD0002D9C6 /* ClockFace */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ClockFace; sourceTree = "<group>"; };
@@ -241,6 +272,7 @@
 		2F39B84027823CF600FE72C3 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				81808CCD3014F3A80064A962 /* EventManagement */,
 				6F0FAB150415892D2EFB758D /* AppCore */,
 				8193FC9C300EDA860002D9C6 /* DesignToken */,
 				8193FCC8300EE6DD0002D9C6 /* ClockFace */,
@@ -344,6 +376,24 @@
 				816FDFE430126B31002D82E3 /* CalendarDateSelection.swift */,
 			);
 			path = MainHeader;
+			sourceTree = "<group>";
+		};
+		816FE9873014F325002D82E3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				816FE9943014F326002D82E3 /* Host.app */,
+				816FE9963014F326002D82E3 /* Swift Refactor.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		816FE9893014F325002D82E3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				816FE98E3014F326002D82E3 /* Integration.app */,
+				816FE9903014F326002D82E3 /* IntegrationUITests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -477,6 +527,16 @@
 			);
 			productRefGroup = 2F39B84C27823CF600FE72C3 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 816FE9893014F325002D82E3 /* Products */;
+					ProjectRef = 816FE16E3014F325002D82E3 /* Integration.xcodeproj */;
+				},
+				{
+					ProductGroup = 816FE9873014F325002D82E3 /* Products */;
+					ProjectRef = 816FE1F73014F325002D82E3 /* SwiftRefactorExtension.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				2F39B84A27823CF600FE72C3 /* TimeDraw (iOS) */,
@@ -485,6 +545,37 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		816FE98E3014F326002D82E3 /* Integration.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Integration.app;
+			remoteRef = 816FE98D3014F326002D82E3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		816FE9903014F326002D82E3 /* IntegrationUITests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = IntegrationUITests.xctest;
+			remoteRef = 816FE98F3014F326002D82E3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		816FE9943014F326002D82E3 /* Host.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = Host.app;
+			remoteRef = 816FE9933014F326002D82E3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		816FE9963014F326002D82E3 /* Swift Refactor.appex */ = {
+			isa = PBXReferenceProxy;
+			fileType = "wrapper.app-extension";
+			path = "Swift Refactor.appex";
+			remoteRef = 816FE9953014F326002D82E3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		2F39B84927823CF600FE72C3 /* Resources */ = {
@@ -745,10 +836,10 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Time Draw";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Time Draw can create and display Calendar Events";
-				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "Time Draw can create and display your Reminders";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -786,10 +877,10 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Time Draw";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Time Draw can create and display Calendar Events";
-				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "Time Draw can create and display your Reminders";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -891,11 +982,11 @@
 				INFOPLIST_FILE = ./watchOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WatchFace;
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = WatchFace_WatchKit_Extension.ComplicationController;
-				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Time Draw can create and display Calendar Events";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
 				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "Time Draw can create and display your Reminders";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.michaelrobertellis.TimeDraw;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -929,11 +1020,11 @@
 				INFOPLIST_FILE = ./watchOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WatchFace;
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = WatchFace_WatchKit_Extension.ComplicationController;
-				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Time Draw can create and display Calendar Events";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
 				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "Time Draw can create and display your Reminders";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Draw can create and display your Reminders";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.michaelrobertellis.TimeDraw;
 				LD_RUNPATH_SEARCH_PATHS = (

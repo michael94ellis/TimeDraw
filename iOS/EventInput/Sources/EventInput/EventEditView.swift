@@ -8,6 +8,7 @@
 import EventKit
 import AppCore
 import EventKitUI
+import EventManagement
 import SwiftUI
 
 public struct EventEditView: UIViewControllerRepresentable {

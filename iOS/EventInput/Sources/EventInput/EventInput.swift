@@ -9,6 +9,7 @@ import Dependencies
 import AppCore
 import DesignToken
 import EventKit
+import EventManagement
 import EventUIComponents
 import SwiftUI
 import UIComponents

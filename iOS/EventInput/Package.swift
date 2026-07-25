@@ -16,6 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../AppCore"),
+        .package(path: "../../Shared/EventManagement"),
         .package(path: "../DesignToken"),
         .package(path: "../UIComponents"),
         .package(path: "../EventUIComponents"),
@@ -27,6 +28,7 @@ let package = Package(
             name: "EventInput",
             dependencies: [
                 .product(name: "AppCore", package: "AppCore"),
+                .product(name: "EventManagement", package: "EventManagement"),
                 .product(name: "DesignToken", package: "DesignToken"),
                 .product(name: "UIComponents", package: "UIComponents"),
                 .product(name: "EventUIComponents", package: "EventUIComponents"),

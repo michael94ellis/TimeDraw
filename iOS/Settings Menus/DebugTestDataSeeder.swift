@@ -280,7 +280,7 @@ enum DebugTestDataSeeder {
 struct DebugSeedTestDataButton: View {
 
     @Dependency(\.eventKitManager) private var eventKitManager
-    @EnvironmentObject private var calendarItemListViewModel: CalendarItemListViewModel
+    @EnvironmentObject private var calendarItemListViewModel: CalendarListViewModel
 
     @State private var isSeeding = false
     @State private var statusMessage: String?

@@ -26,7 +26,7 @@ struct MainViewContainer: View {
     @State private var navPath: NavigationPath = .init()
     @EnvironmentObject private var appSettings: AppSettings
     @EnvironmentObject private var itemViewModel: ModifyCalendarItemViewModel
-    @EnvironmentObject private var listViewModel: CalendarItemListViewModel
+    @EnvironmentObject private var listViewModel: CalendarListViewModel
     /// Observable user default
     @AppStorage(AppStorageKey.firstOpen) public var isFirstAppOpen = true
     

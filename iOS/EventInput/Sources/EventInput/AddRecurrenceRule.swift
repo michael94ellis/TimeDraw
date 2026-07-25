@@ -7,6 +7,7 @@
 
 import EventKit
 import AppCore
+import EventManagement
 import SwiftUI
 import UIComponents
 

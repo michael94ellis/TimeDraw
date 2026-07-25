@@ -21,7 +21,7 @@ struct MainHeaderView: View {
     
     @Namespace private var weekdaySelection
     // TODO: Add a full month calendar feature somewhere
-    @EnvironmentObject var itemList: CalendarItemListViewModel
+    @EnvironmentObject var itemList: CalendarListViewModel
     @Environment(\.layoutMetrics) private var layoutMetrics
     @Binding var navPath: NavigationPath
     @State var swipeDirection: SwipeDirection = .left

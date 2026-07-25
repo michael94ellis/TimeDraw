@@ -41,7 +41,7 @@ public struct DismissableEventKitPermissionPlaceholder: View {
                     HStack {
                         Spacer()
                         Button(action: dismissPlaceholder) {
-                            Image(systemName: "xmark")
+                            Image(.xmark)
                                 .font(.app(.icon))
                                 .foregroundStyle(.secondary)
                         }

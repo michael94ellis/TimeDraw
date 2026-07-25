@@ -31,7 +31,7 @@ public struct ReminderListCell: View {
     
     @ViewBuilder
     var cellContent: some View {
-        Image(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
+        Image(item.isCompleted ? .checkmarkCircleFill : .circle)
             .font(.app(.icon))
                 .foregroundStyle(item.isCompleted ? Colors.completed : Colors.mutedText)
 
@@ -59,7 +59,7 @@ public struct ReminderListCell: View {
         }
 
         if let rules = item.recurrenceRules, !rules.isEmpty {
-            Image(systemName: "repeat")
+            Image(.repeat)
                 .font(.app(.icon))
                 .foregroundStyle(.secondary)
                 .padding(.horizontal, 8)

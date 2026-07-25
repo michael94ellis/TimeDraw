@@ -30,6 +30,7 @@ extension DependencyValues {
 enum EventInputDetailSection: Hashable {
     case dateTime
     case recurrence
+    case priority
     case notes
 }
 
@@ -49,6 +50,7 @@ enum EventInputDetailSection: Hashable {
     @Published var newItemStartDate: DateComponents?
     @Published var newItemEndDate: DateComponents?
     @Published var notesInput: String = ""
+    @Published var selectedPriority: EKReminderPriority = .none
     @Published var selectedCalendar: EKCalendar?
     
     // MARK: - Recurrence Rule vars
@@ -112,8 +114,19 @@ enum EventInputDetailSection: Hashable {
         return firstLine.count > 40 ? String(firstLine.prefix(37)) + "…" : firstLine
     }
 
+    var prioritySummary: String? {
+        CalendarDisplayFormatters.priorityLabel(for: Int(selectedPriority.rawValue))
+    }
+
     var isSelectedCalendarForReminder: Bool {
         selectedCalendar?.allowedEntityTypes == .reminder
+    }
+
+    /// Priority applies only to reminders (create or edit).
+    var showsPriorityInput: Bool {
+        if calendarItem is EKEvent { return false }
+        if calendarItem is EKReminder { return true }
+        return selectedCalendar == nil || isSelectedCalendarForReminder
     }
 
     var recurrenceSummary: String? {
@@ -175,6 +188,7 @@ enum EventInputDetailSection: Hashable {
         self.calendarItem = reminder
         self.selectedCalendar = reminder.calendar
         self.newItemTitle = reminder.title
+        self.selectedPriority = EKReminderPriority.fromReminderPriority(reminder.priority)
         if reminder.hasNotes {
             self.notesInput = reminder.notes ?? ""
             self.isNotesInputOpen = true
@@ -306,27 +320,25 @@ enum EventInputDetailSection: Hashable {
             self.isAddEventTextFieldFocused = false
             self.isShowingEventEditView = false
             self.eventBeingEdited = nil
+            if let calendar = self.selectedCalendar,
+               calendar.allowedEntityTypes != .reminder {
+                self.selectedCalendar = nil
+            }
             
             self.clearTimeInput()
             self.clearNotesInput()
+            self.clearPriority()
             self.clearRecurrence()
             self.expandedDetailSection = nil
             self.selectedCalendar = nil
         }
     }
     
-    private func clearTimeInput() {
-        if self.expandedDetailSection == .dateTime {
-            self.expandedDetailSection = nil
-        }
+    public func clearTimeInput() {
         self.newItemStartTime = nil
         self.newItemEndTime = nil
         self.newItemStartDate = nil
         self.newItemEndDate = nil
-        if let calendar = self.selectedCalendar,
-           calendar.allowedEntityTypes != .reminder {
-            self.selectedCalendar = nil
-        }
     }
     
     private func clearNotesInput() {
@@ -335,6 +347,13 @@ enum EventInputDetailSection: Hashable {
             self.expandedDetailSection = nil
         }
         self.notesInput = ""
+    }
+
+    private func clearPriority() {
+        if self.expandedDetailSection == .priority {
+            self.expandedDetailSection = nil
+        }
+        self.selectedPriority = .none
     }
     
     private func clearRecurrence() {
@@ -379,12 +398,6 @@ enum EventInputDetailSection: Hashable {
         }
     }
     
-    func removeTimeFromEvent() {
-        withAnimation {
-            self.clearTimeInput()
-        }
-    }
-    
     func addNotesToEvent() {
         withAnimation {
             self.isNotesInputOpen = true
@@ -423,6 +436,12 @@ enum EventInputDetailSection: Hashable {
 
     func isDetailSectionExpanded(_ section: EventInputDetailSection) -> Bool {
         expandedDetailSection == section
+    }
+    
+    func updateSelectedCalendar() async {
+        if selectedCalendar == nil {
+            selectedCalendar = await eventKitManager.defaultReminderCalendar
+        }
     }
     
 #if !os(watchOS)
@@ -497,6 +516,7 @@ enum EventInputDetailSection: Hashable {
                let endDate = Calendar.current.date(from: endComponents) {
                 await self.saveNewDates(for: event, newStart: startDate, newEnd: endDate)
             } else if let reminder = self.calendarItem as? EKReminder {
+                reminder.priority = Int(self.selectedPriority.rawValue)
                 await self.saveNewDates(for: reminder, newStart: mergedStartComponments, newEnd: mergedEndComponments)
             }
             
@@ -561,6 +581,7 @@ enum EventInputDetailSection: Hashable {
             if !self.notesInput.isEmpty {
                 newReminder.notes = self.notesInput
             }
+            newReminder.priority = Int(self.selectedPriority.rawValue)
             await self.saveAndDisplayToast(reminder: newReminder, "Reminder Created")
         } catch let error as NSError {
             print("Error: creating reminder: \(error)")

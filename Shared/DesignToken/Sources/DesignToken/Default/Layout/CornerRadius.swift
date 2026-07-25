@@ -17,5 +17,6 @@ public enum CornerRadius {
     public static let textFieldRadius: CGFloat = 4
     public static let calendarColorBarRadius: CGFloat = 2
     public static let eventInputPanelRadius: CGFloat = 20
+    public static let eventInputDeleteButton: CGFloat = 12
     public static let clockHandRadius: CGFloat = 24
 }

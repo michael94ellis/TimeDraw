@@ -39,7 +39,7 @@ public struct EventListCell: View {
         .frame(maxWidth: .infinity, alignment: .leading)
 
         if item.hasRecurrenceRules {
-            Image(systemName: "repeat")
+            Image(.repeat)
                 .font(.app(.icon))
                 .foregroundStyle(.secondary)
                 .padding(.trailing, 8)

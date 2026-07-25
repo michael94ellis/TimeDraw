@@ -147,7 +147,7 @@ struct MainScrollableContent: View {
                                 self.itemList.updateData()
                             }
                         }) {
-                            Image(systemName: "trash")
+                            Image(.trash)
                                 .tint(Colors.destructive)
                         }
                     }
@@ -201,7 +201,7 @@ struct MainScrollableContent: View {
                                 await self.performComplete(for: item)
                             }
                         }) {
-                            Image(systemName: "checkmark")
+                            Image(.checkmark)
                                 .tint(Colors.success)
                         }
                         Button(action: {
@@ -215,7 +215,7 @@ struct MainScrollableContent: View {
                                 self.itemList.updateData()
                             }
                         }) {
-                            Image(systemName: "trash")
+                            Image(.trash)
                                 .tint(Colors.destructive)
                         }
                     }

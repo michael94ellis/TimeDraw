@@ -23,12 +23,30 @@ extension EKRecurrenceFrequency: @retroactive CaseIterable, @retroactive CustomS
 extension EKEvent: @retroactive Identifiable { }
 extension EKReminder: @retroactive Identifiable { }
 extension EKReminderPriority {
-    //    static let none = 0
-    //    static let high = 1
-    //    static let mediumHigh = 3
-    //    static let medium = 5
-    //    static let mediumLow = 7
-    //    static let low = 9
+    /// Standard picker values: None, High, Medium, Low.
+    public static var selectableCases: [EKReminderPriority] {
+        [.none, .high, .medium, .low]
+    }
+
+    public var displayName: String {
+        switch self {
+        case .none: return "None"
+        case .high: return "High"
+        case .medium: return "Medium"
+        case .low: return "Low"
+        @unknown default: return "None"
+        }
+    }
+
+    /// Maps EventKit's free-form `EKReminder.priority` Int onto the four standard levels.
+    public static func fromReminderPriority(_ priority: Int) -> EKReminderPriority {
+        switch priority {
+        case 1...4: return .high
+        case 5: return .medium
+        case 6...9: return .low
+        default: return .none
+        }
+    }
 }
 extension EKEventStatus {
     //    static let none = 0

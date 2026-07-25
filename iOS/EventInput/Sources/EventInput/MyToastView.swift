@@ -14,12 +14,12 @@ public enum ToastStyle {
     case error
     case info
 
-    var iconName: String {
+    var icon: SFSymbol {
         switch self {
-        case .success: return "checkmark.circle.fill"
-        case .destructive: return "trash.fill"
-        case .error: return "exclamationmark.circle.fill"
-        case .info: return "info.circle.fill"
+        case .success: return .checkmarkCircleFill
+        case .destructive: return .trashFill
+        case .error: return .exclamationmarkCircleFill
+        case .info: return .infoCircleFill
         }
     }
 
@@ -78,7 +78,7 @@ struct MyToastView: View {
         VStack {
             Spacer()
             HStack(spacing: 10) {
-                Image(systemName: style.iconName)
+                Image(style.icon)
                     .foregroundStyle(style.accentColor)
                 Text(message)
                     .font(.app(.body))

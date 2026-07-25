@@ -59,7 +59,8 @@ struct AddRecurrenceRule: View {
 
             HStack {
                 Spacer()
-                DestructiveTextButton(title: "Remove Repeat") {
+                Button("Remove Repeat",
+                       role: .destructive) {
                     viewModel.removeRecurrenceFromEvent()
                 }
             }

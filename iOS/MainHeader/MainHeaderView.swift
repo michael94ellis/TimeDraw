@@ -91,7 +91,7 @@ struct MainHeaderView: View {
             Button {
                 navPath.append(MainViewContainer.NavLocation.appSettings)
             } label: {
-                Image(systemName: "ellipsis.circle")
+                Image(.ellipsisCircle)
                     .font(.app(.iconMedium))
                     .foregroundStyle(Colors.primaryText)
                     .frame(minWidth: 44, minHeight: 44)
@@ -101,13 +101,13 @@ struct MainHeaderView: View {
         .padding(.horizontal, layoutMetrics.headerNavHorizontalPadding)
     }
     
-    func weekNavButton(systemName: String, direction: SwipeDirection) -> some View {
+    func weekNavButton(_ symbol: SFSymbol, direction: SwipeDirection) -> some View {
         Button {
             withAnimation {
                 handleGesture(value: direction)
             }
         } label: {
-            Image(systemName: systemName)
+            Image(symbol)
                 .font(.app(.icon))
                 .foregroundStyle(Colors.primaryText)
                 .frame(width: 28, height: 44)
@@ -121,7 +121,7 @@ struct MainHeaderView: View {
             self.headerNav
             HStack(spacing: 0) {
                 Spacer()
-                weekNavButton(systemName: "chevron.left", direction: .left)
+                weekNavButton(.chevronLeft, direction: .left)
                 HStack(spacing: layoutMetrics.weekStripSpacing) {
                     ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.itemList.displayDate), id: \.self) { date in
                         Button {
@@ -144,7 +144,7 @@ struct MainHeaderView: View {
                     .transition(self.transitionDirection(direction: self.swipeDirection))
                 }
                 .frame(maxWidth: .infinity)
-                weekNavButton(systemName: "chevron.right", direction: .right)
+                weekNavButton(.chevronRight, direction: .right)
                 Spacer()
             }
             .padding(.bottom, layoutMetrics.weekStripBottomPadding)

@@ -18,7 +18,7 @@ public struct OnboardingPermissionPage: View {
     
     let title: String
     let message: String
-    let systemImage: String
+    let systemImage: SFSymbol
     let eventKitManager: EventKitManager
     let onContinue: () -> Void
     let permissionKind: Kind
@@ -29,7 +29,7 @@ public struct OnboardingPermissionPage: View {
     public init(
         title: String,
         message: String,
-        systemImage: String,
+        systemImage: SFSymbol,
         authorizationStatus: Binding<EKAuthorizationStatus>,
         eventKitManager: EventKitManager,
         type: Kind,
@@ -56,7 +56,7 @@ public struct OnboardingPermissionPage: View {
     public var body: some View {
         IntroView {
             VStack(spacing: 24) {
-                Image(systemName: accessGranted ? "checkmark.circle.fill" : systemImage)
+                Image(accessGranted ? .checkmarkCircleFill : systemImage)
                     .font(.app(.iconLarge))
                     .foregroundStyle(accessGranted ? Color.green1 : Color.red1)
 

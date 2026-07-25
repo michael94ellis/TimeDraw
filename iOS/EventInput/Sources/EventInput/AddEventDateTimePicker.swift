@@ -17,36 +17,53 @@ import UIComponents
 public struct AddEventDateTimePicker: View {
 
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
-    @EnvironmentObject var calendarListViewModel: CalendarListViewModel
     @Dependency(\.eventKitManager) private var eventKitManager
+    let displayDate: Date
 
     private var isExpanded: Bool {
         viewModel.isDetailSectionExpanded(.dateTime)
     }
+    
+    init(displayDate: Date) {
+        self.displayDate = displayDate
+    }
 
     func setSuggestedTime() {
-        let displayDate = calendarListViewModel.displayDate
-        if viewModel.newItemStartTime == nil {
-            viewModel.newItemStartTime = displayDate.get(.hour, .minute, .second)
+        Task {
+            await viewModel.updateSelectedCalendar()
         }
-        if viewModel.newItemStartDate == nil {
-            viewModel.newItemStartDate = displayDate.get(.year, .month, .day)
-        }
-        if viewModel.newItemEndTime == nil {
-            viewModel.newItemEndTime = Calendar.current.date(byAdding: .hour,
-                                                             value: 1,
-                                                             to: displayDate)?.get(
-                                                                .hour,
-                                                                                   
-                                                                .minute,
-                                                                .second)
-        }
-        if viewModel.newItemEndDate == nil {
-            viewModel.newItemEndDate = displayDate.get(.year, .month, .day)
-        }
-        if viewModel.selectedCalendar == nil {
-            viewModel.selectedCalendar = eventKitManager.eventStore.defaultCalendarForNewEvents
-        }
+    }
+
+    private func addStartTime() {
+        viewModel.newItemStartTime = Date.now.get(.hour, .minute, .second)
+        viewModel.newItemStartDate = displayDate.get(.year, .month, .day)
+    }
+
+    private func clearStartTime() {
+        viewModel.newItemStartDate = nil
+        viewModel.newItemStartTime = nil
+    }
+
+    private var hasStartTime: Bool {
+        viewModel.newItemStartDate != nil || viewModel.newItemStartTime != nil
+    }
+    private func addEndTime() {
+        viewModel.newItemEndTime = Calendar.current.date(byAdding: .hour,
+                                                         value: 1,
+                                                         to: Date.now)?.get(
+                                                            .hour,
+                                                            .minute,
+                                                            .second)
+        viewModel.newItemEndDate = displayDate.get(.year, .month, .day)
+    }
+
+    private func clearEndime() {
+        viewModel.newItemEndDate = nil
+        viewModel.newItemEndTime = nil
+    }
+
+    private var hasEndTime: Bool {
+        viewModel.newItemEndDate != nil || viewModel.newItemEndTime != nil
     }
 
     private var startBinding: Binding<Date> {
@@ -77,28 +94,51 @@ public struct AddEventDateTimePicker: View {
             if isExpanded {
                 FormDivider()
                 VStack(spacing: 4) {
-                    DatePicker("Starts",
-                               selection: startBinding,
-                               displayedComponents: [.date, .hourAndMinute])
-                        .font(.app(.body))
-                        .padding(.horizontal, 16)
-                    DatePicker("Ends",
-                               selection: endBinding,
-                               displayedComponents: [.date, .hourAndMinute])
-                        .font(.app(.body))
-                        .padding(.horizontal, 16)
-                    
-                    if let calendarItem = viewModel.calendarItem,
-                       calendarItem is EKReminder
-                        || !viewModel.editMode {
-                        HStack {
-                            Spacer()
-                            DestructiveTextButton(title: "Remove Time") {
-                                viewModel.removeTimeFromEvent()
+                    if hasStartTime {
+                        HStack(spacing: 8) {
+                            Button(role: .destructive, action: clearStartTime) {
+                                Image(.xmark)
+                                    .frame(minWidth: 44, minHeight: 44)
+                                    .background {
+                                        RoundedRectangle(cornerRadius: CornerRadius.eventInputDeleteButton)
+                                            .strokeBorder(style: .init(lineWidth: 1.0))
+                                    }
                             }
+                            DatePicker("Starts",
+                                       selection: startBinding,
+                                       displayedComponents: [.date, .hourAndMinute])
+                                .font(.app(.body))
                         }
                         .padding(.horizontal, 16)
-                        .padding(.bottom, 12)
+                    } else {
+                        Button("Add Start Time", action: addStartTime)
+                            .font(.app(.body))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                    }
+                    if hasEndTime {
+                        HStack(spacing: 8) {
+                            Button(role: .destructive, action: clearEndime) {
+                                Image(.xmark)
+                                    .frame(minWidth: 44, minHeight: 44)
+                                    .background {
+                                        RoundedRectangle(cornerRadius: CornerRadius.eventInputDeleteButton)
+                                            .strokeBorder(style: .init(lineWidth: 1.0))
+                                    }
+                            }
+                            DatePicker("Ends",
+                                       selection: endBinding,
+                                       displayedComponents: [.date, .hourAndMinute])
+                                .font(.app(.body))
+                        }
+                        .padding(.horizontal, 16)
+                    } else {
+                        Button("Add End Time", action: addEndTime)
+                            .font(.app(.body))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
                     }
                 }
                 .padding(.top, 4)

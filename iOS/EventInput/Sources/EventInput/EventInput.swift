@@ -20,6 +20,7 @@ public struct EventInput: View {
 
     @EnvironmentObject var appSettings: AppSettings
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
+    @EnvironmentObject var listViewModel: CalendarListViewModel
 
     @Dependency(\.eventKitManager) private var eventKitManager
     @FocusState private var isFocused: Bool
@@ -34,8 +35,8 @@ public struct EventInput: View {
         eventKitManager.defaultReminderCalendar?.cgColor ?? .init(red: 55, green: 91, blue: 190, alpha: 1)
     }
 
-    private var submitIconName: String {
-        viewModel.editMode ? "checkmark" : "plus"
+    private var submitSymbol: SFSymbol {
+        viewModel.editMode ? .checkmark : .plus
     }
 
     private var calendarName: String {
@@ -180,7 +181,7 @@ public struct EventInput: View {
     }
 
     private var submitIcon: some View {
-        Image(systemName: submitIconName)
+        Image(submitSymbol)
             .font(.app(.icon))
             .foregroundStyle(Colors.onAccentBackground)
             .frame(width: 32, height: 32)
@@ -193,23 +194,32 @@ public struct EventInput: View {
                 Button {
                     viewModel.reset()
                 } label: {
-                    Label("Cancel", systemImage: "xmark")
+                    Label("Cancel", systemImage: SFSymbol.xmark.rawValue)
                         .font(.app(.body))
                         .foregroundStyle(.primary)
                 }
                 .buttonStyle(.plain)
             }
-
+            
             calendarMenu
-
+            
             Spacer()
-
+            
             if viewModel.editMode {
-                DestructiveTextButton(title: "Delete") {
+                Button(role: .destructive,
+                       action: {
                     Task {
                         await viewModel.delete()
                     }
-                }
+                },
+                       label: {
+                    Image(.trashFill)
+                        .frame(minWidth: 44, minHeight: 44)
+                        .background {
+                            RoundedRectangle(cornerRadius: CornerRadius.eventInputDeleteButton)
+                                .strokeBorder(style: .init(lineWidth: 1.0))
+                        }
+                })
             }
         }
         .id("tools")
@@ -240,7 +250,7 @@ public struct EventInput: View {
                     .font(.app(.body))
                     .foregroundStyle(Colors.primaryText)
                     .lineLimit(1)
-                Image(systemName: "chevron.up.chevron.down")
+                Image(.chevronUpChevronDown)
                     .font(.app(.listCaption))
                     .foregroundStyle(.tertiary)
             }
@@ -262,7 +272,7 @@ public struct EventInput: View {
                     Text(calendar.title)
                     Spacer()
                     if viewModel.selectedCalendar?.calendarIdentifier == calendar.calendarIdentifier {
-                        Image(systemName: "checkmark")
+                        Image(.checkmark)
                     }
                 }
             }
@@ -271,13 +281,19 @@ public struct EventInput: View {
 
     @ViewBuilder
     private var detailSections: some View {
-        AddEventDateTimePicker()
+        AddEventDateTimePicker(displayDate: listViewModel.displayDate)
             .id("AddDateTime")
         if appSettings.showRecurringItems || viewModel.calendarItem?.hasRecurrenceRules ?? false {
             FormDivider(config: .subtle)
                 .id("Divider1")
             AddRecurrenceRule()
                 .id("Recurrence")
+        }
+        if viewModel.showsPriorityInput {
+            FormDivider(config: .subtle)
+                .id("DividerPriority")
+            AddPriorityInput()
+                .id("Priority")
         }
         FormDivider(config: .subtle)
             .id("Divider2")

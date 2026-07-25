@@ -77,7 +77,7 @@ struct SummaryRowLabel: View {
                     .foregroundStyle(isExpanded ? .secondary : .tertiary)
                     .lineLimit(1)
             }
-            Image(systemName: "chevron.right")
+            Image(.chevronRight)
                 .font(.app(.listCaption))
                 .foregroundStyle(.tertiary)
                 .rotationEffect(.degrees(isExpanded ? 90 : 0))
@@ -86,17 +86,5 @@ struct SummaryRowLabel: View {
         .padding(.vertical, 12)
         .contentShape(Rectangle())
         .animation(.easeInOut(duration: 0.2), value: isExpanded)
-    }
-}
-
-struct DestructiveTextButton: View {
-    let title: String
-    let action: () -> Void
-
-    var body: some View {
-        Button(role: .destructive, action: action) {
-            Text(title)
-                .font(.app(.body))
-        }
     }
 }

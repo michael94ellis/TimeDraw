@@ -78,7 +78,7 @@ struct CalendarSelection: View {
                         .foregroundStyle(Colors.primaryText)
                     Spacer()
                     if selectedIds.contains(calendar.calendarIdentifier) {
-                        Image(systemName: "checkmark")
+                        Image(.checkmark)
                             .font(.app(.icon))
                             .foregroundStyle(Colors.action)
                     }

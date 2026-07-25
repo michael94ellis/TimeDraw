@@ -55,7 +55,8 @@ struct AddNotesInput: View {
 
                     HStack {
                         Spacer()
-                        DestructiveTextButton(title: "Remove Notes") {
+                        Button("Remove Notes",
+                               role: .destructive) {
                             notesInputFocus = false
                             viewModel.removeNotesFromEvent()
                         }

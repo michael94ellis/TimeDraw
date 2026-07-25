@@ -24,7 +24,7 @@ struct WatchEventKitAccessIndicators: View {
                 if !isEventAccessGranted {
                     accessButton(
                         title: "Allow Events",
-                        systemImage: "calendar",
+                        systemImage: .calendar,
                         isRequesting: isRequestingEvents
                     ) {
                         isRequestingEvents = true
@@ -35,7 +35,7 @@ struct WatchEventKitAccessIndicators: View {
                 if !isReminderAccessGranted {
                     accessButton(
                         title: "Allow Reminders",
-                        systemImage: "checklist",
+                        systemImage: .checklist,
                         isRequesting: isRequestingReminders
                     ) {
                         isRequestingReminders = true
@@ -49,7 +49,7 @@ struct WatchEventKitAccessIndicators: View {
     
     private func accessButton(
         title: String,
-        systemImage: String,
+        systemImage: SFSymbol,
         isRequesting: Bool,
         action: @escaping () async -> Void
     ) -> some View {
@@ -60,7 +60,7 @@ struct WatchEventKitAccessIndicators: View {
                 if isRequesting {
                     ProgressView()
                 } else {
-                    Image(systemName: systemImage)
+                    Image(systemImage)
                 }
                 Text(title)
             }

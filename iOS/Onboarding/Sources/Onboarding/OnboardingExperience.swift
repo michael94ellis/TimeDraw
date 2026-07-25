@@ -148,7 +148,7 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
             OnboardingPermissionPage(
                 title: "Calendar Access",
                 message: "TimeDraw shows your scheduled events on the analog clock and in your daily list.",
-                systemImage: "calendar",
+                systemImage: .calendar,
                 authorizationStatus: $eventAuthStatus,
                 eventKitManager: eventKitManager,
                 type: .event,
@@ -162,7 +162,7 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
             OnboardingPermissionPage(
                 title: "Reminders Access",
                 message: "TimeDraw displays your reminders alongside events so you can see your whole day at a glance.",
-                systemImage: "checklist",
+                systemImage: .checklist,
                 authorizationStatus: $reminderAuthStatus,
                 eventKitManager: eventKitManager,
                 type: .reminder,

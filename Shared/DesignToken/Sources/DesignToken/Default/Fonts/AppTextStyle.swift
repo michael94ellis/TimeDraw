@@ -53,16 +53,16 @@ private struct FontSpec {
 extension AppTextStyle {
     private var spec: FontSpec {
         switch self {
-        case .headerTitle: FontSpec(weight: .extraBold, phoneSize: 22, padSize: 34, relativeTo: .title3)
-        case .weekday: FontSpec(weight: .light, phoneSize: 18, padSize: 20, relativeTo: .body)
-        case .weekdayEmphasized: FontSpec(weight: .semiBold, phoneSize: 18, padSize: 20, relativeTo: .body)
-        case .dayNumber: FontSpec(weight: .regular, phoneSize: 18, padSize: 20, relativeTo: .body)
-        case .dayNumberSelected: FontSpec(weight: .semiBold, phoneSize: 18, padSize: 20, relativeTo: .body)
-        case .dayNumberToday: FontSpec(weight: .bold, phoneSize: 18, padSize: 20, relativeTo: .body)
-        case .listTitle: FontSpec(weight: .semiBold, phoneSize: 18, padSize: 20, relativeTo: .body)
-        case .listSubtitle: FontSpec(weight: .light, phoneSize: 16, padSize: 18, relativeTo: .callout)
-        case .listCaption: FontSpec(weight: .regular, phoneSize: 12, padSize: 13, relativeTo: .caption)
-        case .listEmpty: FontSpec(weight: .regular, phoneSize: 18, padSize: 20, relativeTo: .body)
+        case .headerTitle: FontSpec(weight: .extraBold, phoneSize: 22, padSize: 38, relativeTo: .title3)
+        case .weekday: FontSpec(weight: .light, phoneSize: 18, padSize: 26, relativeTo: .body)
+        case .weekdayEmphasized: FontSpec(weight: .semiBold, phoneSize: 18, padSize: 26, relativeTo: .body)
+        case .dayNumber: FontSpec(weight: .regular, phoneSize: 18, padSize: 24, relativeTo: .body)
+        case .dayNumberSelected: FontSpec(weight: .semiBold, phoneSize: 18, padSize: 24, relativeTo: .body)
+        case .dayNumberToday: FontSpec(weight: .bold, phoneSize: 18, padSize: 24, relativeTo: .body)
+        case .listTitle: FontSpec(weight: .semiBold, phoneSize: 18, padSize: 26, relativeTo: .headline)
+        case .listSubtitle: FontSpec(weight: .regular, phoneSize: 16, padSize: 18, relativeTo: .callout)
+        case .listCaption: FontSpec(weight: .regular, phoneSize: 12, padSize: 14, relativeTo: .caption)
+        case .listEmpty: FontSpec(weight: .regular, phoneSize: 18, padSize: 22, relativeTo: .body)
         case .clockHour: FontSpec(weight: .semiBold, phoneSize: 18
                                   , padSize: 26, relativeTo: .body)
         case .body: FontSpec(weight: .regular, phoneSize: 18, padSize: 20, relativeTo: .body)

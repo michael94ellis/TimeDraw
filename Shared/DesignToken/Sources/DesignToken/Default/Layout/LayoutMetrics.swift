@@ -33,6 +33,10 @@ public struct LayoutMetrics: Sendable {
     public let listContentHorizontalPadding: CGFloat
     /// Vertical inset for event/reminder list rows.
     public let listContentVerticalPadding: CGFloat
+    /// Vertical inset around full-bleed segmented pickers in settings.
+    public let settingsSegmentedRowVerticalPadding: CGFloat
+    /// Calendar color swatch in the calendars picker list.
+    public let calendarColorSwatchSize: CGFloat
 
     /// Shared column width for week strip and month grid.
     public var monthColumnWidth: CGFloat { weekDayCellWidth }
@@ -67,7 +71,9 @@ public struct LayoutMetrics: Sendable {
         clockVerticalPadding: 20,
         clockDrawingInset: 12,
         listContentHorizontalPadding: 8,
-        listContentVerticalPadding: 4
+        listContentVerticalPadding: 4,
+        settingsSegmentedRowVerticalPadding: 8,
+        calendarColorSwatchSize: 12
     )
 
     public static let pad = LayoutMetrics(
@@ -91,7 +97,9 @@ public struct LayoutMetrics: Sendable {
         clockVerticalPadding: 24,
         clockDrawingInset: 20,
         listContentHorizontalPadding: 16,
-        listContentVerticalPadding: 4
+        listContentVerticalPadding: 4,
+        settingsSegmentedRowVerticalPadding: 12,
+        calendarColorSwatchSize: 16
     )
 
     public static func metrics(for form: DesignForm = .current) -> LayoutMetrics {

@@ -47,7 +47,7 @@ public struct EventKitPermissionPlaceholder: View {
                     .frame(maxWidth: .infinity)
             }
             .font(.app(.button))
-            .foregroundStyle(Color.blue1)
+            .foregroundStyle(Colors.action)
             .buttonStyle(.bordered)
 #endif
         }

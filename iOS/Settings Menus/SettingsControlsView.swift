@@ -6,6 +6,7 @@
 //
 
 import AppCore
+import DesignToken
 import EventManagement
 import SwiftUI
 
@@ -13,32 +14,53 @@ struct SettingsControlsView: View {
 
     @EnvironmentObject var appSettings: AppSettings
     @EnvironmentObject var calendarItemListViewModel: CalendarListViewModel
+    @Environment(\.layoutMetrics) private var layoutMetrics
 
     var body: some View {
-        Section("Customize") {
+        Section {
             Toggle("Daily Goal Note Space", isOn: appSettings.$isDailyGoalEnabled)
+                .font(.app(.body))
 
-            Picker("Time Selection Interval", selection: appSettings.$timePickerGranularity) {
+            Picker(selection: appSettings.$timePickerGranularity,
+                   content: {
                 ForEach([1, 2, 3, 5, 10, 12, 15, 20, 30], id: \.self) { minuteValue in
-                    Text("\(minuteValue) min").tag(minuteValue)
+                    Text("\(minuteValue) min")
+                        .font(.app(.listTitle))
+                        .tag(minuteValue)
                 }
-            }
+            },
+                   label: {
+                Text("Time Selection Interval")
+                    .font(.app(.body))
+            })
+            .font(.app(.body))
 
             NavigationLink {
                 CalendarSelection()
             } label: {
                 Text("Calendars")
+                    .font(.app(.body))
             }
+        } header: {
+            Text("Customize")
+                .font(.app(.listTitle))
         }
 
-        Section("Show") {
+        Section {
             Picker("Items", selection: appSettings.$showCalendarItemType) {
                 ForEach(CalendarItemType.allCases, id: \.self) { item in
-                    Text(item.displayName).tag(item)
+                    Text(item.displayName)
+                        .tag(item)
                 }
             }
             .pickerStyle(.segmented)
-            .listRowInsets(.init(top: 8, leading: 0, bottom: 8, trailing: 0))
+            .font(.app(.body))
+            .listRowInsets(.init(
+                top: layoutMetrics.settingsSegmentedRowVerticalPadding,
+                leading: 0,
+                bottom: layoutMetrics.settingsSegmentedRowVerticalPadding,
+                trailing: 0
+            ))
             .onChange(of: appSettings.showCalendarItemType) {
                 calendarItemListViewModel.updateData()
             }
@@ -47,16 +69,25 @@ struct SettingsControlsView: View {
 
             Picker("Recurrence", selection: appSettings.$showItemRecurrenceType) {
                 ForEach(ItemRecurrenceType.allCases, id: \.self) { item in
-                    Text(item.displayName).tag(item)
+                    Text(item.displayName)
+                        .tag(item)
                 }
             }
             .pickerStyle(.segmented)
-            .listRowInsets(.init(top: 8, leading: 0, bottom: 8, trailing: 0))
+            .listRowInsets(.init(
+                top: layoutMetrics.settingsSegmentedRowVerticalPadding,
+                leading: 0,
+                bottom: layoutMetrics.settingsSegmentedRowVerticalPadding,
+                trailing: 0
+            ))
             .onChange(of: appSettings.showItemRecurrenceType) {
                 calendarItemListViewModel.updateData()
             }
             .listRowBackground(EmptyView())
             .listRowSeparator(.hidden)
+        } header: {
+            Text("Show")
+                .font(.app(.listTitle))
         }
     }
 }

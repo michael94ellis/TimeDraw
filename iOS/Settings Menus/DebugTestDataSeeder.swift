@@ -291,6 +291,7 @@ struct DebugSeedTestDataButton: View {
             Button("Add Test Events & Reminders") {
                 seedTestData()
             }
+            .font(.app(.body))
             .disabled(isSeeding)
 
             if isSeeding {
@@ -298,7 +299,7 @@ struct DebugSeedTestDataButton: View {
             } else if let statusMessage {
                 Text(statusMessage)
                     .font(.app(.fine))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Colors.secondaryText)
             }
         }
     }

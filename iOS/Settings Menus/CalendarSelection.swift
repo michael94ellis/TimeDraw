@@ -7,6 +7,7 @@
 
 import Dependencies
 import AppCore
+import DesignToken
 import EventKit
 import EventUIComponents
 import SwiftUI
@@ -22,6 +23,7 @@ struct CalendarSelection: View {
 
     var selectedIds: [String] { appSettings.userSelectedCalendars.loadCalendarIds() }
     @EnvironmentObject var appSettings: AppSettings
+    @Environment(\.layoutMetrics) private var layoutMetrics
     @Environment(\.scenePhase) private var scenePhase
     @Dependency(\.eventKitManager) private var eventKitManager
 
@@ -67,13 +69,18 @@ struct CalendarSelection: View {
                 HStack {
                     Circle()
                         .fill(Color(cgColor: calendar.cgColor))
-                        .frame(width: 12, height: 12)
+                        .frame(
+                            width: layoutMetrics.calendarColorSwatchSize,
+                            height: layoutMetrics.calendarColorSwatchSize
+                        )
                     Text(calendar.title)
-                        .foregroundStyle(Color(uiColor: .label))
+                        .font(.app(.body))
+                        .foregroundStyle(Colors.primaryText)
                     Spacer()
                     if selectedIds.contains(calendar.calendarIdentifier) {
                         Image(systemName: "checkmark")
-                            .foregroundStyle(Color.blue1)
+                            .font(.app(.icon))
+                            .foregroundStyle(Colors.action)
                     }
                 }
             }
@@ -82,7 +89,7 @@ struct CalendarSelection: View {
 
     var body: some View {
         List {
-            Section("Events") {
+            Section {
                 switch eventAuthStatus {
                 case .loading:
                     ProgressView()
@@ -93,11 +100,15 @@ struct CalendarSelection: View {
                         message: "Allow calendar access to choose which event calendars appear in TimeDraw.",
                         authorizationStatus: eventKitManager.eventAuthorizationStatus(),
                         requestAccess: {
-                            (try? await eventKitManager.requestEventAccess()) ?? false                        }
+                            (try? await eventKitManager.requestEventAccess()) ?? false
+                        }
                     )
                 }
+            } header: {
+                Text("Events")
+                    .font(.app(.listCaption))
             }
-            Section("Reminders") {
+            Section {
                 switch reminderAuthStatus {
                 case .loading:
                     ProgressView()
@@ -108,11 +119,16 @@ struct CalendarSelection: View {
                         message: "Allow reminders access to choose which reminder lists appear in TimeDraw.",
                         authorizationStatus: eventKitManager.reminderAuthorizationStatus(),
                         requestAccess: {
-                            (try? await eventKitManager.requestReminderAccess()) ?? false                        }
+                            (try? await eventKitManager.requestReminderAccess()) ?? false
+                        }
                     )
                 }
+            } header: {
+                Text("Reminders")
+                    .font(.app(.listCaption))
             }
         }
+        .font(.app(.body))
         .navigationTitle("Calendars")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {

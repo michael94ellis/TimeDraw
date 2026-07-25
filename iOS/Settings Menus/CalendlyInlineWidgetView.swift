@@ -6,8 +6,11 @@
 import SwiftUI
 import WebKit
 
-struct CalendlyInlineWidgetView: View {
-    var body: some View {
+public struct CalendlyInlineWidgetView: View {
+    
+    public init() { }
+    
+    public var body: some View {
         CalendlyInlineWebView()
             .navigationTitle("Contact")
             .navigationBarTitleDisplayMode(.inline)

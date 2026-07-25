@@ -256,6 +256,7 @@ enum EventInputDetailSection: Hashable {
             self.recurrenceEnd = EKRecurrenceEnd(occurrenceCount: numberOfOccurences)
         } else {
             self.recurrenceEnd = nil
+            return
         }
         switch self.selectedRule {
         case .daily:
@@ -448,10 +449,6 @@ enum EventInputDetailSection: Hashable {
     
     /// Create an EKCalendarItem for the given information OR the currently displayed EKCalendarItem will be saved
     public func submitEventOrReminder() async {
-        if self.newItemEndDate == nil {
-            self.displayToast("End Date Required", style: .error)
-            return
-        }
         // ToDo extract to function, clean up this date extraction
         let startDateComponents = self.newItemStartDate
         let startTimeComponents = self.newItemStartTime
@@ -557,7 +554,7 @@ enum EventInputDetailSection: Hashable {
             if let selectedCalendar = self.selectedCalendar {
                 newReminder.calendar = selectedCalendar
             }
-            if self.isNotesInputOpen {
+            if !self.notesInput.isEmpty {
                 newReminder.notes = self.notesInput
             }
             await self.saveAndDisplayToast(reminder: newReminder, "Reminder Created")

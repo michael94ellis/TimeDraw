@@ -119,6 +119,7 @@ struct MainHeaderView: View {
         VStack(spacing: 0) {
             self.headerNav
             HStack(spacing: 0) {
+                Spacer()
                 weekNavButton(systemName: "chevron.left", direction: .left)
                 HStack(spacing: layoutMetrics.weekStripSpacing) {
                     ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.itemList.displayDate), id: \.self) { date in
@@ -143,6 +144,7 @@ struct MainHeaderView: View {
                 }
                 .frame(maxWidth: .infinity)
                 weekNavButton(systemName: "chevron.right", direction: .right)
+                Spacer()
             }
             .padding(.bottom, layoutMetrics.weekStripBottomPadding)
         }

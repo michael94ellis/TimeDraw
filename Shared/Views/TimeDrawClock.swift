@@ -100,7 +100,7 @@ struct TimeDrawClock: View {
     var body: some View {
         ZStack {
             ClockFace()
-                .overlay {
+                .background {
                     GeometryReader { geo in
                         let size = min(geo.size.width, geo.size.height)
                         eventLayers(clockSize: size)

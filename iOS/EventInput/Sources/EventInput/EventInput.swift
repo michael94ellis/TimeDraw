@@ -7,6 +7,7 @@
 
 import Dependencies
 import AppCore
+import AppStoreReviewRequest
 import DesignToken
 import EventKit
 import EventManagement
@@ -25,11 +26,7 @@ public struct EventInput: View {
     @Dependency(\.eventKitManager) private var eventKitManager
     @FocusState private var isFocused: Bool
     
-    private var eventCreationAction: () -> Void
-
-    public init(eventCreationAction: @escaping () -> Void) {
-        self.eventCreationAction = eventCreationAction
-    }
+    public init() { }
 
     private var defaultCalendarColor: CGColor {
         eventKitManager.defaultReminderCalendar?.cgColor ?? .init(red: 55, green: 91, blue: 190, alpha: 1)
@@ -164,7 +161,7 @@ public struct EventInput: View {
                 Task {
                     await viewModel.submitEventOrReminder()
                     isFocused = false
-                    eventCreationAction()
+                    ReviewRequestManager().requestReviewIfAppropriate(for: UserDefaults.standard)
                 }
             }
         }

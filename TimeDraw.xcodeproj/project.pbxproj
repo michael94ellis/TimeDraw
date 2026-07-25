@@ -63,7 +63,6 @@
 		8193FD3A300F7C850002D9C6 /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 8193FD39300F7C850002D9C6 /* UIComponents */; };
 		8193FD3C300F7C8B0002D9C6 /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 8193FD3B300F7C8B0002D9C6 /* UIComponents */; };
 		81BF7D2C30104FF5004B06F8 /* DailyGoalTextfield in Frameworks */ = {isa = PBXBuildFile; productRef = 81BF7D2B30104FF5004B06F8 /* DailyGoalTextfield */; };
-		8C6C72E5288EB92A4B3D2B83 /* EventInput in Frameworks */ = {isa = PBXBuildFile; productRef = 4DFD33F2E118DA0E62D253F4 /* EventInput */; };
 		99ACA52A2F522DDF9A42202B /* AppCore in Frameworks */ = {isa = PBXBuildFile; productRef = EB7CDC1388C141FC7D11ABC9 /* AppCore */; };
 		A10FBD023012500200B69C71 /* Onboarding in Frameworks */ = {isa = PBXBuildFile; productRef = A10FBD033012500300B69C71 /* Onboarding */; };
 /* End PBXBuildFile section */
@@ -234,7 +233,6 @@
 				8193FCC6300EE5030002D9C6 /* EventUIComponents in Frameworks */,
 				8193FCCE300EE7500002D9C6 /* ClockFace in Frameworks */,
 				99ACA52A2F522DDF9A42202B /* AppCore in Frameworks */,
-				8C6C72E5288EB92A4B3D2B83 /* EventInput in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,7 +458,6 @@
 				8193FCCD300EE7500002D9C6 /* ClockFace */,
 				8193FD3B300F7C8B0002D9C6 /* UIComponents */,
 				EB7CDC1388C141FC7D11ABC9 /* AppCore */,
-				4DFD33F2E118DA0E62D253F4 /* EventInput */,
 			);
 			productName = TimeDrawWidgetExtension;
 			productReference = 2F7A0BCE2E35C5F100B69C71 /* TimeDrawWidgetExtension.appex */;
@@ -1134,10 +1131,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2FDFFFCC2E2298F800B9D266 /* XCRemoteSwiftPackageReference "ToastWindow" */;
 			productName = ToastWindow;
-		};
-		4DFD33F2E118DA0E62D253F4 /* EventInput */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = EventInput;
 		};
 		5DB0786970D0B4E66CEF1B73 /* AppCore */ = {
 			isa = XCSwiftPackageProductDependency;

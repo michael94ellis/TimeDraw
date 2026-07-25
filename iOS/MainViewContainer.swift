@@ -72,9 +72,7 @@ struct MainViewContainer: View {
                     .overlay(self.blurOverlay)
                 VStack {
                     Spacer()
-                    EventInput(eventCreationAction: {
-                        ReviewRequestManager().requestReviewIfAppropriate(for: UserDefaults.standard)
-                    })
+                    EventInput()
                     .environmentObject(appSettings)
                 }
                 .onAppear {

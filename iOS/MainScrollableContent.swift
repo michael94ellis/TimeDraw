@@ -250,6 +250,7 @@ struct MainScrollableContent: View {
         .listSectionSpacing(0)
         .listRowSpacing(0)
         .environment(\.defaultMinListRowHeight, 0)
+        .padding(.horizontal, 18)
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(Colors.groupedBackground)

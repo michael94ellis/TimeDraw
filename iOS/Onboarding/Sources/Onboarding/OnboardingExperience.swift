@@ -138,9 +138,7 @@ public struct OnboardingExperience<HeaderDemo: View, ClockDemo: View>: View {
             VStack {
                 Spacer()
                 Text("You can create events and reminders from TimeDraw as well")
-                EventInput(eventCreationAction: {
-                    // TODO: Add create event demo experienc with confetti
-                })
+                EventInput()
                     .environmentObject(itemViewModel)
             }
             .allowsHitTesting(false)

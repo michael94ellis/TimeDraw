@@ -981,7 +981,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ./watchOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WatchFace;
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = WatchFace_WatchKit_Extension.ComplicationController;
+				INFOPLIST_KEY_CLKComplicationPrincipalClass = WatchFace_App.ComplicationController;
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -1019,7 +1019,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ./watchOS/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WatchFace;
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = WatchFace_WatchKit_Extension.ComplicationController;
+				INFOPLIST_KEY_CLKComplicationPrincipalClass = WatchFace_App.ComplicationController;
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Draw can create and display Calendar Events";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";

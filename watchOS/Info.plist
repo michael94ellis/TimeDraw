@@ -2,21 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSExtension</key>
-	<dict>
-		<key>NSExtensionAttributes</key>
-		<dict>
-			<key>WKAppBundleIdentifier</key>
-			<string>com.michaelrobertellis.TimeDraw.watchkitapp</string>
-		</dict>
-		<key>NSExtensionPointIdentifier</key>
-		<string>com.apple.watchkit</string>
-	</dict>
 	<key>NSCalendarsUsageDescription</key>
 	<string>TimeDraw needs calendar access to draw your events on the watch face.</string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
 	<string>TimeDraw needs full calendar access to read and display your events on the watch face.</string>
 	<key>NSRemindersUsageDescription</key>
+	<string>TimeDraw needs reminders access to draw your reminders on the watch face.</string>
+	<key>NSRemindersFullAccessUsageDescription</key>
 	<string>TimeDraw needs reminders access to draw your reminders on the watch face.</string>
 </dict>
 </plist>

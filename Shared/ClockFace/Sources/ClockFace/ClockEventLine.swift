@@ -201,7 +201,8 @@ public struct ClockCrossoverBend: Shape {
         let amRadius = baseRadius * ClockEventGeometry.amRadiusMultiplier
         let pmRadius = baseRadius * ClockEventGeometry.pmRadiusMultiplier
         var path = Path()
-        Self.addBendSweep(
+        // One continuous AM arc → noon bend → PM arc (same lane offset throughout).
+        Self.addNoonCrossover(
             to: &path,
             in: rect,
             center: center,

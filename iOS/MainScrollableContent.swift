@@ -54,8 +54,14 @@ struct MainScrollableContent: View {
     }
 
     func performComplete(for item: EKReminder) async {
-        self.itemList.completeReminder(item)
-        await self.modifyItemViewModel.saveAndDisplayToast(reminder: item, "Reminder Completed")
+        do {
+            try await itemList.completeReminder(item)
+            modifyItemViewModel.displayToast("Reminder Completed", style: .success)
+        } catch let error as NSError {
+            modifyItemViewModel.handleError(error)
+        } catch {
+            modifyItemViewModel.displayToast(error.localizedDescription, style: .error)
+        }
     }
 
     func refreshAuthStatuses() {
@@ -192,7 +198,6 @@ struct MainScrollableContent: View {
                         Button(action: {
                             Task {
                                 await self.performComplete(for: item)
-                                self.itemList.updateData()
                             }
                         }) {
                             Image(systemName: "checkmark")

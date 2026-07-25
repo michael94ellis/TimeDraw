@@ -357,7 +357,7 @@ enum EventInputDetailSection: Hashable {
         toastManager.showToast(content: toast, duration: 2.8)
     }
     
-    func handleError(_ error: NSError) {
+    public func handleError(_ error: NSError) {
         self.displayToast(error.displayEKErrorDescription, style: .error)
     }
     

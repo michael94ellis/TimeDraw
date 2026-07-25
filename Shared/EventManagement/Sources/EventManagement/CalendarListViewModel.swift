@@ -112,10 +112,6 @@ public final class CalendarListViewModel: ObservableObject {
         try await fetchRemindersForDisplayDate(filterCalendarIDs: calendarFilterIDs)
     }
     
-    public func completeReminder(_ reminder: EKReminder) {
-        reminder.isCompleted = true
-    }
-    
     // MARK: - Fetch Events
     private func fetchEventsForDisplayDate(filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
         var eventsResult = try await eventKitManager.fetchEvents(
@@ -153,6 +149,13 @@ public final class CalendarListViewModel: ObservableObject {
     // Watch OS does not support these actions
     // https://developer.apple.com/forums/thread/42293
     #if !os(watchOS)
+    @MainActor
+    public func completeReminder(_ reminder: EKReminder) async throws {
+        reminder.isCompleted = true
+        try await eventKitManager.eventStore.save(reminder, commit: true)
+        reminders.removeAll { $0.calendarItemIdentifier == reminder.calendarItemIdentifier }
+    }
+    
     @MainActor
     public func delete(_ item: EKCalendarItem) async throws {
         if let reminder = item as? EKReminder {

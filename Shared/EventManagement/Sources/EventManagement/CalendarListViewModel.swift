@@ -30,6 +30,8 @@ public final class CalendarListViewModel: ObservableObject {
     }
     
     @Published public var events: [EKEvent] = []
+    /// Events spanning the week of `displayDate`, used for week-header calendar dots.
+    @Published public var weekEvents: [EKEvent] = []
     @Published public var reminders: [EKReminder] = []
     @Published public var error: (any Error)?
     
@@ -75,6 +77,31 @@ public final class CalendarListViewModel: ObservableObject {
         }
     }
     
+    /// Up to `limit` distinct calendar colors for items occurring on `date`.
+    public func calendarColors(for date: Date, limit: Int = 3) -> [Color] {
+        var seen = Set<String>()
+        var colors: [Color] = []
+        
+        func append(_ calendar: EKCalendar?) {
+            guard colors.count < limit,
+                  let calendar,
+                  seen.insert(calendar.calendarIdentifier).inserted else { return }
+            colors.append(Color(cgColor: calendar.cgColor))
+        }
+        
+        for event in weekEvents where Self.event(event, occursOn: date) {
+            append(event.calendar)
+            if colors.count >= limit { return colors }
+        }
+        
+        for reminder in reminders where Self.reminder(reminder, occursOn: date) {
+            append(reminder.calendar)
+            if colors.count >= limit { return colors }
+        }
+        
+        return colors
+    }
+    
     private func updateDataAsync() async throws {
         let canReadEvents = eventKitManager.eventAuthorizationStatus() == .fullAccess
         let canReadReminders = eventKitManager.reminderAuthorizationStatus() == .fullAccess
@@ -82,20 +109,39 @@ public final class CalendarListViewModel: ObservableObject {
         switch showCalendarItemType {
         case .scheduled:
             reminders = []
-            events = canReadEvents ? try await fetchEvents() : []
+            if canReadEvents {
+                let loadedWeek = try await fetchWeekEvents()
+                weekEvents = loadedWeek
+                events = Self.events(loadedWeek, occurringOn: displayDate)
+            } else {
+                weekEvents = []
+                events = []
+            }
         case .unscheduled:
             events = []
+            weekEvents = []
             reminders = canReadReminders ? try await fetchReminders() : []
         case .all:
             await withThrowingTaskGroup { group in
                 group.addTask {
-                    let loadedEvents = try await self.fetchEvents()
+                    let loadedWeek: [EKEvent]
+                    if canReadEvents {
+                        loadedWeek = try await self.fetchWeekEvents()
+                    } else {
+                        loadedWeek = []
+                    }
                     await MainActor.run {
-                        self.events = loadedEvents
+                        self.weekEvents = loadedWeek
+                        self.events = Self.events(loadedWeek, occurringOn: self.displayDate)
                     }
                 }
                 group.addTask {
-                    let loadedReminders = try await self.fetchReminders()
+                    let loadedReminders: [EKReminder]
+                    if canReadReminders {
+                        loadedReminders = try await self.fetchReminders()
+                    } else {
+                        loadedReminders = []
+                    }
                     await MainActor.run {
                         self.reminders = loadedReminders
                     }
@@ -114,11 +160,33 @@ public final class CalendarListViewModel: ObservableObject {
     
     // MARK: - Fetch Events
     private func fetchEventsForDisplayDate(filterCalendarIDs: [String] = []) async throws -> [EKEvent] {
-        var eventsResult = try await eventKitManager.fetchEvents(
+        let eventsResult = try await eventKitManager.fetchEvents(
             startDate: displayDate.startOfDay,
             endDate: displayDate.endOfDay,
             calendars: filterCalendarIDs
         )
+        return applyRecurrenceFilter(to: eventsResult)
+    }
+    
+    private func fetchWeekEvents(filterCalendarIDs: [String]? = nil) async throws -> [EKEvent] {
+        let filterIDs = filterCalendarIDs ?? calendarFilterIDs
+        guard let weekInterval = Calendar.current.dateInterval(of: .weekOfYear, for: displayDate) else {
+            return []
+        }
+        let start = weekInterval.start
+        guard let lastDay = Calendar.current.date(byAdding: .day, value: 6, to: start) else {
+            return []
+        }
+        let eventsResult = try await eventKitManager.fetchEvents(
+            startDate: start,
+            endDate: lastDay.endOfDay,
+            calendars: filterIDs
+        )
+        return applyRecurrenceFilter(to: eventsResult)
+    }
+    
+    private func applyRecurrenceFilter(to events: [EKEvent]) -> [EKEvent] {
+        var eventsResult = events
         switch showItemRecurrenceType {
         case .recurring:
             eventsResult.removeAll(where: { !$0.hasRecurrenceRules })
@@ -128,6 +196,28 @@ public final class CalendarListViewModel: ObservableObject {
             break
         }
         return eventsResult
+    }
+    
+    private static func events(_ events: [EKEvent], occurringOn day: Date) -> [EKEvent] {
+        events.filter { event($0, occursOn: day) }
+    }
+    
+    private static func event(_ event: EKEvent, occursOn day: Date) -> Bool {
+        let calendar = Calendar.current
+        let dayStart = calendar.startOfDay(for: day)
+        guard let dayEnd = calendar.date(byAdding: .day, value: 1, to: dayStart) else { return false }
+        return event.startDate < dayEnd && event.endDate > dayStart
+    }
+    
+    private static func reminder(_ reminder: EKReminder, occursOn day: Date) -> Bool {
+        let calendar = Calendar.current
+        if let due = reminder.dueDateComponents, let date = calendar.date(from: due) {
+            return calendar.isDate(date, inSameDayAs: day)
+        }
+        if let start = reminder.startDateComponents, let date = calendar.date(from: start) {
+            return calendar.isDate(date, inSameDayAs: day)
+        }
+        return false
     }
     
     // MARK: Fetch Reminders

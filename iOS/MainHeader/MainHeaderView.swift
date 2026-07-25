@@ -38,7 +38,8 @@ struct MainHeaderView: View {
     func weekDayHeader(for date: Date) -> some View {
         let today = Calendar.current.isDateInToday(date)
         let display = Calendar.current.isDate(date, inSameDayAs: self.itemList.displayDate)
-        return VStack {
+        let colors = itemList.calendarColors(for: date)
+        return VStack(spacing: 2) {
             Text(self.weekdayFormatter.string(from: date))
                 .font(today || display ? .app(.weekdayEmphasized) : .app(.weekday))
                 .foregroundColor(Colors.primaryText)
@@ -52,6 +53,14 @@ struct MainHeaderView: View {
                 )
                 .foregroundColor(today ? Colors.today : display ? Colors.primaryText : Colors.mutedText)
                 .animation(nil, value: itemList.displayDate)
+            HStack(spacing: 3) {
+                ForEach(Array(colors.enumerated()), id: \.offset) { _, color in
+                    Circle()
+                        .fill(color)
+                        .frame(width: 4, height: 4)
+                }
+            }
+            .frame(height: 4)
         }
         .frame(width: layoutMetrics.weekDayCellWidth)
         .padding(.vertical, layoutMetrics.weekDayCellVerticalPadding)
@@ -91,29 +100,49 @@ struct MainHeaderView: View {
         .padding(.horizontal, layoutMetrics.headerNavHorizontalPadding)
     }
     
+    func weekNavButton(systemName: String, direction: SwipeDirection) -> some View {
+        Button {
+            withAnimation {
+                handleGesture(value: direction)
+            }
+        } label: {
+            Image(systemName: systemName)
+                .font(.app(.icon))
+                .foregroundStyle(Colors.primaryText)
+                .frame(width: 28, height: 44)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             self.headerNav
-            HStack(spacing: layoutMetrics.weekStripSpacing) {
-                ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.itemList.displayDate), id: \.self) { date in
-                    Button {
-                        withAnimation(.easeInOut(duration: layoutMetrics.daySelectionAnimationDuration)) {
-                            itemList.displayDate = date
-                        }
-                    } label: {
-                        weekDayHeader(for: date)
-                            .background {
-                                if Calendar.current.isDate(date, inSameDayAs: itemList.displayDate) {
-                                    RoundedRectangle(cornerRadius: layoutMetrics.weekDaySelectionRadius, style: .continuous)
-                                        .fill(Colors.weekDaySelectionFill)
-                                        .matchedGeometryEffect(id: "weekDaySelection", in: weekdaySelection)
-                                }
+            HStack(spacing: 0) {
+                weekNavButton(systemName: "chevron.left", direction: .left)
+                HStack(spacing: layoutMetrics.weekStripSpacing) {
+                    ForEach(Calendar.current.daysWithSameWeekOfYear(as: self.itemList.displayDate), id: \.self) { date in
+                        Button {
+                            withAnimation(.easeInOut(duration: layoutMetrics.daySelectionAnimationDuration)) {
+                                itemList.displayDate = date
                             }
-                            .id("WeekDayHeader\(date)")
+                        } label: {
+                            weekDayHeader(for: date)
+                                .background {
+                                    if Calendar.current.isDate(date, inSameDayAs: itemList.displayDate) {
+                                        RoundedRectangle(cornerRadius: layoutMetrics.weekDaySelectionRadius, style: .continuous)
+                                            .fill(Colors.weekDaySelectionFill)
+                                            .matchedGeometryEffect(id: "weekDaySelection", in: weekdaySelection)
+                                    }
+                                }
+                                .id("WeekDayHeader\(date)")
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
+                    .transition(self.transitionDirection(direction: self.swipeDirection))
                 }
-                .transition(self.transitionDirection(direction: self.swipeDirection))
+                .frame(maxWidth: .infinity)
+                weekNavButton(systemName: "chevron.right", direction: .right)
             }
             .padding(.bottom, layoutMetrics.weekStripBottomPadding)
         }

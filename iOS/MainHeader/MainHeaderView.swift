@@ -24,8 +24,12 @@ struct MainHeaderView: View {
     // TODO: Add a full month calendar feature somewhere
     @EnvironmentObject var itemList: CalendarListViewModel
     @Environment(\.layoutMetrics) private var layoutMetrics
+    @AppStorage(AppStorageKey.highlightColorHex, store: .appGroup)
+    private var highlightColorHex = AppSettings.defaultHighlightColorHex
     @Binding var navPath: NavigationPath
     @State var swipeDirection: SwipeDirection = .left
+
+    private var highlightColor: Color { Color(hex: highlightColorHex) }
     
     func transitionDirection(direction: SwipeDirection) -> AnyTransition {
         let slideIn: Edge = direction == .right ? .trailing : .leading
@@ -52,7 +56,7 @@ struct MainHeaderView: View {
                         : display ? .app(.dayNumberSelected)
                         : .app(.dayNumber)
                 )
-                .foregroundColor(today ? Colors.today : display ? Colors.primaryText : Colors.mutedText)
+                .foregroundColor(today ? highlightColor : display ? Colors.primaryText : Colors.mutedText)
                 .animation(nil, value: itemList.displayDate)
             HStack(spacing: 3) {
                 ForEach(Array(colors.enumerated()), id: \.offset) { _, color in
@@ -86,7 +90,7 @@ struct MainHeaderView: View {
         HStack {
             Text(self.monthYearFormatter.string(from: self.itemList.displayDate))
                 .font(.app(.headerTitle))
-                .foregroundColor(Colors.today)
+                .foregroundColor(highlightColor)
             Spacer()
             Button {
                 navPath.append(MainViewContainer.NavLocation.appSettings)

@@ -18,11 +18,15 @@ struct CalendarDateSelection: View {
     @EnvironmentObject var itemList: CalendarListViewModel
     @Environment(\.layoutMetrics) private var layoutMetrics
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @AppStorage(AppStorageKey.highlightColorHex, store: .appGroup)
+    private var highlightColorHex = AppSettings.defaultHighlightColorHex
     
     init(date: Binding<Date>, showCompactCalendar: Binding<Bool>) {
         self._showCompactCalendar = showCompactCalendar
         self._selectedDate = date
     }
+
+    private var highlightColor: Color { Color(hex: highlightColorHex) }
     
     var body: some View {
         VStack {
@@ -58,7 +62,7 @@ struct CalendarDateSelection: View {
                                             : .app(.dayNumber)
                                     )
                                     .foregroundColor(
-                                        today ? Colors.today :
+                                        today ? highlightColor :
                                             display ? Colors.onAccentBackground :
                                                 Colors.calendarDayText
                                     )

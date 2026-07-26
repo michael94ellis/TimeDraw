@@ -9,6 +9,7 @@ import AppCore
 import DesignToken
 import EventManagement
 import SwiftUI
+import WidgetKit
 
 struct SettingsControlsView: View {
 
@@ -16,8 +17,28 @@ struct SettingsControlsView: View {
     @EnvironmentObject var calendarItemListViewModel: CalendarListViewModel
     @Environment(\.layoutMetrics) private var layoutMetrics
 
+    private var highlightColorBinding: Binding<Color> {
+        Binding(
+            get: { Color(hex: appSettings.highlightColorHex) },
+            set: { newColor in
+                if let hex = newColor.hexString {
+                    appSettings.highlightColorHex = hex
+                    WidgetCenter.shared.reloadTimelines(ofKind: TimeDrawWidgetKind.clock)
+                    PhoneWatchSync.shared.syncHighlightColor(hex)
+                }
+            }
+        )
+    }
+
     var body: some View {
         Section {
+            ColorPicker(
+                "Highlight Color",
+                selection: highlightColorBinding,
+                supportsOpacity: false
+            )
+            .font(.app(.body))
+
             Toggle("Daily Goal Note Space", isOn: appSettings.$isDailyGoalEnabled)
                 .font(.app(.body))
 

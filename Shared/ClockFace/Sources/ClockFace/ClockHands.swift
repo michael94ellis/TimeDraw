@@ -11,9 +11,11 @@ import SwiftUI
 public struct ClockHands: View {
     
     @Binding var currentTime: Time
+    var handColor: Color
     
-    public init(currentTime: Binding<Time>) {
+    public init(currentTime: Binding<Time>, handColor: Color = Colors.clockHand) {
         self._currentTime = currentTime
+        self.handColor = handColor
     }
 
     public var body: some View {
@@ -45,18 +47,18 @@ public struct ClockHands: View {
                     .fill(Colors.clockHand)
                     .frame(width: size * 0.09, height: size * 0.09)
                 Circle()
-                    .fill(Colors.clockSecondHand)
+                    .fill(handColor)
                     .frame(width: size * 0.05, height: size * 0.05)
 
                 // Seconds hand
                 RoundedRectangle(cornerRadius: CornerRadius.clockHandRadius)
-                    .fill(Colors.clockSecondHand)
+                    .fill(handColor)
                     .frame(width: 2, height: secondsOffset)
                     .offset(y: -secondsOffset / 2)
                     .rotationEffect(.degrees(Double(currentTime.sec) * 6))
 
                 RoundedRectangle(cornerRadius: CornerRadius.clockHandRadius)
-                    .fill(Colors.clockSecondHand)
+                    .fill(handColor)
                     .frame(width: 2, height: size * 0.2)
                     .offset(y: 10)
                     .rotationEffect(.degrees(Double(currentTime.sec) * 6))

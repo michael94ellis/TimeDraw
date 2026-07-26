@@ -16,6 +16,7 @@ struct TimeDrawWatchApp: App {
     @Environment(\.scenePhase) private var scenePhase
     @State private var calendarModel = WatchCalendarModel()
     private let mirroredSelection = MirroredCalendarSelection.shared
+    private let mirroredHighlight = MirroredHighlightColor.shared
     
     init() {
         DesignTokenFonts.register()
@@ -29,13 +30,15 @@ struct TimeDrawWatchApp: App {
                 Spacer(minLength: 0)
                 TimeDrawClock(
                     events: calendarModel.events,
-                    reminders: calendarModel.todaysReminders
+                    reminders: calendarModel.todaysReminders,
+                    highlightColorHex: mirroredHighlight.hex
                 )
                 .adaptiveLayoutMetrics()
                 .id(
                     calendarModel.events.compactMap(\.eventIdentifier).joined(separator: "|")
                     + "|\(calendarModel.todaysReminders.count)"
                     + "|\(mirroredSelection.selectedCalendarIDs.joined(separator: ","))"
+                    + "|\(mirroredHighlight.hex)"
                 )
                 
                 WatchEventKitAccessIndicators(

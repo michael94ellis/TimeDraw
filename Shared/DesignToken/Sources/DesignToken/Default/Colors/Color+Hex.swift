@@ -7,8 +7,12 @@
 
 import SwiftUI
 
+#if canImport(UIKit)
+import UIKit
+#endif
+
 extension Color {
-    init(hex: String) {
+    public init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int: UInt64 = 0
         Scanner(string: hex).scanHexInt64(&int)
@@ -31,5 +35,25 @@ extension Color {
             blue: Double(b) / 255,
             opacity: Double(a) / 255
         )
+    }
+
+    /// Six-digit sRGB hex without `#`, or `nil` if the color cannot be resolved.
+    public var hexString: String? {
+        #if canImport(UIKit)
+        let uiColor = UIColor(self)
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        guard uiColor.getRed(&r, green: &g, blue: &b, alpha: &a) else { return nil }
+        return String(
+            format: "%02X%02X%02X",
+            Int((r * 255).rounded()),
+            Int((g * 255).rounded()),
+            Int((b * 255).rounded())
+        )
+        #else
+        return nil
+        #endif
     }
 }

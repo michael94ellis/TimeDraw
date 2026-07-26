@@ -14,10 +14,18 @@ import SwiftUI
 struct TimeDrawClock: View {
     
     @Environment(\.layoutMetrics) private var layoutMetrics
+    @AppStorage(AppStorageKey.highlightColorHex, store: .appGroup)
+    private var storedHighlightColorHex = AppSettings.defaultHighlightColorHex
     @State var currentTime = Time(sec: 0, min: 0, hour: 0)
     @State var timer = Timer.publish(every: 1, on: .current, in: .default).autoconnect()
     var events: [EKEvent]
     var reminders: [EKReminder]
+    /// When set (e.g. from a widget timeline entry), overrides the stored highlight color.
+    var highlightColorHex: String? = nil
+
+    private var resolvedHighlightColorHex: String {
+        highlightColorHex ?? storedHighlightColorHex
+    }
     
     func setCurrentTime() {
         let timeZone = TimeZone.autoupdatingCurrent
@@ -108,7 +116,7 @@ struct TimeDrawClock: View {
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                 }
-            ClockHands(currentTime: $currentTime)
+            ClockHands(currentTime: $currentTime, handColor: Color(hex: resolvedHighlightColorHex))
         }
         // Inset face/events so all-day rings (radius > half the face) stay inside bounds.
         .padding(layoutMetrics.clockDrawingInset)

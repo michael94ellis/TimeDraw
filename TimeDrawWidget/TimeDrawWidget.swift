@@ -17,13 +17,19 @@ struct WidgetEntry: TimelineEntry {
     
     let events: [EKEvent]
     let reminders: [EKReminder]
+    let highlightColorHex: String
 }
 
 struct Provider: TimelineProvider {
     private let eventKitManager = EventKitManager()
     
     func placeholder(in context: Context) -> Entry {
-        .init(date: .now, events: [], reminders: [])
+        .init(
+            date: .now,
+            events: [],
+            reminders: [],
+            highlightColorHex: AppSettings.defaultHighlightColorHex
+        )
     }
     
     func getSnapshot(in context: Context, completion: @escaping @Sendable (Entry) -> Void) {
@@ -59,6 +65,9 @@ struct Provider: TimelineProvider {
     }
     
     private func fetchData(for date: Date) async -> WidgetEntry {
+        let highlightColorHex = UserDefaults.appGroup.string(forKey: AppStorageKey.highlightColorHex)
+            ?? AppSettings.defaultHighlightColorHex
+
         do {
             // Load user selected calendar IDs from standard UserDefaults
             let userDefaults = UserDefaults.standard
@@ -76,11 +85,21 @@ struct Provider: TimelineProvider {
             let reminders = try await eventKitManager.fetchReminders(calendars: calendarIds) ?? []
             let incompleteReminders = reminders.filter { !$0.isCompleted }
             
-            return WidgetEntry(date: date, events: events, reminders: incompleteReminders)
+            return WidgetEntry(
+                date: date,
+                events: events,
+                reminders: incompleteReminders,
+                highlightColorHex: highlightColorHex
+            )
         } catch {
             assertionFailure("Error fetching widget data: \(error)")
             // Return empty data instead of failing completely
-            return WidgetEntry(date: date, events: [], reminders: [])
+            return WidgetEntry(
+                date: date,
+                events: [],
+                reminders: [],
+                highlightColorHex: highlightColorHex
+            )
         }
     }
 }
@@ -89,12 +108,16 @@ struct TimeDrawWidgetEntryView: View {
     var entry: Provider.Entry
 
     var body: some View {
-        TimeDrawClock(events: entry.events, reminders: entry.reminders)
+        TimeDrawClock(
+            events: entry.events,
+            reminders: entry.reminders,
+            highlightColorHex: entry.highlightColorHex
+        )
     }
 }
 
 struct TimeDrawWidget: Widget {
-    let kind: String = "TimeDrawWidget"
+    let kind: String = TimeDrawWidgetKind.clock
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
@@ -110,5 +133,10 @@ struct TimeDrawWidget: Widget {
 #Preview(as: .systemSmall) {
     TimeDrawWidget()
 } timeline: {
-    WidgetEntry(date: .now, events: [], reminders: [])
+    WidgetEntry(
+        date: .now,
+        events: [],
+        reminders: [],
+        highlightColorHex: AppSettings.defaultHighlightColorHex
+    )
 }

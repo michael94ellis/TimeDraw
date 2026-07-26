@@ -25,9 +25,14 @@ public enum AppStorageKey {
     public static let timePickerGranularity = "timePickerGranularity"
     /// Bool
     public static let showRecurringItems = EventStorageKey.showRecurringItems
+    /// String — sRGB hex (e.g. "FF5C39") for header year, today text, and clock hands
+    public static let highlightColorHex = "highlightColorHex"
 }
 
 public class AppSettings: ObservableObject {
+
+    /// Default matches `Colors.today` / `Palette.red1`.
+    public static let defaultHighlightColorHex = "FF5C39"
     
     @AppStorage(AppStorageKey.firstOpen) public var isFirstAppOpen = true
 
@@ -40,6 +45,20 @@ public class AppSettings: ObservableObject {
     @AppStorage(AppStorageKey.timePickerGranularity) public var timePickerGranularity: Int = 15
     
     @AppStorage(AppStorageKey.showRecurringItems) public var showRecurringItems: Bool = true
+
+    @AppStorage(AppStorageKey.highlightColorHex, store: .appGroup)
+    public var highlightColorHex: String = AppSettings.defaultHighlightColorHex
     
-    public init() { }
+    public init() {
+        Self.migrateHighlightColorIfNeeded()
+    }
+
+    /// Copies a previously saved highlight color from standard defaults into the app group suite.
+    private static func migrateHighlightColorIfNeeded() {
+        let group = UserDefaults.appGroup
+        guard group.object(forKey: AppStorageKey.highlightColorHex) == nil,
+              let legacy = UserDefaults.standard.string(forKey: AppStorageKey.highlightColorHex)
+        else { return }
+        group.set(legacy, forKey: AppStorageKey.highlightColorHex)
+    }
 }

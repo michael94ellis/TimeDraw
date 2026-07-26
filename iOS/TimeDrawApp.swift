@@ -23,12 +23,19 @@ struct TimeDrawApp: App {
     init() {
         DesignTokenFonts.register()
         UIFont.overrideInitialize()
+        PhoneWatchSync.shared.activate()
         UserDefaults.standard.register(defaults: [
             AppStorageKey.isDailyGoalEnabled: false,
             AppStorageKey.timePickerGranularity: 15,
             AppStorageKey.showCalendarItemType: CalendarItemType.all.rawValue,
             AppStorageKey.showItemRecurrenceType: ItemRecurrenceType.all.rawValue,
         ])
+    }
+    
+    private func syncCalendarsToWatch() {
+        PhoneWatchSync.shared.syncSelectedCalendars(
+            appSettings.userSelectedCalendars.loadCalendarIds()
+        )
     }
     
     var body: some Scene {
@@ -38,9 +45,16 @@ struct TimeDrawApp: App {
                 .environmentObject(itemViewModel)
                 .environmentObject(listViewModel)
                 .environmentObject(appSettings)
+                .onAppear {
+                    syncCalendarsToWatch()
+                }
+                .onChange(of: appSettings.userSelectedCalendars) { _, _ in
+                    syncCalendarsToWatch()
+                }
                 .onChange(of: scenePhase) { _, phase in
                     if phase == .active {
                         listViewModel.updateData()
+                        syncCalendarsToWatch()
                     }
                 }
         }

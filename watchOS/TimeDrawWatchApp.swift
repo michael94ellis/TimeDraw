@@ -15,10 +15,12 @@ struct TimeDrawWatchApp: App {
     
     @Environment(\.scenePhase) private var scenePhase
     @State private var calendarModel = WatchCalendarModel()
+    private let mirroredSelection = MirroredCalendarSelection.shared
     
     init() {
         DesignTokenFonts.register()
         UIFont.overrideInitialize()
+        PhoneWatchSync.shared.activate()
     }
     
     @SceneBuilder var body: some Scene {
@@ -33,6 +35,7 @@ struct TimeDrawWatchApp: App {
                 .id(
                     calendarModel.events.compactMap(\.eventIdentifier).joined(separator: "|")
                     + "|\(calendarModel.todaysReminders.count)"
+                    + "|\(mirroredSelection.selectedCalendarIDs.joined(separator: ","))"
                 )
                 
                 WatchEventKitAccessIndicators(
@@ -50,6 +53,9 @@ struct TimeDrawWatchApp: App {
             .padding(.horizontal, 4)
             .task {
                 await calendarModel.load()
+            }
+            .onChange(of: mirroredSelection.selectedCalendarIDs) { _, ids in
+                Task { await calendarModel.load(calendarIDs: ids) }
             }
             .onChange(of: scenePhase) { _, phase in
                 guard phase == .active else { return }

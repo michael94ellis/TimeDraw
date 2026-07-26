@@ -8,8 +8,10 @@ import EventKit
 import SwiftUI
 
 /// Watch-specific calendar loader. Avoids shared AppStorage filters / Dependency wiring
-/// that have been unreliable for EventKit on watchOS.
+/// that have been unreliable for EventKit on watchOS. Calendar IDs are mirrored from
+/// the iPhone via `PhoneWatchSync` / `MirroredCalendarSelection`.
 @Observable
+@MainActor
 final class WatchCalendarModel {
     
     @ObservationIgnored
@@ -50,8 +52,6 @@ final class WatchCalendarModel {
             let granted = try await store.requestFullAccessToEvents()
             if granted {
                 store = EKEventStore()
-            }
-            if granted {
                 await load()
             }
             return granted
@@ -66,8 +66,6 @@ final class WatchCalendarModel {
             let granted = try await store.requestFullAccessToReminders()
             if granted {
                 store = EKEventStore()
-            }
-            if granted {
                 await load()
             }
             return granted
@@ -76,38 +74,54 @@ final class WatchCalendarModel {
         }
     }
     
-    func load() async {
+    func load(calendarIDs: [String]? = nil) async {
         store = EKEventStore()
+        let filterIDs = calendarIDs ?? MirroredCalendarSelection.shared.selectedCalendarIDs
         
-        var loadedEvents: [EKEvent] = []
-        var loadedReminders: [EKReminder] = []
-        await withTaskGroup { group in
-            group.addTask {
-                guard self.eventStatus == .fullAccess else {
-                    return
-                }
-                if self.isEventAccessGranted {
-                    let start = Date().startOfDay
-                    let end = Date().endOfDay
-                    let predicate = self.store.predicateForEvents(withStart: start, end: end, calendars: nil)
-                    loadedEvents = self.store.events(matching: predicate)
-                    self.events = loadedEvents
-                }
-            }
-            group.addTask {
-                guard self.reminderStatus == .fullAccess else {
-                    return
-                }
-                if self.isReminderAccessGranted {
-                    let predicate = self.store.predicateForReminders(in: nil)
-                    loadedReminders = await withCheckedContinuation { continuation in
-                        self.store.fetchReminders(matching: predicate) { reminders in
-                            continuation.resume(returning: reminders ?? [])
-                        }
-                    }.filter { !$0.isCompleted }
-                    self.reminders = loadedReminders
-                }
-            }
+        if eventStatus == .fullAccess {
+            let calendars = Self.resolvedCalendars(
+                in: store,
+                for: .event,
+                filterCalendarIDs: filterIDs
+            )
+            let predicate = store.predicateForEvents(
+                withStart: Date().startOfDay,
+                end: Date().endOfDay,
+                calendars: calendars
+            )
+            events = store.events(matching: predicate)
+        } else {
+            events = []
         }
+        
+        if reminderStatus == .fullAccess {
+            let calendars = Self.resolvedCalendars(
+                in: store,
+                for: .reminder,
+                filterCalendarIDs: filterIDs
+            )
+            let predicate = store.predicateForReminders(in: calendars)
+            let fetched = await withCheckedContinuation { continuation in
+                store.fetchReminders(matching: predicate) { reminders in
+                    continuation.resume(returning: reminders ?? [])
+                }
+            }
+            reminders = fetched.filter { !$0.isCompleted }
+        } else {
+            reminders = []
+        }
+    }
+    
+    /// `nil` means “all calendars”. Matches `EventKitManager.resolvedCalendars`.
+    private static func resolvedCalendars(
+        in store: EKEventStore,
+        for entityType: EKEntityType,
+        filterCalendarIDs: [String]
+    ) -> [EKCalendar]? {
+        guard !filterCalendarIDs.isEmpty else { return nil }
+        let filtered = store.calendars(for: entityType).filter {
+            filterCalendarIDs.contains($0.calendarIdentifier)
+        }
+        return filtered.isEmpty ? nil : filtered
     }
 }

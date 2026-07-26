@@ -92,6 +92,7 @@ struct MainViewContainer: View {
                         clockDemo: { TimeDrawClock(events: [], reminders: []) }
                     )
                         .environmentObject(appSettings)
+                        .navigationBarBackButtonHidden()
                 case .appSettings:
                     SettingsView(navPath: $navPath)
                 }

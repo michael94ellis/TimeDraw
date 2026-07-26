@@ -21,7 +21,7 @@ struct TimeDrawClock: View {
     var events: [EKEvent]
     var reminders: [EKReminder]
     /// When set (e.g. from a widget timeline entry), overrides the stored highlight color.
-    var highlightColorHex: String? = nil
+    var highlightColorHex: String?
 
     private var resolvedHighlightColorHex: String {
         highlightColorHex ?? storedHighlightColorHex

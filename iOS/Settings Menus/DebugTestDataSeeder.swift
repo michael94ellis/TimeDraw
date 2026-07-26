@@ -14,7 +14,6 @@ import SwiftUI
 
 enum DebugTestDataSeeder {
 
-    static let titlePrefix = "[Debug]"
     static let workCalendarTitle = "Work"
     static let personalCalendarTitle = "Personal"
 
@@ -424,64 +423,35 @@ enum DebugTestDataSeeder {
 
         let templates: [ReminderTemplate] = [
             ReminderTemplate(
-                title: "\(titlePrefix) Due today w/ time",
+                title: "Due today w/ time",
                 priority: 1,
                 start: dayComponents(today, hour: 14, minute: 0),
                 due: dayComponents(today, hour: 15, minute: 30),
                 notes: nil, recurrence: nil, isCompleted: false, completionDate: nil
             ),
             ReminderTemplate(
-                title: "\(titlePrefix) Due tomorrow",
+                title: "Reports Due tomorrow",
                 priority: 5,
                 start: nil,
                 due: dayComponents(dateByAdding(days: 1)),
                 notes: nil, recurrence: nil, isCompleted: false, completionDate: nil
             ),
             ReminderTemplate(
-                title: "\(titlePrefix) Due in 3 days",
+                title: "Work Due in 3 days",
                 priority: 9,
                 start: nil,
                 due: dayComponents(dateByAdding(days: 3)),
                 notes: nil, recurrence: nil, isCompleted: false, completionDate: nil
             ),
             ReminderTemplate(
-                title: "\(titlePrefix) Overdue",
-                priority: 1,
-                start: nil,
-                due: dayComponents(dateByAdding(days: -5)),
-                notes: nil, recurrence: nil, isCompleted: false, completionDate: nil
-            ),
-            ReminderTemplate(
-                title: "\(titlePrefix) Time range today",
-                priority: 5,
-                start: dayComponents(today, hour: 10, minute: 0),
-                due: dayComponents(today, hour: 11, minute: 30),
-                notes: nil, recurrence: nil, isCompleted: false, completionDate: nil
-            ),
-            ReminderTemplate(
-                title: "\(titlePrefix) Start only today",
+                title: "Start Annual Task today",
                 priority: 9,
                 start: dayComponents(today, hour: 16, minute: 0),
                 due: nil,
                 notes: nil, recurrence: nil, isCompleted: false, completionDate: nil
             ),
             ReminderTemplate(
-                title: "\(titlePrefix) Title only",
-                priority: 0,
-                start: nil,
-                due: nil,
-                notes: nil, recurrence: nil, isCompleted: false, completionDate: nil
-            ),
-            ReminderTemplate(
-                title: "\(titlePrefix) With notes",
-                priority: 5,
-                start: nil,
-                due: dayComponents(dateByAdding(days: 7)),
-                notes: "Debug reminder with notes for testing.",
-                recurrence: nil, isCompleted: false, completionDate: nil
-            ),
-            ReminderTemplate(
-                title: "\(titlePrefix) Weekly recurring",
+                title: "Weekly clean up",
                 priority: 9,
                 start: nil,
                 due: dayComponents(today, hour: 9, minute: 0),
@@ -490,22 +460,7 @@ enum DebugTestDataSeeder {
                 isCompleted: false, completionDate: nil
             ),
             ReminderTemplate(
-                title: "\(titlePrefix) Far future",
-                priority: 0,
-                start: nil,
-                due: dayComponents(dateByAdding(days: 25)),
-                notes: nil, recurrence: nil, isCompleted: false, completionDate: nil
-            ),
-            ReminderTemplate(
-                title: "\(titlePrefix) Completed",
-                priority: 5,
-                start: nil,
-                due: dayComponents(dateByAdding(days: -1)),
-                notes: nil, recurrence: nil, isCompleted: true,
-                completionDate: dateByAdding(days: -1, to: today).addingTimeInterval(3600 * 10)
-            ),
-            ReminderTemplate(
-                title: "\(titlePrefix) All-day due",
+                title: "All-day alert",
                 priority: 1,
                 start: nil,
                 due: dayComponents(dateByAdding(days: 2)),

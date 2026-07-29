@@ -121,7 +121,7 @@ struct TimeDrawClock: View {
         // Inset face/events so all-day rings (radius > half the face) stay inside bounds.
         .padding(layoutMetrics.clockDrawingInset)
         .aspectRatio(1, contentMode: .fit)
-        .frame(maxWidth: 440, alignment: .center)
+        .frame(maxWidth: 440, maxHeight: 440, alignment: .center)
         .onAppear {
             let calendar = Calendar.current
             let currentDateTime = Date()

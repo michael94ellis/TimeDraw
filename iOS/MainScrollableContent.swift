@@ -5,10 +5,10 @@
 //  Created by Michael Ellis on 1/20/22.
 //
 
-import Dependencies
-import EventInput
 import AppCore
+import Dependencies
 import DesignToken
+import EventInput
 import EventKit
 import EventManagement
 import EventUIComponents
@@ -230,11 +230,15 @@ struct MainScrollableContent: View {
         
     var body: some View {
         List {
-            TimeDrawClock(events: itemList.events, reminders: itemList.reminders)
-                .padding(.vertical, layoutMetrics.clockVerticalPadding)
-                .padding(.horizontal, layoutMetrics.clockHorizontalPadding)
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
+            HStack {
+                Spacer()
+                TimeDrawClock(events: itemList.events, reminders: itemList.reminders)
+                Spacer()
+            }
+            .padding(.vertical, layoutMetrics.clockVerticalPadding)
+            .padding(.horizontal, layoutMetrics.clockHorizontalPadding)
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
             if showsEventsSection {
                 eventsSectionContent()
             }

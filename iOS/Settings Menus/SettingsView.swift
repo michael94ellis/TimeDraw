@@ -39,12 +39,12 @@ struct SettingsView: View {
             }
             
 #if DEBUG
-//            Section {
-//                DebugSeedTestDataButton()
-//            } header: {
-//                Text("Debug")
-//                    .font(.app(.listTitle))
-//            }
+            Section {
+                DebugSeedTestDataButton()
+            } header: {
+                Text("Debug")
+                    .font(.app(.listTitle))
+            }
 #endif
             
             Section {

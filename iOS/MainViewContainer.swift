@@ -9,7 +9,6 @@ import AppCore
 import AppStoreReviewRequest
 import CoreData
 import DailyGoalTextfield
-
 import EventInput
 import EventKit
 import EventManagement
@@ -73,6 +72,7 @@ struct MainViewContainer: View {
                 VStack {
                     Spacer()
                     EventInput()
+                        .frame(maxWidth: 600)
                     .environmentObject(appSettings)
                 }
                 .onAppear {

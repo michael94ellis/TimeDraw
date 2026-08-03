@@ -36,6 +36,12 @@ private enum InterWeight: String {
     case extraBold = "Inter-ExtraBold"
 }
 
+private struct FontSpecAttributes {
+    let name: String
+    let size: CGFloat
+    let relativeTo: Font.TextStyle
+}
+
 private struct FontSpec {
     let weight: InterWeight
     let phoneSize: CGFloat
@@ -73,10 +79,12 @@ extension AppTextStyle {
         case .iconLarge: FontSpec(weight: .regular, phoneSize: 56, padSize: 56, relativeTo: .largeTitle)
         }
     }
-
-    fileprivate func resolved(for form: DesignForm) -> (name: String, size: CGFloat, relativeTo: Font.TextStyle) {
-        let s = spec
-        return (s.weight.rawValue, s.size(for: form), s.relativeTo)
+    
+    fileprivate func resolved(for form: DesignForm) -> FontSpecAttributes {
+        let resolvedSpec = spec
+        return .init(name: resolvedSpec.weight.rawValue,
+                     size: resolvedSpec.size(for: form),
+                     relativeTo: resolvedSpec.relativeTo)
     }
 }
 

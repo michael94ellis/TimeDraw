@@ -103,6 +103,8 @@ struct AddRecurrenceRule: View {
                     CalendarMultiDateSelection(selectedDates: $viewModel.selectedMonthDays)
                 }
             }
+        case .none:
+            EmptyView()
         @unknown default:
             EmptyView()
         }

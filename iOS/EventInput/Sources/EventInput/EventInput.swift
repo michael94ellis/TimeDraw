@@ -22,16 +22,14 @@ public struct EventInput: View {
     @EnvironmentObject var appSettings: AppSettings
     @EnvironmentObject var viewModel: ModifyCalendarItemViewModel
     @EnvironmentObject var listViewModel: CalendarListViewModel
+    private let eventStore = EKEventStore()
 
     @Dependency(\.eventKitManager) private var eventKitManager
     @FocusState private var isFocused: Bool
+    private let defaultCalendarColor: CGColor = .init(red: 55, green: 91, blue: 190, alpha: 1)
     
     public init() { }
-
-    private var defaultCalendarColor: CGColor {
-        eventKitManager.defaultReminderCalendar?.cgColor ?? .init(red: 55, green: 91, blue: 190, alpha: 1)
-    }
-
+    
     private var submitSymbol: SFSymbol {
         viewModel.editMode ? .checkmark : .plus
     }
@@ -49,15 +47,13 @@ public struct EventInput: View {
     }
 
     private var selectableEventCalendars: [EKCalendar] {
-        eventKitManager
-            .eventStore
+        eventStore
             .selectedCalendars(ids: selectedCalendarIds, entityType: .event)
             .filter { $0.allowsContentModifications }
     }
 
     private var selectableReminderCalendars: [EKCalendar] {
-        eventKitManager
-            .eventStore
+        eventStore
             .selectedCalendars(ids: selectedCalendarIds, entityType: .reminder)
             .filter { $0.allowsContentModifications }
     }
@@ -89,7 +85,7 @@ public struct EventInput: View {
                 viewModel.dismissEventEditView()
             }) {
                 EventEditView(
-                    eventStore: eventKitManager.eventStore,
+                    eventStore: eventStore,
                     event: viewModel.eventBeingEdited
                 ) { _ in
                     viewModel.dismissEventEditView()

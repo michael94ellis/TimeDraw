@@ -19,9 +19,6 @@ disabled_rules:
   - trailing_comma
   - line_length
   - multiple_closures_with_trailing_closure
-  
-opt-in_rules:
- - sorted_imports
 
 # To set both levels implicitly, use an array.
 type_body_length:

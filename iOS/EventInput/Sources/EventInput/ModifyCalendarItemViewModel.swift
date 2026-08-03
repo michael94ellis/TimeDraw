@@ -148,6 +148,8 @@ enum EventInputDetailSection: Hashable {
             return "Monthly · \(days)"
         case .yearly:
             return "Yearly"
+        case .none:
+            return nil
         @unknown default:
             return nil
         }
@@ -210,43 +212,44 @@ enum EventInputDetailSection: Hashable {
     // MARK: - Recurrence
     
     private func extractRecurrenceRules(for item: EKCalendarItem, start: Date) {
-        if let recurrenceRule = item.recurrenceRules?.first {
-            self.selectedRule = recurrenceRule.frequency
-            self.recurrenceRule = recurrenceRule
-            self.recurrenceEnd = recurrenceRule.recurrenceEnd
-            if let recurrenceEndDate = recurrenceRule.recurrenceEnd?.endDate {
-                self.endRecurrenceDate = recurrenceEndDate.get(.month, .day, .year)
-                self.endRecurrenceTime = recurrenceEndDate.get(.hour, .minute, .second)
+        guard let recurrenceRule = item.recurrenceRules?.first else {
+            return
+        }
+        self.selectedRule = recurrenceRule.frequency
+        self.recurrenceRule = recurrenceRule
+        self.recurrenceEnd = recurrenceRule.recurrenceEnd
+        if let recurrenceEndDate = recurrenceRule.recurrenceEnd?.endDate {
+            self.endRecurrenceDate = recurrenceEndDate.get(.month, .day, .year)
+            self.endRecurrenceTime = recurrenceEndDate.get(.hour, .minute, .second)
+        }
+        if let occurences = recurrenceRule.recurrenceEnd?.occurrenceCount {
+            self.numberOfOccurences = occurences
+            self.isRecurrenceUsingOccurences = true
+        }
+        switch recurrenceRule.frequency {
+        case .daily:
+            self.frequencyDayValueInt = recurrenceRule.interval
+            self.dayFrequencyText = String(recurrenceRule.interval)
+        case .weekly:
+            if let selectedDays = recurrenceRule.daysOfTheWeek?.compactMap({ $0.dayOfTheWeek }) {
+                self.frequencyWeekdayValues = selectedDays
             }
-            if let occurences = recurrenceRule.recurrenceEnd?.occurrenceCount {
-                self.numberOfOccurences = occurences
-                self.isRecurrenceUsingOccurences = true
-            }
-            switch recurrenceRule.frequency {
-            case .daily:
-                self.frequencyDayValueInt = recurrenceRule.interval
-                self.dayFrequencyText = String(recurrenceRule.interval)
-            case .weekly:
-                if let selectedDays = recurrenceRule.daysOfTheWeek?.compactMap({ $0.dayOfTheWeek }) {
-                    self.frequencyWeekdayValues = selectedDays
-                }
-            case .monthly:
-                self.selectedMonthDays = (recurrenceRule.daysOfTheMonth ?? []) as? [Int] ?? []
-            case .yearly:
-                if let days = recurrenceRule.daysOfTheMonth {
-                    self.selectedMonthDays = days as? [Int] ?? []
-                    if let month = recurrenceRule.monthsOfTheYear?.first?.intValue {
-                        self.frequencyMonthDate = month - 1
-                    }
-                } else {
-                    let day = start.get(.day)
-                    let month = start.get(.month)
-                    self.selectedMonthDays = [day]
+        case .monthly:
+            self.selectedMonthDays = (recurrenceRule.daysOfTheMonth ?? []) as? [Int] ?? []
+        case .yearly:
+            if let days = recurrenceRule.daysOfTheMonth {
+                self.selectedMonthDays = days as? [Int] ?? []
+                if let month = recurrenceRule.monthsOfTheYear?.first?.intValue {
                     self.frequencyMonthDate = month - 1
                 }
-            default:
-                break
+            } else {
+                let day = start.get(.day)
+                let month = start.get(.month)
+                self.selectedMonthDays = [day]
+                self.frequencyMonthDate = month - 1
             }
+        default:
+            break
         }
     }
     
@@ -562,7 +565,7 @@ enum EventInputDetailSection: Hashable {
             await self.saveAndDisplayToast(event: newEvent, "Event Created")
         } catch let error as NSError {
             print("Error creating event: \(error)")
-            await self.handleError(error)
+            self.handleError(error)
         }
     }
     

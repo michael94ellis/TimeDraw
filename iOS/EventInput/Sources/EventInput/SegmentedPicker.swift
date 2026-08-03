@@ -33,17 +33,25 @@ public struct SegmentedPicker<T: Equatable, Content: View>: View {
                 .padding(2)
                 .matchedGeometryEffect(id: "selectedSegmentHighlight", in: self.selectionAnimation)
                 .offset(x: self.dragPosition)
-                .gesture(DragGesture().onChanged({ dragChange in
-                    self.dragPosition = dragChange.translation.width
-                }).onEnded({ dragEnd in
-                    withAnimation(.linear) {
-                        self.dragPosition = .zero
-                    }
-                }))
-
+                .gesture(
+                    DragGesture()
+                        .onChanged(
+                            { dragChange in
+                                self.dragPosition = dragChange.translation.width
+                            }
+                        )
+                        .onEnded(
+                            { _ in
+                                withAnimation(.linear) {
+                                    self.dragPosition = .zero
+                                }
+                            }
+                        )
+                )
+            
         }
     }
-
+    
     public var body: some View {
         HStack {
             ForEach(self.items.indices, id: \.self) { index in
@@ -53,10 +61,12 @@ public struct SegmentedPicker<T: Equatable, Content: View>: View {
                         self.selectedItem = self.items[index]
                     }
                 },
-                       label: { self.content(self.items[index]) })
-                    .buttonStyle(.plain)
-                    .contentShape(Rectangle())
-                    .overlay(self.overlay(for: self.items[index]))
+                       label: {
+                    self.content(self.items[index])
+                })
+                .buttonStyle(.plain)
+                .contentShape(Rectangle())
+                .overlay(self.overlay(for: self.items[index]))
             }
         }
         .background(RoundedRectangle(cornerRadius: CornerRadius.segmentedPickerTrackRadius).fill(Color(uiColor: .systemGray4))
